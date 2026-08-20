@@ -34,6 +34,13 @@ window.HUB = {
       credits: 3, term: "Next semester", color: "#e0913a",
       desc: "Data analysis; correlation and regression; sampling and experimental design; probability (random variables, expected values, normal & binomial); hypothesis testing and confidence intervals; spreadsheet software.",
       guide: true
+    },
+    {
+      code: "LEETCODE", slug: "LEETCODE",
+      title: "LeetCode / NeetCode Pro",
+      credits: 0, term: "Ongoing", color: "#f5a623",
+      desc: "Pattern-based interview prep using NeetCode Pro's roadmap. Notes organized by pattern (triggers, key insights, gotchas) rather than by problem number.",
+      guide: true
     }
   ]
 };
