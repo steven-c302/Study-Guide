@@ -1,0 +1,4 @@
+window.MATERIALS = {
+  "lectures": [],
+  "exams": []
+};

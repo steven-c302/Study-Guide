@@ -41,6 +41,13 @@ window.HUB = {
       credits: 0, term: "Ongoing", color: "#f5a623",
       desc: "Pattern-based interview prep using NeetCode Pro's roadmap. Notes organized by pattern (triggers, key insights, gotchas) rather than by problem number.",
       guide: true
+    },
+    {
+      code: "SWE PROJECTS", slug: "SWE-PROJECTS",
+      title: "Project & Software Learning",
+      credits: 0, term: "Ongoing", color: "#60a5fa",
+      desc: "Self-directed guide for web-stack fundamentals (MERN, Next.js) and AI-engineering concepts (RAG, embeddings, structured output, MCP) used in Steven's real projects — Court Vision, FileButler, Larder.",
+      guide: true
     }
   ]
 };

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWE Projects · Study Guide</title>
+<link rel="stylesheet" href="../../../shared/hub.css">
+<style>
+  .topic-nav{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px}
+  .topic-nav a{font-size:13px; padding:6px 12px; border:1px solid var(--line); border-radius:20px; background:var(--panel2); color:var(--muted)}
+  .topic-nav a:hover{color:var(--text); border-color:var(--accent); text-decoration:none}
+  table.cmp{width:100%; border-collapse:collapse; font-size:14px; margin:10px 0}
+  table.cmp th, table.cmp td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top}
+  table.cmp th{background:var(--panel2); color:var(--text)}
+  table.cmp td{color:var(--muted)}
+  .tag{display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:12px; margin-right:6px}
+  .tag.have{background:#15995733; color:#5fd88f; border:1px solid #159957}
+  .tag.gap{background:#d6890f33; color:#f0ad4e; border:1px solid #d6890f}
+  .tag.skip{background:#c0392b33; color:#e57373; border:1px solid #c0392b}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../course.html">← back to SWE Projects</a> &nbsp;·&nbsp; <a href="../../../index.html">Study Hub</a></div>
+  <div class="hub-header" style="border-bottom-color:#60a5fa33">
+    <h1 style="color:#60a5fa">SWE Projects · Study Guide</h1>
+    <p>Web-stack fundamentals and AI-engineering concepts, tied to real work: Court Vision, FileButler, and Larder (pantry tracker). Grows alongside <code>PROGRESS_LOG.md</code> in the Resume project.</p>
+  </div>
+
+  <div class="topic-nav">
+    <a href="#mern">MERN Stack</a>
+    <a href="#stack-compare">Your Stack vs. Full MERN</a>
+    <a href="#ai-concepts">AI Engineering Concepts</a>
+    <a href="#mcp">MCP</a>
+    <a href="#glossary">Quick Glossary</a>
+  </div>
+
+  <div class="card" id="mern">
+    <h2>The MERN Stack</h2>
+    <p>MERN = <b>M</b>ongoDB, <b>E</b>xpress, <b>R</b>eact, <b>N</b>ode.js — four pieces that together let you write a full web app (frontend + backend + database) in one language, JavaScript.</p>
+
+    <div class="note-box">
+      <h4>MongoDB — the database</h4>
+      <p>A NoSQL <i>document</i> database. Records are stored as JSON-like documents instead of rows in fixed tables, so two documents in the same collection can have different fields. Good fit when data is naturally variable-shaped — e.g. recipes with different numbers of ingredients, optional sections, nested steps and comments (this is why Larder's community-cookbook feature uses Mongo).</p>
+      <p class="muted" style="font-size:13px">Not a good fit for data with strict relationships that need to stay consistent (users, orders, foreign keys) — that's what a relational database (Postgres) is for.</p>
+    </div>
+
+    <div class="note-box">
+      <h4>Express — the backend framework</h4>
+      <p>A lightweight framework that runs on top of Node.js and handles HTTP routing and middleware. You define routes (<code>app.post('/api/recipes', handler)</code>) and Express wires up request parsing, responses, error handling, etc. It's the "plumbing" layer between your React frontend and your database.</p>
+    </div>
+
+    <div class="note-box">
+      <h4>React — the frontend library</h4>
+      <p>Builds UI out of reusable, stateful components. Instead of manually updating the DOM, you describe what the UI should look like for a given state, and React re-renders efficiently when that state changes.</p>
+    </div>
+
+    <div class="note-box">
+      <h4>Node.js — the runtime</h4>
+      <p>Lets JavaScript run outside the browser, on a server. Express (and Next.js) are both built on top of Node — it's the foundation, not something you "add" separately once you're using either framework.</p>
+    </div>
+  </div>
+
+  <div class="card" id="stack-compare">
+    <h2>Your actual stack vs. full MERN</h2>
+    <p>Larder (the pantry-tracker project) uses <b>Next.js + PostgreSQL/pgvector + MongoDB</b>, not plain MERN. Short version: keep it that way — you'd be trading down on two fronts to "match" MERN exactly.</p>
+    <table class="cmp">
+      <tr><th>Piece</th><th>Full MERN</th><th>Your stack</th><th>Verdict</th></tr>
+      <tr>
+        <td>Frontend</td><td>React (separate SPA)</td><td>React via Next.js</td>
+        <td>Next.js = React + built-in routing/SSR. No downgrade — same skill, less boilerplate, matches your SAM IT experience.</td>
+      </tr>
+      <tr>
+        <td>Backend</td><td>Express (separate server)</td><td>Next.js API routes</td>
+        <td>Next.js API routes replace most of what Express does. One deploy target (Vercel) instead of two.</td>
+      </tr>
+      <tr>
+        <td>Primary DB</td><td>MongoDB only</td><td>PostgreSQL + pgvector</td>
+        <td><b>Don't drop this.</b> pgvector is what makes the RAG recipe-recommendation pipeline possible — your strongest AI-engineering story.</td>
+      </tr>
+      <tr>
+        <td>Secondary DB</td><td>—</td><td>MongoDB (community recipes)</td>
+        <td>Kept — genuine fit for variable-shaped documents, not forced.</td>
+      </tr>
+    </table>
+    <p class="muted" style="font-size:13px">Worth doing anyway: get comfortable writing raw Express routes and real MongoDB queries/aggregations at some point (a small standalone exercise, not a rebuild of Larder) — it makes "what is Next.js doing for me" an easy interview answer, and deepens the Mongo half of your stack for real.</p>
+  </div>
+
+  <div class="card" id="ai-concepts">
+    <h2>AI Engineering Concepts (for Larder + interviews)</h2>
+
+    <h3>Structured output / schema-constrained generation</h3>
+    <p>Instead of asking an LLM for free text and hoping it's parseable, you give it a JSON schema (or use function-calling) and it returns data in that exact shape. This is the first AI skill Larder's recipe-scan feature is built around — more reliable than prompting for "nice formatting" and asking your code to guess at parsing it.</p>
+
+    <h3>Vision / multimodal prompting</h3>
+    <p>Sending an image (a recipe card, a fridge photo) to a multimodal LLM alongside a text prompt, and combining it with structured output to get clean data back (ingredients, quantities, detected items).</p>
+
+    <h3>Embeddings</h3>
+    <p>A way of converting text (a recipe, a query) into a vector of numbers such that similar meanings end up close together in that vector space. This is what makes "find recipes similar to what I have" possible without exact keyword matching.</p>
+
+    <h3>Vector search / pgvector</h3>
+    <p>Once everything is embedded, you can search by <i>similarity</i> (cosine distance) instead of exact match. pgvector adds this capability directly inside PostgreSQL, so you don't need a separate vector database for a project this size.</p>
+
+    <h3>RAG (Retrieval-Augmented Generation)</h3>
+    <p>The pattern behind Larder's recipe recommendations: <b>retrieve</b> relevant candidates first (via vector similarity search over your recipe corpus), <b>then generate</b> — have the LLM adapt/rank/explain those real, retrieved recipes rather than hallucinating one from scratch. This is meaningfully more than "call an API and print the answer," and it's the concept to lead with when asked about AI work.</p>
+
+    <h3>Tool-calling / agentic workflows</h3>
+    <p>Letting an LLM call your own functions (e.g. "search pantry," "search recipes") instead of guessing at data. The model decides which tool to call and with what arguments; your code executes it and returns the result. This is the mechanism behind Larder's planned chat assistant.</p>
+
+    <h3>Knowing when <i>not</i> to use AI</h3>
+    <p>Expiration-window lookups and grocery-list diffing in Larder are both deterministic (a rules table, a set difference) — no LLM involved. Explicitly choosing not to use AI where it isn't needed is itself a signal worth naming in an interview.</p>
+  </div>
+
+  <div class="card" id="mcp">
+    <h2>MCP — Model Context Protocol</h2>
+    <p>An open standard (from Anthropic, now broadly adopted) for connecting an LLM to external tools and data sources in a consistent way. Instead of every app hand-rolling its own tool-calling integration, an MCP <i>server</i> exposes a set of tools/resources, and any MCP-compatible client (Claude, other agent frameworks) can connect to it the same way.</p>
+    <p class="muted" style="font-size:13px">Where this fits Larder: the planned chat assistant's tools ("search pantry," "search recipes," "get expiring items") could be exposed as an actual MCP server instead of hand-rolled function-calling — a more current, more legible resume line. Lower priority than the core RAG pipeline — add once that's solid, not before.</p>
+  </div>
+
+  <div class="card" id="glossary">
+    <h2>Quick glossary</h2>
+    <p><b>REST API</b> — a convention for structuring web APIs around resources and HTTP verbs (GET/POST/PUT/DELETE).</p>
+    <p><b>ORM (e.g. Prisma)</b> — a library that lets you query a relational database using code/objects instead of raw SQL.</p>
+    <p><b>SSR (Server-Side Rendering)</b> — generating HTML on the server per-request, instead of shipping a blank page and building it entirely in the browser. One of the things Next.js gives you over a plain React SPA.</p>
+    <p><b>PWA (Progressive Web App)</b> — a website that can be installed like an app and access device features (camera, push notifications) via the browser, no app-store review needed.</p>
+    <p><b>Cosine similarity</b> — a way of measuring how "close" two vectors point, used to compare embeddings.</p>
+  </div>
+
+  <div class="footer">Last updated alongside the Larder / pantry-tracker planning discussion in the Resume project. Ask Claude to add a new topic here whenever a project introduces something new worth understanding deeply.</div>
+</div>
+</body>
+</html>
