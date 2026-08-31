@@ -8,7 +8,7 @@
   :root{
     --bg:#0f1720; --panel:#16212e; --panel2:#1d2b3a; --ink:#e8eef5; --muted:#9fb0c3;
     --line:#2b3c50; --green:#159957; --green-d:#0f7a44; --red:#c0392b; --amber:#d68910;
-    --blue:#2e86de; --accent:#5ad19a; --heap:#8e44ad; --stack:#2e86de;
+    --blue:#2e86de; --accent:#5ad19a; --purple:#a45deb; --dir:#5aa9f0;
     --brand:#159957; --brand-d:#0f7a44;
   }
   *{box-sizing:border-box}
@@ -22,7 +22,6 @@
   .lesson-bar button{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);
     padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700}
   .lesson-bar button.active{background:#fff;color:var(--brand-d)}
-  .lesson-bar button:disabled{opacity:.45;cursor:not-allowed}
   .progress-wrap{max-width:1150px;margin:10px auto 0;background:rgba(255,255,255,.15);border-radius:8px;height:7px;overflow:hidden}
   .progress-bar{height:100%;background:#fff;width:0;transition:width .3s}
   .progress-txt{font-size:11px;opacity:.9;margin-top:4px;max-width:1150px;margin-left:auto;margin-right:auto}
@@ -44,13 +43,14 @@
   .concept b{color:var(--accent)}
   .warn{background:rgba(214,137,16,.12);border-left:4px solid var(--amber);border-radius:8px;padding:12px 16px;margin:12px 0;font-size:14px}
   .warn b{color:var(--amber)}
+  .danger{background:rgba(192,57,43,.14);border-left:4px solid var(--red);border-radius:8px;padding:12px 16px;margin:12px 0;font-size:14px}
+  .danger b{color:#ff8b7a}
   code,pre{font-family:"SF Mono",Menlo,Consolas,monospace}
   code{background:#0b1119;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:12.5px}
   pre{background:#0b1119;border:1px solid var(--line);border-radius:8px;padding:14px;overflow-x:auto;font-size:13px;
-    line-height:1.5;position:relative}
+    line-height:1.5}
   pre code{background:none;border:none;padding:0;font-size:13px}
-  pre .ln{color:#54687e;user-select:none;display:inline-block;width:22px;text-align:right;margin-right:12px}
-  .kw{color:#ff7b72}.ty{color:#79c0ff}.st{color:#a5d6ff}.cm{color:#8b949e;font-style:italic}.fn{color:#d2a8ff}.nm{color:#ffa657}
+  .kw{color:#ff7b72}.ty{color:#79c0ff}.st{color:#a5d6ff}.cm{color:#8b949e;font-style:italic}.fn{color:#d2a8ff}.nm{color:#ffa657}.pp{color:#f0883e}
   .q{margin:14px 0}
   .q .prompt{font-weight:600;margin-bottom:8px}
   .q .prompt .tag{font-size:11px;background:var(--panel2);color:var(--muted);border:1px solid var(--line);
@@ -76,7 +76,7 @@
   .reveal{display:none;margin-top:10px}
   .reveal.show{display:block}
   .fillblank{display:inline-block;width:180px;margin:0 4px}
-  .fillblank.sm{width:120px}.fillblank.lg{width:340px}
+  .fillblank.sm{width:120px}
   .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
   .step-desc{background:var(--panel2);border-radius:8px;padding:10px 14px;font-size:14px;margin-top:12px;min-height:44px}
   .step-desc b{color:var(--accent)}
@@ -87,63 +87,78 @@
   .match-term{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;font-weight:600;font-size:14px}
   .match-def{width:100%}
   table.cmp{width:100%;border-collapse:collapse;margin:4px 0 12px;font-size:14px}
-  table.cmp th,table.cmp td{border:1px solid var(--line);padding:8px 10px;text-align:left}
+  table.cmp th,table.cmp td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
   table.cmp th{background:var(--panel2);font-weight:700}
   table.cmp code{white-space:nowrap}
   .ma-item{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--line);
     border-radius:8px;padding:10px 12px;margin:6px 0;font-size:14px}
+  .ma-item input{width:auto}
   footer{text-align:center;color:var(--muted);font-size:12px;padding:30px}
   kbd{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:12px}
   .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:780px){.two{grid-template-columns:1fr}}
+  .two-wide{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+  @media(max-width:820px){.two,.two-wide{grid-template-columns:1fr}}
 
-  /* ---------- string memory strip (Reading 02 widget) ---------- */
-  .strip{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
-  .cell{width:52px;height:58px;border-radius:8px;border:1px solid var(--line);background:#0b1119;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:"SF Mono",monospace;font-size:15px}
-  .cell .idx{font-size:10px;color:#54687e;margin-top:3px}
-  .cell.chr{border-color:var(--brand);background:rgba(21,153,87,.16)}
-  .cell.nul{border-color:var(--amber);background:rgba(214,137,16,.18);color:var(--amber);font-weight:700}
-  .cell.junk{border-color:var(--line);color:#54687e}
-  .cell.read{box-shadow:0 0 0 2px var(--accent) inset}
-  .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:6px}
-  .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-  .legend .l-chr::before{background:rgba(21,153,87,.7)}
-  .legend .l-nul::before{background:rgba(214,137,16,.8)}
-  .legend .l-junk::before{background:#39485c}
+  /* ---------- terminal / shell simulator (Lesson 1) ---------- */
+  .term{background:#0b0f14;border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+    font-family:"SF Mono",Menlo,monospace;font-size:13px;line-height:1.55;height:320px;overflow-y:auto;white-space:pre-wrap}
+  .term .ps{color:var(--accent)}
+  .term .cmdline{color:var(--ink)}
+  .term .err{color:#ff8b7a}
+  .term .dirout{color:var(--dir)}
+  .term-input{display:flex;align-items:center;gap:8px;margin-top:8px}
+  .term-input span{color:var(--accent);font-family:"SF Mono",Menlo,monospace;font-size:13px;white-space:nowrap}
+  .term-input input{flex:1}
+  .tree{background:#0b1119;border:1px solid var(--line);border-radius:10px;padding:14px;
+    font-family:"SF Mono",Menlo,monospace;font-size:12.5px;line-height:1.7;height:320px;overflow:auto;white-space:pre}
+  .tree .d{color:var(--dir);font-weight:700}
+  .tree .f{color:var(--muted)}
+  .tree .cwd{background:rgba(164,93,235,.35);border-radius:4px;padding:0 4px;color:#fff;font-weight:700}
+  .tree .hid{color:#54687e;font-style:italic}
 
-  /* ---------- fd / redirection diagram ---------- */
-  .fdbox{background:#0b1119;border:1px solid var(--line);border-radius:10px;padding:16px;margin-top:12px}
-  .fdrow{display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;align-items:center;margin:10px 0;font-size:13px}
-  .fdtag{font-family:"SF Mono",monospace;font-weight:700;padding:7px 10px;border-radius:8px;text-align:center;border:1px solid var(--line)}
-  .fd0{color:var(--blue);border-color:var(--blue);background:rgba(46,134,222,.12)}
-  .fd1{color:var(--green);border-color:var(--green);background:rgba(21,153,87,.14)}
-  .fd2{color:var(--red);border-color:var(--red);background:rgba(192,57,43,.14)}
-  .arrow{color:var(--muted);text-align:center;font-family:"SF Mono",monospace}
-  .dest{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-family:"SF Mono",monospace}
-  .dest.changed{border-color:var(--accent);color:var(--accent)}
+  /* ---------- bit / byte strip (Lessons 0 & 2) ---------- */
+  .bits{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+  .bit{width:44px;height:56px;border-radius:8px;border:1px solid var(--line);background:#0b1119;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:"SF Mono",monospace;font-size:17px;
+    transition:.12s;color:var(--muted)}
+  .bit.on{border-color:var(--brand);background:rgba(21,153,87,.2);color:var(--accent);font-weight:700}
+  .bit .pv{font-size:9px;color:#54687e;margin-top:3px}
+  .readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+  .ro{background:#0b1119;border:1px solid var(--line);border-radius:8px;padding:10px 12px;text-align:center}
+  .ro .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .ro .val{font-family:"SF Mono",monospace;font-size:20px;color:var(--accent);margin-top:4px;word-break:break-all}
+
+  /* ---------- compile pipeline (Lesson 2) ---------- */
+  .pipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0}
+  .stage{background:#0b1119;border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center;font-size:13px;transition:.2s}
+  .stage.on{border-color:var(--brand);background:rgba(21,153,87,.14)}
+  .stage .t{font-weight:700;color:var(--accent);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+  .stage .s{font-family:"SF Mono",monospace;font-size:11px;color:var(--muted);margin-top:6px}
 </style>
 </head>
 <body>
 <header>
   <p style="margin:0 0 6px;font-size:13px"><a href="../course.html" style="color:#cfe8db;text-decoration:none">&larr; COMP 211 course page</a> &nbsp;&middot;&nbsp; <a href="../../../index.html" style="color:#cfe8db;text-decoration:none">Study Hub</a></p>
   <h1>COMP211 &middot; Systems Fundamentals — Study Guide</h1>
-  <p>Active-recall review + interactive diagrams &middot; built reading by reading</p>
+  <p>Fall 2026 &middot; Connor McMahon &middot; built lecture by lecture from the slides and readings</p>
   <div class="lesson-bar">
-    <button data-l="r01" class="active" onclick="showLesson('r01',this)">Reading 01 &middot; C Basics, printf, Conditionals &amp; Arrays</button>
-    <button data-l="r02" onclick="showLesson('r02',this)">Reading 02 &middot; C Strings, I/O Redirection &amp; Pipes</button>
+    <button data-l="l0" onclick="showLesson('l0',this)">Lesson 0 &middot; Welcome &amp; Binary</button>
+    <button data-l="l1" class="active" onclick="showLesson('l1',this)">Lesson 1 &middot; Unix Basics</button>
+    <button data-l="l2" onclick="showLesson('l2',this)">Lesson 2 &middot; Intro to C</button>
   </div>
   <div class="progress-wrap"><div class="progress-bar" id="pbar"></div></div>
   <div class="progress-txt" id="ptxt">0 items answered</div>
 </header>
 
-<div class="lesson active" id="r01"></div>
-<div class="lesson" id="r02"></div>
+<div class="lesson" id="l0"></div>
+<div class="lesson active" id="l1"></div>
+<div class="lesson" id="l2"></div>
 
-<footer>COMP 211 &middot; Systems Fundamentals — study guide. Sources: <i>Dive into Systems</i> &sect;16.1&ndash;16.3 &amp; 16.5 (C basics, I/O, conditionals, arrays &amp; strings), &sect;17.12 (I/O redirection), &sect;17.13 (pipes).</footer>
+<footer>COMP 211 &middot; Systems Fundamentals. Built from CL00 Welcome, CL01 Unix Basics, CL02 Intro to C, and <i>Dive into Systems</i> &sect;16.1&ndash;16.3, &sect;16.5, &sect;17.1.</footer>
 
-<script src="COMP211_Study_Guide_R01.js"></script>
-<script src="COMP211_Study_Guide_R02.js"></script>
+<script src="COMP211_Study_Guide_L0.js"></script>
+<script src="COMP211_Study_Guide_L1.js"></script>
+<script src="COMP211_Study_Guide_L2.js"></script>
 <script src="COMP211_Study_Guide.js"></script>
 </body>
 </html>

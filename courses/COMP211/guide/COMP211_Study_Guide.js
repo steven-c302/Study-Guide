@@ -137,6 +137,7 @@ function checkMulti(btn) {
 }
 
 /* ================= INIT ================= */
-if (typeof initR01 === 'function') initR01();
-if (typeof initR02 === 'function') initR02();
+['initL0','initL1','initL2','initL3','initL4','initL5','initL6','initL7','initL8'].forEach(function (fn) {
+  if (typeof window[fn] === 'function') window[fn]();
+});
 updateProgress();

@@ -7,7 +7,7 @@ A single, offline hub for all of Steven's courses — interactive study guides, 
 - Open **`index.html`** → the homepage shows a card for every course.
 - Click a course → its page has tabs for **Overview**, **Study Guide**, **Lectures**, **Past Exams**, and **Notes & Resources**.
 - The **COMP 210** study guide is fully built (Lessons 1–21, Final Prep, and 4 real quizzes + 5 practice exams).
-- The **COMP 211** study guide has started: **Reading 01** (C basics, `printf`, conditionals, arrays) and **Reading 02** (C strings, I/O redirection, pipes) — interactive labs plus every handout question graded.
+- The **COMP 211** study guide is being built lecture by lecture (Fall 2026): Lessons 0–2 cover the welcome deck, Unix basics, and intro to C — with a working shell simulator, a compilation-pipeline stepper, and bit/ASCII labs.
 - COMP 301 and STOR 155 start with an empty study guide you grow over the term.
 
 ## Structure
