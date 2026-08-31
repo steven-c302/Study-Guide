@@ -20,6 +20,18 @@ Fall 2026 · Connor McMahon. Open **`index.html`** in any browser. No server, no
 
 **74 graded items** across the three lessons.
 
+## Grading behaviour
+
+The engine deliberately **never reveals a correct answer when you get one wrong**:
+
+- A wrong choice is marked red and taken out of play; every other option stays live and you try again. The feedback says only how many options remain.
+- The explanation is stashed on load (`fb._explain`) and the `.fb` starts empty, so nothing leaks before it is earned. It appears only when you answer correctly — with the attempt count if it took more than one — or when you press **Reveal answer**.
+- Every question grows a control row on first attempt: **↻ Try again** (clears marks, inputs, checkboxes, feedback, and re-arms the options) and **Reveal answer**.
+- Fill-in and matching report *how many* are right without saying which answer is correct; wrong multiple-select boxes reveal nothing at all, just a count.
+- Progress counts a question only once it is answered **correctly**. Revealing does not count, and Try again removes it from the tally.
+
+These controls are injected by the engine, so **lesson modules need no changes** to get them.
+
 ## Engine API (available to every module)
 
 - `showLesson(id, btn)` / `showTopic(btn, sectionId)` — navigation
