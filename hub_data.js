@@ -36,6 +36,13 @@ window.HUB = {
       guide: true
     },
     {
+      code: "INLS 382", slug: "INLS382",
+      title: "Systems Analysis",
+      credits: 3, term: "Fall 2026", color: "#c2410c",
+      desc: "Analysis of organizational problems and how information systems can be designed to solve those problems, taught via Soft Systems Methodology (SSM): worldview, purposeful activity models, rich pictures, and the SSM learning cycle. Application of database and interface design principles to the implementation of information systems.",
+      guide: true
+    },
+    {
       code: "LEETCODE", slug: "LEETCODE",
       title: "LeetCode / NeetCode Pro",
       credits: 0, term: "Ongoing", color: "#f5a623",

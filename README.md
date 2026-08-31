@@ -8,6 +8,7 @@ A single, offline hub for all of Steven's courses — interactive study guides, 
 - Click a course → its page has tabs for **Overview**, **Study Guide**, **Lectures**, **Past Exams**, and **Notes & Resources**.
 - The **COMP 210** study guide is fully built (Lessons 1–21, Final Prep, and 4 real quizzes + 5 practice exams).
 - The **COMP 211** study guide is being built lecture by lecture (Fall 2026): Lessons 0–2 cover the welcome deck, Unix basics, and intro to C — with a working shell simulator, a compilation-pipeline stepper, and bit/ASCII labs.
+- The **INLS 382** study guide is being built meeting by meeting (Fall 2026): Lesson 1 covers problematical situations, worldview, purposeful activity models, the SSM learning cycle, and a rich-picture preview, from Checkland & Poulter's *Learning for Action*.
 - COMP 301 and STOR 155 start with an empty study guide you grow over the term.
 
 ## Structure
@@ -26,7 +27,7 @@ courses/
     materials/
       lectures/       ← lecture slides/notes (PDFs, etc.)
       exams/          ← past exams & quizzes (PDFs)
-  COMP211/  COMP301/  STOR155/   ← same layout; guides to be built
+  COMP211/  COMP301/  STOR155/  INLS382/   ← same layout; guides to be built
   _TEMPLATE/          ← copy this to start a new course
 ```
 
@@ -69,4 +70,4 @@ To add materials to the **hosted** copy, upload the file to the repo on github.c
 Ask Claude: *"Add Lesson 1 for COMP 211"* and upload the lecture slides (and any quiz). Claude builds an interactive lesson module (active-recall questions, code exercises, diagrams) into that course's `guide/`, the same way COMP 210 was built.
 
 ---
-*Courses set up: COMP 210 (Data Structures & Algorithms), COMP 211 (Systems Fundamentals), COMP 301 (Foundations of Programming), STOR 155 (Data Models & Inference).*
+*Courses set up: COMP 210 (Data Structures & Algorithms), COMP 211 (Systems Fundamentals), COMP 301 (Foundations of Programming), STOR 155 (Data Models & Inference), INLS 382 (Systems Analysis).*
