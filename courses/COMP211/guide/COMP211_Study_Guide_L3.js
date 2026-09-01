@@ -517,7 +517,7 @@ document.getElementById('l3').innerHTML = `
     </div>
     <div class="q" data-fill="1">
       <div class="prompt"><span class="tag">Q3 &middot; Fill in the blank</span>Which <code>wc</code> flag counts lines of input?</div>
-      <input class="fillblank sm" data-answer="-l|wc -l">
+      <input class="fillblank sm" data-answer="-l~~~wc -l">
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb"><code>wc -l</code> counts lines; <code>-w</code> counts words, <code>-c</code> counts characters/bytes.</div>
     </div>

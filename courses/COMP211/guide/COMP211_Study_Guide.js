@@ -87,7 +87,10 @@ document.querySelectorAll('.q').forEach(q => {
 
 /* ================= FILL IN THE BLANK ================= */
 function gradeInput(inp) {
-  const alts = inp.dataset.answer.toLowerCase().split('|').map(s => s.trim().replace(/\s+/g, ' '));
+  /* '~~~' separates multiple ACCEPTED alternative answers. It is NOT '|',
+     because several correct commands contain a literal shell pipe character
+     and splitting on '|' would truncate them (e.g. "cat f | ./prog"). */
+  const alts = inp.dataset.answer.toLowerCase().split('~~~').map(s => s.trim().replace(/\s+/g, ' '));
   const val = inp.value.trim().toLowerCase().replace(/\s+/g, ' ');
   const ok = alts.indexOf(val) !== -1;
   inp.style.borderColor = val === '' ? 'var(--line)' : (ok ? 'var(--green)' : 'var(--red)');
@@ -218,10 +221,23 @@ function qGiveUp(btn) {
       i.style.borderColor = b.checked ? 'var(--green)' : 'var(--line)';
     });
   } else {
+    const answers = [];
     scope.querySelectorAll('.fillblank').forEach(i => {
-      i.value = i.dataset.answer.split('|')[0];
+      const first = i.dataset.answer.split('~~~')[0];
+      i.value = first;
       i.style.borderColor = 'var(--amber)';
+      answers.push(first);
     });
+    /* Make the literal correct command visible in the explanation text too —
+       the input box alone can be too narrow/easy to miss, especially for
+       long piped/redirected commands. */
+    const fb = scope.querySelector('.fb');
+    if (fb && answers.length) {
+      fbInit(fb);
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const code = answers.map(a => '<code>' + esc(a) + '</code>').join(', ');
+      fb._explain = code + (fb._explain ? ' &mdash; ' + fb._explain : '');
+    }
   }
   fbReveal(scope.querySelector('.fb'));
   qShowControls(scope);

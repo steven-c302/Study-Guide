@@ -289,7 +289,7 @@ document.getElementById('l5').innerHTML = `
     </div>
     <div class="q" data-fill="1">
       <div class="prompt"><span class="tag">Fill in the blank</span>Write a <code>find</code> command that recursively searches from the current directory (<code>.</code>) for any file whose name ends in <code>.c</code>.</div>
-      <input class="fillblank" data-answer="find . -name &quot;*.c&quot;|find . -name '*.c'|find ./ -name &quot;*.c&quot;|find ./ -name '*.c'">
+      <input class="fillblank" data-answer="find . -name &quot;*.c&quot;~~~find . -name '*.c'~~~find ./ -name &quot;*.c&quot;~~~find ./ -name '*.c'">
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb"><code>find . -name "*.c"</code> &mdash; <code>.</code> (or <code>./</code>) as the search root, <code>-name</code> with a glob pattern. Single or double quotes around the pattern both work.</div>
     </div>
@@ -356,7 +356,7 @@ document.getElementById('l5').innerHTML = `
     </div>
     <div class="q" data-fill="1">
       <div class="prompt"><span class="tag">Fill in the blank</span>Write a <code>grep</code> (extended, <code>-E</code>) command that prints lines from <code>users.txt</code> starting with a lowercase letter and ending in exactly 2 or 3 digits.</div>
-      <input class="fillblank" data-answer="grep -e &quot;^[a-z].*[0-9]{2,3}$&quot; users.txt|grep -E &quot;^[a-z].*[0-9]{2,3}$&quot; users.txt|grep -E '^[a-z].*[0-9]{2,3}$' users.txt|grep -e '^[a-z].*[0-9]{2,3}$' users.txt">
+      <input class="fillblank" data-answer="grep -e &quot;^[a-z].*[0-9]{2,3}$&quot; users.txt~~~grep -E &quot;^[a-z].*[0-9]{2,3}$&quot; users.txt~~~grep -E '^[a-z].*[0-9]{2,3}$' users.txt~~~grep -e '^[a-z].*[0-9]{2,3}$' users.txt">
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb">Something like <code>grep -E "^[a-z].*[0-9]{2,3}$" users.txt</code> &mdash; anchors at both ends, <code>[a-z]</code> for the first character, and <code>[0-9]{2,3}</code> for 2&ndash;3 trailing digits.</div>
     </div>
@@ -418,7 +418,7 @@ document.getElementById('l5').innerHTML = `
     </div>
     <div class="q" data-fill="1">
       <div class="prompt"><span class="tag">Q7 &middot; Fill in the blank</span>Write a <code>find</code> command that searches recursively under <code>./src</code> for files named exactly <code>main.c</code>.</div>
-      <input class="fillblank" data-answer="find ./src -name &quot;main.c&quot;|find ./src -name 'main.c'">
+      <input class="fillblank" data-answer="find ./src -name &quot;main.c&quot;~~~find ./src -name 'main.c'">
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb"><code>find ./src -name "main.c"</code> — search root first, then <code>-name</code> with the glob pattern (a literal name is also a valid glob).</div>
     </div>

@@ -252,14 +252,14 @@ document.getElementById('l0').innerHTML = `
     Type the four binary digits for each — no <code>0b</code> prefix needed.</p>
     <div class="q">
       <p style="line-height:2.4">
-        8 = <input type="text" class="fillblank sm" data-answer="1000|0b1000" placeholder="????" style="width:90px">
-        &nbsp; 9 = <input type="text" class="fillblank sm" data-answer="1001|0b1001" placeholder="????" style="width:90px">
-        &nbsp; 10 = <input type="text" class="fillblank sm" data-answer="1010|0b1010" placeholder="????" style="width:90px">
-        &nbsp; 11 = <input type="text" class="fillblank sm" data-answer="1011|0b1011" placeholder="????" style="width:90px"><br>
-        12 = <input type="text" class="fillblank sm" data-answer="1100|0b1100" placeholder="????" style="width:90px">
-        &nbsp; 13 = <input type="text" class="fillblank sm" data-answer="1101|0b1101" placeholder="????" style="width:90px">
-        &nbsp; 14 = <input type="text" class="fillblank sm" data-answer="1110|0b1110" placeholder="????" style="width:90px">
-        &nbsp; 15 = <input type="text" class="fillblank sm" data-answer="1111|0b1111" placeholder="????" style="width:90px">
+        8 = <input type="text" class="fillblank sm" data-answer="1000~~~0b1000" placeholder="????" style="width:90px">
+        &nbsp; 9 = <input type="text" class="fillblank sm" data-answer="1001~~~0b1001" placeholder="????" style="width:90px">
+        &nbsp; 10 = <input type="text" class="fillblank sm" data-answer="1010~~~0b1010" placeholder="????" style="width:90px">
+        &nbsp; 11 = <input type="text" class="fillblank sm" data-answer="1011~~~0b1011" placeholder="????" style="width:90px"><br>
+        12 = <input type="text" class="fillblank sm" data-answer="1100~~~0b1100" placeholder="????" style="width:90px">
+        &nbsp; 13 = <input type="text" class="fillblank sm" data-answer="1101~~~0b1101" placeholder="????" style="width:90px">
+        &nbsp; 14 = <input type="text" class="fillblank sm" data-answer="1110~~~0b1110" placeholder="????" style="width:90px">
+        &nbsp; 15 = <input type="text" class="fillblank sm" data-answer="1111~~~0b1111" placeholder="????" style="width:90px">
       </p>
       <button class="btn small" onclick="checkFillGroup(this)">Check all</button>
       <div class="fb">Answers: <b>1000, 1001, 1010, 1011, 1100, 1101, 1110, 1111</b>. Every one of these

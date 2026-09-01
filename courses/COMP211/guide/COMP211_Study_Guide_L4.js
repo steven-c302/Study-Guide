@@ -421,7 +421,7 @@ document.getElementById('l4').innerHTML = `
     </div>
     <div class="q" data-fill="1">
       <div class="prompt"><span class="tag">Q9 &middot; Fill in the blank</span>On this architecture, a pointer &mdash; regardless of what it points to &mdash; is always how many bytes?</div>
-      <input class="fillblank sm" data-answer="8|8 bytes">
+      <input class="fillblank sm" data-answer="8~~~8 bytes">
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb">All pointers are 8 bytes: an address, not the data itself.</div>
     </div>

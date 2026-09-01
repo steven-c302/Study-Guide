@@ -251,13 +251,13 @@ document.getElementById('l6').innerHTML = `
     <h3 style="margin-top:0">Creating vs. appending</h3>
     <div class="q" data-fill="1">
       <div class="prompt"><span class="tag">Fill in the blank</span>Create <code>feed.txt</code> containing exactly the line <code>warmup ready</code>.</div>
-      <input class="fillblank" data-answer="echo &quot;warmup ready&quot; &gt; feed.txt|echo 'warmup ready' &gt; feed.txt">
+      <input class="fillblank" data-answer="echo &quot;warmup ready&quot; &gt; feed.txt~~~echo 'warmup ready' &gt; feed.txt">
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb"><code>&gt;</code> creates the file (or overwrites it if it exists) with exactly that content.</div>
     </div>
     <div class="q" data-fill="1">
       <div class="prompt"><span class="tag">Fill in the blank</span>Now <b>append</b> the line <code>ready for review</code> to the end of <code>feed.txt</code> &mdash; without destroying what's already there.</div>
-      <input class="fillblank" data-answer="echo &quot;ready for review&quot; &gt;&gt; feed.txt|echo 'ready for review' &gt;&gt; feed.txt">
+      <input class="fillblank" data-answer="echo &quot;ready for review&quot; &gt;&gt; feed.txt~~~echo 'ready for review' &gt;&gt; feed.txt">
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb"><code>&gt;&gt;</code> appends. Using <code>&gt;</code> here would erase <code>warmup ready</code> entirely.</div>
     </div>
@@ -303,7 +303,7 @@ document.getElementById('l6').innerHTML = `
     </div>
     <div class="q" data-fill="1">
       <div class="prompt"><span class="tag">Fill in the blank</span>Run <code>./parser</code> with stdin from <code>data.txt</code>, stdout to <code>good.txt</code>, and stderr to <code>bad.txt</code>.</div>
-      <input class="fillblank" data-answer="./parser &lt; data.txt &gt; good.txt 2&gt; bad.txt|./parser &gt; good.txt &lt; data.txt 2&gt; bad.txt|./parser 2&gt; bad.txt &lt; data.txt &gt; good.txt|./parser &lt; data.txt 2&gt; bad.txt &gt; good.txt|./parser &gt; good.txt 2&gt; bad.txt &lt; data.txt|./parser 2&gt; bad.txt &gt; good.txt &lt; data.txt">
+      <input class="fillblank" data-answer="./parser &lt; data.txt &gt; good.txt 2&gt; bad.txt~~~./parser &gt; good.txt &lt; data.txt 2&gt; bad.txt~~~./parser 2&gt; bad.txt &lt; data.txt &gt; good.txt~~~./parser &lt; data.txt 2&gt; bad.txt &gt; good.txt~~~./parser &gt; good.txt 2&gt; bad.txt &lt; data.txt~~~./parser 2&gt; bad.txt &gt; good.txt &lt; data.txt">
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb">All six orderings of <code>&lt; data.txt</code>, <code>&gt; good.txt</code>, <code>2&gt; bad.txt</code> are equivalent &mdash; order among redirections doesn't matter, only which operator pairs with which stream.</div>
     </div>
@@ -464,7 +464,7 @@ document.getElementById('l6').innerHTML = `
     <h3 style="margin-top:0">Cleanup &mdash; <code>rm -rf</code> and its danger</h3>
     <div class="q" data-fill="1">
       <div class="prompt"><span class="tag">Fill in the blank</span>You're inside <code>cli-warmup</code>. Step out of it, then remove the <code>cli-warmup</code> directory and everything inside it.</div>
-      <input class="fillblank" data-answer="cd .. &amp;&amp; rm -rf cli-warmup|cd ..; rm -rf cli-warmup">
+      <input class="fillblank" data-answer="cd .. &amp;&amp; rm -rf cli-warmup~~~cd ..; rm -rf cli-warmup">
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb">You can't remove your own current working directory, so <code>cd ..</code> first. <code>-r</code> handles the directory's contents; <code>-f</code> suppresses per-file confirmation prompts.</div>
     </div>
