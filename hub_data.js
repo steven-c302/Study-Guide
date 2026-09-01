@@ -43,6 +43,13 @@ window.HUB = {
       guide: true
     },
     {
+      code: "COMP 227", slug: "COMP227",
+      title: "Effective Peer Teaching in Computer Science",
+      credits: 3, term: "Fall 2026", color: "#be185d",
+      desc: "Trains undergraduates already holding a UTA position to tutor/mentor peers: pedagogy concepts, effective tutoring practices, and building accessible, inclusive, diverse learning environments.",
+      guide: true
+    },
+    {
       code: "LEETCODE", slug: "LEETCODE",
       title: "LeetCode / NeetCode Pro",
       credits: 0, term: "Ongoing", color: "#f5a623",
