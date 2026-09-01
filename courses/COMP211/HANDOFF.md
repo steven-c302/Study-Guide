@@ -29,14 +29,20 @@ courses/COMP211/
     COMP211_Study_Guide_L0.js   ← CL00 Welcome + binary
     COMP211_Study_Guide_L1.js   ← CL01 Unix Basics + RD00 (shell simulator)
     COMP211_Study_Guide_L2.js   ← CL02 Intro to C + RD01 (pipeline + bits labs)
+    COMP211_Study_Guide_L3.js   ← CL03 IO Redirection and Strings + RD02
+    COMP211_Study_Guide_L4.js   ← CL04 Function Stack Frames + RD03
+    COMP211_Study_Guide_L5.js   ← Unix Basics (FA26): $PATH, globbing, regex, find, grep
+    COMP211_Study_Guide_L6.js   ← Checkoff 1 Prep: CLI practical (drill, from a released sample checkoff)
     COMP211_Study_Guide.js      ← shared engine, MUST load last
     README.md                   ← engine API + authoring rules — read this first
 ```
 
 ## Current status
 
-Lessons **0, 1, 2** are complete — 74 graded items, three interactive labs plus a full shell simulator, every
-in-class active-learning problem worked through, and self-checks for RD00 and RD01. Nothing past CL02 exists yet.
+Lessons **0–5** plus a **Checkoff 1 Prep (CLI practical)** module are complete — 184 graded items,
+interactive labs (shell simulator, compilation pipeline, bits/ASCII), every in-class active-learning problem
+worked through, self-checks for RD00–RD03, and a drill module built from a released sample checkoff. Nothing
+past Checkoff 1 Prep exists yet.
 
 ## Adding a lecture
 

@@ -13,7 +13,7 @@ window.COURSE = {
   exams: [],
   notes: [
     { title: "Study guide — what's in it so far",
-      body: "<b>Lessons 0&ndash;2</b> are built from the Week 1 slides: <b>CL00 Welcome</b> (course structure, policies, binary &amp; bases), <b>CL01 Unix Basics</b> (terminal vs shell vs CLI, the file system tree, paths, commands) with the <b>RD00</b> self-check, and <b>CL02 Intro to C</b> (compiling &amp; assembling, gcc, types, printf, ASCII, getchar/EOF) with the <b>RD01</b> self-check. 74 graded items, every in-class problem worked through, plus a working <b>shell simulator</b>, a <b>compilation pipeline stepper</b>, and two <b>bit/ASCII labs</b>. Open the <b>Study Guide</b> tab." },
+      body: "<b>Lessons 0&ndash;5</b> are built so far: <b>CL00 Welcome</b> (course structure, policies, binary &amp; bases), <b>CL01 Unix Basics</b> (terminal vs shell vs CLI, the file system tree, paths, commands) with the <b>RD00</b> self-check, <b>CL02 Intro to C</b> (compiling &amp; assembling, gcc, types, printf, ASCII, getchar/EOF) with the <b>RD01</b> self-check, <b>CL03 IO Redirection and Strings</b> (arrays, #define, redirection, pipes, C strings) with the <b>RD02</b> self-check, <b>CL04 Function Stack Frames</b> (stack frames, stdint.h types, pass-by-value vs pass-by-pointer, array passing) with the <b>RD03</b> self-check, and a later <b>Unix Basics (FA26)</b> lecture on <b>$PATH, globbing, regex, find, and grep</b>. Plus a <b>Checkoff 1 Prep</b> module &mdash; a CLI practical drill built from a released sample checkoff, with logistics, a 24-task worked walkthrough, and a fresh command-typing drill. 184 graded items, every in-class problem worked through, plus a working <b>shell simulator</b>, a <b>compilation pipeline stepper</b>, and bit/ASCII labs. Open the <b>Study Guide</b> tab." },
     { title: "Key dates",
       body: "<b>Final exam</b> &mdash; Section 1: Tuesday, December 8, 2026, 8&ndash;11 AM &middot; Section 2: Saturday, December 5, 2026, 4&ndash;7 PM. Quiz dates are posted on Canvas. Readings are due <b>10:00 AM on the day of class</b>." },
     { title: "Honor code reminder",
@@ -26,7 +26,10 @@ window.COURSE = {
     { title: "Dive into Systems — Getting Started in C (§16.1)", url: "https://diveintosystems.org/book/Appendix1/getting_started.html", note: "RD01 · Q1" },
     { title: "Dive into Systems — Input / Output (§16.2)", url: "https://diveintosystems.org/book/Appendix1/input_output.html", note: "RD01 · Q2" },
     { title: "Dive into Systems — Conditionals & Loops (§16.3)", url: "https://diveintosystems.org/book/Appendix1/conditionals.html", note: "RD01 · Q3" },
-    { title: "Dive into Systems — Arrays & Strings in C (§16.5)", url: "https://diveintosystems.org/book/Appendix1/arrays_strings.html", note: "RD01 · Q4" },
+    { title: "Dive into Systems — Arrays & Strings in C (§16.5)", url: "https://diveintosystems.org/book/Appendix1/arrays_strings.html", note: "RD01 · Q4 / RD02" },
+    { title: "Dive into Systems — I/O Redirection", url: "https://diveintosystems.org/book/Appendix2/ioredirect.html", note: "RD02" },
+    { title: "Dive into Systems — Pipes", url: "https://diveintosystems.org/book/Appendix2/pipe.html", note: "RD02" },
+    { title: "Dive into Systems — Functions", url: "https://diveintosystems.org/book/Appendix1/functions.html", note: "RD03" },
     { title: "Dive into Systems — full text (free online)", url: "https://diveintosystems.org/book/", note: "the course textbook" }
   ]
 };

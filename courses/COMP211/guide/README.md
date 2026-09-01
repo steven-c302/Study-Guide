@@ -10,6 +10,10 @@ Fall 2026 · Connor McMahon. Open **`index.html`** in any browser. No server, no
 | `COMP211_Study_Guide_L0.js` | **Lesson 0** — CL00 Welcome: course structure, policies, AI rules, binary & bases. |
 | `COMP211_Study_Guide_L1.js` | **Lesson 1** — CL01 Unix Basics + RD00. Includes the shell simulator. |
 | `COMP211_Study_Guide_L2.js` | **Lesson 2** — CL02 Intro to C + RD01. Includes the pipeline and bits labs. |
+| `COMP211_Study_Guide_L3.js` | **Lesson 3** — CL03 IO Redirection and Strings + RD02. |
+| `COMP211_Study_Guide_L4.js` | **Lesson 4** — CL04 Function Stack Frames + RD03. |
+| `COMP211_Study_Guide_L5.js` | **Lesson 5** — Unix Basics (FA26): $PATH, globbing, regex, `find`, `grep`. |
+| `COMP211_Study_Guide_L6.js` | **Checkoff 1 Prep** — CLI practical drill, built from a released sample checkoff (blank + solution). |
 | `COMP211_Study_Guide.js` | Shared **engine**. Must load **last**. |
 
 ## Lessons built
@@ -17,8 +21,12 @@ Fall 2026 · Connor McMahon. Open **`index.html`** in any browser. No server, no
 - **Lesson 0 · Welcome & Binary** — how the course works (readings/homework/labs/quizzes/checkoffs and their very different policies), honor code and AI rules, binary and bases, the `0b` prefix. Interactive **binary lab** (clickable bit strip, 4- or 8-bit) plus the in-class 4-bit table drill.
 - **Lesson 1 · Unix Basics** — terminal vs shell vs CLI, the history from batch processing to TTYs to CRTs to GUIs, the Unix file system tree, absolute vs relative paths, `.` `..` `~`, hidden files, and every command from the slides. **Shell simulator**: a working bash-style shell over the lecture's own file tree with a live tree view, supporting `pwd cd ls ls -a mkdir touch cp mv rm rm -r rm -rf rmdir`, command history, and a one-click replay of the in-class command sequence. Both in-class problems worked through, plus a 16-question RD00 self-check.
 - **Lesson 2 · Intro to C** — machine code → assembly → high-level languages, compiler vs assembler, the first C program, the standard library and header files, `gcc` and `-o` and `./a.out`, variables (scope/lifetime/type), numeric types and `sizeof`, `printf` placeholders and escape sequences, `char` and ASCII, "bits are just bits", `getchar`/`putchar`/EOF. **Pipeline lab** (5-step compile-and-run stepper) and **bits lab** (one byte shown as binary, decimal, and ASCII at once). All three in-class problems plus a 28-question RD01 self-check.
+- **Lesson 3 · I/O, Pipes & Strings** — C arrays and `#define` (with the classic `ndigit[c-'0']` vs `ndigit[c]` bug), the four-stage build pipeline (preprocessor/compiler/assembler/linker), C arrays vs Java arrays, I/O redirection (`<` `>` `>>` `2>`, fd 0/1/2), `getchar`/`putchar`/`fputc(stderr)` demo programs, pipes (`|`, chaining into `wc`), and C strings (`'\0'` termination, `strlen` vs `sizeof`). A 3-part RD02 self-check.
+- **Lesson 4 · Function Stack Frames** — what's inside a stack frame (RA, args, locals), the stack pointer and push/pop mechanics, a worked multi-function call-chain trace, `<stdint.h>` fixed-size types, a field-by-field memory diagram for `add(int8_t,int8_t)` including the caller's RV slot, and the array-passing memory diagram that is the lecture's central idea — **arrays are never copied, only an 8-byte pointer is passed**, so element mutations inside a callee affect the caller's data even though plain-value parameters don't. A pass-by-value vs pass-by-pointer comparison and an RD03 self-check.
+- **Lesson 5 · $PATH, Globbing & Regex** — why `./` is required and how `$PATH` is searched left-to-right, shell globbing (`* ? [abc] [a-z]`) vs regex (character classes, quantifiers `* + ? {n} {n,} {n,m}`, anchors `^ $`) performed by a program like `grep`, the classic "`*` means something different in each" confusion, `find -name` (glob-based) with a full worked exercise set, and `grep`/`grep -E` (regex-based) with a piece-by-piece breakdown of a real pattern. A synthesizing self-check with `find`/`grep` fill-in-the-blank commands.
+- **Checkoff 1 Prep · CLI Practical** — practice/drill module (not lecture content) built from a released sample checkoff (blank + solution) for the course's first one-on-one, oral, live-terminal practical. A logistics card (format, ~15 min average in a 30-min slot, container must be pre-built, redo caps at 80/100), a 24-task worked walkthrough grouped by concept (create vs. append, the three redirection operators, combining pipes and redirects, `mkdir -p`/`touch`, hidden files, relative vs. absolute paths in `cp`/`mv`, `cp -r`, `rm -rf`), a fresh fill-in-the-command-heavy drill with different filenames/paths than the sample, and a common-mistakes callout.
 
-**74 graded items** across the three lessons.
+**184 graded items** across the seven modules.
 
 ## Grading behaviour
 
