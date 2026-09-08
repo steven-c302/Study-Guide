@@ -33,16 +33,18 @@ courses/COMP211/
     COMP211_Study_Guide_L4.js   ← CL04 Function Stack Frames + RD03
     COMP211_Study_Guide_L5.js   ← Unix Basics (FA26): $PATH, globbing, regex, find, grep
     COMP211_Study_Guide_L6.js   ← Checkoff 1 Prep: CLI practical (drill, from a released sample checkoff)
+    COMP211_Study_Guide_L7.js   ← RD07: Bitwise Operators (DiS §4.6, §4.6.5)
     COMP211_Study_Guide.js      ← shared engine, MUST load last
     README.md                   ← engine API + authoring rules — read this first
 ```
 
 ## Current status
 
-Lessons **0–5** plus a **Checkoff 1 Prep (CLI practical)** module are complete — 184 graded items,
-interactive labs (shell simulator, compilation pipeline, bits/ASCII), every in-class active-learning problem
-worked through, self-checks for RD00–RD03, and a drill module built from a released sample checkoff. Nothing
-past Checkoff 1 Prep exists yet.
+Lessons **0–5**, a **Checkoff 1 Prep (CLI practical)** module, and an **RD07 (Bitwise Operators)** reading
+self-check are complete — 211 graded items, interactive labs (shell simulator, compilation pipeline,
+bits/ASCII), every in-class active-learning problem worked through, self-checks for RD00–RD03 and RD07, and a
+drill module built from a released sample checkoff. Lesson 6 (numbered) does not exist — L6 is the Checkoff 1
+Prep module and L7 is RD07; nothing covering the lecture(s) between Checkoff 1 Prep and RD07 exists yet.
 
 ## Adding a lecture
 

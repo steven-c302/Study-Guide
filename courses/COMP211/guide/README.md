@@ -14,6 +14,7 @@ Fall 2026 · Connor McMahon. Open **`index.html`** in any browser. No server, no
 | `COMP211_Study_Guide_L4.js` | **Lesson 4** — CL04 Function Stack Frames + RD03. |
 | `COMP211_Study_Guide_L5.js` | **Lesson 5** — Unix Basics (FA26): $PATH, globbing, regex, `find`, `grep`. |
 | `COMP211_Study_Guide_L6.js` | **Checkoff 1 Prep** — CLI practical drill, built from a released sample checkoff (blank + solution). |
+| `COMP211_Study_Guide_L7.js` | **RD07 · Bitwise Operators** — DiS &sect;4.6, &sect;4.6.5. |
 | `COMP211_Study_Guide.js` | Shared **engine**. Must load **last**. |
 
 ## Lessons built
@@ -25,8 +26,9 @@ Fall 2026 · Connor McMahon. Open **`index.html`** in any browser. No server, no
 - **Lesson 4 · Function Stack Frames** — what's inside a stack frame (RA, args, locals), the stack pointer and push/pop mechanics, a worked multi-function call-chain trace, `<stdint.h>` fixed-size types, a field-by-field memory diagram for `add(int8_t,int8_t)` including the caller's RV slot, and the array-passing memory diagram that is the lecture's central idea — **arrays are never copied, only an 8-byte pointer is passed**, so element mutations inside a callee affect the caller's data even though plain-value parameters don't. A pass-by-value vs pass-by-pointer comparison and an RD03 self-check.
 - **Lesson 5 · $PATH, Globbing & Regex** — why `./` is required and how `$PATH` is searched left-to-right, shell globbing (`* ? [abc] [a-z]`) vs regex (character classes, quantifiers `* + ? {n} {n,} {n,m}`, anchors `^ $`) performed by a program like `grep`, the classic "`*` means something different in each" confusion, `find -name` (glob-based) with a full worked exercise set, and `grep`/`grep -E` (regex-based) with a piece-by-piece breakdown of a real pattern. A synthesizing self-check with `find`/`grep` fill-in-the-blank commands.
 - **Checkoff 1 Prep · CLI Practical** — practice/drill module (not lecture content) built from a released sample checkoff (blank + solution) for the course's first one-on-one, oral, live-terminal practical. A logistics card (format, ~15 min average in a 30-min slot, container must be pre-built, redo caps at 80/100), a 24-task worked walkthrough grouped by concept (create vs. append, the three redirection operators, combining pipes and redirects, `mkdir -p`/`touch`, hidden files, relative vs. absolute paths in `cp`/`mv`, `cp -r`, `rm -rf`), a fresh fill-in-the-command-heavy drill with different filenames/paths than the sample, and a common-mistakes callout.
+- **RD07 · Bitwise Operators** — bitwise (`&` `|` `^` `~`) vs. logical (`&&` `||` `!`) operators, with truth tables and column-aligned worked examples for AND/OR/XOR/NOT; left shift (`<<`) and right shift (`>>`), the "bits fall off the end and are lost" idea, and logical vs. arithmetic right shift (zero-fill vs. sign-bit-fill). A full RD07 self-check (19 multiple-choice questions faithfully recreating the reading quiz, plus true/false, fill-in, and multiple-select reinforcement).
 
-**184 graded items** across the seven modules.
+**211 graded items** across the eight modules.
 
 ## Grading behaviour
 

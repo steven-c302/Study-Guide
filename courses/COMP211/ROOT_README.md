@@ -7,7 +7,7 @@ A single, offline hub for all of Steven's courses — interactive study guides, 
 - Open **`index.html`** → the homepage shows a card for every course.
 - Click a course → its page has tabs for **Overview**, **Study Guide**, **Lectures**, **Past Exams**, and **Notes & Resources**.
 - The **COMP 210** study guide is fully built (Lessons 1–21, Final Prep, and 4 real quizzes + 5 practice exams).
-- The **COMP 211** study guide is being built lecture by lecture (Fall 2026): Lessons 0–5 cover the welcome deck, Unix basics, intro to C, IO redirection & strings, function stack frames, and $PATH/globbing/regex — with a working shell simulator, a compilation-pipeline stepper, and bit/ASCII labs — plus a Checkoff 1 Prep module drilling the CLI practical from a released sample checkoff.
+- The **COMP 211** study guide is being built lecture by lecture (Fall 2026): Lessons 0–5 cover the welcome deck, Unix basics, intro to C, IO redirection & strings, function stack frames, and $PATH/globbing/regex — with a working shell simulator, a compilation-pipeline stepper, and bit/ASCII labs — plus a Checkoff 1 Prep module drilling the CLI practical from a released sample checkoff, and an RD07 (Bitwise Operators) reading self-check.
 - COMP 301 and STOR 155 start with an empty study guide you grow over the term.
 
 ## Structure
