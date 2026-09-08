@@ -675,6 +675,474 @@
     "text": "Q27 Why has signed magnitude largely disappeared from modern systems? — The double-zero and discontinuity problems make signed magnitude arithmetic harder to build correct, efficient hardware for — which is precisely what two's complement fixes."
   },
   {
+    "id": "l10-ranges",
+    "section": "l10-ranges",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "section",
+    "title": "Lesson 6 &middot; Ranges",
+    "text": "Lesson 6 &middot; Ranges A fixed n -bit representation can only hold so many distinct values (2 n of them, since each bit is independently 0 or 1). Which values those 2 n bit patterns mean depends on whether the type is unsigned or two's-complement signed — so the same bit width supports two different ranges. Type Range for n bits Range for 8 bits Unsigned [0, 2 n &minus;1] [0, 255] Two's complement (signed) [&minus;2 n&minus;1 , 2 n&minus;1 &minus;1] [&minus;128, 127] Both ranges hold exactly 2 n values — signed just shifts about half of them to the negative side, and the negative side gets one extra value (there's a &minus;2 n&minus;1 but no matching +2 n&minus;1 ), because two's complement has only one representation of zero, not a separate +0 and &minus;0. Multiple choice What is the range of a signed (two's complement) 8-bit integer? [0, 255] [-127, 127] [-128, 127] [-128, 128] General formula [-2 n-1 , 2 n-1 -1] with n=8 gives [-128, 127] — one more negative value than positive, since there's only one zero."
+  },
+  {
+    "id": "l10-ranges-q0",
+    "section": "l10-ranges",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "Lesson 6 &middot; Ranges",
+    "text": "Multiple choice What is the range of a signed (two's complement) 8-bit integer? — General formula [-2 n-1 , 2 n-1 -1] with n=8 gives [-128, 127] — one more negative value than positive, since there's only one zero."
+  },
+  {
+    "id": "l10-addition",
+    "section": "l10-addition",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "section",
+    "title": "Lesson 6 &middot; Binary Addition & Overflow",
+    "text": "Lesson 6 &middot; Binary Addition & Overflow Binary addition works exactly like decimal addition by hand: add column by column from the right, and when a column's sum is 2 or more, write down the low bit and carry a 1 into the next column to the left. Terminology Term Meaning Carry-in the carry bit coming into a column from the column to its right Carry-out the carry bit produced out of a column, passed to the column on its left Every column's carry-out becomes the next column's carry-in. The carry-out of the very last (most significant) column has nowhere left to go — it either gets discarded (and may signal overflow) or, in some hardware, is captured in a special flag. Worked example (unsigned, 8-bit) 0111 0101 (117) + 0010 1100 ( 44) ----------- 1010 0001 (161) Column by column from the right, tracking carries, gives 0b1010_0001 , and no carry falls off the MSB column — the true sum 161 fits within 8 unsigned bits (max 255). Unsigned overflow Detection rule (unsigned): overflow occurred exactly when the carry-out of the most-significant (last) column is 1 — the true mathematical sum needed one more bit than the type has, so that extra bit was silently dropped. Analogy: a speedometer that maxes out at 99 and wraps to 00 on the next mile doesn't show an error — it just silently wraps. Unsigned overflow in fixed-width binary works the same way: the hardware doesn't stop you, it just drops the extra carry bit and the stored value wraps around. 1111 1111 (255, the max 8-bit unsigned value) + 0000 0001 ( 1) ----------- 1 0000 0000 &larr; carry-out of the last column is 1: OVERFLOW 0000 0000 (stored result: 0, not 256 — wrapped around) True / False Unsigned overflow is detected when the carry-out of the most significant bit's column is 1. True False True. That extra carry bit has nowhere to go in a fixed-width unsigned number — its presence means the true sum didn't fit. 8-bit unsigned addition: 0b1111_1110 + 0b0000_0011 = ? Does it overflow? Give the stored 8-bit result as 0bXXXX_XXXX . Check 254 + 3 = 257, which needs 9 bits. The 8-bit stored result wraps to 0b0000_0001 (1) with a carry-out of 1 from the last column — overflow."
+  },
+  {
+    "id": "l10-addition-q0",
+    "section": "l10-addition",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "Lesson 6 &middot; Binary Addition & Overflow",
+    "text": "True / False Unsigned overflow is detected when the carry-out of the most significant bit's column is 1. — True. That extra carry bit has nowhere to go in a fixed-width unsigned number — its presence means the true sum didn't fit."
+  },
+  {
+    "id": "l10-addition-q1",
+    "section": "l10-addition",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "Lesson 6 &middot; Binary Addition & Overflow",
+    "text": "254 + 3 = 257, which needs 9 bits. The 8-bit stored result wraps to 0b0000_0001 (1) with a carry-out of 1 from the last column — overflow."
+  },
+  {
+    "id": "l10-twoscomp",
+    "section": "l10-twoscomp",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "section",
+    "title": "Lesson 6 &middot; Two's Complement Addition, Subtraction & Overflow",
+    "text": "Lesson 6 &middot; Two's Complement Addition, Subtraction & Overflow Addition Two's complement addition uses the exact same binary addition procedure as unsigned — add column by column, carry as needed. No special-casing for sign is required; that's the whole point of two's complement (&sect;4.4's \"arithmetic wraps around correctly\"). 0000 0101 ( 5) + 1111 1011 (-5) ------------ 1 0000 0000 (carry-out of last column is 1 and discarded) 0000 0000 (0) — correct! 5 + (-5) = 0 Two's complement overflow The carry-out rule from unsigned does NOT apply here. Two's complement overflow is detected differently: it happens exactly when the sign of the result doesn't make sense given the signs of the operands. Operand signs Can overflow? Overflow signature positive + positive yes result comes out negative negative + negative yes result comes out positive mixed signs (one pos, one neg) never — the true sum is always between the two operands in magnitude, so it always fits Worked example: adding two positives that overflow into a negative result, 8-bit 100 + 100 : 0110 0100 (100) + 0110 0100 (100) ----------- 1100 1000 (interpreted as signed: -56, but 100+100=200 should be +200 — overflow!) A real-world example of exactly this bug: 32-bit signed integer overflow has caused real, documented incidents where a counter that should keep climbing instead flips to a large negative number once it crosses 2 31 &minus;1. Subtraction: negate and add Two's complement has no separate subtraction circuitry: a &minus; b is computed as a + (&minus;b) , where &minus;b is b's two's complement negation (flip every bit of b , then add 1). This reuses the same adder hardware for both operations. Worked example, 8-bit 20 &minus; 5 : 5 = 0000 0101 -5 = 1111 1010 + 1 = 1111 1011 (flip bits, add 1) 0001 0100 ( 20) + 1111 1011 ( -5) ----------- 0000 1111 ( 15) — correct! 20 - 5 = 15 Overflow detection for subtraction uses the same sign-based rule as addition, once you've rewritten it as \"add the negation\": check the signs of a and (&minus;b) , not the signs of a and the original b . Multiple choice Adding a positive and a negative two's-complement number can overflow. True or false? True — it can overflow just like same-sign addition False — mixed-sign addition can never overflow False is correct. When the operands have opposite signs, the true sum's magnitude is always smaller than at least one operand's magnitude, so it always fits in the same width — only same-sign addition (pos+pos or neg+neg) can overflow. Multiple choice Two positive 8-bit two's complement numbers are added and the result appears negative. What happened? This is normal and expected A carry-out of the last column occurred, which always means overflow here Signed overflow occurred — the true sum needed more than 8 bits and the sign bit got corrupted The subtraction rule was used by mistake pos + pos should never be negative — a negative result is exactly the overflow signature for two positive operands."
+  },
+  {
+    "id": "l10-twoscomp-q0",
+    "section": "l10-twoscomp",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "Lesson 6 &middot; Two's Complement Addition, Subtraction & Overflow",
+    "text": "Multiple choice Adding a positive and a negative two's-complement number can overflow. True or false? — False is correct. When the operands have opposite signs, the true sum's magnitude is always smaller than at least one operand's magnitude, so it always fits in the same width — only same-sign addition (pos+pos or neg+neg) can overflow."
+  },
+  {
+    "id": "l10-twoscomp-q1",
+    "section": "l10-twoscomp",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "Lesson 6 &middot; Two's Complement Addition, Subtraction & Overflow",
+    "text": "Multiple choice Two positive 8-bit two's complement numbers are added and the result appears negative. What happened? — pos + pos should never be negative — a negative result is exactly the overflow signature for two positive operands."
+  },
+  {
+    "id": "l10-c",
+    "section": "l10-c",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "section",
+    "title": "Lesson 6 &middot; Two's Complement in C",
+    "text": "Lesson 6 &middot; Two's Complement in C C's int (and int8_t , int16_t , etc.) are signed two's complement by default. The exact same bit pattern in memory is interpreted completely differently depending on whether the variable (or the format specifier used to print it) is signed or unsigned — the bits never change, only the interpretation does. Worked example: int8_t x = -100; uint8_t y = (uint8_t) x; // same bit pattern, reinterpreted printf(\"%d\\\\n\", x); // -100 (signed interpretation of 0b1001_1100) printf(\"%u\\\\n\", y); // 156 (unsigned interpretation of the SAME bits) A closely related C gotcha from the reading: printing the same variable once with %d and once with %u can print -100 and 4294967196 for what is really the identical 32-bit pattern — the bit pattern is simply interpreted differently by each format specifier (signed vs. unsigned). Casting (or choosing a different printf format specifier) never changes the stored bits — it only changes how those bits are read back as a number. ASCII reference (for context — ties casting/ interpretation to character codes) Char Dec Char Dec Char Dec '0' – '9' 48–57 'A' – 'Z' 65–90 'a' – 'z' 97–122 ' ' (space) 32 '\\\\n' 10 '\\\\0' 0 Same underlying idea: a byte's bit pattern is meaningless on its own — ASCII, signed int, and unsigned int are three different lenses for reading the identical bits. Multiple choice Why does printing a variable's bit pattern with %d vs. %u give different results? The compiler changes the stored bits based on the format specifier The bit pattern is interpreted differently — signed vs. unsigned — by each specifier This is undefined behavior with no consistent explanation %u only works for characters The bits in memory never change. %d reads them as signed two's complement; %u reads the identical bits as unsigned."
+  },
+  {
+    "id": "l10-c-q0",
+    "section": "l10-c",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "Lesson 6 &middot; Two's Complement in C",
+    "text": "Multiple choice Why does printing a variable's bit pattern with %d vs. %u give different results? — The bits in memory never change. %d reads them as signed two's complement; %u reads the identical bits as unsigned."
+  },
+  {
+    "id": "l10-rd06",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "section",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check Covers Dive into Systems &sect;4.4–4.5 (Two's Complement, Sign/Zero Extension). Q1 Why does an MSB (most significant bit) of 1 in two's complement always mean the number is negative? By convention only, with no mathematical reason Because the MSB is always ignored in arithmetic The MSB contributes a large negative value to the total sum Because the CPU flags it as negative In two's complement's weighted-sum definition, the MSB's place value is &minus;2 n&minus;1 (negative), so setting it always pulls the total sum negative. Q2 How does two's complement simplify the transition between positive and negative numbers, and to/from zero? It requires separate hardware for positive and negative numbers Arithmetic naturally \"wraps around\" correctly It stores a separate sign bit that's checked manually It doesn't — the transition is a special case Ordinary binary addition (with carries) just works across the zero boundary and the positive/negative boundary — no special-casing needed. Q3 What is the shortcut for negating a two's complement number? Flip only the sign bit Subtract 1 from every bit Flip all bits and add one Reverse the bit order Bitwise NOT ( ~x ), then + 1 — the standard \"invert and increment\" negation shortcut. Q4 How does C interpret a plain int by default? As a signed two's complement integer As an unsigned integer As a one's complement integer As a floating-point value Plain int is signed two's complement unless declared unsigned . Q5 What happens when you print the same bit pattern once with %d and once with %u ? Both always print the same number The bit pattern is interpreted differently by each specifier It causes a compile error %u is invalid for integers Same bits, different lens: %d reads them as signed, %u reads them as unsigned. Q6 Why might a program print -100 and 4294967196 for what is really the same 32-bit variable's bit pattern? The variable actually holds two different values Because the bit pattern is interpreted as unsigned in the second case Integer overflow occurred between the two prints This indicates a memory corruption bug -100 as signed two's complement and 4294967196 as unsigned are the exact same 32-bit pattern, read two different ways. Q7 Why is two's complement superior to signed-magnitude representation? It uses fewer bits It can represent larger numbers It simplifies hardware design and arithmetic It avoids the need for a sign bit entirely Two's complement lets addition/subtraction hardware work identically for signed and unsigned operands, with no special sign-checking logic — signed-magnitude cannot do this. Q8 Why is bit extension necessary in C? To make numbers print faster To save memory Because arithmetic operations require operands to have the same number of bits To convert between signed and unsigned types Before combining values of different widths, the narrower one must be widened so both operands line up bit-for-bit. Q9 Which of these is an example C scenario needing bit extension? Printing a string Adding a 32-bit int and a 16-bit short Declaring a variable Comparing two floats The 16-bit short must be extended to 32 bits before it can be added to the 32-bit int . Q10 What does sign extension mean? Repeating the most significant bit to increase bit width Adding zeros to the left regardless of sign Adding zeros to the right Removing the sign bit Sign extension widens a number by repeating its MSB (sign bit) into all the new leading positions. Q11 Which bit gets repeated during sign extension? The least significant bit The most significant (sign) bit Bit 0 of the original number, always A fixed bit chosen by the compiler The current MSB (sign bit) is copied into every new leading position. Q12 How does the sign of a number stay the same after sign extension? It doesn't — sign extension can flip the sign It remains the same as the original number The sign is recalculated from scratch A separate sign flag is set Because the new leading bits copy the original sign bit, the numeric value's weighted sum — and therefore its sign — is unchanged. Q13 If zeros were wrongly prepended to a negative two's complement number instead of sign-extending, what would happen? The value would stay exactly the same The program would crash The value may become positive The value would be unchanged but slower to compute Prepending 0s clears what should have been the sign-carrying bits, which can flip a negative value into an incorrect positive one. Q14 When is zero extension used instead of sign extension? When the value is negative Never — sign extension is always used When the value is explicitly unsigned Only for floating-point values Unsigned values have no sign bit to preserve, so widening them always prepends 0s (zero extension) rather than copying a \"sign\" bit. Q15 How does zero extension differ from sign extension? It repeats the MSB instead of using zeros It always prepends zeros It only works on negative numbers It changes the least significant bits Zero extension unconditionally fills new leading bits with 0, regardless of what the original MSB was — correct for unsigned values, wrong for negative signed ones. Mixed practice Negate 0b0000_0110 (6) using the two's-complement shortcut. Give the 8-bit result as 0bXXXX_XXXX . Check Flip all bits: 0b1111_1001 . Add 1: 0b1111_1010 = &minus;6. True / False Adding a positive and a negative two's-complement number can cause overflow. True False False. Only same-sign addition (pos+pos or neg+neg) can overflow; mixed-sign addition can never overflow. True / False Unsigned overflow is signaled by a carry-out of 1 from the most significant column. True False True. That's the unsigned detection rule — but note it's a different rule from two's complement overflow, which is sign-based instead. Select all that apply Which of these statements about two's complement are true ? A. Two's complement has only one representation of zero. B. Subtraction is implemented as adding the two's-complement negation. C. Mixed-sign addition can overflow just as easily as same-sign addition. D. An 8-bit signed range holds one more negative value than positive value. E. The unsigned carry-out overflow rule also correctly detects two's complement overflow. Check A, B, and D. C is false — mixed-sign addition can never overflow. E is false — two's complement overflow uses a sign-based rule, not the unsigned carry-out rule."
+  },
+  {
+    "id": "l10-rd06-q0",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q1 Why does an MSB (most significant bit) of 1 in two's complement always mean the number is negative? — In two's complement's weighted-sum definition, the MSB's place value is &minus;2 n&minus;1 (negative), so setting it always pulls the total sum negative."
+  },
+  {
+    "id": "l10-rd06-q1",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q2 How does two's complement simplify the transition between positive and negative numbers, and to/from zero? — Ordinary binary addition (with carries) just works across the zero boundary and the positive/negative boundary — no special-casing needed."
+  },
+  {
+    "id": "l10-rd06-q2",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q3 What is the shortcut for negating a two's complement number? — Bitwise NOT ( ~x ), then + 1 — the standard \"invert and increment\" negation shortcut."
+  },
+  {
+    "id": "l10-rd06-q3",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q4 How does C interpret a plain int by default? — Plain int is signed two's complement unless declared unsigned ."
+  },
+  {
+    "id": "l10-rd06-q4",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q5 What happens when you print the same bit pattern once with %d and once with %u ? — Same bits, different lens: %d reads them as signed, %u reads them as unsigned."
+  },
+  {
+    "id": "l10-rd06-q5",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q6 Why might a program print -100 and 4294967196 for what is really the same 32-bit variable's bit pattern? — -100 as signed two's complement and 4294967196 as unsigned are the exact same 32-bit pattern, read two different ways."
+  },
+  {
+    "id": "l10-rd06-q6",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q7 Why is two's complement superior to signed-magnitude representation? — Two's complement lets addition/subtraction hardware work identically for signed and unsigned operands, with no special sign-checking logic — signed-magnitude cannot do this."
+  },
+  {
+    "id": "l10-rd06-q7",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q8 Why is bit extension necessary in C? — Before combining values of different widths, the narrower one must be widened so both operands line up bit-for-bit."
+  },
+  {
+    "id": "l10-rd06-q8",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q9 Which of these is an example C scenario needing bit extension? — The 16-bit short must be extended to 32 bits before it can be added to the 32-bit int ."
+  },
+  {
+    "id": "l10-rd06-q9",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q10 What does sign extension mean? — Sign extension widens a number by repeating its MSB (sign bit) into all the new leading positions."
+  },
+  {
+    "id": "l10-rd06-q10",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q11 Which bit gets repeated during sign extension? — The current MSB (sign bit) is copied into every new leading position."
+  },
+  {
+    "id": "l10-rd06-q11",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q12 How does the sign of a number stay the same after sign extension? — Because the new leading bits copy the original sign bit, the numeric value's weighted sum — and therefore its sign — is unchanged."
+  },
+  {
+    "id": "l10-rd06-q12",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q13 If zeros were wrongly prepended to a negative two's complement number instead of sign-extending, what would happen? — Prepending 0s clears what should have been the sign-carrying bits, which can flip a negative value into an incorrect positive one."
+  },
+  {
+    "id": "l10-rd06-q13",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q14 When is zero extension used instead of sign extension? — Unsigned values have no sign bit to preserve, so widening them always prepends 0s (zero extension) rather than copying a \"sign\" bit."
+  },
+  {
+    "id": "l10-rd06-q14",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Q15 How does zero extension differ from sign extension? — Zero extension unconditionally fills new leading bits with 0, regardless of what the original MSB was — correct for unsigned values, wrong for negative signed ones."
+  },
+  {
+    "id": "l10-rd06-q15",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "Flip all bits: 0b1111_1001 . Add 1: 0b1111_1010 = &minus;6."
+  },
+  {
+    "id": "l10-rd06-q16",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "True / False Adding a positive and a negative two's-complement number can cause overflow. — False. Only same-sign addition (pos+pos or neg+neg) can overflow; mixed-sign addition can never overflow."
+  },
+  {
+    "id": "l10-rd06-q17",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "True / False Unsigned overflow is signaled by a carry-out of 1 from the most significant column. — True. That's the unsigned detection rule — but note it's a different rule from two's complement overflow, which is sign-based instead."
+  },
+  {
+    "id": "l10-rd06-q18",
+    "section": "l10-rd06",
+    "course": "COMP211",
+    "lesson": "L10",
+    "type": "qa",
+    "title": "RD06 &middot; Signed Binary Integers & Binary Arithmetic — Self-Check",
+    "text": "A, B, and D. C is false — mixed-sign addition can never overflow. E is false — two's complement overflow uses a sign-based rule, not the unsigned carry-out rule."
+  },
+  {
+    "id": "l12-frames",
+    "section": "l12-frames",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "section",
+    "title": "HW2 &middot; Stack Frames Deep-Dive",
+    "text": "HW2 &middot; Stack Frames Deep-Dive Reinforces Lesson 4's memory-diagram model of function calls: where frames are drawn, how the stack pointer (sp) moves, and what \"returning\" actually does to the diagram. The basics, reinforced Question Answer Where is a callee's frame drawn relative to the caller's? Below the caller's frame Which direction does the stack grow in our memory diagrams? From higher memory addresses toward lower memory addresses What does the stack pointer (sp) represent? The memory address marking the current end of the stack What happens to sp when a new frame is created? It moves down , toward lower memory addresses What does the return address (RA) represent? Where execution should continue after the function returns Reading a frame entry Given a memory-diagram entry like x (4): 12 : The parenthesized number ( 4 ) is the number of bytes occupied by x — not its value, not its address, and not a line number. The value after the colon ( 12 ) is the actual stored value. If main calls a function add whose return value main needs, the label used for that return-value slot in main 's frame is RV(add) — distinct from RA (the return address ) and SP (the stack pointer). What happens when a function returns Two things happen to the memory diagram when a function returns: sp moves back up (toward higher addresses, undoing the down-move that created the frame), and the returning function's old frame gets an X put through it . Nothing is erased byte-by-byte and the memory doesn't stop existing — the X just marks that the frame is no longer valid , even though its old data may still physically remain in memory until something overwrites it. What belongs in a stack frame? A function's stack frame holds its parameters , its local variables , and information about where execution should return (RA/RV) — but not every global variable in the program (globals live elsewhere, not on the stack). A #define d constant does not get its own stack slot. Given #define SIZE 5 used to declare int values[SIZE]; , SIZE itself does not receive a location in the frame, because #define is a preprocessor directive — it's textually substituted before compilation even begins, so there's no SIZE variable left to store by the time the program runs. Arrays and pointers in frames When an array like numbers is passed to a function foo(int arr[]) , the memory diagram should show a pointer in foo 's frame with an arrow drawn back to the original array in the caller's frame — the array itself is never copied into the callee's frame. Multiple choice Where should a callee's stack frame be drawn relative to its caller's? Above the caller's frame Below the caller's frame Inside the caller's frame Either above or below The callee's frame is always drawn below the caller's — the stack grows toward lower memory addresses as new calls are made. Multiple choice Why put an X through a stack frame after its function returns, rather than treating that memory as gone? The memory no longer physically exists Every byte in the frame has automatically become zero The frame is no longer valid, although its old data may still physically remain in memory The function encountered an error The X is a validity marker, not proof of erasure — the bytes can still be sitting in memory (this is exactly why using a pointer to a returned-from frame is undefined behavior: the data might look fine, or might already be overwritten). Select all that apply Which of the following may be stored in a function's stack frame? A. Parameters to the function B. Local variables C. Information about where execution should return after the function finishes D. Every global variable in the program Check A, B, and C. Globals ( D ) live in a separate region of memory, not inside any individual function's frame. Tracing frame order across calls Suppose active frames are arranged, highest address first: main, foo, bar . While bar is executing, what do the active frames look like right after bar returns to foo ? Only bar 's frame is removed — the frames left are, from highest to lowest address, main, foo . Nothing about main or foo changes; a return only ever removes the single frame that's returning. Second example — given doubleIt(int n) called from compute(int x) called from main() , while doubleIt is executing, the active frames from highest to lowest memory address are: main &rarr; compute &rarr; doubleIt — each caller's frame sits above (higher address than) the frame of the function it called. Ordering the events of a function call For int foo() { return 5; } int main() { int x = foo(); } , put these five events in execution order: (1) foo's frame is deallocated, (2) main's frame is created, (3) foo's return value is placed in RV(foo), (4) foo's frame is created, (5) sp moves back up. Check main 's frame must exist first (2) before it can call foo , whose frame is then created (4); foo computes its result and places it in RV(foo) (3) before its frame is torn down (1) and sp moves back up (5). For doubleIt(int n) called as doubleIt(4) from main , order these seven events: (1) doubleIt's return value is placed in RV(doubleIt), (2) main's stack frame is created, (3) doubleIt's stack frame is deallocated, (4) doubleIt's stack frame is created, (5) result is assigned the value 8, (6) sp moves back up after doubleIt returns, (7) the argument n receives the value 4. Check main 's frame exists first (2), then doubleIt 's frame is created (4) and its parameter n receives 4 (7); inside the body, result is computed as 8 (5) and placed in the return slot (1); only then is the frame torn down (3) and sp restored (6). For addOne(int x) called from calculate(int n) called from main as calculate(5) , order these eleven events: (1) calculate's return value is placed in RV(calculate), (2) addOne's stack frame is deallocated, (3) calculate's stack frame is created, (4) addOne's return value is placed in RV(addOne), (5) main's stack frame is created, (6) calculate's stack frame is deallocated, (7) addOne's stack frame is created, (8) addOne's local variable result is assigned 6, (9) calculate's local variable answer is assigned 6, (10) sp moves back up after addOne returns, (11) sp moves back up after calculate returns. Check Each call nests one level deeper before anything unwinds: main &rarr; calculate &rarr; addOne all get created and run to completion of addOne first (5, 3, 7, 8, 4), then addOne unwinds (2, 10) before calculate finishes its own work (9, 1) and unwinds (6, 11)."
+  },
+  {
+    "id": "l12-frames-q0",
+    "section": "l12-frames",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Stack Frames Deep-Dive",
+    "text": "Multiple choice Where should a callee's stack frame be drawn relative to its caller's? — The callee's frame is always drawn below the caller's — the stack grows toward lower memory addresses as new calls are made."
+  },
+  {
+    "id": "l12-frames-q1",
+    "section": "l12-frames",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Stack Frames Deep-Dive",
+    "text": "Multiple choice Why put an X through a stack frame after its function returns, rather than treating that memory as gone? — The X is a validity marker, not proof of erasure — the bytes can still be sitting in memory (this is exactly why using a pointer to a returned-from frame is undefined behavior: the data might look fine, or might already be overwritten)."
+  },
+  {
+    "id": "l12-frames-q2",
+    "section": "l12-frames",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Stack Frames Deep-Dive",
+    "text": "Select all that apply Which of the following may be stored in a function's stack frame? — A, B, and C. Globals ( D ) live in a separate region of memory, not inside any individual function's frame."
+  },
+  {
+    "id": "l12-frames-card7",
+    "section": "l12-frames",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Stack Frames Deep-Dive",
+    "text": "main 's frame must exist first (2) before it can call foo , whose frame is then created (4); foo computes its result and places it in RV(foo) (3) before its frame is torn down (1) and sp moves back up (5)."
+  },
+  {
+    "id": "l12-passing",
+    "section": "l12-passing",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "section",
+    "title": "HW2 &middot; Pass by Value vs. Pass by Pointer",
+    "text": "HW2 &middot; Pass by Value vs. Pass by Pointer Passing by value gives the called function a copy of the argument, stored in its own frame slot — changing the parameter can never affect the caller's original variable. Passing by pointer gives the called function a pointer that can refer back to the original variable, so writes through that pointer do affect the caller's data. Pass by value void change(int32_t x) { x = 20; } int main() { int32_t x = 10; change(x); } // main's x is still 10 — change() only modified its own copy Correct statements about pass by value: the function receives a copy of the argument's value; the parameter has its own location in the called function's stack frame; changing the parameter does not change the caller's original variable. (\"Changing the parameter changes the caller's original variable\" is false — that's what makes pass by value pass by value .) Arrays are effectively passed by pointer void update(int32_t arr[]) { arr[0] = 100; } int main() { int32_t values[3] = {1, 2, 3}; update(values); } // values[0] is now 100 — update() wrote through to the original array In C, an array argument decays to a pointer to its first element. So even though there's no explicit * or & in the call, update can still modify the caller's original array: the entire array is not copied, the original stays in the caller's frame, the callee can change its elements, and those changes are still visible after the callee returns. Mixing value and array parameters Given void update(int32_t x, int32_t arr[]) { x = 100; arr[0] = 100; } called as update(x, nums) where main has x = 5 and nums = {1, 2, 3} : After update returns: x = 5, nums = {100, 2, 3} — the plain int32_t x parameter is pass-by-value (caller's x untouched), while the array parameter still refers back to the caller's original nums (its first element changes). Multiple choice What does it mean to pass an argument by value? The called function receives a copy of the argument's value The called function receives the memory address of the original variable The original variable is moved into the called function's stack frame Both functions use the same variable A copy, stored in the callee's own frame slot — the caller's variable is never touched. Multiple choice What does it mean to pass a variable by pointer? The called function receives a copy of the variable's value The called function receives a pointer that can refer to the original variable The original variable is copied into the called function's stack frame The caller's stack frame is removed A pointer refers back to the original storage location, so writes through it are visible to the caller. Given void change(int32_t x){ x = 20; } int main(){ int32_t x = 10; change(x); } — what is main 's x after change returns? Check Still 10 . change 's parameter x is a separate copy in its own frame — assigning to it never reaches back into main . Given void update(int32_t arr[]){ arr[0] = 100; } called on int32_t values[3] = {1,2,3}; update(values); — what is values[0] after update returns? Check Arrays decay to a pointer when passed — arr refers to the same memory as values , so the write through arr[0] is visible in main as 100 ."
+  },
+  {
+    "id": "l12-passing-q0",
+    "section": "l12-passing",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Pass by Value vs. Pass by Pointer",
+    "text": "Multiple choice What does it mean to pass an argument by value? — A copy, stored in the callee's own frame slot — the caller's variable is never touched."
+  },
+  {
+    "id": "l12-passing-q1",
+    "section": "l12-passing",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Pass by Value vs. Pass by Pointer",
+    "text": "Multiple choice What does it mean to pass a variable by pointer? — A pointer refers back to the original storage location, so writes through it are visible to the caller."
+  },
+  {
+    "id": "l12-passing-q2",
+    "section": "l12-passing",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Pass by Value vs. Pass by Pointer",
+    "text": "Still 10 . change 's parameter x is a separate copy in its own frame — assigning to it never reaches back into main ."
+  },
+  {
+    "id": "l12-passing-q3",
+    "section": "l12-passing",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Pass by Value vs. Pass by Pointer",
+    "text": "Arrays decay to a pointer when passed — arr refers to the same memory as values , so the write through arr[0] is visible in main as 100 ."
+  },
+  {
+    "id": "l12-path",
+    "section": "l12-path",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "section",
+    "title": "HW2 &middot; $PATH & Running Programs",
+    "text": "HW2 &middot; $PATH & Running Programs Whether you type an explicit path ( ./analyze ) or a bare name ( analyze ) changes how the shell decides which program actually runs. Worked scenario Current directory: /home/student/lab . Three executable files named analyze exist: /usr/local/bin/analyze , /home/student/tools/analyze , and /home/student/lab/analyze . $PATH is /usr/local/bin:/home/student/tools:/usr/bin:/bin . You type&hellip; What runs Why ./analyze /home/student/lab/analyze An explicit relative path always wins — $PATH is never consulted analyze /usr/local/bin/analyze A bare name is searched for in $PATH order; /usr/local/bin is listed first ../tools/analyze /home/student/tools/analyze Another explicit (relative) path — again, $PATH is irrelevant Any slash in what you type makes it an explicit path. The moment a command contains a / (whether ./ , ../ , or a full absolute path), the shell resolves it directly and never searches $PATH at all. Only a bare name with no slash triggers a $PATH search. Changing $PATH changes what a bare name resolves to If $PATH is changed to /home/student/tools:/usr/local/bin:/usr/bin:/bin (tools now listed first ), then typing analyze now runs /home/student/tools/analyze instead — the search order changed, so the first match along the new $PATH changed too, even though nothing about the files themselves moved. You're in /home/student/lab with an executable at that same path; typing ./analyze runs which absolute path? Check Explicit relative paths (anything with a / ) are resolved directly, never through $PATH . True / False Typing a bare command name with no slash triggers a search through $PATH , in order, for the first matching executable. True False True. The shell walks the colon-separated directories in $PATH left to right and runs the first executable match it finds."
+  },
+  {
+    "id": "l12-path-q0",
+    "section": "l12-path",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; $PATH & Running Programs",
+    "text": "Explicit relative paths (anything with a / ) are resolved directly, never through $PATH ."
+  },
+  {
+    "id": "l12-path-q1",
+    "section": "l12-path",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; $PATH & Running Programs",
+    "text": "True / False Typing a bare command name with no slash triggers a search through $PATH , in order, for the first matching executable. — True. The shell walks the colon-separated directories in $PATH left to right and runs the first executable match it finds."
+  },
+  {
+    "id": "l12-glob",
+    "section": "l12-glob",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "section",
+    "title": "HW2 &middot; Shell Globbing Practice",
+    "text": "HW2 &middot; Shell Globbing Practice Two complementary skill sets: writing find -name patterns (which use a restricted glob-style syntax), and writing plain shell globs for ls / cp / rm directly on the command line. find -name patterns Goal Command Files named exactly notes.txt find . -name \"notes.txt\" Files ending in .md find . -name \"*.md\" Files whose names begin with test find . -name \"test*\" All .txt files inside docs/ and its subdirectories find docs -name \"*.txt\" Files beginning with test , then exactly one character, then .c find . -name \"test?.c\" In find -name patterns, * matches any number of characters (including zero) and ? matches exactly one character — and because find already recurses into subdirectories on its own, pointing it at a starting directory (like docs ) is enough to reach nested files without any extra flags. Plain shell globs Goal Command List every .txt file ls *.txt List files beginning with data and ending in .csv ls data*.csv List all .c files inside src/ ls src/*.c List all .c and .h files inside src/ ls src/*.[ch] Copy every .txt file into backup/ cp *.txt backup/ Copy all files beginning with report into backup/ cp report* backup/ Display the contents of all .md files cat *.md Delete every .png file rm *.png [ch] is a bracket set — it matches a single character that is either c or h , which is exactly what's needed to glob both .c and .h files with one pattern ( *.[ch] ) instead of writing two separate commands. Write the find command to list every file whose name ends in .md , anywhere under the current directory. Check find . -name \"*.md\" — * matches any run of characters before .md . Write the shell glob command to list all .c and .h files inside src/ in one command. Check The bracket set [ch] matches either letter in that single position, covering both extensions at once: ls src/*.[ch] . True / False find . -name \"test?.c\" matches a file named test.c (no character between test and .c ). True False False. ? requires exactly one character in that position, so it matches test1.c or testX.c but not test.c (zero characters) or test12.c (two characters)."
+  },
+  {
+    "id": "l12-glob-q0",
+    "section": "l12-glob",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Shell Globbing Practice",
+    "text": "find . -name \"*.md\" — * matches any run of characters before .md ."
+  },
+  {
+    "id": "l12-glob-q1",
+    "section": "l12-glob",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Shell Globbing Practice",
+    "text": "The bracket set [ch] matches either letter in that single position, covering both extensions at once: ls src/*.[ch] ."
+  },
+  {
+    "id": "l12-glob-q2",
+    "section": "l12-glob",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Shell Globbing Practice",
+    "text": "True / False find . -name \"test?.c\" matches a file named test.c (no character between test and .c ). — False. ? requires exactly one character in that position, so it matches test1.c or testX.c but not test.c (zero characters) or test12.c (two characters)."
+  },
+  {
+    "id": "l12-regex",
+    "section": "l12-regex",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "section",
+    "title": "HW2 &middot; Regex Practice",
+    "text": "HW2 &middot; Regex Practice All ten patterns below are grep commands against a file students.txt — the same anchor ( ^ / $ ), character-class, and repetition ( * ) syntax from Lesson 5, now drilled against concrete matching goals. Goal Command Key idea Every line containing Alice grep \"Alice\" students.txt Plain substring match — no metacharacters needed Every line that starts with A grep \"^A\" students.txt ^ anchors to the start of the line Every line that ends with a grep \"a$\" students.txt $ anchors to the end of the line Lines starting with A and ending with a , anything between grep \"^A.*a$\" students.txt .* = any number of any character Lines containing Bob followed by zero or more b characters grep \"Bobb*\" students.txt * repeats the single character right before it (here, the second b ) zero or more times Lines containing student followed by exactly one character grep \"student.\" students.txt Unescaped . = exactly one any character Lines containing any digit 0–9 grep \"[0-9]\" students.txt [0-9] is a character-class range Lines beginning with A, B, or C grep \"^[ABC]\" students.txt Combine an anchor with a character class Lines ending with a digit grep \"[0-9]$\" students.txt Combine a character class with the end anchor Lines containing at least one lowercase vowel grep \"[aeiou]\" students.txt Character classes don't need ranges — an explicit list works too Bobb* , not Bob* . A common mistake is writing grep \"Bob*\" for \"Bob followed by zero or more b s\" — but that pattern actually means \"Bo, followed by zero or more b s\" (the * only repeats the single character immediately to its left, which is the second b in Bob , not the whole word). Writing Bobb* correctly repeats the extra b's after \"Bob\". Write a grep command to find every line that starts with A . Check grep \"^A\" students.txt — ^ anchors the match to the very start of the line. Write a grep command to find lines containing student followed by exactly one character. Check grep \"student.\" — the trailing unescaped . matches exactly one arbitrary character right after \"student\" (e.g. student1 , student2 ). Multiple choice What does the regex Bob* actually match? \"Bob\" followed by zero or more additional b's \"Bo\" followed by zero or more b's (so \"Bo\", \"Bob\", \"Bobb\", ...) Exactly the literal string \"Bob*\" Any line containing the letter B * applies only to the single character immediately preceding it — here, the second b in \"Bob\" — so it matches \"Bo\", \"Bob\", \"Bobb\", etc. To require \"Bob\" plus zero-or-more extra b's, you need Bobb* . True / False [0-9] and [aeiou] are both examples of character classes — the first uses a range, the second an explicit list. True False True. A character class matches exactly one character from whatever set is inside the brackets, whether that set is written as a range ( 0-9 ) or spelled out ( aeiou )."
+  },
+  {
+    "id": "l12-regex-q0",
+    "section": "l12-regex",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Regex Practice",
+    "text": "grep \"^A\" students.txt — ^ anchors the match to the very start of the line."
+  },
+  {
+    "id": "l12-regex-q1",
+    "section": "l12-regex",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Regex Practice",
+    "text": "grep \"student.\" — the trailing unescaped . matches exactly one arbitrary character right after \"student\" (e.g. student1 , student2 )."
+  },
+  {
+    "id": "l12-regex-q2",
+    "section": "l12-regex",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Regex Practice",
+    "text": "Multiple choice What does the regex Bob* actually match? — * applies only to the single character immediately preceding it — here, the second b in \"Bob\" — so it matches \"Bo\", \"Bob\", \"Bobb\", etc. To require \"Bob\" plus zero-or-more extra b's, you need Bobb* ."
+  },
+  {
+    "id": "l12-regex-q3",
+    "section": "l12-regex",
+    "course": "COMP211",
+    "lesson": "L12",
+    "type": "qa",
+    "title": "HW2 &middot; Regex Practice",
+    "text": "True / False [0-9] and [aeiou] are both examples of character classes — the first uses a range, the second an explicit list. — True. A character class matches exactly one character from whatever set is inside the brackets, whether that set is written as a range ( 0-9 ) or spelled out ( aeiou )."
+  },
+  {
     "id": "l2-compile",
     "section": "l2-compile",
     "course": "COMP211",
@@ -2057,8 +2525,8 @@
     "course": "COMP211",
     "lesson": "L7",
     "type": "section",
-    "title": "Lesson 7 &middot; Bitwise vs. Logical Operators",
-    "text": "Lesson 7 &middot; Bitwise vs. Logical Operators Bitwise operators operate on the individual bits of a number's binary representation, one bit position at a time, producing a result of the same width . This is fundamentally different from logical operators ( && , || , ! ), which treat each operand as a single truth value (nonzero = true, zero = false) and produce one true/false result. & and && are not interchangeable — one walks every bit, the other collapses the whole operand to a single boolean first. The four bitwise operators Operator Name Result bit is 1 when&hellip; Arity & AND both input bits are 1 binary | OR at least one input bit is 1 binary ^ XOR the input bits differ (exactly one is 1) binary ~ NOT — flips every bit of its one operand unary Each operates column by column : line the two operands up bit-for-bit and compute each result bit independently of every other position. AND ( & ) A B A & B 0 0 0 0 1 0 1 0 0 1 1 1 Worked example: 0b011010 & 0b110110 011010 &110110 ------- 010010 Result: 0b010010 A common use: AND-ing with a mask of 1s and 0s clears the bits lined up with a 0 in the mask, and preserves the bits lined up with a 1 — nothing but a 1&1 in that column can survive. OR ( | ) A B A | B 0 0 0 0 1 1 1 0 1 1 1 1 Worked example: 0b011010 | 0b110110 011010 |110110 ------- 111110 Result: 0b111110 XOR ( ^ ) A B A ^ B 0 0 0 0 1 1 1 0 1 1 1 0 Worked example: 0b011010 ^ 0b110110 011010 ^110110 ------- 101100 Result: 0b101100 XOR is the only one of the three where a bit position with two equal inputs (0&0 or 1&1) always produces 0 — it detects difference , not presence. NOT ( ~ ) Unlike AND/OR/XOR, ~ is unary — it takes a single operand and flips every bit: 1&rarr;0 and 0&rarr;1. Worked example (treating this as a 6-bit value): ~0b011010 0 1 1 0 1 0 (start) 1 0 0 1 0 1 (each bit flipped) Result: 0b100101 Width matters for NOT. Flipping all the bits of an 8-bit representation of a value gives a different-looking result than flipping the same value's 6-bit representation — there are simply more leading bits to flip. There is no \"the\" answer for ~x without first knowing how many bits x is stored in. Multiple choice Why can't you just use && where you meant & ? && is only for characters && is slower && collapses each operand to a single truth value first, so it can never combine bits position-by-position There is no difference Bitwise operators walk the bits; logical operators evaluate \"is this operand nonzero\" once per side and combine two booleans. 5 & 2 is 0 ; 5 && 2 is 1 (true) — same inputs, very different question."
+    "title": "Lesson 8 &middot; Bitwise vs. Logical Operators",
+    "text": "Lesson 8 &middot; Bitwise vs. Logical Operators Bitwise operators operate on the individual bits of a number's binary representation, one bit position at a time, producing a result of the same width . This is fundamentally different from logical operators ( && , || , ! ), which treat each operand as a single truth value (nonzero = true, zero = false) and produce one true/false result. & and && are not interchangeable — one walks every bit, the other collapses the whole operand to a single boolean first. The four bitwise operators Operator Name Result bit is 1 when&hellip; Arity & AND both input bits are 1 binary | OR at least one input bit is 1 binary ^ XOR the input bits differ (exactly one is 1) binary ~ NOT — flips every bit of its one operand unary Each operates column by column : line the two operands up bit-for-bit and compute each result bit independently of every other position. AND ( & ) A B A & B 0 0 0 0 1 0 1 0 0 1 1 1 Worked example: 0b011010 & 0b110110 011010 &110110 ------- 010010 Result: 0b010010 A common use: AND-ing with a mask of 1s and 0s clears the bits lined up with a 0 in the mask, and preserves the bits lined up with a 1 — nothing but a 1&1 in that column can survive. OR ( | ) A B A | B 0 0 0 0 1 1 1 0 1 1 1 1 Worked example: 0b011010 | 0b110110 011010 |110110 ------- 111110 Result: 0b111110 XOR ( ^ ) A B A ^ B 0 0 0 0 1 1 1 0 1 1 1 0 Worked example: 0b011010 ^ 0b110110 011010 ^110110 ------- 101100 Result: 0b101100 XOR is the only one of the three where a bit position with two equal inputs (0&0 or 1&1) always produces 0 — it detects difference , not presence. NOT ( ~ ) Unlike AND/OR/XOR, ~ is unary — it takes a single operand and flips every bit: 1&rarr;0 and 0&rarr;1. Worked example (treating this as a 6-bit value): ~0b011010 0 1 1 0 1 0 (start) 1 0 0 1 0 1 (each bit flipped) Result: 0b100101 Width matters for NOT. Flipping all the bits of an 8-bit representation of a value gives a different-looking result than flipping the same value's 6-bit representation — there are simply more leading bits to flip. There is no \"the\" answer for ~x without first knowing how many bits x is stored in. Multiple choice Why can't you just use && where you meant & ? && is only for characters && is slower && collapses each operand to a single truth value first, so it can never combine bits position-by-position There is no difference Bitwise operators walk the bits; logical operators evaluate \"is this operand nonzero\" once per side and combine two booleans. 5 & 2 is 0 ; 5 && 2 is 1 (true) — same inputs, very different question."
   },
   {
     "id": "l7-bitwise-q0",
@@ -2066,7 +2534,7 @@
     "course": "COMP211",
     "lesson": "L7",
     "type": "qa",
-    "title": "Lesson 7 &middot; Bitwise vs. Logical Operators",
+    "title": "Lesson 8 &middot; Bitwise vs. Logical Operators",
     "text": "Multiple choice Why can't you just use && where you meant & ? — Bitwise operators walk the bits; logical operators evaluate \"is this operand nonzero\" once per side and combine two booleans. 5 & 2 is 0 ; 5 && 2 is 1 (true) — same inputs, very different question."
   },
   {
@@ -2075,8 +2543,8 @@
     "course": "COMP211",
     "lesson": "L7",
     "type": "section",
-    "title": "Lesson 7 &middot; Bit Shifts (&sect;4.6.5)",
-    "text": "Lesson 7 &middot; Bit Shifts (&sect;4.6.5) A bit shift moves every bit in a number's binary representation left or right by a specified number of positions. It is still a bitwise operation — the output has the same width as the input — but instead of combining two operands bit-by-bit, it slides one operand's bits along and has to decide what to do at both ends. Left shift ( << ) Shifts bits toward the more-significant (left) end. Zeros are always added on the right to fill in behind the bits that moved. If no significant bits fall off the left end, this is equivalent to multiplying by 2 for every position shifted. Worked example, as an 8-bit number: 0b00101101 << 2 00101101 (start) shift left 1 &rarr; 01011010 shift left 2 &rarr; 10110100 (leading \"00\" fell off and is discarded; two 0s added on the right) Result: 0b10110100 Bits that fall off the left are gone. Because a stored value has a fixed width (here, 8 bits), any bits pushed past the leftmost position are permanently discarded — they do not wrap around. This is exactly why left-shifting does not always match \"multiply by 2\": the mathematical product may need more bits than the type has, and the width truncates the answer. Right shift ( >> ) Shifts bits toward the less-significant (right) end. Bits that fall off the right are discarded — always lost, never wrapped around or saved. The open question is what fills in on the left , and the answer depends on which kind of right shift is used and whether the number is signed or unsigned. Logical right shift Arithmetic right shift Fills in on the left with 0 , always a copy of the original leftmost bit (the sign bit), repeatedly Used for unsigned numbers signed (two's complement) numbers Preserves sign of a negative number? n/a — unsigned has no sign bit yes — a negative value shifted right stays negative Whether zeros or the sign bit get copied in on a right shift is determined entirely by the number's type (signed vs. unsigned) and which of the two right-shift operations the hardware/language performs — not by the value being shifted. Multiple choice You right-shift a negative signed number and it stays negative. Which kind of shift happened? Left shift Logical right shift Arithmetic right shift Neither — this is impossible Arithmetic right shift copies the original sign bit into the vacated left positions, so a negative value's sign is preserved. A logical right shift would fill with 0s and the value would read as positive (and much larger in magnitude) instead."
+    "title": "Lesson 8 &middot; Bit Shifts (&sect;4.6.5)",
+    "text": "Lesson 8 &middot; Bit Shifts (&sect;4.6.5) A bit shift moves every bit in a number's binary representation left or right by a specified number of positions. It is still a bitwise operation — the output has the same width as the input — but instead of combining two operands bit-by-bit, it slides one operand's bits along and has to decide what to do at both ends. Left shift ( << ) Shifts bits toward the more-significant (left) end. Zeros are always added on the right to fill in behind the bits that moved. If no significant bits fall off the left end, this is equivalent to multiplying by 2 for every position shifted. Worked example, as an 8-bit number: 0b00101101 << 2 00101101 (start) shift left 1 &rarr; 01011010 shift left 2 &rarr; 10110100 (leading \"00\" fell off and is discarded; two 0s added on the right) Result: 0b10110100 Bits that fall off the left are gone. Because a stored value has a fixed width (here, 8 bits), any bits pushed past the leftmost position are permanently discarded — they do not wrap around. This is exactly why left-shifting does not always match \"multiply by 2\": the mathematical product may need more bits than the type has, and the width truncates the answer. Right shift ( >> ) Shifts bits toward the less-significant (right) end. Bits that fall off the right are discarded — always lost, never wrapped around or saved. The open question is what fills in on the left , and the answer depends on which kind of right shift is used and whether the number is signed or unsigned. Logical right shift Arithmetic right shift Fills in on the left with 0 , always a copy of the original leftmost bit (the sign bit), repeatedly Used for unsigned numbers signed (two's complement) numbers Preserves sign of a negative number? n/a — unsigned has no sign bit yes — a negative value shifted right stays negative Whether zeros or the sign bit get copied in on a right shift is determined entirely by the number's type (signed vs. unsigned) and which of the two right-shift operations the hardware/language performs — not by the value being shifted. Multiple choice You right-shift a negative signed number and it stays negative. Which kind of shift happened? Left shift Logical right shift Arithmetic right shift Neither — this is impossible Arithmetic right shift copies the original sign bit into the vacated left positions, so a negative value's sign is preserved. A logical right shift would fill with 0s and the value would read as positive (and much larger in magnitude) instead."
   },
   {
     "id": "l7-shifts-q0",
@@ -2084,8 +2552,35 @@
     "course": "COMP211",
     "lesson": "L7",
     "type": "qa",
-    "title": "Lesson 7 &middot; Bit Shifts (&sect;4.6.5)",
+    "title": "Lesson 8 &middot; Bit Shifts (&sect;4.6.5)",
     "text": "Multiple choice You right-shift a negative signed number and it stays negative. Which kind of shift happened? — Arithmetic right shift copies the original sign bit into the vacated left positions, so a negative value's sign is preserved. A logical right shift would fill with 0s and the value would read as positive (and much larger in magnitude) instead."
+  },
+  {
+    "id": "l7-masks",
+    "section": "l7-masks",
+    "course": "COMP211",
+    "lesson": "L7",
+    "type": "section",
+    "title": "Lesson 8 &middot; Masks & Bit Manipulation (CL08)",
+    "text": "Lesson 8 &middot; Masks & Bit Manipulation (CL08) A mask is a binary pattern used to select (get) , set , clear , or toggle specific bits within a number, by combining it with the mask using a bitwise operator. These four operations are the standard toolkit for manipulating individual bits in C. Operation Meaning Bitwise op used Select (get) read whether a bit is on (1) or off (0) & Set make a bit 1 | Clear make a bit 0 & with an inverted mask Toggle flip a bit (0&rarr;1 or 1&rarr;0) ^ Shifting in worked C examples Left shift ( << ) is equivalent to multiplying by 2 n , always zero-filling on the right: uint8_t a = 5; // 0b0000_0101 uint8_t b = a << 1; // 0b0000_1010 = 10 = 5 &times; 2^1 uint8_t c = a << 2; // 0b0001_0100 = 20 = 5 &times; 2^2 uint8_t d = a << 3; // 0b0010_1000 = 40 = 5 &times; 2^3 Logical right shift (unsigned, always zero-fills on the left): uint8_t a = 5; // 0b0000_0101 uint8_t b = a >> 1; // 0b0000_0010 = 2 uint8_t d = a >> 3; // 0b0000_0000 = 0 Arithmetic right shift (signed, fills with a copy of the sign bit — here on a = -5 , i.e. 0b1111_1011 ): int8_t a = -5; // 0b1111_1011 int8_t b = a >> 1; // 0b1111_1101 = -3 int8_t c = a >> 2; // 0b1111_1110 = -2 int8_t d = a >> 3; // 0b1111_1111 = -1 In C, the rule is type-driven, not value-driven. An unsigned right shift is always logical; a signed right shift is implementation-defined but is usually arithmetic on the compilers you'll use in this course. Casting changes how the same bit pattern is read Given uint8_t b = 2; int8_t c = 10; int8_t d = -2; , predict each printf(\"%d\\n\", &hellip;) : b >> 1 &rarr; 1 (logical shift, unsigned) b << 5 &rarr; 64 (0b0100_0000) c >> 2 &rarr; 2 (10 >> 2 = 2, no sign issues since c is positive) d << 1 &rarr; -4 (0b1111_1100, still negative) d >> 1 &rarr; -1 (arithmetic shift on signed d = 0b1111_1110 &rarr; -1) (uint8_t)(d >> 1) &rarr; 255 (arithmetic shift happens FIRST on the signed value, THEN the result 0b1111_1111 is reinterpreted as unsigned) (uint8_t)(d) >> 1 &rarr; 127 (d is cast to unsigned FIRST: 0b1111_1110 = 254, then a LOGICAL right shift gives 0b0111_1111 = 127) Order of operations matters. (uint8_t)(d >> 1) and (uint8_t)(d) >> 1 give different answers, because casting before vs. after the shift changes which kind of right shift (arithmetic vs. logical) actually happens. get_bit — select a bit with AND Build a mask with a single 1 in the target position ( 1 << bit ), AND it with the number, and check whether the result is nonzero. int8_t get_bit(int8_t num, int8_t bit) { int8_t mask = 1 << bit; int8_t isolate_bit = num & mask; return (isolate_bit != 0); } num=9, bit=1 num=18, bit=4 num 0b0000_1001 0b0001_0010 mask 0b0000_0010 0b0001_0000 isolate_bit 0b0000_0000 0b0001_0000 return value 0 1 set_bit — force a bit to 1 with OR Build a mask with a single 1 in the target position and OR it in. Every other bit is OR-ed with 0 and stays unchanged; only the target position is forced to 1. int8_t set_bit(int8_t num, int8_t i) { int8_t mask = 1 << i; return (mask | num); } set_bit(10, 1) : 0b0000_1010 -> 0b0000_1010 = 10 (bit 1 was already 1 — no change) set_bit(8, 0) : 0b0000_1000 -> 0b0000_1001 = 9 set_bit(12, 4) : 0b0000_1100 -> 0b0001_1100 = 28 clear_bit — force a bit to 0 with AND + inverted mask To clear one bit and leave the rest alone, build a mask with a single 1 in the target position, then invert it with ~ so every position is 1 except the target, and AND it in. int8_t clear_bit(int8_t num, int8_t i) { int8_t mask = ~(1 << i); return (num & mask); } clear_bit(14, 2) : 0b0000_1110 -> 0b0000_1010 = 10 clear_bit(12, 2) : 0b0000_1100 -> 0b0000_1000 = 8 clear_bit(8, 2) : 0b0000_1000 -> 0b0000_1000 = 8 (bit 2 was already 0 — no change) AND-with-inverted-mask is the standard \"clear this one bit, don't touch the rest\" idiom — the same principle as ANDing with a mask of 1s and 0s that Lesson 8's AND section already introduced. update_bit — set OR clear, chosen by a parameter update_bit sets bit i of num to a caller-supplied value x (0 or 1). The cleanest way: clear the bit first, then set it only if x is 1 — combining the clear_bit and set_bit idioms above. update_bit(0b0101, 2, 0) &rarr; 1 (clears bit 2 of 0b0101, leaving 0b0001) update_bit(0b0101, 1, 1) &rarr; 7 (sets bit 1 of 0b0101, giving 0b0111) Multiple choice To clear (force to 0) a single bit without disturbing any other bit, which construction is correct? num | (1 << i) num & (1 << i) num & ~(1 << i) num ^ (1 << i) 1 << i makes a mask with a single 1 at position i ; ~ flips it so every position is 1 except i ; ANDing with that mask forces only position i to 0 and leaves every other bit untouched. Casting order changes the result: what does (uint8_t)(d >> 1) print if int8_t d = -2 (i.e. 0b1111_1110 )? (plain decimal integer) Check The shift happens first, on the signed value: an arithmetic right shift of 0b1111_1110 copies the sign bit in, giving 0b1111_1111 (i.e. -1). Then that bit pattern is cast to uint8_t , reinterpreting it as 255 ."
+  },
+  {
+    "id": "l7-masks-q0",
+    "section": "l7-masks",
+    "course": "COMP211",
+    "lesson": "L7",
+    "type": "qa",
+    "title": "Lesson 8 &middot; Masks & Bit Manipulation (CL08)",
+    "text": "Multiple choice To clear (force to 0) a single bit without disturbing any other bit, which construction is correct? — 1 << i makes a mask with a single 1 at position i ; ~ flips it so every position is 1 except i ; ANDing with that mask forces only position i to 0 and leaves every other bit untouched."
+  },
+  {
+    "id": "l7-masks-q1",
+    "section": "l7-masks",
+    "course": "COMP211",
+    "lesson": "L7",
+    "type": "qa",
+    "title": "Lesson 8 &middot; Masks & Bit Manipulation (CL08)",
+    "text": "The shift happens first, on the signed value: an arithmetic right shift of 0b1111_1110 copies the sign bit in, giving 0b1111_1111 (i.e. -1). Then that bit pattern is cast to uint8_t , reinterpreting it as 255 ."
   },
   {
     "id": "l7-rd07",
