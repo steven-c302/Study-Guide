@@ -8,11 +8,13 @@ UNC CS, Fall 2026 · Tessa Joseph-Nicholas. Open **`index.html`** in any browser
 |---|---|
 | `index.html` | Shell — all CSS, the header, the lesson bar, the progress bar, and one empty `<div class="lesson" id="lN">` per meeting. Loads the modules, then the engine. |
 | `COMP227_Study_Guide_L1.js` | **Lesson 1** — "Tutoring Basics & the Learning Environment": the UNC CS UTA Manual (pp. 1-27), Boyer et al.'s "Principles of Asking Effective Questions During Student Problem Solving," and Ch. 6 of Ambrose et al.'s *How Learning Works*. |
+| `COMP227_Study_Guide_L2.js` | **Lesson 2** — "Constructivism in Computer Science Education": Ben-Ari (2001), full paper. |
 | `COMP227_Study_Guide.js` | Shared **engine**. Must load **last**. |
 
 ## Lessons built
 
 - **Lesson 1 · Tutoring Basics & the Learning Environment** — the 10 steps of effective peer tutoring and trust-building; active listening's three tasks; common tutor mistakes (the Amazing/Ambitious/Procedural Tutor) and tutoring ESL students, with an interactive **question-difficulty-ladder** widget; Boyer et al.'s four principles for asking effective questions; Chickering's Seven Vectors and Perry's intellectual development (dualism → multiplicity → relativism → commitment); Hardiman & Jackson's social identity development (naïve → acceptance → resistance/immersion → redefinition → internalization); course climate, stereotype threat, and classroom strategies, with an interactive **climate-continuum** widget; and a Reading Quiz 1 self-check built directly from the instructor's terms/concepts reminder. 3 matching tables, ~20 graded items.
+- **Lesson 2 · Constructivism in Computer Science Education** — constructivism, misconceptions, and viable/non-viable/effective mental models (worked through the WYSIWYG example); Ernest's four-part educational paradigm (ontology, epistemology, methodology, pedagogy), with an interactive **classical-vs-constructivist click-through**; recursive knowledge construction and radical vs. social constructivism; bricolage, minimalism, notional machines/epistemic games, and closed vs. open labs; Ben-Ari's two core claims about CS education and their three conclusions, including the object-oriented paradox; a dedicated topic answering all 10 of the instructor's "questions to think about" in full; and a Reading Quiz 2 self-check. 2 matching tables, ~15 graded items.
 
 ## Grading behaviour
 

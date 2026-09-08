@@ -29,6 +29,7 @@ courses/COMP227/
   guide/
     index.html                  ← shell: CSS, lesson bar, empty .lesson divs, script tags
     COMP227_Study_Guide_L1.js   ← Lesson 1: UTA Manual pp.1-27, Boyer et al., How Learning Works Ch.6
+    COMP227_Study_Guide_L2.js   ← Lesson 2: Ben-Ari, Constructivism in Computer Science Education
     COMP227_Study_Guide.js      ← shared engine, MUST load last
     README.md                   ← engine API + authoring rules — read this first
 ```
@@ -42,7 +43,18 @@ question-asking principles, Chickering's Seven Vectors, Perry's intellectual dev
 Jackson's social identity development, and course climate/stereotype threat/strategies (with an interactive
 climate-continuum widget). Ends with a Reading Quiz 1 Self-Check topic built directly from the instructor's own
 terms/concepts reminder. Three matching tables, ~20 graded items, two interactive click-through diagrams.
-Nothing past Lesson 1 exists yet.
+
+**Lesson 2 · Constructivism in Computer Science Education** is complete, covering everything from Reading Quiz 2
+(due Tu 9/8), built from Ben-Ari (2001): constructivism, misconceptions, viable/non-viable/effective mental
+models (worked through the WYSIWYG example); Ernest's four-part educational paradigm (ontology, epistemology,
+methodology, pedagogy — with an interactive click-through comparing classical vs. constructivist answers for
+each); recursive knowledge construction and radical vs. social constructivism; bricolage, minimalism, notional
+machines/epistemic games, and closed vs. open labs; and Ben-Ari's two core CS-specific claims (no effective
+model of a computer; the computer as an accessible ontological reality) with their three conclusions, including
+the object-oriented paradox. Includes a dedicated topic answering all 10 of the instructor's "questions to
+think about" in full, plus a self-check topic. Two matching tables, ~15 graded items, one interactive widget.
+
+Nothing past Lesson 2 exists yet.
 
 ## Adding a meeting
 
