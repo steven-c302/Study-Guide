@@ -1,5 +1,5 @@
 /* ============================================================
-   LESSON 7 — RD07 Bitwise Operators (DiS 4.6, 4.6.5).
+   LESSON 8 — CL08 Bitwise Operators, incl. RD07 (DiS 4.6, 4.6.5).
    Injects into #l7. Loaded BEFORE the shared engine.
    NOTE: a literal backslash inside the template literal must be
    written \\ .
@@ -8,13 +8,14 @@ document.getElementById('l7').innerHTML = `
 <nav class="topics">
   <button class="active" onclick="showTopic(this,'l7-bitwise')">1 &middot; Bitwise vs. Logical Operators</button>
   <button onclick="showTopic(this,'l7-shifts')">2 &middot; Bit Shifts</button>
+  <button onclick="showTopic(this,'l7-masks')">3 &middot; Masks &amp; Bit Manipulation</button>
   <button onclick="showTopic(this,'l7-rd07')">RD07 Self-Check</button>
 </nav>
 <main>
 
 <!-- ============ BITWISE VS LOGICAL ============ -->
 <section class="topic active" id="l7-bitwise">
-  <h2>Lesson 7 &middot; Bitwise vs. Logical Operators</h2>
+  <h2>Lesson 8 &middot; Bitwise vs. Logical Operators</h2>
 
   <div class="concept"><b>Bitwise operators</b> operate on the <b>individual bits</b> of a number's binary
   representation, one bit position at a time, producing a result of the <b>same width</b>. This is
@@ -140,7 +141,7 @@ document.getElementById('l7').innerHTML = `
 
 <!-- ============ BIT SHIFTS ============ -->
 <section class="topic" id="l7-shifts">
-  <h2>Lesson 7 &middot; Bit Shifts (&sect;4.6.5)</h2>
+  <h2>Lesson 8 &middot; Bit Shifts (&sect;4.6.5)</h2>
 
   <div class="concept">A <b>bit shift</b> moves every bit in a number's binary representation <b>left</b> or
   <b>right</b> by a specified number of positions. It is still a bitwise operation — the output has the same
@@ -190,6 +191,144 @@ shift left 2 &rarr; 10110100   (leading "00" fell off and is discarded; two 0s a
       <div class="fb"><b>Arithmetic right shift</b> copies the original sign bit into the vacated left
       positions, so a negative value's sign is preserved. A logical right shift would fill with 0s and the
       value would read as positive (and much larger in magnitude) instead.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MASKS & BIT MANIPULATION (CL08 lecture) ============ -->
+<section class="topic" id="l7-masks">
+  <h2>Lesson 8 &middot; Masks &amp; Bit Manipulation (CL08)</h2>
+
+  <div class="concept">A <b>mask</b> is a binary pattern used to <b>select (get)</b>, <b>set</b>, <b>clear</b>,
+  or <b>toggle</b> specific bits within a number, by combining it with the mask using a bitwise operator.
+  These four operations are the standard toolkit for manipulating individual bits in C.</div>
+  <div class="card">
+    <table class="cmp">
+      <tr><th>Operation</th><th>Meaning</th><th>Bitwise op used</th></tr>
+      <tr><td><b>Select (get)</b></td><td>read whether a bit is on (1) or off (0)</td><td><code>&amp;</code></td></tr>
+      <tr><td><b>Set</b></td><td>make a bit 1</td><td><code>|</code></td></tr>
+      <tr><td><b>Clear</b></td><td>make a bit 0</td><td><code>&amp;</code> with an inverted mask</td></tr>
+      <tr><td><b>Toggle</b></td><td>flip a bit (0&rarr;1 or 1&rarr;0)</td><td><code>^</code></td></tr>
+    </table>
+  </div>
+
+  <h3>Shifting in worked C examples</h3>
+  <div class="card">
+    <p class="muted">Left shift (<code>&lt;&lt;</code>) is equivalent to multiplying by 2<sup>n</sup>, always
+    zero-filling on the right:</p>
+<pre>uint8_t a = 5;              // 0b0000_0101
+uint8_t b = a &lt;&lt; 1;         // 0b0000_1010 = 10 = 5 &times; 2^1
+uint8_t c = a &lt;&lt; 2;         // 0b0001_0100 = 20 = 5 &times; 2^2
+uint8_t d = a &lt;&lt; 3;         // 0b0010_1000 = 40 = 5 &times; 2^3</pre>
+    <p class="muted">Logical right shift (unsigned, always zero-fills on the left):</p>
+<pre>uint8_t a = 5;              // 0b0000_0101
+uint8_t b = a &gt;&gt; 1;         // 0b0000_0010 = 2
+uint8_t d = a &gt;&gt; 3;         // 0b0000_0000 = 0</pre>
+    <p class="muted">Arithmetic right shift (signed, fills with a copy of the sign bit &mdash; here on
+    <code>a = -5</code>, i.e. <code>0b1111_1011</code>):</p>
+<pre>int8_t a = -5;               // 0b1111_1011
+int8_t b = a &gt;&gt; 1;           // 0b1111_1101 = -3
+int8_t c = a &gt;&gt; 2;           // 0b1111_1110 = -2
+int8_t d = a &gt;&gt; 3;           // 0b1111_1111 = -1</pre>
+    <div class="warn"><b>In C, the rule is type-driven, not value-driven.</b> An <code>unsigned</code>
+    right shift is always logical; a <code>signed</code> right shift is implementation-defined but is
+    <b>usually arithmetic</b> on the compilers you'll use in this course.</div>
+  </div>
+
+  <h3>Casting changes how the same bit pattern is read</h3>
+  <div class="card">
+    <p class="muted">Given <code>uint8_t b = 2; int8_t c = 10; int8_t d = -2;</code>, predict each
+    <code>printf("%d\n", &hellip;)</code>:</p>
+<pre>b &gt;&gt; 1                    &rarr; 1     (logical shift, unsigned)
+b &lt;&lt; 5                    &rarr; 64    (0b0100_0000)
+c &gt;&gt; 2                    &rarr; 2     (10 &gt;&gt; 2 = 2, no sign issues since c is positive)
+d &lt;&lt; 1                    &rarr; -4    (0b1111_1100, still negative)
+d &gt;&gt; 1                    &rarr; -1    (arithmetic shift on signed d = 0b1111_1110 &rarr; -1)
+(uint8_t)(d &gt;&gt; 1)         &rarr; 255   (arithmetic shift happens FIRST on the signed value, THEN the
+                                       result 0b1111_1111 is reinterpreted as unsigned)
+(uint8_t)(d) &gt;&gt; 1         &rarr; 127   (d is cast to unsigned FIRST: 0b1111_1110 = 254, then a
+                                       LOGICAL right shift gives 0b0111_1111 = 127)</pre>
+    <div class="warn"><b>Order of operations matters.</b> <code>(uint8_t)(d &gt;&gt; 1)</code> and
+    <code>(uint8_t)(d) &gt;&gt; 1</code> give <i>different</i> answers, because casting before vs. after the
+    shift changes which kind of right shift (arithmetic vs. logical) actually happens.</div>
+  </div>
+
+  <h3>get_bit &mdash; select a bit with AND</h3>
+  <div class="card">
+    <p class="muted">Build a mask with a single 1 in the target position (<code>1 &lt;&lt; bit</code>), AND it
+    with the number, and check whether the result is nonzero.</p>
+<pre>int8_t get_bit(int8_t num, int8_t bit) {
+    int8_t mask = 1 &lt;&lt; bit;
+    int8_t isolate_bit = num &amp; mask;
+    return (isolate_bit != 0);
+}</pre>
+    <table class="cmp">
+      <tr><th></th><th>num=9, bit=1</th><th>num=18, bit=4</th></tr>
+      <tr><td>num</td><td><code>0b0000_1001</code></td><td><code>0b0001_0010</code></td></tr>
+      <tr><td>mask</td><td><code>0b0000_0010</code></td><td><code>0b0001_0000</code></td></tr>
+      <tr><td>isolate_bit</td><td><code>0b0000_0000</code></td><td><code>0b0001_0000</code></td></tr>
+      <tr><td>return value</td><td><b>0</b></td><td><b>1</b></td></tr>
+    </table>
+  </div>
+
+  <h3>set_bit &mdash; force a bit to 1 with OR</h3>
+  <div class="card">
+    <p class="muted">Build a mask with a single 1 in the target position and OR it in. Every other bit is
+    OR-ed with 0 and stays unchanged; only the target position is forced to 1.</p>
+<pre>int8_t set_bit(int8_t num, int8_t i) {
+    int8_t mask = 1 &lt;&lt; i;
+    return (mask | num);
+}</pre>
+<pre>set_bit(10, 1) : 0b0000_1010 -&gt; 0b0000_1010 = 10   (bit 1 was already 1 &mdash; no change)
+set_bit(8,  0) : 0b0000_1000 -&gt; 0b0000_1001 = 9
+set_bit(12, 4) : 0b0000_1100 -&gt; 0b0001_1100 = 28</pre>
+  </div>
+
+  <h3>clear_bit &mdash; force a bit to 0 with AND + inverted mask</h3>
+  <div class="card">
+    <p class="muted">To clear one bit and leave the rest alone, build a mask with a single 1 in the target
+    position, then <b>invert it with <code>~</code></b> so every position is 1 <i>except</i> the target, and
+    AND it in.</p>
+<pre>int8_t clear_bit(int8_t num, int8_t i) {
+    int8_t mask = ~(1 &lt;&lt; i);
+    return (num &amp; mask);
+}</pre>
+<pre>clear_bit(14, 2) : 0b0000_1110 -&gt; 0b0000_1010 = 10
+clear_bit(12, 2) : 0b0000_1100 -&gt; 0b0000_1000 = 8
+clear_bit(8,  2) : 0b0000_1000 -&gt; 0b0000_1000 = 8   (bit 2 was already 0 &mdash; no change)</pre>
+    <div class="concept">AND-with-inverted-mask is the standard "clear this one bit, don't touch the
+    rest" idiom &mdash; the same principle as ANDing with a mask of 1s and 0s that Lesson 8's AND section
+    already introduced.</div>
+  </div>
+
+  <h3>update_bit &mdash; set OR clear, chosen by a parameter</h3>
+  <div class="card">
+    <p class="muted"><code>update_bit</code> sets bit <code>i</code> of <code>num</code> to a caller-supplied
+    value <code>x</code> (0 or 1). The cleanest way: <b>clear</b> the bit first, then <b>set</b> it only if
+    <code>x</code> is 1 &mdash; combining the <code>clear_bit</code> and <code>set_bit</code> idioms above.</p>
+<pre>update_bit(0b0101, 2, 0)  &rarr;  1    (clears bit 2 of 0b0101, leaving 0b0001)
+update_bit(0b0101, 1, 1)  &rarr;  7    (sets bit 1 of 0b0101, giving 0b0111)</pre>
+  </div>
+
+  <div class="card">
+    <div class="q" data-mc="2">
+      <div class="prompt"><span class="tag">Multiple choice</span>To clear (force to 0) a single bit without disturbing any other bit, which construction is correct?</div>
+      <button class="opt" data-i="0"><code>num | (1 &lt;&lt; i)</code></button>
+      <button class="opt" data-i="1"><code>num &amp; (1 &lt;&lt; i)</code></button>
+      <button class="opt" data-i="2"><code>num &amp; ~(1 &lt;&lt; i)</code></button>
+      <button class="opt" data-i="3"><code>num ^ (1 &lt;&lt; i)</code></button>
+      <div class="fb"><code>1 &lt;&lt; i</code> makes a mask with a single 1 at position <code>i</code>;
+      <code>~</code> flips it so every position is 1 <i>except</i> <code>i</code>; ANDing with that mask
+      forces only position <code>i</code> to 0 and leaves every other bit untouched.</div>
+    </div>
+    <div class="q">
+      <p>Casting order changes the result: what does <code>(uint8_t)(d &gt;&gt; 1)</code> print if
+      <code>int8_t d = -2</code> (i.e. <code>0b1111_1110</code>)? (plain decimal integer)</p>
+      <input class="fillblank" data-answer="255">
+      <button class="btn small" style="margin-top:8px" onclick="checkFill(this)">Check</button>
+      <div class="fb">The shift happens first, on the <b>signed</b> value: an arithmetic right shift of
+      <code>0b1111_1110</code> copies the sign bit in, giving <code>0b1111_1111</code> (i.e. -1). <i>Then</i>
+      that bit pattern is cast to <code>uint8_t</code>, reinterpreting it as <b>255</b>.</div>
     </div>
   </div>
 </section>

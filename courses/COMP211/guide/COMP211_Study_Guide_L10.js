@@ -1,7 +1,9 @@
 /* ============================================================
-   LESSON 6 — CL06 Number Representation (+ RD05, DiS 4.1 & 4.3).
-   Injects into #l10. Loaded BEFORE the shared engine.
-   Plain content lesson — no interactive widget, no initL10().
+   LESSON 6 — CL06 Number Representation (+ RD05, DiS 4.1 & 4.3)
+   combined with CL07 Signed Binary Integers & Binary Arithmetic
+   (+ RD06, DiS 4.4-4.5). Injects into #l10. Loaded BEFORE the
+   shared engine. Plain content lesson — no interactive widget,
+   no initL10().
    ============================================================ */
 document.getElementById('l10').innerHTML = `
 <nav class="topics">
@@ -12,6 +14,11 @@ document.getElementById('l10').innerHTML = `
   <button onclick="showTopic(this,'l10-ones')">5 &middot; One's Complement</button>
   <button onclick="showTopic(this,'l10-twos')">6 &middot; Two's Complement</button>
   <button onclick="showTopic(this,'l10-rd05')">7 &middot; Practice &amp; RD05 Self-Check</button>
+  <button onclick="showTopic(this,'l10-ranges')">8 &middot; Ranges</button>
+  <button onclick="showTopic(this,'l10-addition')">9 &middot; Binary Addition &amp; Overflow</button>
+  <button onclick="showTopic(this,'l10-twoscomp')">10 &middot; Two's Complement Add/Sub/Overflow</button>
+  <button onclick="showTopic(this,'l10-c')">11 &middot; Two's Complement in C</button>
+  <button onclick="showTopic(this,'l10-rd06')">12 &middot; RD06 Self-Check</button>
 </nav>
 <main>
 
@@ -738,5 +745,415 @@ original value = -3</pre>
     </div>
   </div>
 </section>
+
+
+
+<!-- ============ RANGES ============ -->
+<section class="topic" id="l10-ranges">
+  <h2>Lesson 6 &middot; Ranges</h2>
+
+  <div class="concept">A fixed <i>n</i>-bit representation can only hold so many distinct values
+  (2<sup>n</sup> of them, since each bit is independently 0 or 1). Which values those 2<sup>n</sup> bit
+  patterns <i>mean</i> depends on whether the type is unsigned or two's-complement signed &mdash; so the same
+  bit width supports two different ranges.</div>
+
+  <div class="card">
+    <table class="cmp">
+      <tr><th>Type</th><th>Range for <i>n</i> bits</th><th>Range for 8 bits</th></tr>
+      <tr><td><b>Unsigned</b></td><td><code>[0, 2<sup>n</sup>&minus;1]</code></td><td><code>[0, 255]</code></td></tr>
+      <tr><td><b>Two's complement (signed)</b></td><td><code>[&minus;2<sup>n&minus;1</sup>, 2<sup>n&minus;1</sup>&minus;1]</code></td><td><code>[&minus;128, 127]</code></td></tr>
+    </table>
+    <div class="concept">Both ranges hold exactly 2<sup>n</sup> values &mdash; signed just shifts about half of
+    them to the negative side, and the negative side gets <b>one extra value</b> (there's a
+    &minus;2<sup>n&minus;1</sup> but no matching +2<sup>n&minus;1</sup>), because two's complement has only
+    <b>one</b> representation of zero, not a separate +0 and &minus;0.</div>
+  </div>
+
+  <div class="card">
+    <div class="q" data-mc="2">
+      <div class="prompt"><span class="tag">Multiple choice</span>What is the range of a signed (two's complement) 8-bit integer?</div>
+      <button class="opt" data-i="0"><code>[0, 255]</code></button>
+      <button class="opt" data-i="1"><code>[-127, 127]</code></button>
+      <button class="opt" data-i="2"><code>[-128, 127]</code></button>
+      <button class="opt" data-i="3"><code>[-128, 128]</code></button>
+      <div class="fb">General formula <code>[-2<sup>n-1</sup>, 2<sup>n-1</sup>-1]</code> with n=8 gives
+      <code>[-128, 127]</code> &mdash; one more negative value than positive, since there's only one zero.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BINARY ADDITION & OVERFLOW ============ -->
+<section class="topic" id="l10-addition">
+  <h2>Lesson 6 &middot; Binary Addition &amp; Overflow</h2>
+
+  <div class="concept">Binary addition works exactly like decimal addition by hand: add column by column from
+  the right, and when a column's sum is 2 or more, write down the low bit and <b>carry</b> a 1 into the next
+  column to the left.</div>
+
+  <h3>Terminology</h3>
+  <div class="card">
+    <table class="cmp">
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td><b>Carry-in</b></td><td>the carry bit coming <i>into</i> a column from the column to its right</td></tr>
+      <tr><td><b>Carry-out</b></td><td>the carry bit produced <i>out of</i> a column, passed to the column on its left</td></tr>
+    </table>
+    <p class="muted">Every column's carry-out becomes the next column's carry-in. The carry-out of the very
+    <b>last (most significant) column</b> has nowhere left to go &mdash; it either gets discarded (and may
+    signal overflow) or, in some hardware, is captured in a special flag.</p>
+  </div>
+
+  <h3>Worked example (unsigned, 8-bit)</h3>
+  <div class="card">
+<pre>  0111 0101   (117)
++ 0010 1100   ( 44)
+-----------
+  1010 0001   (161)</pre>
+    <p class="muted">Column by column from the right, tracking carries, gives <code>0b1010_0001</code>, and no
+    carry falls off the MSB column &mdash; the true sum 161 fits within 8 unsigned bits (max 255).</p>
+  </div>
+
+  <h3>Unsigned overflow</h3>
+  <div class="card">
+    <div class="concept"><b>Detection rule (unsigned):</b> overflow occurred exactly when the <b>carry-out of
+    the most-significant (last) column is 1</b> &mdash; the true mathematical sum needed one more bit than the
+    type has, so that extra bit was silently dropped.</div>
+    <p class="muted">Analogy: a speedometer that maxes out at 99 and wraps to 00 on the next mile doesn't show
+    an error &mdash; it just silently wraps. Unsigned overflow in fixed-width binary works the same way: the
+    hardware doesn't stop you, it just drops the extra carry bit and the stored value wraps around.</p>
+<pre>  1111 1111   (255, the max 8-bit unsigned value)
++ 0000 0001   (  1)
+-----------
+1 0000 0000   &larr; carry-out of the last column is 1: OVERFLOW
+  0000 0000   (stored result: 0, not 256 &mdash; wrapped around)</pre>
+  </div>
+
+  <div class="card">
+    <div class="q" data-tf="T">
+      <div class="prompt"><span class="tag">True / False</span>Unsigned overflow is detected when the carry-out of the most significant bit's column is 1.</div>
+      <button class="opt" data-v="T">True</button>
+      <button class="opt" data-v="F">False</button>
+      <div class="fb"><b>True.</b> That extra carry bit has nowhere to go in a fixed-width unsigned number
+      &mdash; its presence means the true sum didn't fit.</div>
+    </div>
+    <div class="q">
+      <p>8-bit unsigned addition: <code>0b1111_1110 + 0b0000_0011</code> = ? Does it overflow?
+      Give the stored 8-bit result as <code>0bXXXX_XXXX</code>.</p>
+      <input class="fillblank" data-answer="0b0000_0001~~~0b00000001">
+      <button class="btn small" style="margin-top:8px" onclick="checkFill(this)">Check</button>
+      <div class="fb">254 + 3 = 257, which needs 9 bits. The 8-bit stored result wraps to
+      <code>0b0000_0001</code> (1) with a carry-out of 1 from the last column &mdash; overflow.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TWO'S COMPLEMENT ADD/SUB/OVERFLOW ============ -->
+<section class="topic" id="l10-twoscomp">
+  <h2>Lesson 6 &middot; Two's Complement Addition, Subtraction &amp; Overflow</h2>
+
+  <h3>Addition</h3>
+  <div class="card">
+    <div class="concept">Two's complement addition uses the <b>exact same binary addition procedure</b> as
+    unsigned &mdash; add column by column, carry as needed. No special-casing for sign is required; that's the
+    whole point of two's complement (&sect;4.4's "arithmetic wraps around correctly").</div>
+<pre>   0000 0101   ( 5)
++  1111 1011   (-5)
+------------
+ 1 0000 0000   (carry-out of last column is 1 and discarded)
+   0000 0000   (0) &mdash; correct! 5 + (-5) = 0</pre>
+  </div>
+
+  <h3>Two's complement overflow</h3>
+  <div class="card">
+    <div class="warn"><b>The carry-out rule from unsigned does NOT apply here.</b> Two's complement overflow
+    is detected differently: it happens exactly when the <b>sign of the result doesn't make sense</b> given
+    the signs of the operands.</div>
+    <table class="cmp">
+      <tr><th>Operand signs</th><th>Can overflow?</th><th>Overflow signature</th></tr>
+      <tr><td>positive + positive</td><td>yes</td><td>result comes out <b>negative</b></td></tr>
+      <tr><td>negative + negative</td><td>yes</td><td>result comes out <b>positive</b></td></tr>
+      <tr><td>mixed signs (one pos, one neg)</td><td><b>never</b></td><td>&mdash; the true sum is always between the two operands in magnitude, so it always fits</td></tr>
+    </table>
+    <p class="muted">Worked example: adding two positives that overflow into a negative result, 8-bit
+    <code>100 + 100</code>:</p>
+<pre>  0110 0100   (100)
++ 0110 0100   (100)
+-----------
+  1100 1000   (interpreted as signed: -56, but 100+100=200 should be +200 &mdash; overflow!)</pre>
+    <p class="muted">A real-world example of exactly this bug: 32-bit signed integer overflow has caused
+    real, documented incidents where a counter that should keep climbing instead flips to a large negative
+    number once it crosses 2<sup>31</sup>&minus;1.</p>
+  </div>
+
+  <h3>Subtraction: negate and add</h3>
+  <div class="card">
+    <div class="concept">Two's complement has no separate subtraction circuitry: <code>a &minus; b</code> is
+    computed as <code>a + (&minus;b)</code>, where <code>&minus;b</code> is <b>b's two's complement
+    negation</b> (flip every bit of <code>b</code>, then add 1). This reuses the same adder hardware for both
+    operations.</div>
+    <p class="muted">Worked example, 8-bit <code>20 &minus; 5</code>:</p>
+<pre>  5 = 0000 0101
+ -5 = 1111 1010 + 1 = 1111 1011   (flip bits, add 1)
+
+  0001 0100   ( 20)
++ 1111 1011   ( -5)
+-----------
+  0000 1111   ( 15)   &mdash; correct! 20 - 5 = 15</pre>
+    <p class="muted">Overflow detection for subtraction uses the same sign-based rule as addition, once you've
+    rewritten it as "add the negation": check the signs of <code>a</code> and <code>(&minus;b)</code>, not the
+    signs of <code>a</code> and the original <code>b</code>.</p>
+  </div>
+
+  <div class="card">
+    <div class="q" data-mc="1">
+      <div class="prompt"><span class="tag">Multiple choice</span>Adding a positive and a negative two's-complement number can overflow. True or false?</div>
+      <button class="opt" data-i="0">True &mdash; it can overflow just like same-sign addition</button>
+      <button class="opt" data-i="1">False &mdash; mixed-sign addition can never overflow</button>
+      <div class="fb"><b>False is correct.</b> When the operands have opposite signs, the true sum's
+      magnitude is always smaller than at least one operand's magnitude, so it always fits in the same width
+      &mdash; only same-sign addition (pos+pos or neg+neg) can overflow.</div>
+    </div>
+    <div class="q" data-mc="2">
+      <div class="prompt"><span class="tag">Multiple choice</span>Two positive 8-bit two's complement numbers are added and the result appears negative. What happened?</div>
+      <button class="opt" data-i="0">This is normal and expected</button>
+      <button class="opt" data-i="1">A carry-out of the last column occurred, which always means overflow here</button>
+      <button class="opt" data-i="2">Signed overflow occurred &mdash; the true sum needed more than 8 bits and the sign bit got corrupted</button>
+      <button class="opt" data-i="3">The subtraction rule was used by mistake</button>
+      <div class="fb">pos + pos should never be negative &mdash; a negative result is exactly the
+      overflow signature for two positive operands.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TWO'S COMPLEMENT IN C ============ -->
+<section class="topic" id="l10-c">
+  <h2>Lesson 6 &middot; Two's Complement in C</h2>
+
+  <div class="concept">C's <code>int</code> (and <code>int8_t</code>, <code>int16_t</code>, etc.) are
+  <b>signed two's complement</b> by default. The exact same bit pattern in memory is interpreted completely
+  differently depending on whether the variable (or the format specifier used to print it) is signed or
+  unsigned &mdash; the bits never change, only the <i>interpretation</i> does.</div>
+
+  <div class="card">
+    <p class="muted">Worked example:</p>
+<pre>int8_t   x = -100;
+uint8_t  y = (uint8_t) x;   // same bit pattern, reinterpreted
+
+printf("%d\\n", x);   // -100          (signed interpretation of 0b1001_1100)
+printf("%u\\n", y);   // 156           (unsigned interpretation of the SAME bits)</pre>
+    <p class="muted">A closely related C gotcha from the reading: printing the <b>same</b> variable once with
+    <code>%d</code> and once with <code>%u</code> can print <b>-100</b> and <b>4294967196</b> for what is
+    really the identical 32-bit pattern &mdash; the bit pattern is simply interpreted differently by each
+    format specifier (signed vs. unsigned).</p>
+    <div class="warn">Casting (or choosing a different <code>printf</code> format specifier) never changes the
+    stored bits &mdash; it only changes how those bits are <i>read back</i> as a number.</div>
+  </div>
+
+  <h3>ASCII reference (for context &mdash; ties casting/ interpretation to character codes)</h3>
+  <div class="card">
+    <table class="cmp">
+      <tr><th>Char</th><th>Dec</th><th>Char</th><th>Dec</th><th>Char</th><th>Dec</th></tr>
+      <tr><td><code>'0'</code>&ndash;<code>'9'</code></td><td>48&ndash;57</td><td><code>'A'</code>&ndash;<code>'Z'</code></td><td>65&ndash;90</td><td><code>'a'</code>&ndash;<code>'z'</code></td><td>97&ndash;122</td></tr>
+      <tr><td><code>' '</code> (space)</td><td>32</td><td><code>'\\n'</code></td><td>10</td><td><code>'\\0'</code></td><td>0</td></tr>
+    </table>
+    <p class="muted">Same underlying idea: a byte's bit pattern is meaningless on its own &mdash; ASCII, signed
+    int, and unsigned int are three different lenses for reading the identical bits.</p>
+  </div>
+
+  <div class="card">
+    <div class="q" data-mc="1">
+      <div class="prompt"><span class="tag">Multiple choice</span>Why does printing a variable's bit pattern with <code>%d</code> vs. <code>%u</code> give different results?</div>
+      <button class="opt" data-i="0">The compiler changes the stored bits based on the format specifier</button>
+      <button class="opt" data-i="1">The bit pattern is interpreted differently &mdash; signed vs. unsigned &mdash; by each specifier</button>
+      <button class="opt" data-i="2">This is undefined behavior with no consistent explanation</button>
+      <button class="opt" data-i="3"><code>%u</code> only works for characters</button>
+      <div class="fb">The bits in memory never change. <code>%d</code> reads them as signed two's complement;
+      <code>%u</code> reads the identical bits as unsigned.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RD06 SELF-CHECK ============ -->
+<section class="topic" id="l10-rd06">
+  <h2>RD06 &middot; Signed Binary Integers &amp; Binary Arithmetic &mdash; Self-Check</h2>
+  <p class="muted">Covers <i>Dive into Systems</i> &sect;4.4&ndash;4.5 (Two's Complement, Sign/Zero Extension).</p>
+
+  <div class="card">
+    <div class="q" data-mc="2">
+      <div class="prompt"><span class="tag">Q1</span>Why does an MSB (most significant bit) of 1 in two's complement always mean the number is negative?</div>
+      <button class="opt" data-i="0">By convention only, with no mathematical reason</button>
+      <button class="opt" data-i="1">Because the MSB is always ignored in arithmetic</button>
+      <button class="opt" data-i="2">The MSB contributes a large negative value to the total sum</button>
+      <button class="opt" data-i="3">Because the CPU flags it as negative</button>
+      <div class="fb">In two's complement's weighted-sum definition, the MSB's place value is
+      <b>&minus;2<sup>n&minus;1</sup></b> (negative), so setting it always pulls the total sum negative.</div>
+    </div>
+    <div class="q" data-mc="1">
+      <div class="prompt"><span class="tag">Q2</span>How does two's complement simplify the transition between positive and negative numbers, and to/from zero?</div>
+      <button class="opt" data-i="0">It requires separate hardware for positive and negative numbers</button>
+      <button class="opt" data-i="1">Arithmetic naturally "wraps around" correctly</button>
+      <button class="opt" data-i="2">It stores a separate sign bit that's checked manually</button>
+      <button class="opt" data-i="3">It doesn't &mdash; the transition is a special case</button>
+      <div class="fb">Ordinary binary addition (with carries) just works across the zero boundary and the
+      positive/negative boundary &mdash; no special-casing needed.</div>
+    </div>
+    <div class="q" data-mc="2">
+      <div class="prompt"><span class="tag">Q3</span>What is the shortcut for negating a two's complement number?</div>
+      <button class="opt" data-i="0">Flip only the sign bit</button>
+      <button class="opt" data-i="1">Subtract 1 from every bit</button>
+      <button class="opt" data-i="2">Flip all bits and add one</button>
+      <button class="opt" data-i="3">Reverse the bit order</button>
+      <div class="fb">Bitwise NOT (<code>~x</code>), then <code>+ 1</code> &mdash; the standard "invert and
+      increment" negation shortcut.</div>
+    </div>
+    <div class="q" data-mc="0">
+      <div class="prompt"><span class="tag">Q4</span>How does C interpret a plain <code>int</code> by default?</div>
+      <button class="opt" data-i="0">As a signed two's complement integer</button>
+      <button class="opt" data-i="1">As an unsigned integer</button>
+      <button class="opt" data-i="2">As a one's complement integer</button>
+      <button class="opt" data-i="3">As a floating-point value</button>
+      <div class="fb">Plain <code>int</code> is signed two's complement unless declared
+      <code>unsigned</code>.</div>
+    </div>
+    <div class="q" data-mc="1">
+      <div class="prompt"><span class="tag">Q5</span>What happens when you print the same bit pattern once with <code>%d</code> and once with <code>%u</code>?</div>
+      <button class="opt" data-i="0">Both always print the same number</button>
+      <button class="opt" data-i="1">The bit pattern is interpreted differently by each specifier</button>
+      <button class="opt" data-i="2">It causes a compile error</button>
+      <button class="opt" data-i="3"><code>%u</code> is invalid for integers</button>
+      <div class="fb">Same bits, different lens: <code>%d</code> reads them as signed, <code>%u</code> reads
+      them as unsigned.</div>
+    </div>
+    <div class="q" data-mc="1">
+      <div class="prompt"><span class="tag">Q6</span>Why might a program print <code>-100</code> and <code>4294967196</code> for what is really the same 32-bit variable's bit pattern?</div>
+      <button class="opt" data-i="0">The variable actually holds two different values</button>
+      <button class="opt" data-i="1">Because the bit pattern is interpreted as unsigned in the second case</button>
+      <button class="opt" data-i="2">Integer overflow occurred between the two prints</button>
+      <button class="opt" data-i="3">This indicates a memory corruption bug</button>
+      <div class="fb">-100 as signed two's complement and 4294967196 as unsigned are the exact same 32-bit
+      pattern, read two different ways.</div>
+    </div>
+    <div class="q" data-mc="2">
+      <div class="prompt"><span class="tag">Q7</span>Why is two's complement superior to signed-magnitude representation?</div>
+      <button class="opt" data-i="0">It uses fewer bits</button>
+      <button class="opt" data-i="1">It can represent larger numbers</button>
+      <button class="opt" data-i="2">It simplifies hardware design and arithmetic</button>
+      <button class="opt" data-i="3">It avoids the need for a sign bit entirely</button>
+      <div class="fb">Two's complement lets addition/subtraction hardware work identically for signed and
+      unsigned operands, with no special sign-checking logic &mdash; signed-magnitude cannot do this.</div>
+    </div>
+    <div class="q" data-mc="2">
+      <div class="prompt"><span class="tag">Q8</span>Why is bit extension necessary in C?</div>
+      <button class="opt" data-i="0">To make numbers print faster</button>
+      <button class="opt" data-i="1">To save memory</button>
+      <button class="opt" data-i="2">Because arithmetic operations require operands to have the same number of bits</button>
+      <button class="opt" data-i="3">To convert between signed and unsigned types</button>
+      <div class="fb">Before combining values of different widths, the narrower one must be widened so both
+      operands line up bit-for-bit.</div>
+    </div>
+    <div class="q" data-mc="1">
+      <div class="prompt"><span class="tag">Q9</span>Which of these is an example C scenario needing bit extension?</div>
+      <button class="opt" data-i="0">Printing a string</button>
+      <button class="opt" data-i="1">Adding a 32-bit <code>int</code> and a 16-bit <code>short</code></button>
+      <button class="opt" data-i="2">Declaring a variable</button>
+      <button class="opt" data-i="3">Comparing two floats</button>
+      <div class="fb">The 16-bit <code>short</code> must be extended to 32 bits before it can be added to the
+      32-bit <code>int</code>.</div>
+    </div>
+    <div class="q" data-mc="0">
+      <div class="prompt"><span class="tag">Q10</span>What does sign extension mean?</div>
+      <button class="opt" data-i="0">Repeating the most significant bit to increase bit width</button>
+      <button class="opt" data-i="1">Adding zeros to the left regardless of sign</button>
+      <button class="opt" data-i="2">Adding zeros to the right</button>
+      <button class="opt" data-i="3">Removing the sign bit</button>
+      <div class="fb">Sign extension widens a number by repeating its MSB (sign bit) into all the new
+      leading positions.</div>
+    </div>
+    <div class="q" data-mc="1">
+      <div class="prompt"><span class="tag">Q11</span>Which bit gets repeated during sign extension?</div>
+      <button class="opt" data-i="0">The least significant bit</button>
+      <button class="opt" data-i="1">The most significant (sign) bit</button>
+      <button class="opt" data-i="2">Bit 0 of the original number, always</button>
+      <button class="opt" data-i="3">A fixed bit chosen by the compiler</button>
+      <div class="fb">The current MSB (sign bit) is copied into every new leading position.</div>
+    </div>
+    <div class="q" data-mc="1">
+      <div class="prompt"><span class="tag">Q12</span>How does the sign of a number stay the same after sign extension?</div>
+      <button class="opt" data-i="0">It doesn't &mdash; sign extension can flip the sign</button>
+      <button class="opt" data-i="1">It remains the same as the original number</button>
+      <button class="opt" data-i="2">The sign is recalculated from scratch</button>
+      <button class="opt" data-i="3">A separate sign flag is set</button>
+      <div class="fb">Because the new leading bits copy the original sign bit, the numeric value's
+      <b>weighted sum</b> &mdash; and therefore its sign &mdash; is unchanged.</div>
+    </div>
+    <div class="q" data-mc="2">
+      <div class="prompt"><span class="tag">Q13</span>If zeros were wrongly prepended to a negative two's complement number instead of sign-extending, what would happen?</div>
+      <button class="opt" data-i="0">The value would stay exactly the same</button>
+      <button class="opt" data-i="1">The program would crash</button>
+      <button class="opt" data-i="2">The value may become positive</button>
+      <button class="opt" data-i="3">The value would be unchanged but slower to compute</button>
+      <div class="fb">Prepending 0s clears what should have been the sign-carrying bits, which can flip a
+      negative value into an incorrect positive one.</div>
+    </div>
+    <div class="q" data-mc="2">
+      <div class="prompt"><span class="tag">Q14</span>When is zero extension used instead of sign extension?</div>
+      <button class="opt" data-i="0">When the value is negative</button>
+      <button class="opt" data-i="1">Never &mdash; sign extension is always used</button>
+      <button class="opt" data-i="2">When the value is explicitly unsigned</button>
+      <button class="opt" data-i="3">Only for floating-point values</button>
+      <div class="fb">Unsigned values have no sign bit to preserve, so widening them always prepends 0s
+      (zero extension) rather than copying a "sign" bit.</div>
+    </div>
+    <div class="q" data-mc="1">
+      <div class="prompt"><span class="tag">Q15</span>How does zero extension differ from sign extension?</div>
+      <button class="opt" data-i="0">It repeats the MSB instead of using zeros</button>
+      <button class="opt" data-i="1">It always prepends zeros</button>
+      <button class="opt" data-i="2">It only works on negative numbers</button>
+      <button class="opt" data-i="3">It changes the least significant bits</button>
+      <div class="fb">Zero extension unconditionally fills new leading bits with 0, regardless of what the
+      original MSB was &mdash; correct for unsigned values, wrong for negative signed ones.</div>
+    </div>
+  </div>
+
+  <h3>Mixed practice</h3>
+  <div class="card">
+    <div class="q">
+      <p>Negate <code>0b0000_0110</code> (6) using the two's-complement shortcut. Give the 8-bit result as
+      <code>0bXXXX_XXXX</code>.</p>
+      <input class="fillblank" data-answer="0b1111_1010~~~0b11111010">
+      <button class="btn small" style="margin-top:8px" onclick="checkFill(this)">Check</button>
+      <div class="fb">Flip all bits: <code>0b1111_1001</code>. Add 1: <code>0b1111_1010</code> = &minus;6.</div>
+    </div>
+    <div class="q" data-tf="F">
+      <div class="prompt"><span class="tag">True / False</span>Adding a positive and a negative two's-complement number can cause overflow.</div>
+      <button class="opt" data-v="T">True</button>
+      <button class="opt" data-v="F">False</button>
+      <div class="fb"><b>False.</b> Only same-sign addition (pos+pos or neg+neg) can overflow; mixed-sign
+      addition can never overflow.</div>
+    </div>
+    <div class="q" data-tf="T">
+      <div class="prompt"><span class="tag">True / False</span>Unsigned overflow is signaled by a carry-out of 1 from the most significant column.</div>
+      <button class="opt" data-v="T">True</button>
+      <button class="opt" data-v="F">False</button>
+      <div class="fb"><b>True.</b> That's the unsigned detection rule &mdash; but note it's a
+      <i>different</i> rule from two's complement overflow, which is sign-based instead.</div>
+    </div>
+
+    <h3 style="margin-top:22px">Select all that apply</h3>
+    <p>Which of these statements about two's complement are <b>true</b>?</p>
+    <div class="q" data-multi="0,1,3">
+      <label class="ma-item"><input type="checkbox" data-i="0"><span><b>A.</b> Two's complement has only one representation of zero.</span></label>
+      <label class="ma-item"><input type="checkbox" data-i="1"><span><b>B.</b> Subtraction is implemented as adding the two's-complement negation.</span></label>
+      <label class="ma-item"><input type="checkbox" data-i="2"><span><b>C.</b> Mixed-sign addition can overflow just as easily as same-sign addition.</span></label>
+      <label class="ma-item"><input type="checkbox" data-i="3"><span><b>D.</b> An 8-bit signed range holds one more negative value than positive value.</span></label>
+      <label class="ma-item"><input type="checkbox" data-i="4"><span><b>E.</b> The unsigned carry-out overflow rule also correctly detects two's complement overflow.</span></label>
+      <button class="btn small" style="margin-top:8px" onclick="checkMulti(this)">Check</button>
+      <div class="fb"><b>A, B, and D.</b>
+      <br>&nbsp;&nbsp;<b>C</b> is false &mdash; mixed-sign addition can <i>never</i> overflow.
+      <br>&nbsp;&nbsp;<b>E</b> is false &mdash; two's complement overflow uses a sign-based rule, not the
+      unsigned carry-out rule.</div>
+    </div>
+  </div>
+</section>
+
 
 </main>`;
