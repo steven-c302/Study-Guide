@@ -1,0 +1,10 @@
+{
+  "name": "study-hub-rag",
+  "private": true,
+  "type": "module",
+  "description": "Tooling for the Study Hub's RAG-based Ask feature. The hub itself stays 100% static — this only supports the offline indexing script and the Netlify function.",
+  "scripts": {
+    "build-rag-index": "node tools/build-rag-index.mjs"
+  },
+  "dependencies": {}
+}

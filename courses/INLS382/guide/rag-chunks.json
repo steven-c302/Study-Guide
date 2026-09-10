@@ -1,0 +1,191 @@
+[
+  {
+    "id": "l1-situations",
+    "section": "l1-situations",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; \"Problematical Situations,\" Not \"Problems\"",
+    "text": "Lesson 1 &middot; \"Problematical Situations,\" Not \"Problems\" Checkland and Poulter deliberately avoid the word \"problem.\" A problem implies a well-defined thing that can be solved out of existence. Real situations in organizations and everyday life are messier than that — so SSM calls them \"problematical situations\": situations about which someone has the feeling that \"something needs to be done about this.\" The reading's own examples Situation Why it isn't a clean \"problem\" A company wonders whether to bid for a smaller rival's equity No obviously \"correct\" answer — it depends on judgment, risk appetite, and whose interests count A university's intake is biased toward middle-class students \"Fixing\" it raises further open questions about what changing it would actually involve A government wants security from terrorism without losing civil liberties The two goals trade off against each other; there's no single correct balance A local council's services aren't \"citizen-friendly\" \"Citizen-friendly\" itself means different things to different people A head teacher decides whether the school or the local authority should run school meals Depends on who benefits from a surplus and how much control matters Notice what all five have in common: each could be tackled by \"appealing to previous experience; intuitively; by randomly thrashing about... by responding emotionally\" — or by using a genuine method of inquiry. SSM is that method. Common misreading. \"Problematical situation\" is not just a softer synonym for \"problem.\" The whole point of the word choice is to keep open the possibility that there is no single correct fix — only a situation that different people, with different criteria, experience differently. If you find yourself asking \"what's the solution to this problematical situation,\" you've slipped back into hard-systems thinking without noticing. What \"everyday life\" actually looks like, per the reading We experience life as an \"onrushing turbulent stream, a flux of happenings, ideas, emotions, actions, all mediated through the slippery agency of language, all continually changing.\" Nothing is intrinsically \"a situation\" — it is our own perceptions that carve a \"situation\" out of that flux, and in doing so we already know its boundaries and content will keep changing. This is why SSM is a flexible process , not a fixed technique or a sequence of steps you could hand to a robot. Checkland calls it a methodology rather than a method precisely because \"the human world is one in which nothing ever happens twice, not in exactly the same way\" — a methodology is a set of principles adapted to each unique situation, not a recipe."
+  },
+  {
+    "id": "l1-worldview",
+    "section": "l1-worldview",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; Worldview and the Core Systems Ideas",
+    "text": "Lesson 1 &middot; Worldview and the Core Systems Ideas To judge anything as \"good\" or \"bad,\" you need criteria . Different people's criteria come from different genetic makeup and, above all, different life experience — and over time those criteria firm up into a relatively stable outlook, a worldview (German Weltanschauung ), through which a person perceives the world. The book calls worldview \"the most important concept in understanding the complexity of human situations, and indeed, the nature and form of SSM.\" Worldview lens: same facts, different verdict Pick a scenario, then try each worldview on it. Nothing about the underlying facts changes — only the criteria used to judge them. Scenario: Economic activity (the reading's example) A prison's daily routine (the reading's example) An armed group attacks a government facility (the reading's example) Choose a worldview above. What this does not mean. Neither observer is \"factually wrong.\" Worldviews aren't errors to correct — they're stable, and can change over time (the book's example: \"a paranoid person whose worldview is 'this hostile world owes me a living' might become a more integrated member of society as a result of experiencing love and generosity\"), but they can't be argued away by pointing at facts both sides already agree on. The four requirements of an adaptive whole (a \"system\") Systems ideas are the toolkit SSM borrows — but redirected, as the next section explains. The core systems concept is an adaptive whole : something that survives through time by adapting to changes in its environment. Click each requirement to see what it means. E (environment) S SS SS Communication processes Control processes Structure in layers Emergent properties A system S receives shocks from its changing environment E (the arrows). Click a requirement to see why survival depends on it. Select all that apply Which two of these are among the four requirements Figure 1.1 lists for a system S to survive through time? Structure in layers A written objective function Emergent properties A single, unified worldview Check The four are communication processes, control processes, structure in layers, and emergent properties — only two of which appear above. \"Objective function\" belongs to hard systems engineering, and a \"single worldview\" is the opposite of what SSM expects to find in a real situation."
+  },
+  {
+    "id": "l1-worldview-q0",
+    "section": "l1-worldview",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Worldview and the Core Systems Ideas",
+    "text": "Select all that apply Which two of these are among the four requirements Figure 1.1 lists for a system S to survive through time? — The four are communication processes, control processes, structure in layers, and emergent properties — only two of which appear above. \"Objective function\" belongs to hard systems engineering, and a \"single worldview\" is the opposite of what SSM expects to find in a real situation."
+  },
+  {
+    "id": "l1-models",
+    "section": "l1-models",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; Purposeful Activity Models and the Learning Cycle",
+    "text": "Lesson 1 &middot; Purposeful Activity Models and the Learning Cycle Every real-world problematical situation — whether \"a small firm making wheelbarrows\" or a \"multi-national oil company\" — has one thing in common: it contains people trying to act purposefully , not just acting on instinct. SSM's key move is to treat purposeful action itself as a system — an adaptive whole, built the same way as Figure 1.1, with the \"operations\" being monitored against defined measures of performance so that control action can be taken. Worked example: painting the garden fence (Fig. 1.2 & 1.3) A logically linked set of activities forms a whole whose emergent property is purposefulness . Arrows show one activity depending on another. 1. Decide the scope of the task &rarr; 2. Appraise the colour scheme of the property &rarr; 3. Decide colour to paint the fence &rarr; 4. Obtain paint 5. Obtain brush 6. Prepare fence for painting &rarr; 7. Apply paint to fence 8. Define measures of performance &rarr; 9. Monitor activities 1–7 &rarr; 10. Take control action Activity 7 (apply paint) depends on 4, 5, and 6 all being done first — that's what the arrows into it mean. Multiple choice Whose worldview does this particular model express? An objective, worldview-free description of fence painting The householder's: \"I can do useful DIY jobs to improve my property\" The neighbour's worldview about property upkeep The paint manufacturer's worldview The model is built entirely within the fence-painter's own worldview . The book is explicit that other relevant worldviews exist even in a case this trivial — the neighbours' or a partner's — and each would require a different model, since a model can only ever encapsulate one pure worldview at a time. The single most-missed idea in the whole reading. Purposeful activity models can never be descriptions of (part of) the real world. Each one expresses only one way of looking at the situation, and there will always be multiple possibilities (think of the Olympics example: the IOC, the host city, athletes, sponsors, security staff, and a group seeking publicity for a cause could each need a different relevant model — \"there could never be a single model relevant to all these different interests\"). A model's job is to be a device — an intellectual tool that generates good questions about the real situation, not a picture of it. The learning cycle (Fig. 1.4 & 1.5) Once you have models built from different worldviews, you use them as a source of questions : does real activity in the situation look more, or less, like the model? Should it? That comparison structures a real discussion/debate whose purpose is to surface different worldviews and find an accommodation — a version of the situation different people, with different worldviews, could nevertheless live with . A candidate change has to clear two bars simultaneously: Bar Meaning Arguably desirable Justified by what using the models to question the situation revealed Culturally feasible Workable for these particular people, given their particular history and politics — not a generic \"best practice\" The four stages, as the classic diagram (Fig. 1.5) shows them: (1) find out about the perceived real-world problematical situation, (2) build purposeful activity models relevant to it (each based on a declared worldview), (3) use the models to structure a discussion about change, and (4) define/take action to improve. Common misreading: the cycle is not a checklist you complete once, in order. The book says this explicitly: describing the cycle as steps 1–4 \"may give a false impression that we are describing a sequence of steps. Not so.\" In real use (Fig. 1.6), finding-out runs continuously, model-building happens in bursts fed by both the models and the ongoing finding-out, and discussion feeds back into more finding-out and more modelling. It is, in principle, never-ending : taking action changes the situation into a new one, which the cycle can address all over again. LUMAS: how a user actually applies the methodology LUMAS = L earning for a U ser by a M ethodology-informed A pproach to a S ituation. Read it starting from the user (U) in the centre: perceiving a problematical situation (S) and appreciating the methodology (M), the user tailors M to S to produce a specific approach (A) for this situation. Using A doesn't just improve the situation — it also yields learning (L) , which can in turn modify how the user appreciates the methodology itself. Fill in the LUMAS acronym: L earning for a by a -informed to a Check all Learning for a User by a Methodology -informed Approach to a Situation . It is a generic model of how any methodology (not just SSM) gets tailored to a unique real situation by the person using it."
+  },
+  {
+    "id": "l1-models-q0",
+    "section": "l1-models",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Purposeful Activity Models and the Learning Cycle",
+    "text": "Multiple choice Whose worldview does this particular model express? — The model is built entirely within the fence-painter's own worldview . The book is explicit that other relevant worldviews exist even in a case this trivial — the neighbours' or a partner's — and each would require a different model, since a model can only ever encapsulate one pure worldview at a time."
+  },
+  {
+    "id": "l1-models-q1",
+    "section": "l1-models",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Purposeful Activity Models and the Learning Cycle",
+    "text": "Learning for a User by a Methodology -informed Approach to a Situation . It is a generic model of how any methodology (not just SSM) gets tailored to a unique real situation by the person using it."
+  },
+  {
+    "id": "l1-hardsoft",
+    "section": "l1-hardsoft",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; Hard vs. Soft Systems Thinking",
+    "text": "Lesson 1 &middot; Hard vs. Soft Systems Thinking SSM grew out of Systems Engineering (SE) — developed at Bell Telephone — which names a \"system\" (assumed to exist, or be buildable, in the real world), defines its objectives, then engineers it to meet them. SE was found \"poverty-stricken\" for human situations: \"too thin, not rich enough to deal with fizzing social complexity.\" The fix was not to add more technique — it was to change where \"systemicity\" is assumed to live. Observer 1 — \"hard\" \"I spy systems which I can engineer.\" The world itself is taken to contain systems with fixed objectives. This is the stance of Systems Engineering, classical Operational Research, the Viable System Model, and early System Dynamics — none of which have a place for conflicting worldviews. Observer 2 — \"soft\" \"I spy complexity and confusion; but I can organize exploration of it as a learning system.\" The social world itself is complex, problematical, and mysteriously shot through with clashing worldviews — created and recreated by people thinking, talking, and acting. What's systemic is the process of inquiry , not the world being inquired into. Common misreading. \"Hard vs. soft\" is not \"quantitative vs. qualitative,\" and it isn't a value judgment about rigor. It's a question of where the word \"system\" is allowed to attach : to the world itself (hard), or only to the inquiry process built to make sense of the world (soft). This is also why casual, everyday talk of \"the education system\" or \"the healthcare system\" is a trap — SSM's technical sense of \"system\" never refers to those real-world chunks directly, only to models and the inquiry process. True / False In SSM, \"the prison system\" is itself a system in the technical sense the methodology uses. True False Everyday language uses \"system\" loosely, to mean \"a complex chunk of reality that might be better engineered.\" SSM's technical use is much narrower: systemicity belongs to the models (each built from one declared worldview) and to the process of inquiry — never directly to a real-world institution. True / False Hard systems thinking and soft systems thinking mainly differ over whether to use numbers. True False They differ over where systemicity is located — in the world (hard) or in the process of inquiry into the world (soft) — not over quantitative versus qualitative method. Match the stance to its belief Systems Engineering (hard) — choose — Systems exist in the world and can be engineered to meet fixed objectives The world is complex and contested; the inquiry process itself can be organized as a learning system SSM (soft) — choose — Systems exist in the world and can be engineered to meet fixed objectives The world is complex and contested; the inquiry process itself can be organized as a learning system Check"
+  },
+  {
+    "id": "l1-hardsoft-q0",
+    "section": "l1-hardsoft",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Hard vs. Soft Systems Thinking",
+    "text": "True / False In SSM, \"the prison system\" is itself a system in the technical sense the methodology uses. — Everyday language uses \"system\" loosely, to mean \"a complex chunk of reality that might be better engineered.\" SSM's technical use is much narrower: systemicity belongs to the models (each built from one declared worldview) and to the process of inquiry — never directly to a real-world institution."
+  },
+  {
+    "id": "l1-hardsoft-q1",
+    "section": "l1-hardsoft",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Hard vs. Soft Systems Thinking",
+    "text": "True / False Hard systems thinking and soft systems thinking mainly differ over whether to use numbers. — They differ over where systemicity is located — in the world (hard) or in the process of inquiry into the world (soft) — not over quantitative versus qualitative method."
+  },
+  {
+    "id": "l1-richpicture",
+    "section": "l1-richpicture",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; What a Rich Picture Is (and Isn't) — Preview",
+    "text": "Lesson 1 &middot; What a Rich Picture Is (and Isn't) — Preview Where this fits. The assigned reading for this meeting (the Preamble and Chapter 1) lays the conceptual groundwork — problematical situations, worldview, purposeful activity models, the learning cycle — but doesn't itself walk through how to draw a rich picture. That's a \"finding out\" technique detailed in Chapter 2, which isn't assigned yet. What follows previews the idea from the syllabus's own framing so today's class makes sense; expect the full technique (symbols, drawing conventions, worked examples) once Chapter 2 is assigned. The course's own framing: \"Human situations are complex because they always involve multiple interacting relationships. A picture shows those relations all at once, which a paragraph can only deliver one after another: that is the whole argument for drawing one.\" What a rich picture is A way of capturing a problematical situation's structure (roles, physical layout, reporting lines) and process (what actually happens, who does what) together, at a glance. A \"finding out\" device — it belongs to stage (1) of the learning cycle, before any purposeful activity model gets built. Meant to surface tensions, concerns, and multiple worldviews simultaneously — exactly the kind of thing a paragraph of prose has to present one sentence at a time, losing the \"all at once\" quality that makes interacting relationships visible. What it is not Not this Why not A flowchart A flowchart shows a sequence of steps toward one outcome; a rich picture shows many relationships coexisting, with no single \"flow\" An org chart An org chart shows only formal reporting lines; a rich picture also shows informal tensions, physical realities, and concerns an org chart can't represent Judged as art Its purpose is to communicate structure and process to the people in the situation, not to be aesthetically impressive Multiple choice Which best describes why Checkland & Poulter's tradition uses a picture rather than a paragraph to capture a problematical situation? Pictures are quicker to draw than paragraphs A picture looks more professional in a report A picture can show multiple interacting relationships all at once, where prose can only present them one after another A picture avoids the need to talk to people in the situation The stated argument is entirely about simultaneity : complex human situations always involve multiple interacting relationships, and only a picture can show them together rather than one-after-another the way sentences must. True / False A rich picture is essentially a flowchart of the main process in a situation. True False The course materials explicitly rule this out: a rich picture is \"not a flowchart, not an org chart, and not judged as art.\" A flowchart's sequential, single-outcome shape is exactly what a rich picture is meant to avoid."
+  },
+  {
+    "id": "l1-richpicture-q0",
+    "section": "l1-richpicture",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; What a Rich Picture Is (and Isn't) — Preview",
+    "text": "Multiple choice Which best describes why Checkland & Poulter's tradition uses a picture rather than a paragraph to capture a problematical situation? — The stated argument is entirely about simultaneity : complex human situations always involve multiple interacting relationships, and only a picture can show them together rather than one-after-another the way sentences must."
+  },
+  {
+    "id": "l1-richpicture-q1",
+    "section": "l1-richpicture",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; What a Rich Picture Is (and Isn't) — Preview",
+    "text": "True / False A rich picture is essentially a flowchart of the main process in a situation. — The course materials explicitly rule this out: a rich picture is \"not a flowchart, not an org chart, and not judged as art.\" A flowchart's sequential, single-outcome shape is exactly what a rich picture is meant to avoid."
+  },
+  {
+    "id": "l1-check",
+    "section": "l1-check",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; Self-Check",
+    "text": "Lesson 1 &middot; Self-Check Multiple choice Why does Checkland avoid the word \"problem\" in favor of \"problematical situation\"? \"Problem\" sounds too negative for a business audience \"Problem\" implies a well-defined thing that can be solved out of existence; real situations are messier \"Problematical situation\" is simply the British spelling Clients respond better to softer language \"Problem\" implies \"solution,\" which eliminates the problem for ever — and \"real life is more complex than that.\" A problematical situation is something people feel needs improving, with no guarantee of one clean fix. Multiple choice What is the single most important concept for understanding SSM, per the reading? Worldview (Weltanschauung) Emergent properties Feasibility studies Return on investment The text calls worldview \"the most important concept in understanding the complexity of human situations, and indeed, the nature and form of SSM\" — it's what makes multiple, conflicting, equally legitimate judgments of the same situation possible. True / False A purposeful activity model is meant to be an accurate description of what actually happens in the real-world situation. True False Purposeful activity models \"can never be descriptions\" of the real world. Each one expresses a single pure worldview and functions as a device to generate questions — comparing model to reality is the point, not mistaking one for the other. True / False SSM's four-stage learning cycle is, in principle, never-ending. True False Taking action to improve a situation changes that situation into a new one, which the cycle could in principle address all over again — \"the changing flux of everyday life will itself bring new events and new ideas, so that no human situation could ever be rendered static.\" Multiple choice An SSM study finds a change that is \"desirable\" but not \"culturally feasible\" for the people involved. What should happen? Implement it anyway, since desirability is what matters most Abandon the whole study Force an accommodation by eliminating the conflicting worldview Look for a different change that clears both bars — desirable and feasible — for this particular situation and its history SSM requires change to be both arguably desirable (given the models) and culturally feasible for these particular people, with their particular history and politics. A change that fails either bar isn't the target — the search continues for one that clears both. Multiple choice What distinguishes \"hard\" from \"soft\" systems thinking? Hard systems thinking uses statistics; soft systems thinking doesn't Hard systems thinking locates \"systemicity\" in the world itself; soft systems thinking locates it in the process of inquiry Hard systems thinking is older and therefore outdated Soft systems thinking rejects the idea of systems entirely Hard (e.g. Systems Engineering) assumes the world contains engineerable systems with fixed objectives. Soft (SSM) treats the world as complex and contested, and organizes the inquiry itself as the thing that can be systemic. True / False A rich picture is judged partly on how artistically polished it looks. True False The course is explicit: a rich picture is \"not judged as art.\" Its only job is to communicate a situation's structure and process — multiple relationships at once — to the people who need to use it. Fill in the blank: SSM treats purposeful itself as a system — because every real-world problematical situation contains people trying to act this way, whatever their worldview. Check Activity. \"Purposeful activity\" is the thing SSM chooses to model as an adaptive whole — not the organization, not \"the system\" in the everyday sense, but the purposeful behavior of people within it. Match each learning-cycle stage to what happens in it Stage 1 — choose — Find out about the perceived real-world problematical situation Build purposeful activity models, each based on a declared worldview Use the models to structure a discussion about change Define/take action to improve the situation Stage 2 — choose — Find out about the perceived real-world problematical situation Build purposeful activity models, each based on a declared worldview Use the models to structure a discussion about change Define/take action to improve the situation Stage 3 — choose — Find out about the perceived real-world problematical situation Build purposeful activity models, each based on a declared worldview Use the models to structure a discussion about change Define/take action to improve the situation Stage 4 — choose — Find out about the perceived real-world problematical situation Build purposeful activity models, each based on a declared worldview Use the models to structure a discussion about change Define/take action to improve the situation Check Remember: in real use these overlap and loop back into each other (Fig. 1.6) — this ordering is the \"iconic\" summary (Fig. 1.5), not a checklist you complete once."
+  },
+  {
+    "id": "l1-check-q0",
+    "section": "l1-check",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Self-Check",
+    "text": "Multiple choice Why does Checkland avoid the word \"problem\" in favor of \"problematical situation\"? — \"Problem\" implies \"solution,\" which eliminates the problem for ever — and \"real life is more complex than that.\" A problematical situation is something people feel needs improving, with no guarantee of one clean fix."
+  },
+  {
+    "id": "l1-check-q1",
+    "section": "l1-check",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Self-Check",
+    "text": "Multiple choice What is the single most important concept for understanding SSM, per the reading? — The text calls worldview \"the most important concept in understanding the complexity of human situations, and indeed, the nature and form of SSM\" — it's what makes multiple, conflicting, equally legitimate judgments of the same situation possible."
+  },
+  {
+    "id": "l1-check-q2",
+    "section": "l1-check",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Self-Check",
+    "text": "True / False A purposeful activity model is meant to be an accurate description of what actually happens in the real-world situation. — Purposeful activity models \"can never be descriptions\" of the real world. Each one expresses a single pure worldview and functions as a device to generate questions — comparing model to reality is the point, not mistaking one for the other."
+  },
+  {
+    "id": "l1-check-q3",
+    "section": "l1-check",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Self-Check",
+    "text": "True / False SSM's four-stage learning cycle is, in principle, never-ending. — Taking action to improve a situation changes that situation into a new one, which the cycle could in principle address all over again — \"the changing flux of everyday life will itself bring new events and new ideas, so that no human situation could ever be rendered static.\""
+  },
+  {
+    "id": "l1-check-q4",
+    "section": "l1-check",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Self-Check",
+    "text": "Multiple choice An SSM study finds a change that is \"desirable\" but not \"culturally feasible\" for the people involved. What should happen? — SSM requires change to be both arguably desirable (given the models) and culturally feasible for these particular people, with their particular history and politics. A change that fails either bar isn't the target — the search continues for one that clears both."
+  },
+  {
+    "id": "l1-check-q5",
+    "section": "l1-check",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Self-Check",
+    "text": "Multiple choice What distinguishes \"hard\" from \"soft\" systems thinking? — Hard (e.g. Systems Engineering) assumes the world contains engineerable systems with fixed objectives. Soft (SSM) treats the world as complex and contested, and organizes the inquiry itself as the thing that can be systemic."
+  },
+  {
+    "id": "l1-check-q6",
+    "section": "l1-check",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Self-Check",
+    "text": "True / False A rich picture is judged partly on how artistically polished it looks. — The course is explicit: a rich picture is \"not judged as art.\" Its only job is to communicate a situation's structure and process — multiple relationships at once — to the people who need to use it."
+  },
+  {
+    "id": "l1-check-q7",
+    "section": "l1-check",
+    "course": "INLS382",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Self-Check",
+    "text": "Activity. \"Purposeful activity\" is the thing SSM chooses to model as an adaptive whole — not the organization, not \"the system\" in the everyday sense, but the purposeful behavior of people within it."
+  }
+]
