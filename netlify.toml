@@ -2,3 +2,12 @@
 # Serve everything (index.html + courses/ + shared/) straight from the repo root.
 [build]
   publish = "."
+
+# The one live piece: the "Ask" (RAG Q&A) feature's serverless function.
+# Everything else in this site stays 100% static.
+[functions]
+  directory = "netlify/functions"
+  # Bundle each course's precomputed chunks+embeddings (built offline by
+  # tools/build-rag-index.mjs) into the function so it can search them
+  # without a live database.
+  included_files = ["courses/*/guide/rag-chunks.json"]

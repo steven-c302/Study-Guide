@@ -1,0 +1,596 @@
+[
+  {
+    "id": "l1-steps",
+    "section": "l1-steps",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; The 10 Steps of Effective Peer Tutoring",
+    "text": "Lesson 1 &middot; The 10 Steps of Effective Peer Tutoring You won't know much about most of your tutees — where their strengths/weaknesses are, what else they're dealing with. So the manual recommends a systematic approach to extend equal, professional treatment to everyone, especially during your first semester, with new students, across a language/cultural barrier, or whenever the comfort level between you and a student could use improvement. Once you're comfortable, you're not expected to run every step in every session. The sequence 1. Greet & set the climate &rarr; 2. Identify the task/s &rarr; 3. Break large problems into subtasks &rarr; 4. Identify course resources & strategies &rarr; 5. Set your agenda & next steps 6. Start work on the tasks &rarr; 7. Wrap-up: skills/information summary &rarr; 8. Wrap-up: problem-solving process summary &rarr; 9. Confirm learning; positive feedback &rarr; 10. Say goodbye Step 2 is the one worth studying closest. It has two jobs: (1) get the tutee to specifically articulate what they need help with — \"everything\" is not a starting point — and (2) identify their real misunderstandings. If a tutee is completely lost, the manual says go all the way back to fundamentals: is the code editor/debugger working? Do they understand functions vs. methods, or why we use for loops? Foundational and tool issues get cleared up before the assignment itself. Multiple choice A tutee says they need help with \"everything.\" Per Step 2, what should you do? Start explaining the whole assignment from the top Follow up with questions until you've identified a specific place to start — make sure they can articulate each problem before working on it Tell them to come back once they've narrowed it down themselves Move straight to Step 6 and start working through the code together The manual is explicit: \"This is not helpful; follow up with questions until you've identified a place to start. Make sure your tutee can articulate each problem before you start working on it.\" Multiple choice Which step is specifically about time management — discussing how long each task will take and making a plan if there isn't enough time in the current session? Step 2: Identify the task/s Step 4: Identify course resources and problem-solving strategies Step 7: Wrap-up, skills summary Step 5: Set your agenda and next steps Step 5 is about time management: discuss how much time each identified task needs, and break tasks across multiple sessions if you don't have enough time now. True / False The 10 steps must be followed in full, in order, in every tutoring session. True False False. Once you're more comfortable with the process, you're not expected to apply every step every time — you develop a sense of which ones matter most for each session. (Running every step rigidly, every time, is literally the manual's \"Procedural Tutor\" mistake — see the next topic.) Select all that apply Which of these are behaviors the manual's \"Do\" list says build trust with tutees? Express empathy (\"I understand; that sounds really frustrating\") Be patient — give the tutee time to speak and form a thoughtful response Admit when you don't know something, and show them how you'd find the answer Take the blame for a bad grade, even if it wasn't really your fault, to keep the student happy Check The Dos are empathy, patience, and honestly admitting what you don't know. Taking blame you don't deserve is a listed Don't (along with overpromising, creating \"shared enemies\" out of the professor, and implying judgment)."
+  },
+  {
+    "id": "l1-steps-q0",
+    "section": "l1-steps",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; The 10 Steps of Effective Peer Tutoring",
+    "text": "Multiple choice A tutee says they need help with \"everything.\" Per Step 2, what should you do? — The manual is explicit: \"This is not helpful; follow up with questions until you've identified a place to start. Make sure your tutee can articulate each problem before you start working on it.\""
+  },
+  {
+    "id": "l1-steps-q1",
+    "section": "l1-steps",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; The 10 Steps of Effective Peer Tutoring",
+    "text": "Multiple choice Which step is specifically about time management — discussing how long each task will take and making a plan if there isn't enough time in the current session? — Step 5 is about time management: discuss how much time each identified task needs, and break tasks across multiple sessions if you don't have enough time now."
+  },
+  {
+    "id": "l1-steps-q2",
+    "section": "l1-steps",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; The 10 Steps of Effective Peer Tutoring",
+    "text": "True / False The 10 steps must be followed in full, in order, in every tutoring session. — False. Once you're more comfortable with the process, you're not expected to apply every step every time — you develop a sense of which ones matter most for each session. (Running every step rigidly, every time, is literally the manual's \"Procedural Tutor\" mistake — see the next topic.)"
+  },
+  {
+    "id": "l1-steps-q3",
+    "section": "l1-steps",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; The 10 Steps of Effective Peer Tutoring",
+    "text": "Select all that apply Which of these are behaviors the manual's \"Do\" list says build trust with tutees? — The Dos are empathy, patience, and honestly admitting what you don't know. Taking blame you don't deserve is a listed Don't (along with overpromising, creating \"shared enemies\" out of the professor, and implying judgment)."
+  },
+  {
+    "id": "l1-listening",
+    "section": "l1-listening",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; Active Listening",
+    "text": "Lesson 1 &middot; Active Listening Active listening means focusing attentively and intentionally on the speaker: keep your full attention on what the student says, wait until you're certain they're done, then paraphrase their remarks back to confirm you've understood. It communicates respect and builds the trust that makes effective tutoring possible. The three tasks, in order Listen with your full attention. Wait until you're very sure the speaker is done before responding. Paraphrase the speaker's remarks back to them: e.g., \"It sounds like you're saying ___. Is that correct?\" Common misunderstanding. \"Not interrupting\" doesn't just mean not talking over someone — the manual specifically warns against faking attention (smiling and nodding while your brain is elsewhere; \"people can tell when they're not being listened to\"), and against multitasking even for a moment without narrating it out loud first. True / False If you need to quickly check an important text message during a session, it's fine to do so silently while nodding along so you don't interrupt the flow. True False False. The manual's example script is to say so out loud first: \"I'm sorry, this is important. Do you mind if I answer it?\" — handle it quickly, then apologize and return full attention. Silently faking attention is explicitly called out as something students can tell is happening. Fill in the blank: after paraphrasing what you heard, the manual's model always closes with a direct check — \"...Is that ?\" — rather than just assuming you understood correctly. Check Right / correct / accurate all work. The point of active listening isn't just restating what you heard — it's explicitly asking whether you got it right, so a misunderstanding surfaces immediately instead of derailing the rest of the session. Multiple choice Per the reading, what should active listening communicate about the student's tone (not just their words)? Tone doesn't matter — only the literal content of what's said should shape your response You should correct a nervous or worried tone immediately so the student can move on Be attentive to tone (nervous, worried, confused) and offer a nonjudgmental acknowledgment of their state of mind Tone should be ignored entirely to avoid seeming unprofessional The manual specifically calls out being attentive to tone, not just words, and offers nonjudgmental reassurance (\"I know this stuff is confusing. I'm really glad you came in\") as a model response."
+  },
+  {
+    "id": "l1-listening-q0",
+    "section": "l1-listening",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Active Listening",
+    "text": "True / False If you need to quickly check an important text message during a session, it's fine to do so silently while nodding along so you don't interrupt the flow. — False. The manual's example script is to say so out loud first: \"I'm sorry, this is important. Do you mind if I answer it?\" — handle it quickly, then apologize and return full attention. Silently faking attention is explicitly called out as something students can tell is happening."
+  },
+  {
+    "id": "l1-listening-q1",
+    "section": "l1-listening",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Active Listening",
+    "text": "Right / correct / accurate all work. The point of active listening isn't just restating what you heard — it's explicitly asking whether you got it right, so a misunderstanding surfaces immediately instead of derailing the rest of the session."
+  },
+  {
+    "id": "l1-listening-q2",
+    "section": "l1-listening",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Active Listening",
+    "text": "Multiple choice Per the reading, what should active listening communicate about the student's tone (not just their words)? — The manual specifically calls out being attentive to tone, not just words, and offers nonjudgmental reassurance (\"I know this stuff is confusing. I'm really glad you came in\") as a model response."
+  },
+  {
+    "id": "l1-mistakes",
+    "section": "l1-mistakes",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; Common Mistakes & Tutoring ESL Students",
+    "text": "Lesson 1 &middot; Common Mistakes & Tutoring ESL Students Three well-meaning, competent UTAs still make common mistakes. None of these tutors are incompetent or careless — each has a real strength that tips into a real weakness. Match the tutor profile to its mistake The Amazing Tutor — choose — Talented and well-liked, but never plans sessions — free-form conversation leaves no way to evaluate progress, and students struggle to replicate the methods on their own later Prepares exhaustively and moves quickly, but loses patience with students who aren't as prepared and doesn't check whether concepts self-evident to her actually landed Sticks rigidly to all 10 steps every time, even with familiar students — sessions run long, and he over-explains rules/definitions instead of letting students program The Ambitious Tutor — choose — Talented and well-liked, but never plans sessions — free-form conversation leaves no way to evaluate progress, and students struggle to replicate the methods on their own later Prepares exhaustively and moves quickly, but loses patience with students who aren't as prepared and doesn't check whether concepts self-evident to her actually landed Sticks rigidly to all 10 steps every time, even with familiar students — sessions run long, and he over-explains rules/definitions instead of letting students program The Procedural Tutor — choose — Talented and well-liked, but never plans sessions — free-form conversation leaves no way to evaluate progress, and students struggle to replicate the methods on their own later Prepares exhaustively and moves quickly, but loses patience with students who aren't as prepared and doesn't check whether concepts self-evident to her actually landed Sticks rigidly to all 10 steps every time, even with familiar students — sessions run long, and he over-explains rules/definitions instead of letting students program Check ESL is an umbrella term for a huge range of backgrounds, and English proficiency has nothing to do with intelligence or effort . Some ESL students speak five languages but struggle with English; some understand everything spoken but struggle to speak; some write better than they speak, or the reverse. Techniques for Questioning ESL Students — the difficulty ladder Click each rung. If a student seems to be keeping up well, start at the top and work down only if they get stuck. If a student seems to be struggling, start at the bottom and work up. Why / Which / How questions (hardest) Or questions (medium) Yes/No & definition questions (easiest) Click a rung to see what it tests and an example. Multiple choice You suspect a student is struggling and might not have integrated a concept. Where should you start on the question ladder? A why/which/how question, to test the deepest understanding first The easiest type — a yes/no question or a request for a definition — then work up through \"or\" questions toward why/which/how Skip questioning and just re-explain the concept An \"or\" question only, since it's a good middle ground If you're pretty sure the student is struggling, start with the easiest type (yes/no or definition) to build confidence, then move up through \"or\" to why/which/how once they're answering confidently. True / False Quiet or hesitant English from a student is a reliable sign that the student is personally shy. True False False. The manual explicitly warns against assuming quiet/hesitant English means a quiet person — the student might simply be less confident speaking English, regardless of personality. Multiple choice You don't understand what a student is trying to say. What does the manual recommend? Say so honestly: \"I'm sorry, I didn't understand that. Can you repeat it or write it down?\" Nod along and hope it becomes clear from context Correct their pronunciation so the miscommunication doesn't happen again Move on to a different topic to avoid embarrassing them Pretending to understand \"does no one any good.\" The manual's script is to say so plainly and ask them to repeat or write it down — and to never correct pronunciation unless they ask you to."
+  },
+  {
+    "id": "l1-mistakes-q0",
+    "section": "l1-mistakes",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Common Mistakes & Tutoring ESL Students",
+    "text": "Multiple choice You suspect a student is struggling and might not have integrated a concept. Where should you start on the question ladder? — If you're pretty sure the student is struggling, start with the easiest type (yes/no or definition) to build confidence, then move up through \"or\" to why/which/how once they're answering confidently."
+  },
+  {
+    "id": "l1-mistakes-q1",
+    "section": "l1-mistakes",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Common Mistakes & Tutoring ESL Students",
+    "text": "True / False Quiet or hesitant English from a student is a reliable sign that the student is personally shy. — False. The manual explicitly warns against assuming quiet/hesitant English means a quiet person — the student might simply be less confident speaking English, regardless of personality."
+  },
+  {
+    "id": "l1-mistakes-q2",
+    "section": "l1-mistakes",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Common Mistakes & Tutoring ESL Students",
+    "text": "Multiple choice You don't understand what a student is trying to say. What does the manual recommend? — Pretending to understand \"does no one any good.\" The manual's script is to say so plainly and ask them to repeat or write it down — and to never correct pronunciation unless they ask you to."
+  },
+  {
+    "id": "l1-questions",
+    "section": "l1-questions",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; Boyer et al., \"Principles of Asking Effective Questions\"",
+    "text": "Lesson 1 &middot; Boyer et al., \"Principles of Asking Effective Questions\" This study classified 714 questions from 78 tutoring sessions between untrained CS tutors and novice students, to see what question-asking habits look like without training — and where those habits fall short. The headline finding Only 11% of all 6,558 tutor dialogue messages were questions at all — untrained tutors default to telling . Of the questions that were asked, Hint and Procedural types were the two most common, together accounting for nearly a fifth of all questions. Four principles for asking better questions Principle What it means Facilitate comprehension & decomposition Make sure the student understands and has broken down the problem before jumping to a plan (their bad example: asking \"Where would you like to start?\" before the student has even finished reading the problem) Ask targeted, specific questions Vague questions (\"Did you have any questions?\") don't reveal real knowledge gaps; specific content questions do Prompt self-explanation Ask the student to explain their own reasoning rather than telling them the answer — their example shows a tutor supplying the next line of code instead of asking the student to reason to it Ask questions frequently Novice tutors ask far fewer questions than expert tutors — asking more, not fewer, is itself a marker of pedagogical skill Multiple choice What percentage of untrained tutors' dialogue messages in the study were questions? 64% 33% 11% 85% Only 11% of the 6,558 tutor messages were questions — consistent with other findings that novice tutors ask far fewer questions than expert tutors. Multiple choice Which two question types were most common among the untrained tutors studied? Assessment and Backchannel Hint and Procedural Enablement and Justification Free Creation and Causal Antecedent Hint questions (scaffolding the student's problem-solving effort) and Procedural questions each accounted for nearly a fifth of all questions asked — the two most frequent types. True / False The paper's excerpt where a tutor supplies the next line of code (\"Ok so now we need somewhere to keep the individual digits\") is presented as a good example of effective questioning. True False False — it's presented as the opposite: an instance of the tutor telling the student information instead of asking a question that would prompt the student to self-explain and reach it themselves."
+  },
+  {
+    "id": "l1-questions-q0",
+    "section": "l1-questions",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Boyer et al., \"Principles of Asking Effective Questions\"",
+    "text": "Multiple choice What percentage of untrained tutors' dialogue messages in the study were questions? — Only 11% of the 6,558 tutor messages were questions — consistent with other findings that novice tutors ask far fewer questions than expert tutors."
+  },
+  {
+    "id": "l1-questions-q1",
+    "section": "l1-questions",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Boyer et al., \"Principles of Asking Effective Questions\"",
+    "text": "Multiple choice Which two question types were most common among the untrained tutors studied? — Hint questions (scaffolding the student's problem-solving effort) and Procedural questions each accounted for nearly a fifth of all questions asked — the two most frequent types."
+  },
+  {
+    "id": "l1-questions-q2",
+    "section": "l1-questions",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Boyer et al., \"Principles of Asking Effective Questions\"",
+    "text": "True / False The paper's excerpt where a tutor supplies the next line of code (\"Ok so now we need somewhere to keep the individual digits\") is presented as a good example of effective questioning. — False — it's presented as the opposite: an instance of the tutor telling the student information instead of asking a question that would prompt the student to self-explain and reach it themselves."
+  },
+  {
+    "id": "l1-development",
+    "section": "l1-development",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; Chickering's Seven Vectors & Perry's Intellectual Development",
+    "text": "Lesson 1 &middot; Chickering's Seven Vectors & Perry's Intellectual Development Principle (How Learning Works, Ch. 6): Students' current level of development interacts with the social, emotional, and intellectual climate of the course to impact learning. Chickering's model (1969) systematically accounts for the developmental changes students experience across seven cumulative vectors . Chickering's Seven Vectors (build on each other, cumulatively) 1. Developing competence &rarr; 2. Managing emotions &rarr; 3. Developing autonomy &rarr; 4. Establishing identity &rarr; 5. Freeing interpersonal relationships &rarr; 6. Developing purpose &rarr; 7. Developing integrity Vector 4, establishing identity , is the pivotal one — it builds on the vectors before it and is the foundation for the ones after. Match each vector to how Professor Guttman's story illustrates it Developing competence — choose — By never calling on women, Guttman inadvertently signals doubt in their ability to perform on the spot, hindering their sense of intellectual/interpersonal competence By giving women extra unsolicited help, Guttman may interfere with their developing sense of independent, self-directed capability The TA's sexist comment challenges women's sense that they belong and can commit to engineering as a field Developing autonomy — choose — By never calling on women, Guttman inadvertently signals doubt in their ability to perform on the spot, hindering their sense of intellectual/interpersonal competence By giving women extra unsolicited help, Guttman may interfere with their developing sense of independent, self-directed capability The TA's sexist comment challenges women's sense that they belong and can commit to engineering as a field Developing purpose — choose — By never calling on women, Guttman inadvertently signals doubt in their ability to perform on the spot, hindering their sense of intellectual/interpersonal competence By giving women extra unsolicited help, Guttman may interfere with their developing sense of independent, self-directed capability The TA's sexist comment challenges women's sense that they belong and can commit to engineering as a field Check Perry's Intellectual Development: Dualism &rarr; Multiplicity &rarr; Relativism &rarr; Commitment Stage What it looks like Dualism Knowledge is right or wrong, handed down by authorities; no room for ambiguity (Kayla's \"It's just plain wrong!\") Multiplicity Everyone's opinion is equally valid; the instructor is just \"another perspective.\" Looks like a step backward, but isn't — it's the first stage where students are open to disagreement and can start constructing their own knowledge Relativism Opinions aren't all equal — they're evaluated by evidence and discipline-specific rules; a shift from quantitative to qualitative knowledge Commitment Students provisionally commit to one theory/approach as a foundation, refining it as they go — informed and nuanced, not naively dualistic Fill in the Perry sequence: &rarr; &rarr; &rarr; Check all Dualism &rarr; Multiplicity &rarr; Relativism &rarr; Commitment. Multiple choice Why does the \"multiplicity\" stage matter, even though it can look like a regression (everyone's opinion is equally valid)? It doesn't matter — it's simply a wrong turn students should skip It means students have mastered the course material It's the crucial transition where students stop fixating on \"the right answer\" and become open to differing opinions, which is foundational for all later development It means the instructor should stop grading student work Two things happen here: students are no longer fixated on one \"right\" opinion, and learning becomes personal — they're now entitled to their own opinion and can start constructing their own knowledge. The book calls this transition \"foundational for all further development.\" True / False A student can be more developed in one area (e.g., intellectual maturity) than another (e.g., emotional maturity) at the same time. True False True. Developmental models describe the aggregate, not any one individual — movement isn't always forward, students can regress or foreclose development, and uneven development across areas is normal."
+  },
+  {
+    "id": "l1-development-q0",
+    "section": "l1-development",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Chickering's Seven Vectors & Perry's Intellectual Development",
+    "text": "Dualism &rarr; Multiplicity &rarr; Relativism &rarr; Commitment."
+  },
+  {
+    "id": "l1-development-q1",
+    "section": "l1-development",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Chickering's Seven Vectors & Perry's Intellectual Development",
+    "text": "Multiple choice Why does the \"multiplicity\" stage matter, even though it can look like a regression (everyone's opinion is equally valid)? — Two things happen here: students are no longer fixated on one \"right\" opinion, and learning becomes personal — they're now entitled to their own opinion and can start constructing their own knowledge. The book calls this transition \"foundational for all further development.\""
+  },
+  {
+    "id": "l1-development-q2",
+    "section": "l1-development",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Chickering's Seven Vectors & Perry's Intellectual Development",
+    "text": "True / False A student can be more developed in one area (e.g., intellectual maturity) than another (e.g., emotional maturity) at the same time. — True. Developmental models describe the aggregate, not any one individual — movement isn't always forward, students can regress or foreclose development, and uneven development across areas is normal."
+  },
+  {
+    "id": "l1-identity",
+    "section": "l1-identity",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; Social Identity Development (Hardiman & Jackson)",
+    "text": "Lesson 1 &middot; Social Identity Development (Hardiman & Jackson) Social identity is the extent and nature of a student's identification with social groups — especially groups that are often targets of prejudice. Hardiman & Jackson (1992) describe two parallel developmental paths : one for minority groups, one for dominant groups, moving through similar named stages but experienced very differently. Naïve &rarr; Acceptance &rarr; Resistance/Immersion &rarr; Redefinition &rarr; Internalization Stage What happens Naïve Early childhood; differences (e.g., skin color) are noticed but no value is attached to them yet Acceptance Conscious or unconscious acceptance of societal messages about which groups are \"normal,\" \"smart,\" etc. (Kayla's comment about immigrants may reflect this stage) Resistance / Immersion Triggered by challenge or new information. Dominant-group members often feel shame/guilt about their group's privilege. Minority-group members often feel pride in their own group, sometimes withdrawing to socialize mainly within it (\"immersion\") Redefinition & Internalization Students move beyond the dominant/minority dichotomy; group identity becomes one part of who they are, not the defining feature — guilt/anger give way to a commitment to work for justice within their sphere of influence Commonly missed detail. At the resistance stage, white students who feel overwhelmed by accusations of racism (rather than pride/anger) are going through what Helms (1993) calls disintegration — a related but distinct experience from the minority-group version of this stage. Fill in the five-stage sequence: &rarr; &rarr; &rarr; &rarr; Check all Naïve &rarr; Acceptance &rarr; Resistance/Immersion &rarr; Redefinition &rarr; Internalization. True / False Dominant-group and minority-group members typically experience the \"resistance\" stage the same way. True False False. Dominant-group members tend to experience shame and guilt about their group's privilege; minority-group members tend to experience pride in their own group (and sometimes prefer to socialize within it — \"immersion\"), sometimes viewing the dominant group as a source of societal harm. Multiple choice What does Helms (1993) call it when white students feel overwhelmed, rather than proud/angry, when confronted with racism accusations? Disintegration Redefinition Multiplicity Internalization Disintegration — the dominant-group-specific experience at the resistance stage, distinct from (though related to) the minority-group experience of pride/immersion at that same stage."
+  },
+  {
+    "id": "l1-identity-q0",
+    "section": "l1-identity",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Social Identity Development (Hardiman & Jackson)",
+    "text": "Naïve &rarr; Acceptance &rarr; Resistance/Immersion &rarr; Redefinition &rarr; Internalization."
+  },
+  {
+    "id": "l1-identity-q1",
+    "section": "l1-identity",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Social Identity Development (Hardiman & Jackson)",
+    "text": "True / False Dominant-group and minority-group members typically experience the \"resistance\" stage the same way. — False. Dominant-group members tend to experience shame and guilt about their group's privilege; minority-group members tend to experience pride in their own group (and sometimes prefer to socialize within it — \"immersion\"), sometimes viewing the dominant group as a source of societal harm."
+  },
+  {
+    "id": "l1-identity-q2",
+    "section": "l1-identity",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Social Identity Development (Hardiman & Jackson)",
+    "text": "Multiple choice What does Helms (1993) call it when white students feel overwhelmed, rather than proud/angry, when confronted with racism accusations? — Disintegration — the dominant-group-specific experience at the resistance stage, distinct from (though related to) the minority-group experience of pride/immersion at that same stage."
+  },
+  {
+    "id": "l1-climate",
+    "section": "l1-climate",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; Course Climate, Stereotype Threat & Strategies",
+    "text": "Lesson 1 &middot; Course Climate, Stereotype Threat & Strategies Course climate is the intellectual, social, emotional, and physical environment in which students learn — shaped by faculty-student interaction, tone, stereotyping/tokenism, course demographics, student-student interaction, and the range of perspectives in the content, both inside and outside class. The climate continuum — click each stage Climate is better modeled as a continuum than a good/bad binary. Messages are explicit (planned/stated) or implicit (inferred from consistent absence), and either marginalizing or centralizing. Explicitly Marginalizing Implicitly Marginalizing Implicitly Centralizing Explicitly Centralizing Click a stage to see its definition and an example from the reading. Multiple choice Which point on the continuum did DeSurra & Church's research find was most common in college classrooms — even well-intentioned ones? Explicitly centralizing Implicitly marginalizing Explicitly marginalizing Climate research found no common pattern Implicitly marginalizing climates — subtle, unintentional exclusion — were most common, even though most instructors assume their courses land on the inclusive end. Professor Guttman's story is the textbook example: trying to help women by not calling on them backfires into exactly this. True / False Steele & Aronson's research found that stereotype threat's effect on performance is driven by lowered self-esteem. True False False — that hypothesis was tested and not supported. The mechanism their data confirmed instead is emotional/cognitive disruption: students focus on anger at the stereotype or instructor, can't think clearly, and re-check answers repeatedly, running out of time. Select all that apply Which four factors does the chapter identify as shaping course climate? Stereotypes Tone Faculty-student and student-student interaction Content The course's grading curve Check The chapter focuses on four interrelated climate factors: stereotypes, tone, faculty-student/student-student interaction, and content. A grading curve isn't one of the four, though grading criteria come up under the \"incorporate evidence\" strategy below. Match each strategy to what it looks like in practice Make uncertainty safe — choose — Explicitly validate different viewpoints, even unpopular ones, and frame the goal of discussion as enriching thinking, not reaching consensus Use rubrics/evidence in grading criteria so opinions must be supported, which also reduces \"grade grubbing\" Question your own assumptions about what background, ability, or identity your students share with you or each other Learn students' names and invite them to office hours so large classes don't feel anonymous Incorporate evidence into grading — choose — Explicitly validate different viewpoints, even unpopular ones, and frame the goal of discussion as enriching thinking, not reaching consensus Use rubrics/evidence in grading criteria so opinions must be supported, which also reduces \"grade grubbing\" Question your own assumptions about what background, ability, or identity your students share with you or each other Learn students' names and invite them to office hours so large classes don't feel anonymous Examine your assumptions — choose — Explicitly validate different viewpoints, even unpopular ones, and frame the goal of discussion as enriching thinking, not reaching consensus Use rubrics/evidence in grading criteria so opinions must be supported, which also reduces \"grade grubbing\" Question your own assumptions about what background, ability, or identity your students share with you or each other Learn students' names and invite them to office hours so large classes don't feel anonymous Reduce anonymity — choose — Explicitly validate different viewpoints, even unpopular ones, and frame the goal of discussion as enriching thinking, not reaching consensus Use rubrics/evidence in grading criteria so opinions must be supported, which also reduces \"grade grubbing\" Question your own assumptions about what background, ability, or identity your students share with you or each other Learn students' names and invite them to office hours so large classes don't feel anonymous Check Other listed strategies: be mindful of low-ability cues, don't ask individuals to speak for their whole group, model inclusive language, use multiple/diverse examples, establish & reinforce ground rules, use the syllabus/first day to set climate, get feedback on climate, anticipate sensitive issues, address tensions early, turn discord into a learning opportunity, and facilitate active listening."
+  },
+  {
+    "id": "l1-climate-q0",
+    "section": "l1-climate",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Course Climate, Stereotype Threat & Strategies",
+    "text": "Multiple choice Which point on the continuum did DeSurra & Church's research find was most common in college classrooms — even well-intentioned ones? — Implicitly marginalizing climates — subtle, unintentional exclusion — were most common, even though most instructors assume their courses land on the inclusive end. Professor Guttman's story is the textbook example: trying to help women by not calling on them backfires into exactly this."
+  },
+  {
+    "id": "l1-climate-q1",
+    "section": "l1-climate",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Course Climate, Stereotype Threat & Strategies",
+    "text": "True / False Steele & Aronson's research found that stereotype threat's effect on performance is driven by lowered self-esteem. — False — that hypothesis was tested and not supported. The mechanism their data confirmed instead is emotional/cognitive disruption: students focus on anger at the stereotype or instructor, can't think clearly, and re-check answers repeatedly, running out of time."
+  },
+  {
+    "id": "l1-climate-q2",
+    "section": "l1-climate",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Course Climate, Stereotype Threat & Strategies",
+    "text": "Select all that apply Which four factors does the chapter identify as shaping course climate? — The chapter focuses on four interrelated climate factors: stereotypes, tone, faculty-student/student-student interaction, and content. A grading curve isn't one of the four, though grading criteria come up under the \"incorporate evidence\" strategy below."
+  },
+  {
+    "id": "l1-check",
+    "section": "l1-check",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "section",
+    "title": "Lesson 1 &middot; Reading Quiz 1 Self-Check",
+    "text": "Lesson 1 &middot; Reading Quiz 1 Self-Check Mixed review, built directly from the terms/concepts list your instructor circulated ahead of Reading Quiz 1. Each item names where it's covered above if you want to review before answering. Multiple choice (10 Steps & Trust topic) A tutee is completely lost on an assignment. Per the manual, where should you start? Straight to Step 7, summarizing skills, so they leave with something Give them the answer so they don't fall further behind Go back to fundamentals — confirm their editor/debugger works and that they understand basic concepts (like functions vs. methods) before touching the assignment Tell them to re-read the assignment on their own and come back When a tutee is completely lost, the problem may lie outside the assignment itself — in tooling or foundational concepts. Clear those up first. True / False (Active Listening topic) Paraphrasing the speaker's remarks back to them is one of active listening's three core tasks. True False True — listen fully, wait until they're done, then paraphrase to confirm. Multiple choice (Mistakes & ESL topic) Which question type is easiest for an ESL student, and should be the starting point if you suspect they're struggling? Why questions Yes/no questions and requests for definitions Which questions How questions Yes/no and definition questions are the easiest rung of the ladder; why/which/how are the hardest, since they require fully integrated, independent understanding. Multiple choice (Asking Effective Questions topic) Per Boyer et al., what should an instructor do instead of just telling a student the next step? Ask a question that prompts the student to self-explain and reason to that step themselves Wait silently until the student gives up and asks directly Give a hint that's really just the answer reworded Move to a completely different topic Prompting self-explanation (rather than telling) is one of the paper's four principles, and research shows self-explaining improves learning. (Chickering & Perry topic) Fill in the blank: Chickering's pivotal vector, which builds on the vectors before it and underlies all the ones after, is . Check Establishing identity — vector 4 of 7. Multiple choice (Social Identity Development topic) At the \"resistance/immersion\" stage, how do minority-group members typically respond, in contrast to dominant-group members? Both groups respond with guilt and shame Both groups respond with pride and immersion in their own group Minority-group members often feel pride in their own group (sometimes immersing within it); dominant-group members often feel guilt/shame about privilege Neither group shows any emotional response at this stage This asymmetry — pride/immersion for minority-group members vs. guilt/shame (or \"disintegration,\" per Helms) for dominant-group members — is the detail most worth double-checking before the quiz. Multiple choice (Course Climate topic) An instructor never planned to include a marginalized perspective, and it's also never spontaneously come up in class. What point on the climate continuum is this? Explicitly centralizing Implicitly centralizing Explicitly marginalizing Implicitly marginalizing No overt hostility (so not \"explicit\"), but consistent, unplanned absence of a perspective — that's implicitly marginalizing, the point on the continuum research found most common. True / False (Course Climate topic) Stereotype threat requires an instructor's intentional, overtly hostile comment to be triggered. True False False — activation \"does not need to be intentional.\" Subtle cues (assumptions about ability, tokenism) can trigger it just as effectively as overt comments."
+  },
+  {
+    "id": "l1-check-q0",
+    "section": "l1-check",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Reading Quiz 1 Self-Check",
+    "text": "Multiple choice (10 Steps & Trust topic) A tutee is completely lost on an assignment. Per the manual, where should you start? — When a tutee is completely lost, the problem may lie outside the assignment itself — in tooling or foundational concepts. Clear those up first."
+  },
+  {
+    "id": "l1-check-q1",
+    "section": "l1-check",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Reading Quiz 1 Self-Check",
+    "text": "True / False (Active Listening topic) Paraphrasing the speaker's remarks back to them is one of active listening's three core tasks. — True — listen fully, wait until they're done, then paraphrase to confirm."
+  },
+  {
+    "id": "l1-check-q2",
+    "section": "l1-check",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Reading Quiz 1 Self-Check",
+    "text": "Multiple choice (Mistakes & ESL topic) Which question type is easiest for an ESL student, and should be the starting point if you suspect they're struggling? — Yes/no and definition questions are the easiest rung of the ladder; why/which/how are the hardest, since they require fully integrated, independent understanding."
+  },
+  {
+    "id": "l1-check-q3",
+    "section": "l1-check",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Reading Quiz 1 Self-Check",
+    "text": "Multiple choice (Asking Effective Questions topic) Per Boyer et al., what should an instructor do instead of just telling a student the next step? — Prompting self-explanation (rather than telling) is one of the paper's four principles, and research shows self-explaining improves learning."
+  },
+  {
+    "id": "l1-check-q4",
+    "section": "l1-check",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Reading Quiz 1 Self-Check",
+    "text": "Establishing identity — vector 4 of 7."
+  },
+  {
+    "id": "l1-check-q5",
+    "section": "l1-check",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Reading Quiz 1 Self-Check",
+    "text": "Multiple choice (Social Identity Development topic) At the \"resistance/immersion\" stage, how do minority-group members typically respond, in contrast to dominant-group members? — This asymmetry — pride/immersion for minority-group members vs. guilt/shame (or \"disintegration,\" per Helms) for dominant-group members — is the detail most worth double-checking before the quiz."
+  },
+  {
+    "id": "l1-check-q6",
+    "section": "l1-check",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Reading Quiz 1 Self-Check",
+    "text": "Multiple choice (Course Climate topic) An instructor never planned to include a marginalized perspective, and it's also never spontaneously come up in class. What point on the climate continuum is this? — No overt hostility (so not \"explicit\"), but consistent, unplanned absence of a perspective — that's implicitly marginalizing, the point on the continuum research found most common."
+  },
+  {
+    "id": "l1-check-q7",
+    "section": "l1-check",
+    "course": "COMP227",
+    "lesson": "L1",
+    "type": "qa",
+    "title": "Lesson 1 &middot; Reading Quiz 1 Self-Check",
+    "text": "True / False (Course Climate topic) Stereotype threat requires an instructor's intentional, overtly hostile comment to be triggered. — False — activation \"does not need to be intentional.\" Subtle cues (assumptions about ability, tokenism) can trigger it just as effectively as overt comments."
+  },
+  {
+    "id": "l2-theory",
+    "section": "l2-theory",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "section",
+    "title": "Lesson 2 &middot; Constructivism, Misconceptions & Mental Models",
+    "text": "Lesson 2 &middot; Constructivism, Misconceptions & Mental Models Constructivism: the dominant theory of learning today, claiming students actively construct knowledge rather than passively receive and store it from a teacher. Because construction builds recursively on knowledge the student already has, each student ends up with a slightly idiosyncratic version of the knowledge. Where that version isn't identical to \"standard\" knowledge, the student is said to have a misconception . Worked example: WYSIWYG word processors (Ben-Ari's motivating case) You type a title, select it, request boldface. As you keep typing the rest of the paper, it's also boldface. Why? Your pre-existing model of a word processor — \"it's just like writing with pen and paper\" — explains normal use, but has no way to explain this. What you (think you) get What you actually get Blobs of ink placed sequentially on paper A data structure storing text plus formatting symbols (e.g., <b> , <br> ) and a set of operations on that data structure — what you see on screen is a rendering of it If your selection to bold included an invisible line-break character, text typed before that line break gets boldfaced too — perfectly explicable once you have the real model, inexplicable with the \"ink on paper\" model. Three key terms, applied to that example Term Meaning In the WYSIWYG example Misconception Not a careless error — a logically consistent, non-standard theory built from real prior knowledge \"It's like ink on paper\" is perfectly reasonable, just wrong for this artifact Viable / non-viable model Viable = lets you successfully predict/act; non-viable = leads you to fail The ink-on-paper model is viable for ordinary typing, non-viable the moment formatting and invisible line breaks are involved Effective model A cognitive structure detailed enough to support further viable construction from experience Understanding \"data structure + operations on it\" is what lets you correctly predict & fix formatting surprises going forward Commonly missed point. A misconception is not \"not trying hard enough.\" Ben-Ari is explicit: the problem is \"caused not by stupidity on the part of the novice, nor by incorrectly following the instructions, but by a misconception\" — the absence of a viable model that can explain the novel situation. Multiple choice Why does typing text after selecting \"bold\" sometimes make later, unselected text boldface too? The word processor is buggy and this shouldn't happen Your selection likely included an invisible line-break symbol; since formatting is stored as symbols in a data structure, not \"ink,\" the boldface tag now applies to more than you intended Word processors always bold everything after the title This can't happen if you understand the ink-on-paper model correctly This is exactly the scenario in Figs. 1–2: the underlying reality is a data structure of symbols including invisible ones, not literal ink — the ink-on-paper model has no way to predict this. True / False Per Ben-Ari, a student's misconception is best explained by carelessness or not following instructions closely enough. True False False — misconceptions are logical constructions from real prior knowledge, \"caused not by stupidity... nor by incorrectly following instructions, but by a misconception\" (the lack of a viable model for this situation). Multiple choice A student's mental model of a variable as a \"box\" correctly predicts simple assignment, but breaks down on read(A,B); read(B); write(A,B,B); . This model is: An effective model, since it worked for a while Not a real model at all, just a guess A viable model for simple cases that turns out to be non-viable once reads/writes get more complex Proof the student has no prior knowledge to build from Viability is task-dependent: a model can be viable for the tasks it was built to explain and non-viable the moment it meets a case — like double-reads — it can't account for."
+  },
+  {
+    "id": "l2-theory-q0",
+    "section": "l2-theory",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Constructivism, Misconceptions & Mental Models",
+    "text": "Multiple choice Why does typing text after selecting \"bold\" sometimes make later, unselected text boldface too? — This is exactly the scenario in Figs. 1–2: the underlying reality is a data structure of symbols including invisible ones, not literal ink — the ink-on-paper model has no way to predict this."
+  },
+  {
+    "id": "l2-theory-q1",
+    "section": "l2-theory",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Constructivism, Misconceptions & Mental Models",
+    "text": "True / False Per Ben-Ari, a student's misconception is best explained by carelessness or not following instructions closely enough. — False — misconceptions are logical constructions from real prior knowledge, \"caused not by stupidity... nor by incorrectly following instructions, but by a misconception\" (the lack of a viable model for this situation)."
+  },
+  {
+    "id": "l2-theory-q2",
+    "section": "l2-theory",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Constructivism, Misconceptions & Mental Models",
+    "text": "Multiple choice A student's mental model of a variable as a \"box\" correctly predicts simple assignment, but breaks down on read(A,B); read(B); write(A,B,B); . This model is: — Viability is task-dependent: a model can be viable for the tasks it was built to explain and non-viable the moment it meets a case — like double-reads — it can't account for."
+  },
+  {
+    "id": "l2-paradigm",
+    "section": "l2-paradigm",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "section",
+    "title": "Lesson 2 &middot; Ernest's Four-Part \"Educational Paradigm\"",
+    "text": "Lesson 2 &middot; Ernest's Four-Part \"Educational Paradigm\" Ernest (1995) frames a coherent educational worldview as four components. Ben-Ari uses this framework specifically to contrast the classical and constructivist paradigms cleanly. Click each component to compare the two paradigms Ontology — theory of existence Epistemology — theory of knowledge Methodology — acquiring/validating knowledge Pedagogy — theory of teaching Click a component to compare the classical and constructivist answers. Match each term to its definition Ontology — choose — A theory of existence — what is really \"out there\" A theory of knowledge, both individual and shared The method for acquiring and validating knowledge A theory of teaching Epistemology — choose — A theory of existence — what is really \"out there\" A theory of knowledge, both individual and shared The method for acquiring and validating knowledge A theory of teaching Methodology — choose — A theory of existence — what is really \"out there\" A theory of knowledge, both individual and shared The method for acquiring and validating knowledge A theory of teaching Pedagogy — choose — A theory of existence — what is really \"out there\" A theory of knowledge, both individual and shared The method for acquiring and validating knowledge A theory of teaching Check Multiple choice What does it mean for constructivist epistemology to be \"nonfoundationalist and fallible\"? Knowledge rests on absolute, unshakeable truths like 2+2=4 There is no foundation of absolute truth to build on — even \"2+2=4\" is not a necessary truth, and all knowledge is a fallible, revisable construction Only mathematics can be known with certainty It means the same thing as \"foundational\" Ben-Ari is explicit that in constructivism, \"absolute truth is unattainable, so there is no foundation of truth on which to build. Even 2+2=4 is not a necessary truth.\" True / False The classical paradigm and the constructivist paradigm mainly disagree about teaching technique (e.g., lecturing vs. group work), not about deeper questions of existence or knowledge. True False False. Ben-Ari notes constructivism doesn't reject lecturing itself (Mason: \"many educators espousing constructivism have been known to attend lectures... and to have enjoyed them\"). The real divide is in ontology and epistemology — pedagogy is just the downstream consequence."
+  },
+  {
+    "id": "l2-paradigm-q0",
+    "section": "l2-paradigm",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Ernest's Four-Part \"Educational Paradigm\"",
+    "text": "Multiple choice What does it mean for constructivist epistemology to be \"nonfoundationalist and fallible\"? — Ben-Ari is explicit that in constructivism, \"absolute truth is unattainable, so there is no foundation of truth on which to build. Even 2+2=4 is not a necessary truth.\""
+  },
+  {
+    "id": "l2-paradigm-q1",
+    "section": "l2-paradigm",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Ernest's Four-Part \"Educational Paradigm\"",
+    "text": "True / False The classical paradigm and the constructivist paradigm mainly disagree about teaching technique (e.g., lecturing vs. group work), not about deeper questions of existence or knowledge. — False. Ben-Ari notes constructivism doesn't reject lecturing itself (Mason: \"many educators espousing constructivism have been known to attend lectures... and to have enjoyed them\"). The real divide is in ontology and epistemology — pedagogy is just the downstream consequence."
+  },
+  {
+    "id": "l2-construction",
+    "section": "l2-construction",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "section",
+    "title": "Lesson 2 &middot; Recursive Construction, Radical & Social Constructivism",
+    "text": "Lesson 2 &middot; Recursive Construction, Radical & Social Constructivism Recursive knowledge construction: sensory data combines with existing knowledge to create new cognitive structures, which then become the basis for further construction. This traces to Piaget's work on how children acquire knowledge. Two variants of constructivism Variant Emphasis Radical constructivism Individual cognition is central; taken to an extreme, critics warn it can slide toward solipsism — the world as nothing but your own mental creation Social constructivism Knowledge is constructed through social interaction and negotiation, not solely inside one mind; has a lot to say about the role of peers and the teacher, and (Ben-Ari argues) about the documented social difficulties women face in CS classrooms/labs Why passive learning is expected to fail. Because each student brings a different cognitive framework and will construct new knowledge differently, a lecture or textbook can't just \"pour\" identical knowledge into every student. Constructivists argue learning must be active : the student constructs knowledge assisted by teacher guidance and feedback, not by absorbing a transmission. Fill in the blank: because knowledge construction is , new knowledge is built by combining sensory data with knowledge the student already has — which is why passive transmission can't guarantee two students end up with the same understanding. Check Recursive. Each round of construction uses the previous round's output as raw material. Multiple choice Which variant of constructivism does Ben-Ari invoke to discuss the social difficulties women face in CS classrooms and labs, and to argue for closed labs? Radical constructivism Social constructivism Minimalism Neither — this is outside the scope of constructivism entirely Social constructivism, since it has \"a lot to say about the task of the teacher and the role of peers in education.\""
+  },
+  {
+    "id": "l2-construction-q0",
+    "section": "l2-construction",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Recursive Construction, Radical & Social Constructivism",
+    "text": "Recursive. Each round of construction uses the previous round's output as raw material."
+  },
+  {
+    "id": "l2-construction-q1",
+    "section": "l2-construction",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Recursive Construction, Radical & Social Constructivism",
+    "text": "Multiple choice Which variant of constructivism does Ben-Ari invoke to discuss the social difficulties women face in CS classrooms and labs, and to argue for closed labs? — Social constructivism, since it has \"a lot to say about the task of the teacher and the role of peers in education.\""
+  },
+  {
+    "id": "l2-teaching",
+    "section": "l2-teaching",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "section",
+    "title": "Lesson 2 &middot; Bricolage, Minimalism, Notional Machines & Lab Design",
+    "text": "Lesson 2 &middot; Bricolage, Minimalism, Notional Machines & Lab Design Bricolage vs. planning Bricolage (Lévi-Strauss's \"science of the concrete,\" reframed by Turtle & Papert as a valid learning style) is tinkering with whatever's at hand — in programming, this is endless debugging : try it and see what happens. Its limits, per Ben-Ari. Bricolage is fine, even essential, for novices in intro courses — but it is not a viable methodology for professional software engineering , and it fails outright on non-deterministic, concurrent, or real-time systems, which can only be mastered through abstract technique. Students who excel at bricolage, he warns, often struggle to transition to the abstract methods those systems require. Minimalism An instructional-design approach from software-manual writing (Carroll): let learners start immediately on realistic tasks, minimize passive reading, and treat errors as productive rather than as failures. Overlaps with constructivism Diverges from constructivism Prefers active learning; respects pre-existing knowledge; treats errors as a pedagogical device, not a symptom of failure Emphasizes — even insists on — eliminating or deferring conceptual material as long as possible (\"a welcome-to-the-system preface... obstructs the goal\"); constructivism instead requires a viable model to eventually be explicitly built Ben-Ari's own experiment (modifying Word documents) found that even sophisticated users restrict themselves to elementary bricolage techniques and never engage the underlying concepts — evidence that minimalism alone isn't sufficient once tasks go beyond the elementary. Notional machine / epistemic game A notional machine is a deliberately simplified, teachable model of how the underlying machine works — enough structure to reason correctly without full technical fidelity. An epistemic game is a more formalized procedure or tool for building this model. Ben-Ari's own example: three cheap calculators taped to a board, each representing one variable, used to physically demonstrate assignment statements — without ever touching a real, programmable computer. Closed lab vs. open lab Closed lab Open lab Supervised session at an appointed time, everyone working together Students work on assignments whenever convenient, typically alone From a (especially social ) constructivist viewpoint, closed labs should be preferable: they soften the \"brutality\" of interacting with the computer and facilitate the social interaction Ben-Ari sees as necessary for construction. He cites Thweatt (1994) as empirical evidence for the superiority of closed labs. Multiple choice Why does Ben-Ari say bricolage is not sufficient for professional software engineering? Non-deterministic, concurrent, or real-time systems can only be mastered through abstract technique, which trial-and-error tinkering can't provide Bricolage is only useful for graphic design, not programming Professional engineers never make mistakes, so debugging is unnecessary Bricolage is banned by most software engineering standards bodies Bricolage (try it and see) has no answer for systems whose complexity can only be handled through structured, abstract reasoning — concurrency and real-time systems are Ben-Ari's specific examples. True / False Minimalism and constructivism fully agree on how much conceptual/model material to include in instruction. True False False — this is exactly where they diverge. Minimalism wants to defer or eliminate conceptual material as long as possible; constructivism insists a viable model must eventually be explicitly built. Multiple choice What is a \"notional machine\"? The literal, full electronic specification of a CPU A synonym for bricolage A deliberately simplified, teachable model of how the underlying machine works, detailed enough to support correct reasoning without full technical fidelity A type of programming language Right — it's a simplification built for teaching, like the three-calculators-on-a-board epistemic game for demonstrating assignment. Multiple choice Which lab format does a (social) constructivist viewpoint favor, and why? Open labs, because students learn best completely alone Closed labs, because they soften the brutality of computer feedback and facilitate the social interaction needed for construction Neither — lab format has no bearing on constructivism Open labs, because they're empirically proven superior Closed labs — Ben-Ari cites Thweatt (1994) as empirical support, and connects the preference specifically to social constructivism's emphasis on peer interaction."
+  },
+  {
+    "id": "l2-teaching-q0",
+    "section": "l2-teaching",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Bricolage, Minimalism, Notional Machines & Lab Design",
+    "text": "Multiple choice Why does Ben-Ari say bricolage is not sufficient for professional software engineering? — Bricolage (try it and see) has no answer for systems whose complexity can only be handled through structured, abstract reasoning — concurrency and real-time systems are Ben-Ari's specific examples."
+  },
+  {
+    "id": "l2-teaching-q1",
+    "section": "l2-teaching",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Bricolage, Minimalism, Notional Machines & Lab Design",
+    "text": "True / False Minimalism and constructivism fully agree on how much conceptual/model material to include in instruction. — False — this is exactly where they diverge. Minimalism wants to defer or eliminate conceptual material as long as possible; constructivism insists a viable model must eventually be explicitly built."
+  },
+  {
+    "id": "l2-teaching-q2",
+    "section": "l2-teaching",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Bricolage, Minimalism, Notional Machines & Lab Design",
+    "text": "Multiple choice What is a \"notional machine\"? — Right — it's a simplification built for teaching, like the three-calculators-on-a-board epistemic game for demonstrating assignment."
+  },
+  {
+    "id": "l2-teaching-q3",
+    "section": "l2-teaching",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Bricolage, Minimalism, Notional Machines & Lab Design",
+    "text": "Multiple choice Which lab format does a (social) constructivist viewpoint favor, and why? — Closed labs — Ben-Ari cites Thweatt (1994) as empirical support, and connects the preference specifically to social constructivism's emphasis on peer interaction."
+  },
+  {
+    "id": "l2-csclaims",
+    "section": "l2-csclaims",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "section",
+    "title": "Lesson 2 &middot; Ben-Ari's Two Claims About CS & Their Conclusions",
+    "text": "Lesson 2 &middot; Ben-Ari's Two Claims About CS & Their Conclusions Ben-Ari's central argument: computer science education has two characteristics that don't appear in the natural sciences , and from these, three conclusions follow. Claim 1 — No effective model of a computer A beginning CS student typically has no effective model of a computer at all — unlike, say, a physics student, who at least brings an intuitive (if wrong, Aristotelian/Newtonian) model of motion that is genuinely effective for everyday predictions (\"everyone who has ever thrown a ball knows that if you don't keep applying force, an object in motion will eventually come to rest\"). Studies (Taylor 1990; Sleeman et al. 1988) show CS students' models are, at best, non-viable \"grossly anthropomorphic giant brain\" metaphors. Claim 2 — Accessible ontological reality The computer gives immediate, brutal, unambiguous feedback . Unlike physics (you get your homework back a week later) or a discussion where meaning is socially negotiable, the consequences of a misconception show up as a bug , right now. A \"correct\" answer is directly checkable, and there's no room to argue that a crashing program is \"a matter of interpretation.\" The three conclusions that follow Conclusion Why it follows (a) Models must be explicitly taught Since students bring no effective model on their own (Claim 1), leaving model-building to chance or \"facile analogies\" produces haphazard, non-viable models (b) Models must be taught before abstractions The object-oriented paradox : abstraction is supposed to follow (Piaget: accommodation follows assimilation of) detailed understanding, but beginners never had that detail to begin with, so they can't meaningfully \"forget\" it to form an abstraction. Objects-first curricula risk this exact trap (c) The computer's seductive reality must not replace model construction Because feedback is so immediate (Claim 2), students can fall into pure bricolage — \"try it and see\" — without ever building the underlying model, since the computer's reality feels sufficient on its own The object-oriented paradox, restated simply. To treat something as an abstraction (like a Window object), you're supposed to have first understood the messy detail underneath it and then chosen to set that detail aside. A true beginner never had that detail in the first place — so what exactly are they \"abstracting away\"? This is Ben-Ari's core objection to objects-first introductory courses. Select all that apply Which two claims does Ben-Ari make about how CS education differs from other STEM fields like physics? Beginning CS students do not have an effective model of a computer Computers form an accessible ontological reality — feedback is immediate and unambiguous CS students are, on average, less intelligent than physics students Programming languages are impossible to teach using constructivist principles Check The two claims (from the abstract) are exactly (a) no effective model of a computer, and (b) the computer is an accessible ontological reality. Multiple choice What is the \"object-oriented paradox\"? Objects are always easier to teach than procedures There is no paradox — OOP is unambiguously the best first paradigm Abstraction is supposed to follow detailed understanding, but beginners never had that detail to forget in the first place — so how can they meaningfully grasp an object as an abstraction? Objects can only be represented using inheritance Exactly — this is Ben-Ari's central objection to objects-first curricula, grounded in Piaget's claim that abstraction/accommodation follows assimilation of concrete detail. True / False Ben-Ari argues the \"seductive reality\" of the computer can actually work against constructivist learning if it isn't managed carefully. True False True — this is conclusion (c). Because the computer's immediate feedback feels sufficient, students can substitute pure trial-and-error for real model construction unless instructors guard against it."
+  },
+  {
+    "id": "l2-csclaims-q0",
+    "section": "l2-csclaims",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Ben-Ari's Two Claims About CS & Their Conclusions",
+    "text": "Select all that apply Which two claims does Ben-Ari make about how CS education differs from other STEM fields like physics? — The two claims (from the abstract) are exactly (a) no effective model of a computer, and (b) the computer is an accessible ontological reality."
+  },
+  {
+    "id": "l2-csclaims-q1",
+    "section": "l2-csclaims",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Ben-Ari's Two Claims About CS & Their Conclusions",
+    "text": "Multiple choice What is the \"object-oriented paradox\"? — Exactly — this is Ben-Ari's central objection to objects-first curricula, grounded in Piaget's claim that abstraction/accommodation follows assimilation of concrete detail."
+  },
+  {
+    "id": "l2-csclaims-q2",
+    "section": "l2-csclaims",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Ben-Ari's Two Claims About CS & Their Conclusions",
+    "text": "True / False Ben-Ari argues the \"seductive reality\" of the computer can actually work against constructivist learning if it isn't managed carefully. — True — this is conclusion (c). Because the computer's immediate feedback feels sufficient, students can substitute pure trial-and-error for real model construction unless instructors guard against it."
+  },
+  {
+    "id": "l2-questions",
+    "section": "l2-questions",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "section",
+    "title": "Lesson 2 &middot; The Instructor's 10 \"Questions to Think About\"",
+    "text": "Lesson 2 &middot; The Instructor's 10 \"Questions to Think About\" These are the exact questions from the Reading Quiz 2 reminder, each with a full answer and a graded recall item. 1. What is the classical (non-constructivist) view of how knowledge is transmitted, and how does it differ from the constructivist view? Classical: an ontological reality exists independently; epistemology is foundational (built on absolute truths via logical deduction); the mind is a \"clean slate\" that lectures/books can fill directly (the \"Nurnberg Funnel\"). Constructivist: ontology is rejected/irrelevant; epistemology is nonfoundationalist and fallible; knowledge is recursively self-constructed by each student from their own existing structures, so it cannot simply be poured in. 2. What is Ernest's four-part framework for describing an \"educational paradigm\"? Ontology (theory of existence), epistemology (theory of knowledge), methodology (method for acquiring and validating knowledge), and pedagogy (theory of teaching) — see the Ernest topic above. 3. What are the two claims Ben-Ari makes about how CS education differs from other STEM fields (e.g., physics)? What conclusions does he draw from them? (a) Beginning CS students have no effective model of a computer; (b) the computer forms an accessible ontological reality (immediate, brutal, unambiguous feedback). Conclusions: (a) models must be explicitly taught, (b) models must be taught before abstractions, (c) the computer's seductive reality must not be allowed to replace real model construction. 4. Why does Ben-Ari say a misconception should not be treated as a simple mistake? Because it's a logically consistent, non-standard theory the student genuinely constructed from real prior knowledge — not carelessness. Some researchers (Smith, diSessa & Roschelle) go further, arguing misconceptions can even be essential prior knowledge for building the correct model. 5. What role does the teacher play in a constructivist classroom, as opposed to a classical one? Classical: deliver/transmit facts. Constructivist: actively guide construction — which is significantly harder, because guidance must be based on understanding each student's current , possibly non-viable cognitive structures, and helping them modify those structures rather than just supplying new facts. 6. What does the WYSIWYG word processor example (Figures 1–2) illustrate about mental models? That what you see (formatted text on screen) is a rendering of what you actually get (a data structure of text plus formatting symbols, some invisible, plus operations on it) — and that a plausible prior model (ink on paper) can be viable for ordinary use but non-viable the moment it meets a case, like an invisible line break, it can't explain. 7. How does bricolage differ from a \"planning\" approach to programming, and what does Ben-Ari think its limits are? Bricolage is tinkering/trial-and-error (endless debugging); planning is structured, abstract design. Ben-Ari accepts bricolage as valid, even essential, for novices, but says it is not a viable methodology for professional software engineering, and fails outright on non-deterministic, concurrent, or real-time systems that require abstract technique to master. 8. How does minimalism overlap with constructivism, and where does Ben-Ari say it diverges? Overlap: both favor active learning, respect pre-existing knowledge, and treat errors as pedagogically useful rather than failures. Divergence: minimalism emphasizes eliminating or deferring conceptual material as long as possible, while constructivism requires a viable model to eventually be explicitly built — Ben-Ari's own experiment found sophisticated users who relied purely on minimalist/bricolage technique never engaged the underlying concepts at all. 9. Why does Ben-Ari argue that models should be taught *before* abstractions? What is the \"object-oriented paradox\"? Because abstraction (per Piaget) is supposed to follow assimilation of concrete detail — but a true beginner never had that detail, so teaching an abstraction (like an object) before a viable underlying model exists risks a non-viable model that can't easily be fixed later. The object-oriented paradox is exactly this: how can you forget detail you never had? 10. Why does Ben-Ari believe passive learning (e.g., straight lectures rather than active learning classrooms) is likely to fail in CS specifically? Because each student constructs knowledge differently from their own existing structures, a lecture wrongly assumes \"students know what the lecturer told them.\" In CS specifically, this is compounded by the accessible ontological reality of the computer: a non-viable model gets exposed immediately and brutally by a crashing program (not softened by a week's delay, as in physics, or negotiability, as in humanities discussion) — so only active, guided construction can build a model that survives contact with that reality."
+  },
+  {
+    "id": "l2-check",
+    "section": "l2-check",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "section",
+    "title": "Lesson 2 &middot; Reading Quiz 2 Self-Check",
+    "text": "Lesson 2 &middot; Reading Quiz 2 Self-Check Mixed review built directly from the instructor's Reading Quiz 2 terms/concepts reminder. Multiple choice (Constructivism & Models topic) A model that successfully predicts and lets a student act correctly in a domain, even if not objectively \"true,\" is called: A misconception A viable model A foundational model A notional machine Viable — it works for the student, whether or not it's the \"standard\" model. Multiple choice (Ernest's Paradigm topic) Which of Ernest's four components describes \"the method for acquiring and validating knowledge\"? Methodology Ontology Pedagogy Epistemology Methodology. (Ontology = existence, epistemology = knowledge itself, pedagogy = teaching.) True / False (How Knowledge Is Built topic) Radical constructivism emphasizes social negotiation of knowledge over individual cognition. True False False — that's social constructivism. Radical constructivism emphasizes the individual mind, and taken to an extreme risks solipsism. Multiple choice (Bricolage/Minimalism/Labs topic) Per Ben-Ari, why might a (social) constructivist prefer closed labs over open labs? Closed labs are cheaper to run Open labs are banned by most CS departments Closed labs soften the brutality of computer feedback and facilitate the social interaction constructivism sees as important Closed labs eliminate the need for any lab assignments Closed labs support the social-interaction piece of construction and are backed by empirical evidence (Thweatt, 1994) of outperforming open labs. Multiple choice (Ben-Ari's Claims topic) Which pair correctly matches Ben-Ari's two claims about CS education? CS is easier than physics; computers are unreliable Students lack an effective model of a computer; the computer is an accessible ontological reality (immediate, unambiguous feedback) Bricolage is always sufficient; minimalism always fails Objects should always be taught first; abstraction never causes problems Exactly the two claims from the abstract, which drive all three of his conclusions. True / False (The 10 Questions topic, Q10) Ben-Ari believes CS is especially unsuited to passive learning because the computer exposes a non-viable model immediately, rather than softening the blow the way physics homework or humanities discussion might. True False True — the accessible ontological reality of the computer is exactly what makes passive learning riskier in CS than in fields with slower or more negotiable feedback. (Ben-Ari's Claims topic) Fill in the blank: because abstraction is supposed to follow assimilation of detail, but beginners never had that detail, teaching abstractions like objects before a viable model exists creates the . Check The object-oriented paradox."
+  },
+  {
+    "id": "l2-check-q0",
+    "section": "l2-check",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Reading Quiz 2 Self-Check",
+    "text": "Multiple choice (Constructivism & Models topic) A model that successfully predicts and lets a student act correctly in a domain, even if not objectively \"true,\" is called: — Viable — it works for the student, whether or not it's the \"standard\" model."
+  },
+  {
+    "id": "l2-check-q1",
+    "section": "l2-check",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Reading Quiz 2 Self-Check",
+    "text": "Multiple choice (Ernest's Paradigm topic) Which of Ernest's four components describes \"the method for acquiring and validating knowledge\"? — Methodology. (Ontology = existence, epistemology = knowledge itself, pedagogy = teaching.)"
+  },
+  {
+    "id": "l2-check-q2",
+    "section": "l2-check",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Reading Quiz 2 Self-Check",
+    "text": "True / False (How Knowledge Is Built topic) Radical constructivism emphasizes social negotiation of knowledge over individual cognition. — False — that's social constructivism. Radical constructivism emphasizes the individual mind, and taken to an extreme risks solipsism."
+  },
+  {
+    "id": "l2-check-q3",
+    "section": "l2-check",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Reading Quiz 2 Self-Check",
+    "text": "Multiple choice (Bricolage/Minimalism/Labs topic) Per Ben-Ari, why might a (social) constructivist prefer closed labs over open labs? — Closed labs support the social-interaction piece of construction and are backed by empirical evidence (Thweatt, 1994) of outperforming open labs."
+  },
+  {
+    "id": "l2-check-q4",
+    "section": "l2-check",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Reading Quiz 2 Self-Check",
+    "text": "Multiple choice (Ben-Ari's Claims topic) Which pair correctly matches Ben-Ari's two claims about CS education? — Exactly the two claims from the abstract, which drive all three of his conclusions."
+  },
+  {
+    "id": "l2-check-q5",
+    "section": "l2-check",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Reading Quiz 2 Self-Check",
+    "text": "True / False (The 10 Questions topic, Q10) Ben-Ari believes CS is especially unsuited to passive learning because the computer exposes a non-viable model immediately, rather than softening the blow the way physics homework or humanities discussion might. — True — the accessible ontological reality of the computer is exactly what makes passive learning riskier in CS than in fields with slower or more negotiable feedback."
+  },
+  {
+    "id": "l2-check-q6",
+    "section": "l2-check",
+    "course": "COMP227",
+    "lesson": "L2",
+    "type": "qa",
+    "title": "Lesson 2 &middot; Reading Quiz 2 Self-Check",
+    "text": "The object-oriented paradox."
+  }
+]
