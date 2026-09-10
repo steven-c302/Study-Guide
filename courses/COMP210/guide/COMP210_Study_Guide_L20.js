@@ -149,9 +149,9 @@ document.getElementById('l20').innerHTML = `
     <div class="card">
       <h3>Heapsort warm-up (your quiz Q1)</h3>
       <p>Heap sort turns an unordered array into a max heap in
-        <input type="text" class="fillblank sm" data-answer="o(n)|n" placeholder="?" style="width:70px"> time via BuildHeap, then sorts in
-        <input type="text" class="fillblank sm" data-answer="o(nlogn)|o(n log n)|nlogn|n log n" placeholder="?" style="width:100px"> time by bubbling down n times. Total <b>space</b> complexity is
-        <input type="text" class="fillblank sm" data-answer="o(1)|1|constant" placeholder="?" style="width:70px">.</p>
+        <input type="text" class="fillblank sm" data-answer="o(n)~~~n" placeholder="?" style="width:70px"> time via BuildHeap, then sorts in
+        <input type="text" class="fillblank sm" data-answer="o(nlogn)~~~o(n log n)~~~nlogn~~~n log n" placeholder="?" style="width:100px"> time by bubbling down n times. Total <b>space</b> complexity is
+        <input type="text" class="fillblank sm" data-answer="o(1)~~~1~~~constant" placeholder="?" style="width:70px">.</p>
       <button class="btn small" onclick="checkFillGroup(this)">Check all</button>
       <div class="fb">Answers: <b>O(n)</b> (BuildHeap is linear), <b>O(n log n)</b> (n removals × O(log n) sift-down), <b>O(1)</b> space (heapsort sorts in-place, no extra array).</div>
     </div>

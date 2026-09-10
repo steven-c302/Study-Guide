@@ -18,17 +18,17 @@ document.getElementById('l1').innerHTML = `
     <div class="card">
       <h3>Fill in — the core idea (your quiz)</h3>
       <p>For each
-        <input type="text" class="fillblank sm" data-answer="real-world application|real world application|application|real-world app" placeholder="?" style="width:150px"> that requires processing huge amounts of data in real time, there exists an
+        <input type="text" class="fillblank sm" data-answer="real-world application~~~real world application~~~application~~~real-world app" placeholder="?" style="width:150px"> that requires processing huge amounts of data in real time, there exists an
         <input type="text" class="fillblank sm" data-answer="algorithm" placeholder="?" style="width:100px"> that utilizes an efficient
-        <input type="text" class="fillblank sm" data-answer="data structure|datastructure" placeholder="?" style="width:130px"> to organize and store the data.</p>
+        <input type="text" class="fillblank sm" data-answer="data structure~~~datastructure" placeholder="?" style="width:130px"> to organize and store the data.</p>
       <button class="btn small" onclick="checkFillGroup(this)">Check all</button>
       <div class="fb">Answers: <b>real-world application</b> → <b>algorithm</b> → <b>data structure</b>. (Slides 11–13.)</div>
     </div>
     <div class="card">
       <h3>Fill in — the two complexities (your quiz)</h3>
       <p>An algorithm's running time is known as its
-        <input type="text" class="fillblank sm" data-answer="time complexity|time" placeholder="?" style="width:130px">. The amount of space taken by its data is known as its
-        <input type="text" class="fillblank sm" data-answer="space complexity|space" placeholder="?" style="width:130px">.</p>
+        <input type="text" class="fillblank sm" data-answer="time complexity~~~time" placeholder="?" style="width:130px">. The amount of space taken by its data is known as its
+        <input type="text" class="fillblank sm" data-answer="space complexity~~~space" placeholder="?" style="width:130px">.</p>
       <button class="btn small" onclick="checkFillGroup(this)">Check both</button>
       <div class="fb">Answers: <b>time complexity</b> (running time) and <b>space complexity</b> (memory used). Efficiency is judged on both. (Slide 13.) <b>Moore's Law</b> (storage/power doubles ~every 2 years) means ever more data → efficient structures matter more.</div>
     </div>
@@ -71,7 +71,7 @@ document.getElementById('l1').innerHTML = `
       <h3>Practice</h3>
       <div class="q">
         <p><code>0x15</code> to decimal =
-          <input type="text" class="fillblank sm" data-answer="21|0d21" placeholder="?" style="width:70px"></p>
+          <input type="text" class="fillblank sm" data-answer="21~~~0d21" placeholder="?" style="width:70px"></p>
         <button class="btn small" onclick="checkFill(this)">Check</button>
         <div class="fb">1×16 + 5 = <b>21</b>.</div>
       </div>

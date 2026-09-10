@@ -17,7 +17,7 @@ function showTopic(btn,sectionId){
 
 /* ================= PROGRESS ================= */
 let answered=new Set();
-function markAnswered(el){answered.add(el);updateProgress();}
+function markAnswered(el){answered.add(el);updateProgress();saveProgress();}
 function updateProgress(){
   const total=document.querySelectorAll('.q').length
     + document.querySelectorAll('table.match').length
@@ -25,6 +25,60 @@ function updateProgress(){
   const pct=total?Math.min(100,Math.round(answered.size/total*100)):0;
   document.getElementById('pbar').style.width=pct+'%';
   document.getElementById('ptxt').textContent=answered.size+' of '+total+' items answered';
+}
+
+/* ================= PROGRESS PERSISTENCE (localStorage) ================= */
+function progressKey(){return 'guide-progress:'+(window.GUIDE_COURSE||location.pathname);}
+function answeredId(el){
+  if(typeof el==='string')return el; // table/order-widget ids are already strings
+  if(el.id)return el.id;
+  const scope=el.closest?el.closest('.topic'):null;
+  const within=scope?Array.from(scope.querySelectorAll('.q,.card')):[];
+  const idx=within.indexOf(el);
+  return (scope?scope.id:'root')+':'+(idx===-1?'x':idx);
+}
+function saveProgress(){
+  try{
+    const ids=[]; answered.forEach(el=>ids.push(answeredId(el)));
+    localStorage.setItem(progressKey(),JSON.stringify(ids));
+  }catch(e){ /* private browsing / storage disabled — just skip persistence */ }
+}
+function loadProgress(){
+  try{ const raw=localStorage.getItem(progressKey()); return raw?JSON.parse(raw):[]; }
+  catch(e){ return []; }
+}
+function restoreProgress(){
+  const saved=new Set(loadProgress());
+  if(!saved.size)return;
+  // T/F + multiple choice: re-mark the correct option, disable, show feedback
+  document.querySelectorAll('.q[data-tf], .q[data-mc]').forEach(q=>{
+    if(!saved.has(answeredId(q)))return;
+    const tf=q.dataset.tf, mc=q.dataset.mc;
+    q.dataset.done=1; answered.add(q);
+    q.querySelectorAll('.opt').forEach(o=>{
+      const isRight=(tf!==undefined)?o.dataset.v===tf:parseInt(o.dataset.i)===parseInt(mc);
+      if(isRight)o.classList.add('correct');
+      o.classList.add('disabled');
+    });
+    const fb=q.querySelector('.fb');
+    if(fb && !fb.classList.contains('show')){fb.classList.add('show','ok');fb.innerHTML='✓ Correct. '+fb.innerHTML;}
+  });
+  // fill-in-the-blank: pre-fill the first accepted answer and show feedback
+  document.querySelectorAll('.q .fillblank, .card .fillblank').forEach(inp=>{
+    const scope=inp.closest('.q')||inp.closest('.card');
+    if(!saved.has(answeredId(scope)))return;
+    scope.dataset.done=1; answered.add(scope);
+    inp.value=inp.dataset.answer.split('~~~')[0];
+    inp.style.borderColor='var(--green)';
+    const fb=scope.querySelector('.fb');
+    if(fb && !fb.classList.contains('show')){fb.classList.add('show','ok');fb.innerHTML='✓ Correct. '+fb.innerHTML;}
+  });
+  // matching tables + the ordering widget: restore progress credit only
+  // (re-populating dropdowns/order would need re-parsing each onclick's key
+  // array, which isn't worth it for a purely-additive persistence pass)
+  document.querySelectorAll('table.match').forEach(t=>{ if(saved.has(t.id))answered.add(t.id); });
+  if(saved.has('order-class'))answered.add('order-class');
+  updateProgress();
 }
 
 /* ================= T/F + MULTIPLE CHOICE ================= */
@@ -58,8 +112,10 @@ document.querySelectorAll('.q').forEach(q=>{
 
 /* ================= FILL IN THE BLANK ================= */
 function gradeInput(inp){
-  // data-answer may list several accepted answers separated by "|"
-  const alts=inp.dataset.answer.toLowerCase().split('|').map(s=>s.trim().replace(/\s+/g,' '));
+  // data-answer may list several accepted answers separated by "~~~" (not "|" —
+  // some answers contain a literal pipe, e.g. "O(|V| + |E|)", which "|" as a
+  // delimiter would truncate)
+  const alts=inp.dataset.answer.toLowerCase().split('~~~').map(s=>s.trim().replace(/\s+/g,' '));
   let val=inp.value.trim().toLowerCase().replace(/\s+/g,' ');
   let ok=alts.indexOf(val)!==-1;
   if(alts.indexOf('superclasses')!==-1 && (val==='superclass'||val==='super classes'))ok=true;
@@ -106,7 +162,7 @@ function checkMatch(tableId,fbId,key){
     if(!ok)all=false;
   });
   const fb=document.getElementById(fbId);
-  if(any){answered.add(tableId);updateProgress();}
+  if(any){answered.add(tableId);updateProgress();saveProgress();}
   fb.className='fb show '+(all?'ok':'no');
   fb.innerHTML=all?'✓ All correct!':'✗ Green = correct, red = fix these and check again.';
 }
@@ -141,7 +197,7 @@ function checkOrder(){
     items[i].classList.add(ok?'correct':'wrong');
     if(!ok)all=false;
   });
-  answered.add('order-class');updateProgress();
+  answered.add('order-class');updateProgress();saveProgress();
   const fb=document.getElementById('fb-order-class');
   fb.className='fb show '+(all?'ok':'no');
   fb.innerHTML=all
@@ -364,4 +420,5 @@ renderBuild();
 initOrder();
 document.getElementById('l5-code').innerHTML=L5_CODE;
 renderL5();
+restoreProgress();
 updateProgress();

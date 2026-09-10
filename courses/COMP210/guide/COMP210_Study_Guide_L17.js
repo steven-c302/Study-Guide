@@ -20,9 +20,9 @@ document.getElementById('l17').innerHTML = `
     <div class="card">
       <h3>Fill in — the load factor formula (your quiz)</h3>
       <p>Load factor is
-        <input type="text" class="fillblank sm" data-answer="n|# of elements in table|number of elements|# elements|elements in table" placeholder="?">
+        <input type="text" class="fillblank sm" data-answer="n~~~# of elements in table~~~number of elements~~~# elements~~~elements in table" placeholder="?">
         /
-        <input type="text" class="fillblank sm" data-answer="m|table size|size of table|size" placeholder="?">.</p>
+        <input type="text" class="fillblank sm" data-answer="m~~~table size~~~size of table~~~size" placeholder="?">.</p>
       <button class="btn small" onclick="checkFillGroup(this)">Check both</button>
       <div class="fb">Answer: <b>N</b> (# of elements in table) / <b>M</b> (table size). Higher load → higher collision probability.</div>
     </div>

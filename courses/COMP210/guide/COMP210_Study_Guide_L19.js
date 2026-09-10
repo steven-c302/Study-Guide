@@ -123,9 +123,9 @@ d(s) = <span class="nm">0</span>; mark s visited; enqueue s
     <div class="card">
       <h3>What BFS tracks per vertex (your quiz)</h3>
       <p>When running BFS, we track for each vertex whether it is
-        <input type="text" class="fillblank sm" data-answer="visited|marked" placeholder="?">, its
-        <input type="text" class="fillblank sm" data-answer="distance|distance estimate|d(v)|distance from source|hop count" placeholder="?"> from the source, and its
-        <input type="text" class="fillblank sm" data-answer="predecessor|parent|p(v)|predecessor along the path" placeholder="?"> along the path.</p>
+        <input type="text" class="fillblank sm" data-answer="visited~~~marked" placeholder="?">, its
+        <input type="text" class="fillblank sm" data-answer="distance~~~distance estimate~~~d(v)~~~distance from source~~~hop count" placeholder="?"> from the source, and its
+        <input type="text" class="fillblank sm" data-answer="predecessor~~~parent~~~p(v)~~~predecessor along the path" placeholder="?"> along the path.</p>
       <button class="btn small" onclick="checkFillGroup(this)">Check all</button>
       <div class="fb">Answers: <b>visited</b>, <b>distance</b> (d(v)), <b>predecessor</b> (p(v)). Slides 23–24 list exactly these three: "Visited?", "d(v) = distance estimate from source", "p(v) = predecessor of v along the path". Distance gives shortest hop-count; predecessors let you reconstruct the actual path.</div>
     </div>
@@ -196,7 +196,7 @@ d(s) = <span class="nm">0</span>; mark s visited; enqueue s
     <div class="card">
       <h3>Fill in — BFS complexity (your quiz)</h3>
       <p>The time complexity of BFS is
-        <input type="text" class="fillblank sm" data-answer="o(v+e)|o(v + e)|o(n+m)|o(n + m)|o(|v|+|e|)|o(|v| + |e|)|v+e|n+m" placeholder="?" style="width:130px">.</p>
+        <input type="text" class="fillblank sm" data-answer="o(v+e)~~~o(v + e)~~~o(n+m)~~~o(n + m)~~~o(|v|+|e|)~~~o(|v| + |e|)~~~v+e~~~n+m" placeholder="?" style="width:130px">.</p>
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb">Answer: <b>O(|V| + |E|)</b> = O(n + m). Slide 31: setup is O(n), and the while-loop touches each vertex O(1) and each edge O(1), giving O(n + m) overall.</div>
     </div>
