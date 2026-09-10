@@ -1,7 +1,12 @@
 /* ============================================================
-   INLS 382 STUDY GUIDE — SHARED ENGINE
-   Loads LAST so it can wire up questions injected by every
-   lesson module (each module writes into its own .lesson div).
+   SHARED STUDY GUIDE ENGINE
+   Loads LAST (after every lesson module) so it can wire up
+   questions injected by each lesson (each module writes into
+   its own .lesson div). Used by any course guide that follows
+   the retry-until-correct question pattern — currently COMP211,
+   COMP227, and INLS382. (COMP210 predates this engine and has
+   its own, with a different single-shot grading UX — not
+   consolidated here.)
 
    Grading policy:
      - A WRONG answer never reveals the correct one. The chosen
@@ -87,7 +92,11 @@ document.querySelectorAll('.q').forEach(q => {
 
 /* ================= FILL IN THE BLANK ================= */
 function gradeInput(inp) {
-  const alts = inp.dataset.answer.toLowerCase().split('|').map(s => s.trim().replace(/\s+/g, ' '));
+  /* '~~~' separates multiple ACCEPTED alternative answers. It is NOT '|',
+     because some correct answers contain a literal pipe character (a shell
+     pipe like "cat f | ./prog", or math notation like "O(|V| + |E|)") and
+     splitting on '|' would truncate them. */
+  const alts = inp.dataset.answer.toLowerCase().split('~~~').map(s => s.trim().replace(/\s+/g, ' '));
   const val = inp.value.trim().toLowerCase().replace(/\s+/g, ' ');
   const ok = alts.indexOf(val) !== -1;
   inp.style.borderColor = val === '' ? 'var(--line)' : (ok ? 'var(--green)' : 'var(--red)');
@@ -218,10 +227,23 @@ function qGiveUp(btn) {
       i.style.borderColor = b.checked ? 'var(--green)' : 'var(--line)';
     });
   } else {
+    const answers = [];
     scope.querySelectorAll('.fillblank').forEach(i => {
-      i.value = i.dataset.answer.split('|')[0];
+      const first = i.dataset.answer.split('~~~')[0];
+      i.value = first;
       i.style.borderColor = 'var(--amber)';
+      answers.push(first);
     });
+    /* Make the literal correct answer visible in the explanation text too —
+       the input box alone can be too narrow/easy to miss, especially for
+       long piped/redirected commands. */
+    const fb = scope.querySelector('.fb');
+    if (fb && answers.length) {
+      fbInit(fb);
+      const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const code = answers.map(a => '<code>' + esc(a) + '</code>').join(', ');
+      fb._explain = code + (fb._explain ? ' &mdash; ' + fb._explain : '');
+    }
   }
   fbReveal(scope.querySelector('.fb'));
   qShowControls(scope);
@@ -296,11 +318,72 @@ function matchGiveUp(tableId, fbId) {
   fb.innerHTML = '<b>Answer:</b> the correct pairing is filled in above. Hit <b>Try again</b> to clear it and test yourself.';
 }
 
+/* ================= PROGRESS PERSISTENCE (localStorage) ================= */
+/* Namespaced per course so multiple guides don't collide. window.GUIDE_COURSE
+   is set by each course's guide/index.html before this script loads; falls
+   back to the page path if a course forgot to set it. */
+function progressKey() {
+  return 'guide-progress:' + (window.GUIDE_COURSE || location.pathname);
+}
+function answeredId(el) {
+  /* Prefer a stable id already on the element/table; fall back to a
+     position-based key (topic id + index among siblings of the same kind)
+     so items without a hand-authored id still persist sensibly. */
+  if (el.id) return el.id;
+  if (typeof el === 'string') return el; /* matching tableId is already a string */
+  const scope = el.closest ? el.closest('.topic') : null;
+  const within = scope ? Array.from(scope.querySelectorAll('.q, .card')) : [];
+  const idx = within.indexOf(el);
+  return (scope ? scope.id : 'root') + ':' + (idx === -1 ? 'x' : idx);
+}
+function saveProgress() {
+  try {
+    const ids = [];
+    answered.forEach(el => ids.push(answeredId(el)));
+    localStorage.setItem(progressKey(), JSON.stringify(ids));
+  } catch (e) { /* private browsing / storage disabled — just skip persistence */ }
+}
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem(progressKey());
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) { return []; }
+}
+function restoreProgress() {
+  const saved = new Set(loadProgress());
+  if (!saved.size) return;
+  document.querySelectorAll('.q, .card').forEach(el => {
+    if (!saved.has(answeredId(el))) return;
+    if (el.querySelector('.fillblank, .ma-item, [data-tf], [data-mc]') || el.dataset.tf !== undefined || el.dataset.mc !== undefined) {
+      el.dataset.done = 1;
+      answered.add(el);
+      const fb = el.querySelector('.fb');
+      if (fb) fbOk(fb);
+      qShowControls(el);
+      el.querySelectorAll('.opt').forEach(o => o.classList.add('disabled'));
+    }
+  });
+  document.querySelectorAll('table.match').forEach(t => {
+    if (saved.has(t.id)) { answered.add(t.id); }
+  });
+  updateProgress();
+}
+
+/* wrap the mark/unmark hooks so every progress change also persists */
+const _markAnswered = markAnswered, _unmarkAnswered = unmarkAnswered;
+markAnswered = function (el) { _markAnswered(el); saveProgress(); };
+unmarkAnswered = function (el) { _unmarkAnswered(el); saveProgress(); };
+const _checkMatch = checkMatch;
+checkMatch = function (tableId, fbId, key) { _checkMatch(tableId, fbId, key); saveProgress(); };
+const _matchRetry = matchRetry;
+matchRetry = function (tableId, fbId) { _matchRetry(tableId, fbId); saveProgress(); };
+
 /* ================= INIT ================= */
-['initL0', 'initL1', 'initL2', 'initL3', 'initL4', 'initL5', 'initL6', 'initL7', 'initL8']
+['initL0', 'initL1', 'initL2', 'initL3', 'initL4', 'initL5', 'initL6', 'initL7', 'initL8', 'initL9', 'initL10']
   .forEach(function (fn) { if (typeof window[fn] === 'function') window[fn](); });
 
 /* stash every explanation up front so nothing leaks before it is earned */
 document.querySelectorAll('.q .fb, .card > .fb').forEach(fbInit);
 
+restoreProgress();
 updateProgress();

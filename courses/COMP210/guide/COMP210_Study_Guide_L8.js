@@ -22,8 +22,8 @@ document.getElementById('l8').innerHTML = `
     <div class="card">
       <h3>Fill in — the trade-off (your quiz)</h3>
       <p>For complex recursive problems, recursive approaches are often more
-        <input type="text" class="fillblank sm" data-answer="concise|simpler" placeholder="?"> and have a
-        <input type="text" class="fillblank sm" data-answer="greater|worse|higher" placeholder="?"> time complexity than iterative approaches.</p>
+        <input type="text" class="fillblank sm" data-answer="concise~~~simpler" placeholder="?"> and have a
+        <input type="text" class="fillblank sm" data-answer="greater~~~worse~~~higher" placeholder="?"> time complexity than iterative approaches.</p>
       <button class="btn small" onclick="checkFillGroup(this)">Check both</button>
       <div class="fb">Answers: <b>concise</b> and <b>greater</b>. Recursion reads cleaner, but the naive recursive version can blow up (see Fibonacci below).</div>
     </div>

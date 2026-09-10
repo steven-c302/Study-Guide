@@ -522,7 +522,7 @@ document.getElementById('l2').innerHTML = `
     <div class="q">
       <p><i>(Ben-Ari's Claims topic)</i> Fill in the blank: because abstraction is supposed to follow
       assimilation of detail, but beginners never had that detail, teaching abstractions like objects before a
-      viable model exists creates the <input type="text" class="fillblank" data-answer="object-oriented paradox|object oriented paradox" placeholder="?">.</p>
+      viable model exists creates the <input type="text" class="fillblank" data-answer="object-oriented paradox~~~object oriented paradox" placeholder="?">.</p>
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb">The object-oriented paradox.</div>
     </div>

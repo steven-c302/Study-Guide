@@ -20,7 +20,7 @@ document.getElementById('l11').innerHTML = `
     <div class="concept">A <b>tree</b> is a <b>non-linear</b> data structure of nodes. A <b>binary tree</b> restricts each node to <b>at most 2</b> children — a <b>left</b> and a <b>right</b>. The structure is <b>recursive</b>: each node is itself the root of a binary tree, so operations (<code>contains</code>, <code>height</code>, …) are written recursively and can be called on the nodes directly — no separate "manager" class needed.</div>
     <div class="card">
       <h3>Fill in — how many children</h3>
-      <p>Binary trees can have up to <input type="text" class="fillblank sm" data-answer="2|two" placeholder="?"> children.</p>
+      <p>Binary trees can have up to <input type="text" class="fillblank sm" data-answer="2~~~two" placeholder="?"> children.</p>
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb">Answer: <b>2</b> (a left child and a right child). A node with 0 children is a <b>leaf</b>.</div>
     </div>
@@ -28,10 +28,10 @@ document.getElementById('l11').innerHTML = `
       <h3>Fill in — the fields of a tree node</h3>
       <p class="muted">This is the quiz question — note the leading-underscore field convention it wanted.</p>
       <p>The fields of a binary tree node are
-        <input type="text" class="fillblank sm" data-answer="_value|value" placeholder="?">,
-        <input type="text" class="fillblank sm" data-answer="_left|left|left reference" placeholder="?">,
-        <input type="text" class="fillblank sm" data-answer="_right|right|right reference" placeholder="?">, and
-        <input type="text" class="fillblank sm" data-answer="_parent|parent|parent reference" placeholder="?">.</p>
+        <input type="text" class="fillblank sm" data-answer="_value~~~value" placeholder="?">,
+        <input type="text" class="fillblank sm" data-answer="_left~~~left~~~left reference" placeholder="?">,
+        <input type="text" class="fillblank sm" data-answer="_right~~~right~~~right reference" placeholder="?">, and
+        <input type="text" class="fillblank sm" data-answer="_parent~~~parent~~~parent reference" placeholder="?">.</p>
       <button class="btn small" onclick="checkFillGroup(this)">Check all</button>
       <div class="fb">Answers: <b>_value</b>, <b>_left</b>, <b>_right</b>, and <b>_parent</b> (references). The value, plus references to the left child, right child, and — so you can move <i>up</i> the tree — the parent. ("Value"/"Left Reference" without the underscore was marked wrong; the field convention uses <code>_</code>.)</div>
     </div>

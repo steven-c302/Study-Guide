@@ -139,7 +139,7 @@ document.getElementById('l1').innerHTML = `
 
     <div class="q">
       <p>Fill in the blank: after paraphrasing what you heard, the manual's model always closes with a direct
-      check &mdash; "...Is that <input type="text" class="fillblank sm" data-answer="right|correct|accurate" placeholder="?">?" &mdash; rather than just assuming you understood correctly.</p>
+      check &mdash; "...Is that <input type="text" class="fillblank sm" data-answer="right~~~correct~~~accurate" placeholder="?">?" &mdash; rather than just assuming you understood correctly.</p>
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb">Right / correct / accurate all work. The point of active listening isn't just restating
       what you heard &mdash; it's explicitly asking whether you got it right, so a misunderstanding surfaces
@@ -409,9 +409,9 @@ document.getElementById('l1').innerHTML = `
 
   <div class="card">
     <div class="q">
-      <p>Fill in the five-stage sequence: <input type="text" class="fillblank sm" data-answer="naive|naïve" placeholder="?">
+      <p>Fill in the five-stage sequence: <input type="text" class="fillblank sm" data-answer="naive~~~naïve" placeholder="?">
       &rarr; <input type="text" class="fillblank sm" data-answer="acceptance" placeholder="?"> &rarr;
-      <input type="text" class="fillblank" data-answer="resistance|immersion|resistance/immersion" placeholder="?"> &rarr;
+      <input type="text" class="fillblank" data-answer="resistance~~~immersion~~~resistance/immersion" placeholder="?"> &rarr;
       <input type="text" class="fillblank sm" data-answer="redefinition" placeholder="?"> &rarr;
       <input type="text" class="fillblank sm" data-answer="internalization" placeholder="?"></p>
       <button class="btn small" onclick="checkFillGroup(this)">Check all</button>
@@ -582,7 +582,7 @@ document.getElementById('l1').innerHTML = `
     <div class="q">
       <p><i>(Chickering &amp; Perry topic)</i> Fill in the blank: Chickering's <b>pivotal</b> vector, which builds
       on the vectors before it and underlies all the ones after, is
-      <input type="text" class="fillblank" data-answer="establishing identity|identity" placeholder="?">.</p>
+      <input type="text" class="fillblank" data-answer="establishing identity~~~identity" placeholder="?">.</p>
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb">Establishing identity &mdash; vector 4 of 7.</div>
     </div>

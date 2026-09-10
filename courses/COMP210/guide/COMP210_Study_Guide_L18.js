@@ -22,9 +22,9 @@ document.getElementById('l18').innerHTML = `
     <div class="card">
       <h3>Fill in — heap sort complexity (your quiz)</h3>
       <p>Heap sort turns an unordered array into a max heap in
-        <input type="text" class="fillblank sm" data-answer="o(n)|n" placeholder="?" style="width:70px"> time via BuildHeap, then sorts in
-        <input type="text" class="fillblank sm" data-answer="o(nlogn)|o(n log n)|nlogn|n log n" placeholder="?" style="width:100px"> time by bubbling down n times. Total <b>space</b> complexity is
-        <input type="text" class="fillblank sm" data-answer="o(1)|1|constant" placeholder="?" style="width:70px">.</p>
+        <input type="text" class="fillblank sm" data-answer="o(n)~~~n" placeholder="?" style="width:70px"> time via BuildHeap, then sorts in
+        <input type="text" class="fillblank sm" data-answer="o(nlogn)~~~o(n log n)~~~nlogn~~~n log n" placeholder="?" style="width:100px"> time by bubbling down n times. Total <b>space</b> complexity is
+        <input type="text" class="fillblank sm" data-answer="o(1)~~~1~~~constant" placeholder="?" style="width:70px">.</p>
       <button class="btn small" onclick="checkFillGroup(this)">Check all</button>
       <div class="fb">Answers: <b>O(n)</b> (BuildHeap is linear — slide 13), <b>O(n log n)</b> (n sift-downs × O(log n) — slide 17), <b>O(1)</b> space (sorts in place, no extra array). Total time O(n)+O(n log n) = O(n log n).</div>
     </div>
@@ -127,8 +127,8 @@ document.getElementById('l18').innerHTML = `
     <div class="card">
       <h3>Fill in — the best data structures (your quiz)</h3>
       <p>The most efficient data structure(s) for an adjacency list are
-        <input type="text" class="fillblank sm" data-answer="a hash table|hash table|hashtable|hashmap|hash map|hash-table" placeholder="?" style="width:130px"> to store the vertices and
-        <input type="text" class="fillblank sm" data-answer="linked lists|linked list|linkedlist|linkedlists|linked-list" placeholder="?" style="width:130px"> to store the edges.</p>
+        <input type="text" class="fillblank sm" data-answer="a hash table~~~hash table~~~hashtable~~~hashmap~~~hash map~~~hash-table" placeholder="?" style="width:130px"> to store the vertices and
+        <input type="text" class="fillblank sm" data-answer="linked lists~~~linked list~~~linkedlist~~~linkedlists~~~linked-list" placeholder="?" style="width:130px"> to store the edges.</p>
       <button class="btn small" onclick="checkFillGroup(this)">Check both</button>
       <div class="fb">Answers: a <b>hash table</b> (vertices as keys → O(1) vertex lookup) and <b>linked lists</b> (each vertex's edges). Slides 44, 50: "HashMap with Vertex as key and LinkedList as value." Each list node is an Edge object with source/destination/weight.</div>
     </div>

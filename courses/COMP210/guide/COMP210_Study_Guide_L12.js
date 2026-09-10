@@ -61,7 +61,7 @@ document.getElementById('l12').innerHTML = `
     <div class="card">
       <h3>Fill in — the BMT invariant (your quiz)</h3>
       <p>A BMT's value is
-        <input type="text" class="fillblank sm" data-answer="smaller|smallest|less" placeholder="?"> than all values in both the left and right subtrees.</p>
+        <input type="text" class="fillblank sm" data-answer="smaller~~~smallest~~~less" placeholder="?"> than all values in both the left and right subtrees.</p>
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb">Answer: <b>smaller</b>. Each node is the minimum of its whole subtree → the root is the global minimum. (This is the <b>min-heap property</b>: parent ≤ every descendant.)</div>
     </div>

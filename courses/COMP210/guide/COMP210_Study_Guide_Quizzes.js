@@ -25,7 +25,7 @@ document.getElementById('lquiz').innerHTML = `
       <div class="q" data-tf="T"><div class="prompt"><span class="tag">Q1 · T/F</span>Primary storage holds data temporarily and is very fast to access, while secondary storage is for long-term storage and is slower to access.</div>
         <button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button>
         <div class="fb">True. Primary (RAM/cache) = fast, volatile, temporary; secondary (SSD/HDD) = slower, non-volatile, long-term.</div></div>
-      <div class="q"><p><span class="tag">Q2 · Fill</span>Convert <code>0x2B</code> to binary (with prefix): <input type="text" class="fillblank sm" data-answer="0b00101011|0b101011|00101011|101011" placeholder="?" style="width:150px"></p>
+      <div class="q"><p><span class="tag">Q2 · Fill</span>Convert <code>0x2B</code> to binary (with prefix): <input type="text" class="fillblank sm" data-answer="0b00101011~~~0b101011~~~00101011~~~101011" placeholder="?" style="width:150px"></p>
         <button class="btn small" onclick="checkFill(this)">Check</button>
         <div class="fb"><b>0b00101011</b>. 0x2B: 2→0010, B→1011 → 00101011 (= 43).</div></div>
       <div class="q"><p><span class="tag">Q3 · Fill</span>What language does the JVM read and execute? <input type="text" class="fillblank sm" data-answer="bytecode" placeholder="?" style="width:120px"></p>
@@ -53,7 +53,7 @@ class, String, array = reference types (no primitive size)</pre></div></div>
         <button class="opt" data-i="0">Instance</button><button class="opt" data-i="1">Class</button>
         <div class="fb"><b>Instance</b> — there's no <code>static</code>, so it's an instance method (called on an object).</div></div>
       <div class="q"><p><span class="tag">Q10 · Fill</span>Return type (write "none" if no return)? <input type="text" class="fillblank sm" data-answer="string[]" placeholder="?" style="width:110px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>String[]</b> (capital S).</div></div>
-      <div class="q"><p><span class="tag">Q11 · Fill</span>How many arguments does a call require? <input type="text" class="fillblank sm" data-answer="2|two" placeholder="?" style="width:70px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>2</b> (int x, int y).</div></div>
+      <div class="q"><p><span class="tag">Q11 · Fill</span>How many arguments does a call require? <input type="text" class="fillblank sm" data-answer="2~~~two" placeholder="?" style="width:70px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>2</b> (int x, int y).</div></div>
       <div class="q" data-mc="0"><div class="prompt"><span class="tag">Q12 · MC</span>Could this method be called by code outside the class where it is defined?</div>
         <button class="opt" data-i="0">Yes</button><button class="opt" data-i="1">No</button>
         <div class="fb"><b>Yes</b> — <code>protected</code> allows access from the same package and subclasses, which are outside the class itself.</div></div>
@@ -109,7 +109,7 @@ checkClock(int hour): int time=1600; println(time);</pre>
         <div class="reveal"><div class="concept"><b>Instance Field → Class Field → Constructor → Instance Method → Class Method.</b></div></div></div>
       <div class="q"><p><span class="tag">Q3 · Fill</span>What is the universal reference type? <input type="text" class="fillblank sm" data-answer="object" placeholder="?" style="width:110px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>Object</b> — every reference type is a subclass of Object.</div></div>
       <div class="q"><p><span class="tag">Q4 · Fill</span>What is the universal reference value? <input type="text" class="fillblank sm" data-answer="null" placeholder="?" style="width:90px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>null</b> — any reference variable can hold null.</div></div>
-      <div class="q"><p><span class="tag">Q5 · Fill</span>The purpose of an ADT is to separate the abstract <input type="text" class="fillblank sm" data-answer="behavior" placeholder="?" style="width:110px"> of a data type from its concrete <input type="text" class="fillblank sm" data-answer="implementation|implementation." placeholder="?" style="width:140px">.</p><button class="btn small" onclick="checkFillGroup(this)">Check both</button><div class="fb">To separate the abstract <b>behavior</b> (what) from its concrete <b>implementation</b> (how).</div></div>
+      <div class="q"><p><span class="tag">Q5 · Fill</span>The purpose of an ADT is to separate the abstract <input type="text" class="fillblank sm" data-answer="behavior" placeholder="?" style="width:110px"> of a data type from its concrete <input type="text" class="fillblank sm" data-answer="implementation~~~implementation." placeholder="?" style="width:140px">.</p><button class="btn small" onclick="checkFillGroup(this)">Check both</button><div class="fb">To separate the abstract <b>behavior</b> (what) from its concrete <b>implementation</b> (how).</div></div>
       <div class="q" data-mc="2"><div class="prompt"><span class="tag">Q6 · MC</span>A single ADT can have how many implementations?</div>
         <button class="opt" data-i="0">Exactly 1</button><button class="opt" data-i="1">At most 2</button><button class="opt" data-i="2">Infinitely many (∞)</button>
         <div class="fb"><b>Infinitely many.</b> e.g. the List ADT → ArrayList, LinkedList, and any other valid implementation.</div></div>
@@ -149,7 +149,7 @@ checkClock(int hour): int time=1600; println(time);</pre>
     <div class="card">
       <div class="concept">Q1 uses: <code>interface Flower&lt;T&gt;</code> and <code>class Tulip implements Flower&lt;Bee&gt;</code>.</div>
       <div class="q"><p><span class="tag">Q1 · Fill</span>Declare a Flower object instantiated as a Tulip:</p>
-        <p><input type="text" class="fillblank" data-answer="flower<bee> x = new tulip<>();|flower<bee> x = new tulip();" placeholder="Flower<...> x = new Tulip<>();" style="width:100%"></p>
+        <p><input type="text" class="fillblank" data-answer="flower<bee> x = new tulip<>();~~~flower<bee> x = new tulip();" placeholder="Flower<...> x = new Tulip<>();" style="width:100%"></p>
         <button class="btn small" onclick="checkFill(this)">Check</button>
         <div class="fb"><code>Flower&lt;Bee&gt; x = new Tulip&lt;&gt;();</code> — declared type is the interface with its type argument; instantiated as the concrete Tulip.</div></div>
       <div class="card" style="background:none;border:none;padding:0"><h3>Q2 · Which of the following are ADTs? (categorize)</h3>
@@ -211,11 +211,11 @@ checkClock(int hour): int time=1600; println(time);</pre>
     1      45
              \\
              70</pre></div></div>
-      <div class="q"><p><span class="tag">Q11 · Fill</span>In-order traversal of that tree: <input type="text" class="fillblank" data-answer="1,5,10,45,70,90|1, 5, 10, 45, 70, 90" placeholder="?" style="width:230px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>1, 5, 10, 45, 70, 90</b> — in-order of a BST is sorted ascending.</div></div>
-      <div class="q"><p><span class="tag">Q12 · Fill</span>Post-order traversal: <input type="text" class="fillblank" data-answer="1,5,70,45,90,10|1, 5, 70, 45, 90, 10" placeholder="?" style="width:230px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>1, 5, 70, 45, 90, 10</b> (left, right, root).</div></div>
-      <div class="q"><p><span class="tag">Q13 · Fill</span>Breadth-first (level-order) traversal: <input type="text" class="fillblank" data-answer="10,5,90,1,45,70|10, 5, 90, 1, 45, 70" placeholder="?" style="width:230px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>10, 5, 90, 1, 45, 70</b> (level by level, using a FIFO queue).</div></div>
-      <div class="q"><p><span class="tag">Q14 · Fill</span>Binary heap node at index i — index of its parent? <input type="text" class="fillblank sm" data-answer="(i-1)/2|floor((i-1)/2)|(i - 1) / 2" placeholder="?" style="width:130px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>⌊(i − 1) / 2⌋</b> (integer division).</div></div>
-      <div class="q"><p><span class="tag">Q15 · Fill</span>Index of its right child? <input type="text" class="fillblank sm" data-answer="2i+2|2*i+2|(i*2)+2|2i + 2" placeholder="?" style="width:120px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>2i + 2</b> (left child is 2i + 1).</div></div>
+      <div class="q"><p><span class="tag">Q11 · Fill</span>In-order traversal of that tree: <input type="text" class="fillblank" data-answer="1,5,10,45,70,90~~~1, 5, 10, 45, 70, 90" placeholder="?" style="width:230px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>1, 5, 10, 45, 70, 90</b> — in-order of a BST is sorted ascending.</div></div>
+      <div class="q"><p><span class="tag">Q12 · Fill</span>Post-order traversal: <input type="text" class="fillblank" data-answer="1,5,70,45,90,10~~~1, 5, 70, 45, 90, 10" placeholder="?" style="width:230px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>1, 5, 70, 45, 90, 10</b> (left, right, root).</div></div>
+      <div class="q"><p><span class="tag">Q13 · Fill</span>Breadth-first (level-order) traversal: <input type="text" class="fillblank" data-answer="10,5,90,1,45,70~~~10, 5, 90, 1, 45, 70" placeholder="?" style="width:230px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>10, 5, 90, 1, 45, 70</b> (level by level, using a FIFO queue).</div></div>
+      <div class="q"><p><span class="tag">Q14 · Fill</span>Binary heap node at index i — index of its parent? <input type="text" class="fillblank sm" data-answer="(i-1)/2~~~floor((i-1)/2)~~~(i - 1) / 2" placeholder="?" style="width:130px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>⌊(i − 1) / 2⌋</b> (integer division).</div></div>
+      <div class="q"><p><span class="tag">Q15 · Fill</span>Index of its right child? <input type="text" class="fillblank sm" data-answer="2i+2~~~2*i+2~~~(i*2)+2~~~2i + 2" placeholder="?" style="width:120px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>2i + 2</b> (left child is 2i + 1).</div></div>
       <div class="card" style="background:none;border:none;padding:0"><h3>Q16 · Draw the result of remove(10) on the BST (3 pts)</h3>
         <pre>Before:            10
                  /    \\
@@ -279,8 +279,8 @@ RR case) → rotate left at 14. Result:
        /     \\  /
       3      22 40</pre><div class="concept">(Confirmed by the graded rubric.) Only one rotation — a single left rotation at the root 14 — restores balance; 33 becomes the new root.</div></div></div>
       <div class="concept">Q4–6 use a red-black tree: root 16(B); 10, 30; 5, 14, 22, 90; 90→57, 98; 57→42, 60.</div>
-      <div class="q"><p><span class="tag">Q4 · Fill</span>What is the black height of the tree? <input type="text" class="fillblank sm" data-answer="2|3" placeholder="?" style="width:70px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>2</b> (accepted: 2 or 3 depending on whether you count the root/NIL). Black height = number of black nodes on a root-to-NIL path, not counting the start.</div></div>
-      <div class="q"><p><span class="tag">Q5 · Fill</span>Black height of node 30 (not including node 30)? <input type="text" class="fillblank sm" data-answer="1|2" placeholder="?" style="width:70px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>1</b> (accepted: 1 or 2).</div></div>
+      <div class="q"><p><span class="tag">Q4 · Fill</span>What is the black height of the tree? <input type="text" class="fillblank sm" data-answer="2~~~3" placeholder="?" style="width:70px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>2</b> (accepted: 2 or 3 depending on whether you count the root/NIL). Black height = number of black nodes on a root-to-NIL path, not counting the start.</div></div>
+      <div class="q"><p><span class="tag">Q5 · Fill</span>Black height of node 30 (not including node 30)? <input type="text" class="fillblank sm" data-answer="1~~~2" placeholder="?" style="width:70px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>1</b> (accepted: 1 or 2).</div></div>
       <div class="card" style="background:none;border:none;padding:0"><h3>Q6 · Draw the resulting tree after 16 is deleted (4 pts)</h3>
         <div class="toolbar"><button class="btn ghost small" onclick="toggleReveal(this)">Show answer</button></div>
         <div class="reveal"><div class="concept">Delete root 16 → replace with in-order successor 22, then repair red-black invariants (recolor / rotate to resolve any double-black). The result is a valid red-black tree rooted at 22 with 10 (children 5, 14) on the left and the 30/90/57/98/42/60 structure rebalanced on the right. This is a full RB-deletion drawing problem — practice it with the animated deletion walkthrough in <b>Lesson 14</b>.</div></div></div>
@@ -294,7 +294,7 @@ index 1: 15 → 8 → 1
 index 2: (empty)   index 3: (empty)   index 4: (empty)
 index 5: 12 → 5
 index 6: (empty)</pre><div class="concept">1→1, 5→5, 12→5 (collision, prepend), 8→1, 15→1. Head insertion puts the newest at the front of each chain.</div></div></div>
-      <div class="q"><p><span class="tag">Q9 · Fill</span>Load factor of that table? <input type="text" class="fillblank sm" data-answer="5/7|0.71|.71" placeholder="?" style="width:80px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>5/7</b> (N = 5 elements, M = 7 slots).</div></div>
+      <div class="q"><p><span class="tag">Q9 · Fill</span>Load factor of that table? <input type="text" class="fillblank sm" data-answer="5/7~~~0.71~~~.71" placeholder="?" style="width:80px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>5/7</b> (N = 5 elements, M = 7 slots).</div></div>
       <div class="card" style="background:none;border:none;padding:0"><h3>Q10 · Double hashing table (4 pts). h1(k)=k mod 7, h2(k)=1+(k mod 3), h(i,k)=(h1(k)+i·h2(k)) mod 7; insert 1, 5, 12, 8, 15</h3>
         <div class="toolbar"><button class="btn ghost small" onclick="toggleReveal(this)">Show answer</button></div>
         <div class="reveal"><pre>1  → h1=1                          → index 1
@@ -304,7 +304,7 @@ index 6: (empty)</pre><div class="concept">1→1, 5→5, 12→5 (collision, prep
 15 → h1=1 (taken); i=1: h2=1+(15%3)=1 → (1+1)%7=2 → index 2
 
 index: 0(-) 1:1  2:15  3(-)  4:8  5:5  6:12</pre><div class="concept">Each collision re-probes by adding i·h2(k). Double hashing gives each key its own step size, avoiding clustering.</div></div></div>
-      <div class="q"><p><span class="tag">Q11 · Fill</span>Load factor of that table? <input type="text" class="fillblank sm" data-answer="5/7|0.71|.71" placeholder="?" style="width:80px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>5/7</b>.</div></div>
+      <div class="q"><p><span class="tag">Q11 · Fill</span>Load factor of that table? <input type="text" class="fillblank sm" data-answer="5/7~~~0.71~~~.71" placeholder="?" style="width:80px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>5/7</b>.</div></div>
       <div class="q" data-mc="1"><div class="prompt"><span class="tag">Q12 · MC</span>In a chaining hash table, the load factor tells us the…</div>
         <button class="opt" data-i="0">Max chain length</button><button class="opt" data-i="1">Average chain length</button><button class="opt" data-i="2">Probability of collisions</button><button class="opt" data-i="3">Fraction of table space used</button>
         <div class="fb"><b>Average chain length</b> = N/M (elements per bucket on average).</div></div>
@@ -316,17 +316,17 @@ index: 0(-) 1:1  2:15  3(-)  4:8  5:5  6:12</pre><div class="concept">Each colli
         <table class="cmp">
           <tr><th></th><th>Heaps (resizing)<br>amort / worst</th><th>Balanced BSTs<br>amort / worst</th><th>Hash Tables (resizing)<br>amort / worst</th></tr>
           <tr><td>Insert</td>
-            <td><input type="text" class="q14-blank" data-answer="O(log n)|logn|log n" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(n)|n" placeholder="?"></td>
-            <td><input type="text" class="q14-blank" data-answer="O(log n)|logn|log n" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(log n)|logn|log n" placeholder="?"></td>
-            <td><input type="text" class="q14-blank" data-answer="O(1)|1|constant" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(n)|n" placeholder="?"></td></tr>
+            <td><input type="text" class="q14-blank" data-answer="O(log n)~~~logn~~~log n" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(n)~~~n" placeholder="?"></td>
+            <td><input type="text" class="q14-blank" data-answer="O(log n)~~~logn~~~log n" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(log n)~~~logn~~~log n" placeholder="?"></td>
+            <td><input type="text" class="q14-blank" data-answer="O(1)~~~1~~~constant" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(n)~~~n" placeholder="?"></td></tr>
           <tr><td>Search</td>
-            <td><input type="text" class="q14-blank" data-answer="O(n)|n" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(n)|n" placeholder="?"></td>
-            <td><input type="text" class="q14-blank" data-answer="O(log n)|logn|log n" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(log n)|logn|log n" placeholder="?"></td>
-            <td><input type="text" class="q14-blank" data-answer="O(1)|1|constant" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(n)|n" placeholder="?"></td></tr>
+            <td><input type="text" class="q14-blank" data-answer="O(n)~~~n" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(n)~~~n" placeholder="?"></td>
+            <td><input type="text" class="q14-blank" data-answer="O(log n)~~~logn~~~log n" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(log n)~~~logn~~~log n" placeholder="?"></td>
+            <td><input type="text" class="q14-blank" data-answer="O(1)~~~1~~~constant" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(n)~~~n" placeholder="?"></td></tr>
           <tr><td>Delete (min)</td>
-            <td><input type="text" class="q14-blank" data-answer="O(log n)|logn|log n" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(n)|n" placeholder="?"></td>
-            <td><input type="text" class="q14-blank" data-answer="O(log n)|logn|log n" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(log n)|logn|log n" placeholder="?"></td>
-            <td><input type="text" class="q14-blank" data-answer="O(1)|1|constant" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(n)|n" placeholder="?"></td></tr>
+            <td><input type="text" class="q14-blank" data-answer="O(log n)~~~logn~~~log n" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(n)~~~n" placeholder="?"></td>
+            <td><input type="text" class="q14-blank" data-answer="O(log n)~~~logn~~~log n" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(log n)~~~logn~~~log n" placeholder="?"></td>
+            <td><input type="text" class="q14-blank" data-answer="O(1)~~~1~~~constant" placeholder="?"> / <input type="text" class="q14-blank" data-answer="O(n)~~~n" placeholder="?"></td></tr>
         </table>
         <div class="toolbar" style="margin-top:8px">
           <button class="btn small" onclick="q14Check()">Check all</button>
@@ -359,7 +359,7 @@ index: 0(-) 1:1  2:15  3(-)  4:8  5:5  6:12</pre><div class="concept">Each colli
         <button class="opt" data-i="1">Bytecode (.class), run by the JVM (java interpreter + JIT)</button>
         <button class="opt" data-i="2">An interpreted script, run line-by-line by javac</button>
         <div class="fb"><b>Bytecode</b>, executed at runtime by the JVM — the <code>java</code> interpreter plus the JIT compiler.</div></div>
-      <div class="q"><p><span class="tag">A5 · Fill</span>Write a getter for a private field <code>int _age</code>: <input type="text" class="fillblank" data-answer="public int getage() { return _age; }|public int getage(){return _age;}|public int getage() {return _age;}" placeholder="public ... { ... }" style="width:100%"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><code>public int getAge() { return _age; }</code></div></div>
+      <div class="q"><p><span class="tag">A5 · Fill</span>Write a getter for a private field <code>int _age</code>: <input type="text" class="fillblank" data-answer="public int getage() { return _age; }~~~public int getage(){return _age;}~~~public int getage() {return _age;}" placeholder="public ... { ... }" style="width:100%"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><code>public int getAge() { return _age; }</code></div></div>
       <div class="q" data-mc="2"><div class="prompt"><span class="tag">A6 · MC</span>What is the average-case time complexity of binary search?</div>
         <button class="opt" data-i="0">O(1)</button><button class="opt" data-i="1">O(n)</button><button class="opt" data-i="2">O(log n)</button>
         <div class="fb"><b>O(log n)</b> — it halves the search space each step (requires a sorted array).</div></div>
@@ -380,7 +380,7 @@ index: 0(-) 1:1  2:15  3(-)  4:8  5:5  6:12</pre><div class="concept">Each colli
 
 in-order:    20, 30, 40, 50, 60, 70
 level-order: 50, 30, 70, 20, 40, 60</pre></div></div>
-      <div class="q"><p><span class="tag">A9 · Fill</span>In a 0-indexed array heap, the left child of index i is at <input type="text" class="fillblank sm" data-answer="2i+1|2*i+1|(i*2)+1|2i + 1" placeholder="?" style="width:110px">.</p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>2i + 1</b> (right child 2i + 2, parent ⌊(i−1)/2⌋).</div></div>
+      <div class="q"><p><span class="tag">A9 · Fill</span>In a 0-indexed array heap, the left child of index i is at <input type="text" class="fillblank sm" data-answer="2i+1~~~2*i+1~~~(i*2)+1~~~2i + 1" placeholder="?" style="width:110px">.</p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>2i + 1</b> (right child 2i + 2, parent ⌊(i−1)/2⌋).</div></div>
       <div class="q" data-mc="1"><div class="prompt"><span class="tag">A10 · MC</span>buildHeap on an array of n elements is…</div>
         <button class="opt" data-i="0">O(n log n)</button><button class="opt" data-i="1">O(n)</button><button class="opt" data-i="2">O(log n)</button>
         <div class="fb"><b>O(n)</b> bottom-up — most nodes are near the bottom with tiny sift-downs.</div></div>
@@ -391,7 +391,7 @@ RR case → single LEFT rotation at 10:
         20
        /  \\
       10   30</pre></div></div>
-      <div class="q"><p><span class="tag">A12 · Fill</span>The maximum height of a red-black tree with n nodes is <input type="text" class="fillblank sm" data-answer="2log2(n+1)|2log(n+1)|2*log2(n+1)|2log₂(n+1)" placeholder="?" style="width:150px">.</p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>2·log₂(n + 1)</b> — the longest path is at most twice the shortest.</div></div>
+      <div class="q"><p><span class="tag">A12 · Fill</span>The maximum height of a red-black tree with n nodes is <input type="text" class="fillblank sm" data-answer="2log2(n+1)~~~2log(n+1)~~~2*log2(n+1)~~~2log₂(n+1)" placeholder="?" style="width:150px">.</p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>2·log₂(n + 1)</b> — the longest path is at most twice the shortest.</div></div>
       <div class="q" data-mc="2"><div class="prompt"><span class="tag">A13 · MC</span>M = 8, quadratic probing h(k,i) = (k + i²) mod 8. Insert 4, 12, 20. Where does 20 land?</div>
         <button class="opt" data-i="0">index 4</button><button class="opt" data-i="1">index 5</button><button class="opt" data-i="2">index 0</button>
         <div class="fb"><b>index 0.</b> 4→4. 12→ 4 taken; i=1: (12+1)%8=5. 20→ (20)%8=4 taken; i=1: (20+1)%8=5 taken; i=2: (20+4)%8=0 → free.</div></div>
@@ -476,7 +476,7 @@ single RIGHT rotation at 30:
       <div class="q" data-tf="T"><div class="prompt"><span class="tag">B11 · T/F</span>When collision probability is high, chaining generally degrades more gracefully than linear probing.</div>
         <button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button>
         <div class="fb"><b>True.</b> At high load, probing suffers heavy clustering (and can fail), while chaining just grows its linked lists.</div></div>
-      <div class="q"><p><span class="tag">B12 · Fill</span>A hash table resizes when the load factor N/M exceeds a threshold T. For probing, the recommended T is <input type="text" class="fillblank sm" data-answer="0.75|.75|75%" placeholder="?" style="width:80px">.</p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>0.75</b> (chaining uses 1.0).</div></div>
+      <div class="q"><p><span class="tag">B12 · Fill</span>A hash table resizes when the load factor N/M exceeds a threshold T. For probing, the recommended T is <input type="text" class="fillblank sm" data-answer="0.75~~~.75~~~75%" placeholder="?" style="width:80px">.</p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>0.75</b> (chaining uses 1.0).</div></div>
       <div class="q" data-mc="2"><div class="prompt"><span class="tag">B13 · MC</span>A DAG's topological sort is found in… time.</div>
         <button class="opt" data-i="0">O(n²)</button><button class="opt" data-i="1">O(n log n)</button><button class="opt" data-i="2">O(n + m)</button>
         <div class="fb"><b>O(n + m)</b> with Kahn's algorithm (queue of in-degree-0 vertices). Each vertex and edge is handled once.</div></div>
@@ -606,7 +606,7 @@ Search 24: probe 3(10),4(tombstone→skip),5(24) → found.</pre><div class="con
       <div class="q" data-mc="3"><div class="prompt"><span class="tag">D2 · MC</span>M=8, quadratic h(k,i)=(k+i²) mod 8. Insert 3, 11, 19, 27. Where does 27 go?</div>
         <button class="opt" data-i="0">index 3</button><button class="opt" data-i="1">index 4</button><button class="opt" data-i="2">index 7</button><button class="opt" data-i="3">Cannot be inserted</button>
         <div class="fb"><b>Cannot be inserted.</b> 3→3, 11→4, 19→7. Now 27: since 27 mod 8 = 3, its probes are (3 + i²) mod 8, and i² mod 8 only cycles through {0,1,4,1,…}, giving indices {3, 4, 7} — all occupied. It never reaches the empty slots. This is the secondary-clustering failure of quadratic probing.</div></div>
-      <div class="q"><p><span class="tag">D3 · Fill</span>Chaining table, insert-at-head, h(k)=k mod 5, insert 6, 11, 16. After all inserts, the chain at index 1 (head → tail) is: <input type="text" class="fillblank" data-answer="16,11,6|16 11 6|16->11->6|16 → 11 → 6" placeholder="?" style="width:180px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>16 → 11 → 6.</b> All hash to 1; head-insertion puts the newest (16) first.</div></div>
+      <div class="q"><p><span class="tag">D3 · Fill</span>Chaining table, insert-at-head, h(k)=k mod 5, insert 6, 11, 16. After all inserts, the chain at index 1 (head → tail) is: <input type="text" class="fillblank" data-answer="16,11,6~~~16 11 6~~~16->11->6~~~16 → 11 → 6" placeholder="?" style="width:180px"></p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>16 → 11 → 6.</b> All hash to 1; head-insertion puts the newest (16) first.</div></div>
       <div class="q" data-mc="1"><div class="prompt"><span class="tag">D4 · MC</span>A probing table has M=20 and just reached N=15. With threshold Tp=0.75, what happens on the next insert?</div>
         <button class="opt" data-i="0">Nothing — load is fine</button>
         <button class="opt" data-i="1">Resize: load hit 15/20 = 0.75, so grow (e.g. double) and rehash all</button>
@@ -685,7 +685,7 @@ rotate RIGHT at 60, then LEFT at 50:
         55
        /  \\
       50   60</pre></div></div>
-      <div class="q"><p><span class="tag">E6 · Fill</span>A red-black tree with n nodes has height at most <input type="text" class="fillblank sm" data-answer="2log2(n+1)|2log(n+1)|2*log2(n+1)|2log₂(n+1)" placeholder="?" style="width:150px">, so all operations are O(<input type="text" class="fillblank sm" data-answer="log n|logn" placeholder="?" style="width:80px">).</p><button class="btn small" onclick="checkFillGroup(this)">Check both</button><div class="fb"><b>2·log₂(n+1)</b>, giving <b>O(log n)</b>.</div></div>
+      <div class="q"><p><span class="tag">E6 · Fill</span>A red-black tree with n nodes has height at most <input type="text" class="fillblank sm" data-answer="2log2(n+1)~~~2log(n+1)~~~2*log2(n+1)~~~2log₂(n+1)" placeholder="?" style="width:150px">, so all operations are O(<input type="text" class="fillblank sm" data-answer="log n~~~logn" placeholder="?" style="width:80px">).</p><button class="btn small" onclick="checkFillGroup(this)">Check both</button><div class="fb"><b>2·log₂(n+1)</b>, giving <b>O(log n)</b>.</div></div>
       <div class="card" style="background:none;border:none;padding:0"><h3>E7 · Match the clustering type</h3>
         <table class="match" id="exE-clust">
           <tr><td class="match-term">Primary clustering</td><td><select class="match-def"><option value="">—</option><option value="lin">Linear probing — runs of filled slots merge into big blocks</option><option value="quad">Quadratic probing — keys with the same home slot share one probe path</option></select></td></tr>
@@ -696,7 +696,7 @@ rotate RIGHT at 60, then LEFT at 50:
       <div class="q" data-mc="2"><div class="prompt"><span class="tag">E8 · MC</span>You need shortest paths in an unweighted, undirected social graph. Best algorithm?</div>
         <button class="opt" data-i="0">Dijkstra's</button><button class="opt" data-i="1">Bellman-Ford</button><button class="opt" data-i="2">BFS</button>
         <div class="fb"><b>BFS</b> — O(n+m), optimal for unweighted shortest paths (fewest hops).</div></div>
-      <div class="q"><p><span class="tag">E9 · Fill</span>The space complexity of recursion is driven by the maximum depth of the <input type="text" class="fillblank sm" data-answer="call stack|stack|callstack" placeholder="?" style="width:120px">.</p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>call stack</b> — each pending recursive call keeps a frame; depth d → O(d) space.</div></div>
+      <div class="q"><p><span class="tag">E9 · Fill</span>The space complexity of recursion is driven by the maximum depth of the <input type="text" class="fillblank sm" data-answer="call stack~~~stack~~~callstack" placeholder="?" style="width:120px">.</p><button class="btn small" onclick="checkFill(this)">Check</button><div class="fb"><b>call stack</b> — each pending recursive call keeps a frame; depth d → O(d) space.</div></div>
       <div class="q" data-mc="1"><div class="prompt"><span class="tag">E10 · MC</span>A complete binary tree with n nodes stored in an array — the node at index i has children at…</div>
         <button class="opt" data-i="0">i-1 and i+1</button><button class="opt" data-i="1">2i+1 and 2i+2</button><button class="opt" data-i="2">i/2 and i/2+1</button>
         <div class="fb"><b>2i+1 (left) and 2i+2 (right)</b>; parent is ⌊(i−1)/2⌋. This index arithmetic is why heaps need no pointers.</div></div>

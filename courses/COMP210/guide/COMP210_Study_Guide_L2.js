@@ -72,7 +72,7 @@ document.getElementById('l2').innerHTML = `
       <h3>Fill in — substring (your quiz)</h3>
       <p>Given <code>String str = "apple";</code>, extract "app" into <code>str2</code>:</p>
       <p><code>String str2 =</code>
-        <input type="text" class="fillblank sm" data-answer="str.substring(0, 3);|str.substring(0,3);|str.substring(0, 3)|str.substring(0,3)" placeholder="?" style="width:220px"></p>
+        <input type="text" class="fillblank sm" data-answer="str.substring(0, 3);~~~str.substring(0,3);~~~str.substring(0, 3)~~~str.substring(0,3)" placeholder="?" style="width:220px"></p>
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb">Answer: <code>str.substring(0, 3);</code> — <b>substring(start, end)</b> takes characters from index <b>start up to but not including end</b>. Indices 0,1,2 = "app". (Note the space after the comma per style rules.)</div>
     </div>
@@ -91,7 +91,7 @@ document.getElementById('l2').innerHTML = `
     <div class="card">
       <h3>Fill in — a for loop (your quiz)</h3>
       <p>Write a for loop that runs 10 times with counter <code>i</code>:</p>
-      <p><input type="text" class="fillblank" data-answer="for (int i = 0; i < 10; i++)|for (int i = 0; i < 10; i++) {|for(int i = 0; i < 10; i++)|for (int i=0; i<10; i++)" placeholder="?" style="width:100%"> <code>{ ... }</code></p>
+      <p><input type="text" class="fillblank" data-answer="for (int i = 0; i < 10; i++)~~~for (int i = 0; i < 10; i++) {~~~for(int i = 0; i < 10; i++)~~~for (int i=0; i<10; i++)" placeholder="?" style="width:100%"> <code>{ ... }</code></p>
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb">Answer: <code>for (int i = 0; i &lt; 10; i++)</code> — start at 0, run while <code>i &lt; 10</code> (10 iterations: 0–9), increment each pass. Spaces around operators per style rules.</div>
     </div>

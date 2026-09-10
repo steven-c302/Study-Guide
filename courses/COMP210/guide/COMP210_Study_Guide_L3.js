@@ -17,7 +17,7 @@ document.getElementById('l3').innerHTML = `
     <div class="card">
       <h3>Fill in — nextInt delimiter (your quiz)</h3>
       <p>The Scanner method <code>nextInt()</code> gets a single
-        <input type="text" class="fillblank sm" data-answer="integer|int" placeholder="?" style="width:100px"> (delimited by
+        <input type="text" class="fillblank sm" data-answer="integer~~~int" placeholder="?" style="width:100px"> (delimited by
         <input type="text" class="fillblank sm" data-answer="whitespace" placeholder="?" style="width:120px">) input from the user.</p>
       <button class="btn small" onclick="checkFillGroup(this)">Check both</button>
       <div class="fb">Answers: <b>integer</b>, delimited by <b>whitespace</b>. ⚠ Note: the answer is "whitespace," not "space" — a space is just <i>one kind</i> of whitespace. Whitespace also includes tabs (<code>\\t</code>), newlines (<code>\\n</code>), and carriage returns (<code>\\r</code>).</div>
@@ -41,7 +41,7 @@ String line = s.nextLine();</pre>
         <input type="text" class="fillblank sm" data-answer="java" placeholder="?" style="width:60px">.
         <input type="text" class="fillblank sm" data-answer="time" placeholder="?" style="width:60px">.
         <input type="text" class="fillblank sm" data-answer="localtime" placeholder="?" style="width:90px">.
-        <input type="text" class="fillblank sm" data-answer="now()|now" placeholder="?" style="width:70px"><code>);</code></p>
+        <input type="text" class="fillblank sm" data-answer="now()~~~now" placeholder="?" style="width:70px"><code>);</code></p>
       <button class="btn small" onclick="checkFillGroup(this)">Check all</button>
       <div class="fb">Answer: <code>java.time.LocalTime.now()</code>. The doc URL is <code>docs.oracle.com/javase/8/docs/api/java/time/LocalTime.html</code>; <code>now()</code> is a <b>static</b> method (called on the class) that returns the current time. Reading docs to find the right method is the skill being tested.</div>
     </div>

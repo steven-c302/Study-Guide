@@ -108,40 +108,40 @@ document.getElementById('l21').innerHTML = `
           <div style="font-weight:700;color:#e879c6;margin-bottom:8px;text-decoration:underline">Linear</div>
           <div class="muted" style="font-size:12px">ADTs:</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px">
-            <input type="text" class="ds-blank" data-answer="list|lists" placeholder="ADT">
-            <input type="text" class="ds-blank" data-answer="stack|stacks" placeholder="ADT">
-            <input type="text" class="ds-blank" data-answer="queue|queues" placeholder="ADT"></div>
+            <input type="text" class="ds-blank" data-answer="list~~~lists" placeholder="ADT">
+            <input type="text" class="ds-blank" data-answer="stack~~~stacks" placeholder="ADT">
+            <input type="text" class="ds-blank" data-answer="queue~~~queues" placeholder="ADT"></div>
           <div class="muted" style="font-size:12px">Implementations:</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
-            <input type="text" class="ds-blank" data-answer="arraylist|arraylists|array list" placeholder="impl">
-            <input type="text" class="ds-blank" data-answer="linkedlist|linkedlists|linked list" placeholder="impl"></div>
+            <input type="text" class="ds-blank" data-answer="arraylist~~~arraylists~~~array list" placeholder="impl">
+            <input type="text" class="ds-blank" data-answer="linkedlist~~~linkedlists~~~linked list" placeholder="impl"></div>
         </div>
         <div style="flex:1.2;min-width:250px;background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.4);border-radius:10px;padding:12px">
           <div style="font-weight:700;color:#a78bfa;margin-bottom:8px;text-decoration:underline">Trees</div>
           <div class="muted" style="font-size:12px">Binary Trees — PQ ADT + its 2 implementations:</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px">
-            <input type="text" class="ds-blank" data-answer="priority queue|priorityqueue|pq" placeholder="ADT">
-            <input type="text" class="ds-blank" data-answer="binary min tree|bmt|binary min tree|bmts" placeholder="impl">
-            <input type="text" class="ds-blank" data-answer="binary heap|heap|heaps" placeholder="impl"></div>
+            <input type="text" class="ds-blank" data-answer="priority queue~~~priorityqueue~~~pq" placeholder="ADT">
+            <input type="text" class="ds-blank" data-answer="binary min tree~~~bmt~~~binary min tree~~~bmts" placeholder="impl">
+            <input type="text" class="ds-blank" data-answer="binary heap~~~heap~~~heaps" placeholder="impl"></div>
           <div class="muted" style="font-size:12px">BSTs — the subtype + its 2 balanced forms:</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
-            <input type="text" class="ds-blank" data-answer="bst|binary search tree|bsts" placeholder="subtype">
-            <input type="text" class="ds-blank" data-answer="avl tree|avl|avl trees" placeholder="impl">
-            <input type="text" class="ds-blank" data-answer="red-black tree|red black tree|redblack tree|rb tree|red-black trees" placeholder="impl"></div>
+            <input type="text" class="ds-blank" data-answer="bst~~~binary search tree~~~bsts" placeholder="subtype">
+            <input type="text" class="ds-blank" data-answer="avl tree~~~avl~~~avl trees" placeholder="impl">
+            <input type="text" class="ds-blank" data-answer="red-black tree~~~red black tree~~~redblack tree~~~rb tree~~~red-black trees" placeholder="impl"></div>
         </div>
         <div style="flex:1;min-width:230px;display:flex;flex-direction:column;gap:12px">
           <div style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.5);border-radius:10px;padding:12px">
             <div style="font-weight:700;color:#60a5fa;margin-bottom:8px;text-decoration:underline">Maps</div>
             <div style="display:flex;gap:6px;flex-wrap:wrap">
-              <input type="text" class="ds-blank" data-answer="map|maps" placeholder="ADT">
-              <input type="text" class="ds-blank" data-answer="hashmap|hashmaps|hash map" placeholder="impl"></div>
+              <input type="text" class="ds-blank" data-answer="map~~~maps" placeholder="ADT">
+              <input type="text" class="ds-blank" data-answer="hashmap~~~hashmaps~~~hash map" placeholder="impl"></div>
           </div>
           <div style="background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.5);border-radius:10px;padding:12px">
             <div style="font-weight:700;color:#2dd4bf;margin-bottom:8px;text-decoration:underline">Graphs</div>
             <div style="display:flex;gap:6px;flex-wrap:wrap">
-              <input type="text" class="ds-blank" data-answer="graph|graphs" placeholder="ADT">
-              <input type="text" class="ds-blank" data-answer="adjacency matrix|adjacency matrices|adj matrix" placeholder="impl">
-              <input type="text" class="ds-blank" data-answer="adjacency list|adjacency lists|adj list" placeholder="impl"></div>
+              <input type="text" class="ds-blank" data-answer="graph~~~graphs" placeholder="ADT">
+              <input type="text" class="ds-blank" data-answer="adjacency matrix~~~adjacency matrices~~~adj matrix" placeholder="impl">
+              <input type="text" class="ds-blank" data-answer="adjacency list~~~adjacency lists~~~adj list" placeholder="impl"></div>
           </div>
         </div>
       </div>
@@ -226,7 +226,7 @@ document.getElementById('l21').innerHTML = `
       <div class="card" style="background:none;border:none;padding:0;margin:0">
         <h3>Fill in — Prim's growth rule (your quiz)</h3>
         <p>In Prim's algorithm, each step adds to the tree the
-          <input type="text" class="fillblank sm" data-answer="minimum|min|smallest|least|lowest" placeholder="?" style="width:100px"> weight edge (u, v) where
+          <input type="text" class="fillblank sm" data-answer="minimum~~~min~~~smallest~~~least~~~lowest" placeholder="?" style="width:100px"> weight edge (u, v) where
           <input type="text" class="fillblank sm" data-answer="u" placeholder="?" style="width:50px"> is in the tree but
           <input type="text" class="fillblank sm" data-answer="v" placeholder="?" style="width:50px"> is not.</p>
         <button class="btn small" onclick="checkFillGroup(this)">Check all</button>
