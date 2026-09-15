@@ -30,6 +30,7 @@ courses/COMP227/
     index.html                  ← shell: CSS, lesson bar, empty .lesson divs, script tags
     COMP227_Study_Guide_L1.js   ← Lesson 1: UTA Manual pp.1-27, Boyer et al., How Learning Works Ch.6
     COMP227_Study_Guide_L2.js   ← Lesson 2: Ben-Ari, Constructivism in Computer Science Education
+    COMP227_Study_Guide_L3.js   ← Lesson 3: Eickholt (barriers), Greer et al. (active learning environments)
     COMP227_Study_Guide.js      ← shared engine, MUST load last
     README.md                   ← engine API + authoring rules — read this first
 ```
@@ -54,7 +55,21 @@ model of a computer; the computer as an accessible ontological reality) with the
 the object-oriented paradox. Includes a dedicated topic answering all 10 of the instructor's "questions to
 think about" in full, plus a self-check topic. Two matching tables, ~15 graded items, one interactive widget.
 
-Nothing past Lesson 2 exists yet.
+**Lesson 3 · Active Learning in CS Classrooms** is complete, covering everything from Reading Quiz 3 (no
+terms/concepts reminder was circulated for this one), built from Eickholt's "Barriers to Active Learning for
+Computer Science Faculty" and Greer, Hao, Jing & Barnes's "On the Effects of Active Learning Environments in
+Computing Education" (SIGCSE '19): what active learning and evidence-based practices (EBPs) are — POGIL,
+problem-based learning, peer instruction, think-pair-share, minute paper; Michael (2003)'s four categories of
+adoption barriers (student, teacher, pedagogical, institutional/environmental), with time and cost as the two
+most-cited, plus locus of control and fixed/growth mindset; the Eickholt faculty/administrator survey's design
+(Likert scale + open-ended/word-cloud coding) and its headline perception-gap finding; active learning classrooms
+(SCALE-UP/NC State, TEAL/MIT, ACL/U Minnesota) with an interactive click-through widget; and the Greer et al.
+Three-Group replication design (Course One conventional+lecture, Course Two active classroom+peer instruction,
+Course Three "Hybrid" conventional+peer instruction) with MANCOVA/Bonferroni/discriminant analysis, concluding
+that pedagogy — not physical environment — drives the performance difference. One matching table, ~15 graded
+items, one interactive widget, plus a Reading Quiz 3 self-check built from the papers' own vocabulary.
+
+Nothing past Lesson 3 exists yet.
 
 ## Adding a meeting
 
