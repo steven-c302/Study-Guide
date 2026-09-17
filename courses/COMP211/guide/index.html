@@ -146,24 +146,30 @@
   <h1>COMP211 &middot; Systems Fundamentals — Study Guide</h1>
   <p>Fall 2026 &middot; Connor McMahon &middot; built lecture by lecture from the slides and readings</p>
   <div class="lesson-bar">
-    <button data-l="l0" onclick="showLesson('l0',this)">Lesson 0 &middot; Welcome &amp; Binary</button>
-    <button data-l="l1" class="active" onclick="showLesson('l1',this)">Lesson 1 &middot; Unix Basics</button>
+    <button data-l="l16" onclick="showLesson('l16',this)">&#9733; Quiz 1 Study Guide</button>
+    <button data-l="l0" onclick="showLesson('l0',this)">CL00 &middot; Welcome &amp; Binary</button>
+    <button data-l="l1" class="active" onclick="showLesson('l1',this)">CL01 &middot; Unix Basics (RD00)</button>
     <button data-l="l9" onclick="showLesson('l9',this)">HW00 &middot; Unix Basics</button>
-    <button data-l="l2" onclick="showLesson('l2',this)">Lesson 2 &middot; Intro to C</button>
+    <button data-l="l2" onclick="showLesson('l2',this)">CL02 &middot; Intro to C (RD01)</button>
     <button data-l="l8" onclick="showLesson('l8',this)">HW01 &middot; Intro to C</button>
-    <button data-l="l3" onclick="showLesson('l3',this)">Lesson 3 &middot; I/O, Pipes &amp; Strings</button>
-    <button data-l="l4" onclick="showLesson('l4',this)">Lesson 4 &middot; Function Stack Frames</button>
-    <button data-l="l5" onclick="showLesson('l5',this)">Lesson 5 &middot; $PATH, Globbing &amp; Regex</button>
+    <button data-l="l3" onclick="showLesson('l3',this)">CL03 &middot; I/O, Pipes &amp; Strings (RD02)</button>
+    <button data-l="l4" onclick="showLesson('l4',this)">CL04 &middot; Function Stack Frames (RD03)</button>
+    <button data-l="l5" onclick="showLesson('l5',this)">CL05 &middot; $PATH, Globbing &amp; Regex</button>
     <button data-l="l12" onclick="showLesson('l12',this)">HW2 &middot; Stack Frames, Globbing &amp; Regex</button>
-    <button data-l="l10" onclick="showLesson('l10',this)">Lesson 6 &middot; Number Representation</button>
+    <button data-l="l10" onclick="showLesson('l10',this)">CL06/CL07 &middot; Number Representation &amp; Arithmetic (RD05, RD06)</button>
     <button data-l="l6" onclick="showLesson('l6',this)">Checkoff 1 Prep &middot; CLI</button>
-    <button data-l="l7" onclick="showLesson('l7',this)">Lesson 8 &middot; Bitwise Operators</button>
+    <button data-l="l7" onclick="showLesson('l7',this)">CL08 &middot; Bitwise Operators (RD07)</button>
     <button data-l="l13" onclick="showLesson('l13',this)">HW03 &middot; Number Rep, Arithmetic &amp; Bitwise</button>
+    <button data-l="l14" onclick="showLesson('l14',this)">CL09 &middot; Applications of Bitwise Operators (RD08)</button>
+    <button data-l="l15" onclick="showLesson('l15',this)">CL10 &middot; Debugging (RD09)</button>
+<button data-l="l17" onclick="showLesson('l17',this)">CL11 &middot; Unix Basics: Shell Config &amp; Env Vars (RD10)</button>
+<button data-l="l18" onclick="showLesson('l18',this)">CL12 &middot; Quiz 1 Applied Review</button>
   </div>
   <div class="progress-wrap"><div class="progress-bar" id="pbar"></div></div>
   <div class="progress-txt" id="ptxt">0 items answered</div>
 </header>
 
+<div class="lesson" id="l16"></div>
 <div class="lesson" id="l0"></div>
 <div class="lesson active" id="l1"></div>
 <div class="lesson" id="l9"></div>
@@ -177,10 +183,15 @@
 <div class="lesson" id="l6"></div>
 <div class="lesson" id="l7"></div>
 <div class="lesson" id="l13"></div>
+<div class="lesson" id="l14"></div>
+<div class="lesson" id="l15"></div>
+<div class="lesson" id="l17"></div>
+<div class="lesson" id="l18"></div>
 
 <footer>COMP 211 &middot; Systems Fundamentals. Built from CL00 Welcome, CL01 Unix Basics, CL02 Intro to C, CL03 IO Redirection and Strings, CL04 Function Stack Frames, the Unix Basics (FA26) lecture on $PATH/globbing/regex/find/grep, <i>Dive into Systems</i> &sect;16.1&ndash;16.3, &sect;16.5, &sect;17.1, &sect;4.6, &sect;4.6.5, RD02, RD03, RD07 (Bitwise Operators), and Checkoff 1 Prep (CLI practical) drilled from a released sample checkoff, HW01 (Intro to C), and HW03 (Number Representation, Binary Arithmetic &amp; Bitwise Operators) reviewed
 question by question.</footer>
 
+<script src="COMP211_Study_Guide_L16.js"></script>
 <script src="COMP211_Study_Guide_L0.js"></script>
 <script src="COMP211_Study_Guide_L1.js"></script>
 <script src="COMP211_Study_Guide_L9.js"></script>
@@ -194,6 +205,10 @@ question by question.</footer>
 <script src="COMP211_Study_Guide_L6.js"></script>
 <script src="COMP211_Study_Guide_L7.js"></script>
 <script src="COMP211_Study_Guide_L13.js"></script>
+<script src="COMP211_Study_Guide_L14.js"></script>
+<script src="COMP211_Study_Guide_L15.js"></script>
+<script src="COMP211_Study_Guide_L17.js"></script>
+<script src="COMP211_Study_Guide_L18.js"></script>
 <script>window.GUIDE_COURSE = 'COMP211';</script>
 <script src="../../../shared/guide-engine.js"></script>
 </body>
