@@ -8,6 +8,7 @@ document.getElementById('l3').innerHTML = `
   <button onclick="showTopic(this,'l3-findings')">Findings &amp; Takeaways</button>
   <button onclick="showTopic(this,'l3-check')">Reading Quiz 3 Self-Check</button>
 </nav>
+<main>
 
 <section class="topic active" id="l3-active">
   <h2>What Is Active Learning?</h2>
@@ -364,6 +365,8 @@ document.getElementById('l3').innerHTML = `
     <div class="fb" data-explain="Time (redesign + in-class) and cost (labor and sometimes renovation) topped the list."></div>
   </div>
 </section>
+
+</main>
 `;
 
 function classroomShow(btn, key) {
