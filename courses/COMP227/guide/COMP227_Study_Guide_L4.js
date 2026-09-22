@@ -113,6 +113,7 @@ document.getElementById('l4').innerHTML = `
     <div class="ma-item"><input type="checkbox" data-i="1"><span>All students take the same final test</span></div>
     <div class="ma-item"><input type="checkbox" data-i="2"><span>Each style group is given a different test tailored to their style</span></div>
     <div class="ma-item"><input type="checkbox" data-i="3"><span>The optimal method must differ between style groups</span></div>
+    <button class="btn small" onclick="checkMulti(this)">Check</button>
     <div class="fb" data-explain="Random assignment within style group, a common final test, and a different optimal method per group are three of the four criteria. Giving each group a different test is the opposite of what's required &mdash; a shared outcome measure is essential."></div>
   </div>
 
@@ -351,6 +352,7 @@ document.getElementById('l4').innerHTML = `
     <div class="ma-item"><input type="checkbox" data-i="1"><span>The Sternberg Triarchic Abilities Test</span></div>
     <div class="ma-item"><input type="checkbox" data-i="2"><span>Honey and Mumford's Learning Styles Questionnaire</span></div>
     <div class="ma-item"><input type="checkbox" data-i="3"><span>The Visualizer&ndash;Verbalizer Questionnaire (VVQ)</span></div>
+    <button class="btn small" onclick="checkMulti(this)">Check</button>
     <div class="fb" data-explain="Kolb's Inventory and Honey and Mumford's Questionnaire are named commercial learning-styles products. The Sternberg test and the VVQ are research instruments used in specific studies discussed, not commercial learning-styles products."></div>
   </div>
 
