@@ -31,6 +31,7 @@ courses/COMP227/
     COMP227_Study_Guide_L1.js   ← Lesson 1: UTA Manual pp.1-27, Boyer et al., How Learning Works Ch.6
     COMP227_Study_Guide_L2.js   ← Lesson 2: Ben-Ari, Constructivism in Computer Science Education
     COMP227_Study_Guide_L3.js   ← Lesson 3: Eickholt (barriers), Greer et al. (active learning environments)
+    COMP227_Study_Guide_L4.js   ← Lesson 4: Pashler et al., Learning Styles: Concepts and Evidence
     COMP227_Study_Guide.js      ← shared engine, MUST load last
     README.md                   ← engine API + authoring rules — read this first
 ```
@@ -69,7 +70,19 @@ Course Three "Hybrid" conventional+peer instruction) with MANCOVA/Bonferroni/dis
 that pedagogy — not physical environment — drives the performance difference. One matching table, ~15 graded
 items, one interactive widget, plus a Reading Quiz 3 self-check built from the papers' own vocabulary.
 
-Nothing past Lesson 3 exists yet.
+**Lesson 4 · Learning Styles: Concepts & Evidence** is complete, covering everything from Reading Quiz 4 (Tu
+9/22), built from Pashler, McDaniel, Rohrer & Bjork (2009): the meshing hypothesis and the key distinction between
+the existence of study preferences and the (unvalidated) learning-styles hypothesis; the four criteria required
+for experimental validation of a learning-styles intervention; crossover interactions and the "relabeling trap"
+(Figures 1-2), with an interactive click-through widget; the literature search's near-total lack of qualifying
+evidence, including well-designed studies (Massa & Mayer 2006; Constantinidou & Baker 2002) that actively
+contradicted the meshing hypothesis, and the weak Sternberg et al. (1999) "positive" result; Aptitude-Treatment
+Interactions (structured vs. less structured instruction) and locus of control as related-but-distinct
+literatures; and the paper's conclusions on educational policy implications, cost considerations, metacognition,
+and the universality of learning capacity. Every term from the instructor's Reading Quiz 4 terms/concepts list is
+covered in a self-check topic built directly from it. One interactive widget, ~15 graded items.
+
+Nothing past Lesson 4 exists yet.
 
 ## Adding a meeting
 
