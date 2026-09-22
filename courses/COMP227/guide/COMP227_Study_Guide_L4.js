@@ -8,6 +8,7 @@ document.getElementById('l4').innerHTML = `
   <button onclick="showTopic(this,'l4-conclusions')">Conclusions &amp; Policy</button>
   <button onclick="showTopic(this,'l4-check')">Reading Quiz 4 Self-Check</button>
 </nav>
+<main>
 
 <section class="topic active" id="l4-intro">
   <h2>Learning Styles &amp; the Meshing Hypothesis</h2>
@@ -378,6 +379,8 @@ document.getElementById('l4').innerHTML = `
     <div class="fb" data-explain="The authors explicitly discuss cost as a separate consideration from evidence &mdash; any real intervention would need benefits large enough to justify these costs."></div>
   </div>
 </section>
+
+</main>
 `;
 
 function crossoverShow(btn, key) {
