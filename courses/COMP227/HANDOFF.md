@@ -32,6 +32,7 @@ courses/COMP227/
     COMP227_Study_Guide_L2.js   ← Lesson 2: Ben-Ari, Constructivism in Computer Science Education
     COMP227_Study_Guide_L3.js   ← Lesson 3: Eickholt (barriers), Greer et al. (active learning environments)
     COMP227_Study_Guide_L4.js   ← Lesson 4: Pashler et al., Learning Styles: Concepts and Evidence
+    COMP227_Study_Guide_L5.js   ← Lesson 5: CS-Ed Podcast — Washington (cultural competence), Pérez-Quiñones (equity)
     COMP227_Study_Guide.js      ← shared engine, MUST load last
     README.md                   ← engine API + authoring rules — read this first
 ```
@@ -82,7 +83,18 @@ literatures; and the paper's conclusions on educational policy implications, cos
 and the universality of learning capacity. Every term from the instructor's Reading Quiz 4 terms/concepts list is
 covered in a self-check topic built directly from it. One interactive widget, ~15 graded items.
 
-Nothing past Lesson 4 exists yet.
+**Lesson 5 · Cultural Competence & Equity in CS** is complete, covering everything from Reading Quiz 5 (Tu 9/29),
+built from two CS-Ed Podcast episodes: Nicki Washington's "Cultural Competence in Computer Science" (identity
+dimensions; bias in algorithms/technology, worked through the Shirley card and facial-recognition examples;
+intersectionality; gaslighting; the three groups that hinder progress; reading/planning/accountability and the
+qualitative-vs-quantitative-as-stalling-tactic point; an "ally" vs. "advocate/accomplice" interactive click-through;
+and department-level accountability via curriculum and tenure) and Manuel Pérez-Quiñones's "Supporting Students of
+Color" (systemic discrimination/structural inequality; equity vs. equality; fixed vs. growth mindset; specification
+grading; scaffolding; the pipeline metaphor vs. alternative pathways; data/climate surveys; faculty discomfort
+discussing race and identity; and broadening participation via student organizations/mentoring). One interactive
+widget, ~15 graded items, plus a Reading Quiz 5 self-check covering every term from the instructor's list.
+
+Nothing past Lesson 5 exists yet.
 
 ## Adding a meeting
 
@@ -114,6 +126,17 @@ Nothing past Lesson 4 exists yet.
 - Tone: concise and warm; explain *why*, not just *what*. Verify every claim against the actual reading rather
   than general pedagogy knowledge, and flag ideas the reading itself calls out (or that are easy to mix up) as
   commonly misunderstood.
+- Every lesson module's injected HTML must be wrapped in `<main>...</main>` right after the `<nav class="topics">`
+  block (see L1/L2) — `node --check` only validates JS syntax, not this, and a missing `<main>` wrapper silently
+  makes that whole lesson render full-bleed instead of centered with margins like the others (happened with L3/L4
+  on first ship; fixed after the fact).
+- Every `data-multi` (multiple-select) question needs its own `<button class="btn small" onclick="checkMulti(this)">Check</button>`
+  inside the `.q` div — without it, checking boxes does nothing, since `checkMulti` only runs when that button is
+  clicked (happened with L4 on first ship; fixed after the fact). Fill-in questions need the analogous
+  `checkFillGroup(this)` button too.
+- `node --check` catches JS syntax errors but not HTML typos inside the template literal (e.g., a stray `</div>`
+  swapped in for `">`) — proofread new question blocks by eye against a working one before shipping, especially
+  when copy-pasting a `data-multi` or `data-mc` question as a starting point.
 
 ## After each change
 
