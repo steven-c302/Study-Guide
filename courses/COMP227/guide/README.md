@@ -11,6 +11,7 @@ UNC CS, Fall 2026 · Tessa Joseph-Nicholas. Open **`index.html`** in any browser
 | `COMP227_Study_Guide_L2.js` | **Lesson 2** — "Constructivism in Computer Science Education": Ben-Ari (2001), full paper. |
 | `COMP227_Study_Guide_L3.js` | **Lesson 3** — "Active Learning in CS Classrooms": Eickholt, "Barriers to Active Learning for Computer Science Faculty," and Greer et al., "On the Effects of Active Learning Environments in Computing Education" (SIGCSE '19). |
 | `COMP227_Study_Guide_L4.js` | **Lesson 4** — "Learning Styles: Concepts & Evidence": Pashler, McDaniel, Rohrer & Bjork (2009), full paper. |
+| `COMP227_Study_Guide_L5.js` | **Lesson 5** — "Cultural Competence & Equity in CS": CS-Ed Podcast episodes with Nicki Washington and Manuel Pérez-Quiñones. |
 | `COMP227_Study_Guide.js` | Shared **engine**. Must load **last**. |
 
 ## Lessons built
@@ -19,6 +20,7 @@ UNC CS, Fall 2026 · Tessa Joseph-Nicholas. Open **`index.html`** in any browser
 - **Lesson 2 · Constructivism in Computer Science Education** — constructivism, misconceptions, and viable/non-viable/effective mental models (worked through the WYSIWYG example); Ernest's four-part educational paradigm (ontology, epistemology, methodology, pedagogy), with an interactive **classical-vs-constructivist click-through**; recursive knowledge construction and radical vs. social constructivism; bricolage, minimalism, notional machines/epistemic games, and closed vs. open labs; Ben-Ari's two core claims about CS education and their three conclusions, including the object-oriented paradox; a dedicated topic answering all 10 of the instructor's "questions to think about" in full; and a Reading Quiz 2 self-check. 2 matching tables, ~15 graded items.
 - **Lesson 3 · Active Learning in CS Classrooms** — active learning and evidence-based practices (EBPs: POGIL, problem-based learning, peer instruction, think-pair-share, minute paper); Michael's four categories of adoption barriers with time/cost as most-cited, plus locus of control and fixed/growth mindset; the Eickholt faculty/administrator survey design and its perception-gap finding; active learning classrooms (SCALE-UP, TEAL, ACL) with an interactive **classroom click-through**; the Greer et al. Three-Group replication design (with a Hybrid course isolating pedagogy from environment) and its MANCOVA/Bonferroni/discriminant-analysis results; and a Reading Quiz 3 self-check built from the papers' own vocabulary, since no terms/concepts reminder was circulated for this quiz. 1 matching table, ~15 graded items.
 - **Lesson 4 · Learning Styles: Concepts & Evidence** — the meshing hypothesis and the preferences-vs-hypothesis / evidence-vs-belief distinction; the four criteria for experimental validation; crossover interactions and the relabeling trap, with an interactive **crossover click-through**; the literature search (Sternberg et al.'s weak positive result vs. Massa & Mayer and Constantinidou & Baker's well-designed negative results); Aptitude-Treatment Interactions and locus of control as related-but-distinct literatures; conclusions on policy, cost, metacognition, and universality of learning capacity; and a Reading Quiz 4 self-check covering every term from the instructor's terms/concepts list. 1 interactive widget, ~15 graded items.
+- **Lesson 5 · Cultural Competence & Equity in CS** — cultural competence and identity dimensions; bias in algorithms/technology via the Shirley card and facial recognition; intersectionality and gaslighting; moving from reading to action and department-level accountability, with an interactive **ally vs. advocate/accomplice click-through**; equity vs. equality and fixed/growth mindset; specification grading and scaffolding; the pipeline metaphor vs. alternative pathways; data/climate surveys and faculty discomfort; broadening participation; and a Reading Quiz 5 self-check covering every term from the instructor's terms/concepts list. 1 interactive widget, ~15 graded items.
 
 ## Grading behaviour
 
@@ -50,7 +52,15 @@ These controls are injected by the engine, so **lesson modules need no changes**
 2. Module content is injected from a **template literal** — no unescaped backticks, no `${`.
 3. A literal backslash inside that template literal must be written **`\\`** (writing `\0` injects a real NUL byte).
 4. Modules load **before** the engine so it can wire their questions.
-5. Verify with `node --check` before shipping.
+5. Verify with `node --check` before shipping — but note it only checks JS syntax; it will NOT catch a missing
+   `<main>` wrapper (breaks the centered layout) or a `data-multi`/fill-in question missing its `Check` button
+   (breaks grading). Proofread new question blocks by eye against a working lesson.
+6. Every lesson's injected HTML must open with `<nav class="topics">...</nav>` immediately followed by `<main>`,
+   and close with `</main>` right before the closing template-literal backtick — this is what gives the lesson
+   the same centered, margined layout as the rest of the guide.
+7. Every `data-multi` question needs its own `<button class="btn small" onclick="checkMulti(this)">Check</button>`;
+   every fill-in needs `checkFill(this)` or `checkFillGroup(this)` on a button. Without it, nothing happens when
+   the reader interacts with the question.
 
 ## Style classes
 
