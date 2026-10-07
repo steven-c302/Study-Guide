@@ -2,9 +2,12 @@
   "name": "study-hub-rag",
   "private": true,
   "type": "module",
-  "description": "Tooling for the Study Hub's RAG-based Ask feature. The hub itself stays 100% static — this only supports the offline indexing script and the Netlify function.",
+  "description": "Tooling for the Study Hub's RAG-based Ask feature. The hub itself stays 100% static \u2014 this only supports the offline indexing script and the Netlify function. Also hosts the Mastery AI function (netlify/functions/study-ai.mjs).",
   "scripts": {
-    "build-rag-index": "node tools/build-rag-index.mjs"
+    "build-rag-index": "node tools/build-rag-index.mjs",
+    "validate-mastery": "node tools/validate-mastery.mjs"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
 }

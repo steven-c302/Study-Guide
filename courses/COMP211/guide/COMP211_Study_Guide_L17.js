@@ -93,8 +93,8 @@ document.getElementById('l17').innerHTML = `
     <tr><th>Form</th><th>Meaning</th></tr>
     <tr><td><code>VAR</code></td><td>Just the literal text "VAR" &mdash; <b>not</b> expanded</td></tr>
     <tr><td><code>$VAR</code></td><td>Expands to the variable's value</td></tr>
-    <tr><td><code>${VAR}</code></td><td>Same expansion, but with explicit boundaries &mdash; needed when the variable
-    name is immediately followed by more text, e.g. <code>${VAR}suffix</code> (without braces, Bash would try to expand
+    <tr><td><code>\${VAR}</code></td><td>Same expansion, but with explicit boundaries &mdash; needed when the variable
+    name is immediately followed by more text, e.g. <code>\${VAR}suffix</code> (without braces, Bash would try to expand
     a variable literally named <code>VARsuffix</code>).</td></tr>
   </table>
 </div>
@@ -211,7 +211,7 @@ exit               # back to parent</pre>
 <div class="card">
   <h3>Worked example: braces needed</h3>
   <p>Current PATH: <code>/usr/local/bin:/usr/bin:/bin</code>, home directory: <code>/home/student</code>. You run:</p>
-  <pre>export PATH="${PATH}:${HOME}/mybin"</pre>
+  <pre>export PATH="\${PATH}:\${HOME}/mybin"</pre>
   <p>New value of <code>$PATH</code>:</p>
   <button class="btn small" onclick="toggleReveal(this)">Show answer</button>
   <div class="reveal"><code>/usr/local/bin:/usr/bin:/bin:/home/student/mybin</code></div>
@@ -272,7 +272,7 @@ alias ll="ls -al"
 export EDITOR="vim"
 
 # Add a directory containing programs to PATH
-export PATH="${PATH}:${HOME}/bin"</pre>
+export PATH="\${PATH}:\${HOME}/bin"</pre>
 </div>
 
 <div class="card concept">
