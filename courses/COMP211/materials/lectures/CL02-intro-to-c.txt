@@ -1,0 +1,685 @@
+CL02 - Intro to C (COMP 211, Connor McMahon) - text extracted from the slides for search
+
+[Slide 1]
+[Slide 2]
+Classroom Habits
+- Place bags under chairs so that it is easy to walk around.
+- Our goal is to learn! And the first step is not being distracted!
+- Phones
+- Place your phone on Do Not Disturb so that it does not distract from your learning.
+- Phones should be placed in your bags during class.
+- Laptops
+- Should only be out if you are typing notes
+- We are so fortunate to be learning in this room. At the end of class please
+- Clean white boards
+- Place white boards back where they belong
+- Tuck in your chair
+- Clean up trash
+2
+[Slide 3]
+Intro to C
+COMP211 Connor McMahon
+[Slide 4]
+Compiling and Assembling
+4
+[Slide 5]
+Machine Code
+- Computers cannot directly understand the programs that we write (Python,
+Java, etc). Instead, they understand something called machine code.
+- Machine code consists of binary instructions (strings of 1s and 0s) that tell
+the computer what operations to perform.
+5
+00100111101111011111111111111000
+10101111101111100000000000000100
+00000011101000001111000000100101
+10101111110001000000000000001000
+10101111110000100000000000001000
+00000000000000000000000000000000
+00000000010000100000000000011000
+00000000000000000001000000010010
+00000011110000001110100000100101
+10001111101111100000000000000100
+00100111101111010000000000001000
+00000011111000000000000000001000
+00000000000000000000000000000000
+Machine code
+[Slide 6]
+A Brief History of Programming
+- Before the 1950s, programming was done entirely in machine code
+- These instructions were entered manually using switches, punch cards, or
+paper tape.
+6
+IBM 80-Column Punch Card
+[Slide 7]
+A Brief History of Programming
+- In the early 1950s, assembly language was introduced as a more human-readable way to
+write programs.
+- Machines cannot read assembly language programs (they can only read machine code)!
+- Assemblers (programs that translate assembly code into machine code) were developed to
+automate the conversion process.
+- There are lots of different assembly languages. You’ll learn more about them in COMP311!
+7
+This instruction is
+performing the operation
+x8 = x9 + x10
+Assembly
+add x8, x9, x10
+Machine Code
+0b00000000101001001000010000110011
+Assembler
+[Slide 8]
+A Brief History of Programming
+- With the invention of assembly language, programmers could write and debug code much
+more efficiently!
+- Assembly language is known as a low-level language
+8
+00100111101111011111111111111000
+10101111101111100000000000000100
+00000011101000001111000000100101
+10101111110001000000000000001000
+10101111110000100000000000001000
+00000000000000000000000000000000
+00000000010000100000000000011000
+00000000000000000001000000010010
+00000011110000001110100000100101
+10001111101111100000000000000100
+00100111101111010000000000001000
+00000011111000000000000000001000
+00000000000000000000000000000000
+Machine-readable
+Assembly Language
+(Low-level language)
+Machine code
+Human readable
+Assembler
+[Slide 9]
+A Brief History of Programming
+- In the late 1950s, high-level languages began abstracting away the details
+of hardware, focusing on logic and algorithms.
+- Key Early Languages:
+- 1957: FORTRAN (FORmula TRANslation):
+- First widely adopted high-level language.
+- Developed by IBM for scientific and engineering calculations.
+- 1958: LISP (LISt Processor):
+- Pioneered functional programming and symbolic processing.
+- 1959: COBOL (COmmon Business-Oriented Language):
+- Designed for business applications.
+- Emphasized readability and portability.
+- Became a standard for enterprise and financial systems.
+9
+[Slide 10]
+High-Level Languages
+- Most programming languages you’ve heard of are high-level programming
+languages (Python, Java, C, C++).
+- C is a compiled high-level programming language.
+- To execute a compiled high-level programming language, the program is first
+translated into assembly language by a compiler, then an assembler
+translates the assembly language into machine code.
+- Interpreted languages like Python are executed differently. We’ll talk more
+about interpreted languages later.
+10
+[Slide 11]
+Assembling and Compiling
+11
+00100111101111011111111111111000
+10101111101111100000000000000100
+00000011101000001111000000100101
+10101111110001000000000000001000
+10101111110000100000000000001000
+00000000000000000000000000000000
+00000000010000100000000000011000
+00000000000000000001000000010010
+00000011110000001110100000100101
+10001111101111100000000000000100
+00100111101111010000000000001000
+00000011111000000000000000001000
+00000000000000000000000000000000
+Easy for humans to
+read/write Machine-readable
+C
+(High-level language) Assembly Language
+(Low-level language)
+Machine code
+Human readable
+Assembler
+Compiler
+[Slide 12]
+Key Terms
+- Machine Code
+- Assembly Language
+- Low-level language
+- High-level language
+- Compiler
+- Assembler
+- Compiled language
+- FORTRAN, LISP, COBOL
+12
+[Slide 13]
+C Introduction
+13
+[Slide 14]
+Your First C Program
+14
+#include <stdio.h>
+int main() {
+printf("Hello, world!\n");
+return 0;
+}
+All C programs begin executing at the main function.
+- main returns an integer value that is used to indicate
+the exit status of the program.
+- A successful execution returns 0.
+- An abnormal execution returns a non-zero value.
+[Slide 15]
+#include <stdio.h>
+int main() {
+printf("Hello, world!\n");
+return 0;
+}
+Your First C Program
+15
+printf is a
+standard
+library
+function that
+prints output.
+To use printf, you
+must explicitly
+include stdio.h.
+[Slide 16]
+Standard Library
+- The C Standard Library contains a collection pre-written functions that
+handle common tasks like input/output, string manipulation, mathematical
+operations, and memory management.
+- Library functions are grouped together in header files.
+- C does not automatically include any standard library functions.
+16
+[Slide 17]
+Header Files
+- A header file contains the declarations of the functions, macros, and types you can use.
+- Function Declaration: the function’s name, return type, and parameters
+- Function Definition: the body of the function
+17
+Header File Purpose Examples of Functions
+<stdio.h> Input/output functions printf, getchar,
+putchar, fopen
+<stdlib.h> General utilities malloc, free, exit,
+atoi, rand
+<string.h> String manipulation strlen, strcpy, strcat,
+strcmp
+<math.h> Mathematical operations sqrt, pow, sin, cos,
+tan, exp
+<time.h> Date and time utilities time, clock, localtime,
+gmtime
+[Slide 18]
+Compiling, Assembling, and Running your First C Program
+1. Write your program.
+2. Save the file with a .c extension. Say hello.c.
+3. Open a terminal and navigate to the directory where your program is
+located.
+4. Compile and assemble the program
+18
+$ gcc hello.c
+gcc hello.c converts your human-readable C code into a
+machine-readable executable file.
+[Slide 19]
+Compiling and Assembling your Program
+- gcc hello.c
+- gcc: invokes the GNU C Compiler
+- hello.c is the source file you want to compile
+- By default, this produces an executable file named a.out.
+- Use the –o flag to specify a name for the executable. The executable name must
+immediately follow –o.
+19
+Command Executable Name
+gcc hello.c a.out
+gcc hello.c –o hello hello
+gcc –o hello hello.c hello
+gcc hello.c –o hi hi
+[Slide 20]
+Compiling, Assembling, and Running your First C Program
+1. Write your program.
+2. Save the file with a .c extension.
+- For example, hello.c
+3. Open a terminal and navigate to the
+directory where your program is
+located.
+4. Compile and assemble the program
+5. Run the program
+20
+#include <stdio.h>
+int main() {
+printf("Hello, world!\n");
+return 0;
+}
+hello.c
+$ gcc hello.c
+$ ./a.out
+[Slide 21]
+Running your Program
+- ./a.out
+-
+. = current directory
+- ./a.out -> run a.out from current directory
+- If you named your executable something else
+- For example, if you named it hello
+- Run with ./hello
+- (Note: ./ is required because the current directory is not in your PATH.)
+21
+[Slide 22]
+Your turn!
+- [Multiple select] Which of the following set of commands can you use to
+compile, assemble, and execute the program in a file named my_program.c
+22
+D
+$ gcc my_program.c
+$ ./a.out
+A
+$ gcc my_program.c
+$ ./my_program.c
+C
+$ gcc my_program.c –o my_prog
+$ ./my_prog
+B
+$ gcc my_program.c –o my_program
+$ ./a.out
+E
+$ gcc my_program.c –o my_program
+$ ./my_program.c
+[Slide 23]
+Your turn!
+- [Multiple select] Which of the following set of commands can you use to
+compile, assemble, and execute the program in a file named my_program.c
+23
+D
+$ gcc my_program.c
+$ ./a.out
+A
+$ gcc my_program.c
+$ ./my_program.c
+C
+$ gcc my_program.c –o my_prog
+$ ./my_prog
+B
+$ gcc my_program.c –o my_program
+$ ./a.out
+E
+$ gcc my_program.c –o my_program
+$ ./my_program.c
+[Slide 24]
+Key Terms
+- Standard Library
+- main function
+- gcc
+- GNU
+- Executable
+24
+[Slide 25]
+Variables in C
+25
+[Slide 26]
+Variables in C
+- Scope
+- Where in a program you can use a variable
+- Lifetime
+- When the program exists in memory
+- Type
+- The range of values the variable can represent
+- How the value will be interpreted
+26
+[Slide 27]
+C Numeric Types
+27
+Type name Usual size Values stored How to declare
+char 1 byte integers char x;
+short 2 bytes signed integers short x;
+int 4 bytes signed integers int x;
+long 4 or 8 bytes signed integers long x;
+long long 8 bytes signed integers long long x;
+float 4 bytes signed real
+numbers
+float x;
+double 8 bytes signed real
+numbers
+double x;
+8 bits = 1 byte
+[Slide 28]
+Type Sizes
+- The exact number of bytes for each of the C types might vary from one
+architecture to the next.
+- You can print the exact size on a given machine using C’s sizeofoperator,
+which takes the name of a type as an argument and evaluates to the number
+of bytes used to store that type.
+28
+[Slide 29]
+printf
+- C’s printffunction is very similar to the System.out.printf method in
+Java, where the caller specifies a format string to print.
+- The format string often contains formatting specifiers, such as special
+characters that will print tabs (\t) or newlines (\n), or placeholders for
+values in the output.
+- Placeholders consist of %followed by a type specifier letter.
+- For each placeholder in the format string, printfexpects an additional
+argument.
+29
+[Slide 30]
+Common Special Characters
+- A special character is a character that has a specific meaning or function in
+a programming language rather than simply representing ordinary text.
+- In C, escape sequences use a backslash (\) to represent special characters
+- These allow programmers to include characters or actions in a string that
+may be difficult to type or represent directly.
+30
+Special Character Name Meaning / Use Example
+\n Newline Moves to the next line "Hello\nWorld"
+\t Tab Inserts a horizontal tab "Name:\tJohn"
+\\ Backslash Prints a \ "C:\\Users"
+\" Double quote Prints " inside a string "He said \"Hello\""
+\0 Null character Marks the end of a C
+string "Hello\0"
+%% Percent sign Prints % when using
+printf printf("50%%");
+[Slide 31]
+Common Placeholders
+31
+Placeh
+older Used for Example Ouput
+%d Signed integer printf("%d", 25); 25 25
+%u Unsigned integer printf("%u", 25); 25
+%f Floating-point
+number printf("%f", 3.14); 3.14
+%c Single character printf("%c", 'A'); A
+%s String printf("%s", "Hello"); Hello
+[Slide 32]
+Type Sizes
+- The exact number of bytes for each of the C types might vary from one
+architecture to the next. You can print the exact size on a given machine
+using C’s sizeofoperator, which takes the name of a type as an argument
+and evaluates to the number of bytes used to store that type. For example:
+- The sizeofoperator evaluates to an unsigned long value, so in the call
+to printf, use the placeholder %lu to print its value.
+32
+printf("number of bytes in an int: %lu\n", sizeof(int));
+printf("number of bytes in a short: %lu\n", sizeof(short));
+[Slide 33]
+The char Type
+- The C char type stores a numeric value. However, it’s often used by
+programmers to store the value of an ASCII character.
+- With 8 bits, an unsigned char can hold the values [0, 28-1] = [0, 255]
+33
+[Slide 34]
+Characters
+34
+[Slide 35]
+ASCII
+- ASCII stands for American Standard Code for Information Interchange.
+- ASCII is a code that lets computers represent text using numbers.
+- So when a computer encounters the ASCII number 65, it interprets it as the letter A.
+35
+Character ASCII value
+A 65
+B 66
+a 97
+0 48
+Space 32
+! 33
+[Slide 36]
+Full ASCII Table
+36
+[Slide 37]
+Bits are Just Bits!
+- To give bits meaning, you need to assign them a representation, which
+defines how they correspond to meaningful information, such as numbers or
+text.
+37
+Let’s say I have a char holding the value
+0b 0100 0001
+If I interpret this value as a
+decimal integer, then I
+would read it as 65.
+If I interpret this value as an
+ASCII character, then I
+would read it as ‘A’.
+[Slide 38]
+Characters
+38
+#include <stdio.h>
+int main() {
+printf("%c\n", ‘A');
+}
+learncli$ gcc char_ex0.c
+learncli$ ./a.out
+A
+%c prints the character
+[Slide 39]
+Characters
+39
+#include <stdio.h>
+int main() {
+printf("%d\n", ‘A');
+}
+learncli$ gcc char_ex1.c
+learncli$ ./a.out
+65
+%d prints a decimal integer.
+In this case, it prints the character
+code that corresponds to `A`.
+[Slide 40]
+Characters
+40
+#include <stdio.h>
+int main() {
+printf("%c\n", 67);
+}
+learncli$ gcc char_ex2.c
+learncli$ ./a.out
+C
+%c prints the character whose ASCII
+numeric representation is 67
+[Slide 41]
+Characters
+41
+#include <stdio.h>
+int main() {
+printf("%d\n", 87);
+}
+learncli$ gcc char_ex3.c
+learncli$ ./a.out
+87
+%d prints a decimal integer.
+[Slide 42]
+Full ASCII Table
+42
+[Slide 43]
+Characters
+43
+#include <stdio.h>
+int main() {
+printf("%d\n", ‘a' - ‘C');
+}
+What does this program print?
+[Slide 44]
+Characters
+44
+The numeric ASCII representation of C is 67.
+The numeric ASCII representation of a is 97.
+97 – 67 = 30
+#include <stdio.h>
+int main() {
+printf("%d\n", ‘a' - ‘C');
+}
+[Slide 45]
+Bits are Just Bits!
+- To give bits meaning, you need to assign them a representation, which
+defines how they correspond to meaningful information, such as numbers or
+text.
+45
+Let’s say I have a variable holding the value
+0b 0100 0001
+If I interpret this value as a
+decimal integer, then I
+would read it as 65.
+If I interpret this value as an
+ASCII character, then I
+would read it as ‘A’.
+[Slide 46]
+Why We Are Learning This
+- ASCII is not specific to the C programming language.
+- Computers ultimately represent all data using binary, including letters, digits,
+and symbols.
+- Regardless of the programming language you use, characters must be
+represented numerically so that the computer can store and process them.
+- Learning ASCII helps us understand this fundamental relationship between
+characters and their numeric representations.
+46
+[Slide 47]
+Full ASCII Table
+47
+[Slide 48]
+Reading Characters from Standard Input
+48
+#include <stdio.h>
+int main() {
+int my_char = getchar();
+printf("The user entered: %c\n", my_char);
+}
+We need to include stdio.h so
+that we can use the functions
+getchar()and printf()
+getchar()reads one
+character from the
+input (like a keyboard
+or a file) and returns it
+as an integer.
+[Slide 49]
+Determining if a Character is a Letter
+49
+The following program determines if the user has entered any letter.
+Fill in the blank.
+#include <stdio.h>
+int main() {
+int my_char = getchar();
+if (__________________) {
+printf("The user entered a letter.\n");
+} else {
+printf("The user did not enter a letter.\n");
+}
+}
+A. my_char >= 'A' && my_char <= ‘z’
+B. my_char >= 'A’ || my_char <= ‘z’
+C. my_char >= 'A' && my_char <= 'Z' || my_char >= 'a' && my_char <= 'z’
+D. my_char >= 'A' && my_char <= 'Z’ && my_char >= 'a' && my_char <= 'z'
+[Slide 50]
+Determining if a Character is a Letter
+50
+The following program determines if the user has entered any letter.
+Fill in the blank.
+#include <stdio.h>
+int main() {
+int my_char = getchar();
+if (__________________) {
+printf("The user entered a letter.\n");
+} else {
+printf("The user did not enter a letter.\n");
+}
+}
+A. my_char >= 'A' && my_char <= ‘z’
+B. my_char >= 'A’ || my_char <= ‘z’
+C. (my_char >= 'A' && my_char) <= 'Z' || (my_char >= 'a' && my_char <= ‘z’)
+D. (my_char >= 'A' && my_char <= ‘Z’) && (my_char >= 'a' && my_char <= 'z’)
+Note, the C standard
+library includes the
+function isalpha() which
+we could have used to
+check if the character
+was an alphabet. It is
+defined in <ctype.h>.
+[Slide 51]
+End-of-File
+51
+#include <stdio.h>
+int main() {
+int c = getchar();
+while (c != EOF) {
+putchar(c);
+c = getchar();
+}
+}
+This program is a simple echo program. It reads characters from the standard input
+until it encounters the end-of-file (EOF) marker, and it outputs each character as it
+reads it. Essentially, it copies input to output, one character at a time.
+EOF stands for End of File. It is a
+special value returned by getchar()
+when there’s no more input to read.
+You signal EOF by pressing Ctrl+D (Linux/macOS) or Ctrl+Z (Windows) when entering input manually.
+putchar() takes the character stored
+in c and prints it to the output.
+[Slide 52]
+End-of-File
+- EOF stands for End of File. It is a special value returned by getchar() when
+there’s no more input to read.
+- EOF is the reason that getchar() returns an int instead of a char
+- EOF must be distinguishable from any valid character
+- In the ASCII character set, all valid characters are encoded as integers from 0 to 255.
+- If EOF were encoded as a char, it could potentially collide with valid character values.
+- For example, if EOF were represented as 255 on a system where char is unsigned, it
+would conflict with the ASCII value for the ÿ character.
+52
+[Slide 53]
+Characters
+53
+#include <stdio.h>
+int main() {
+int c = getchar();
+while (c != EOF) {
+putchar(c);
+c = getchar();
+}
+}
+#include <stdio.h>
+int main() {
+int c;
+while ((c = getchar()) != EOF) {
+putchar(c);
+}
+}
+The program on the right is a more concise version of the program on the left.
+First, C gets the next char.
+Then the while checks if that char is EOF.
+[Slide 54]
+Characters
+- Given the input, “HeLlO, WorLD!” what would the program’s output be?
+54
+#include <stdio.h>
+int main() {
+int c;
+while ((c = getchar()) != EOF) {
+if (c >= 'a' && c <= 'z') {
+c = c - ('a' - 'A’);
+}
+putchar(c);
+}
+}
+A.hello, world!
+B.HLO, WLD
+C.HELLO, WORLD!
+D.el, or!
+[Slide 55]
+Characters
+- Given the following input, what would the program’s output be?
+55
+#include <stdio.h>
+int main() {
+int c;
+while ((c = getchar()) != EOF) {
+if (c >= 'a' && c <= 'z') {
+c = c - ('a' - 'A’);
+}
+putchar(c);
+}
+}
+HeLlO, WorLD!
+A.hello, world!
+B.HLO, WLD
+C.HELLO, WORLD!
+D.el, or!

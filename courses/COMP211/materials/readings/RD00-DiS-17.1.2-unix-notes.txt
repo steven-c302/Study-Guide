@@ -1,0 +1,12 @@
+RD00 reading notes - Dive into Systems 17.1.2 (Unix command line and file system) - study notes written for this guide
+Current working directory: the directory you are operating in. Commands act relative to it: a file created without a path lands in the cwd.
+Absolute path: starts at the root /. Example: cd /home/sam/classes/CS31. Relative path: starts from the cwd. Example: cd classes/CS31.
+Special names: . is the current directory, .. is the parent, ~ alone is your home directory, ~sarita is user sarita's home directory.
+pwd prints the cwd. cd path changes it; cd with no argument returns to the home directory; cd .. moves to the parent.
+ls lists the cwd, ls -a also shows hidden entries including . and .. (names starting with a dot are hidden).
+mkdir makes a directory. touch makes an empty file. echo "text" >> file appends a line to a file. cat file prints a file. wc file counts lines, words, bytes.
+cp source destination copies a file; cp -r copies a directory and its contents recursively. mv source destination moves or renames a file or directory. Both take two arguments.
+rm removes a file permanently (no recycle bin). rm -i prompts first, -r removes directories recursively, -f forces without prompting. rmdir removes only empty directories (a safety feature).
+rm -rf in the wrong place is catastrophic: run pwd and ls first to confirm where you are. Some administrators alias rm to rm -i.
+File names are case sensitive (basics and Basics are different files). Spaces in names must be escaped or quoted, so Unix users use underscores: hello_there.
+Example trees: /home/sam has classes/CS31, letters, projects; /home/sarita has unix_notes/basics.

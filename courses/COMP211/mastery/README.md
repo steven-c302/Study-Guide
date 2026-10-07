@@ -10,7 +10,7 @@ programming (below), and it is meant to grow as the semester does.
 |---|---|
 | **Today** | One-click ~10 min session: due recall cards + questions you missed + a stretch question, shuffled together. 14-day activity strip, weak spots (misses you were *sure* about count double), exam countdown. |
 | **Learn** | Per unit: big ideas, common traps, links to the source lessons, and worked examples that fade (fully worked, then you finish one, then you do one alone). |
-| **Practice** | A 5-tier ladder per unit: Recognize, Trace, Debug & Build, Integrate, Produce. 80% of a tier opens the next. Wrong answers never reveal the right one; hints come before reveals; rate your confidence. |
+| **Practice** | A 5-tier ladder per unit (plus a **★ Checkpoint** when the unit has one): Recognize, Trace, Debug & Build, Integrate, Produce. 80% of a tier opens the next. Wrong answers never reveal the right one; hints come before reveals; rate your confidence. |
 | **Cards** | Spaced-repetition recall cards (right answers return after 1, 3, 7, 14, 30 days; misses return now). |
 | **Exam** | Timed, interleaved, no feedback until you submit; skews to trace/debug/integrate like real exam problems; results by unit and tier; misses queue for tomorrow. |
 | **Tutor ★** | AI: Socratic chat grounded in this guide, Teach-it-back, and fresh variants of questions you missed. |
@@ -25,6 +25,24 @@ Units now: `u01` number systems, `u02` bitwise, `u03` shell, `u04` C basics, `u0
 * **Worked examples faded to solo problems** reduce load for novices (Sweller; Renkl). Learn tabs do this; **Parsons problems** give the same learning as writing code in less time.
 * **Interleaving and multiple contexts** improve transfer to new problems. Sessions, exams and unit `u07` mix topics on purpose.
 * **Misconceptions in the notional machine** (what is a copy, what is an address) cause most pointer errors. Wrong options carry a "why", and "sure but wrong" misses are tracked.
+
+
+## Homework checkpoints (mini-checkers)
+
+Each homework covers one unit, so each unit can carry a **checkpoint**: a HW-style mini-checker with the homework's own
+topics and question styles but *fresh* questions. It is auto-graded with no hints, unlimited retries and best score kept, shows a
+per-topic breakdown, and queues misses for review. Units with one: `u08` (HW00 Unix basics, 21 questions) and `u09` (HW1 Intro to C,
+34 questions). To add one for a new homework:
+
+1. Put the graded PDF in `materials/private/` (git-ignored; it has your name and grades) and extract its text
+   (PDFKit via a tiny Swift script works on this Mac).
+2. Create `uNN-hwX-checkpoint.js` calling `Mastery.checkpoint('uNN', [items], { title, source, blurb })`, one `topic` per homework section
+   (items must be auto-gradable: no `free`/`explain`). Add its `<script>` after the unit's own file in `guide/index.html`.
+3. `node tools/validate-mastery.mjs`: it compiles and runs every `verify:` snippet. Original questions only; never copy homework text.
+
+The course page and hub home read a progress snapshot the guide writes to localStorage (`mastery-summary:COMP211`), so your due
+count, per-unit progress and checkpoint scores appear there. Deep links: `guide/index.html#mastery`, `#mastery:session`,
+`#mastery:learn:u09`, `#mastery:practice:u09`.
 
 ## Adding a new lecture / new slides
 

@@ -11,6 +11,9 @@
    `node tools/build-rag-index.mjs COMP210`. Omit it to (re)index
    every course that has a guide/ folder with lesson files.
 
+   Also indexes any .txt under courses/<CODE>/materials/ (except private/) and the Mastery units.
+   Existing embeddings are reused when a chunk's text is unchanged.
+
    --no-embed skips the embeddings API call and only (re)writes the
    chunk text — useful for iterating on chunk boundaries for free
    before spending API calls on embeddings.
@@ -42,7 +45,8 @@
    markup but isn't needed for content this well-behaved.
    ============================================================ */
 
-import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from 'node:fs';
+import vm from 'node:vm';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -224,6 +228,80 @@ function buildCourseIndex(courseCode) {
   return allChunks;
 }
 
+/* ---------------- extra sources: course materials text + Mastery units ---------------- */
+
+/**
+ * Any text file under courses/<CODE>/materials/ (EXCEPT the git-ignored private/
+ * folder) is chunked on slide/paragraph boundaries so slides and readings you
+ * add later are searchable. Convention: save a text extraction next to the PDF
+ * (CL01-unix-basics.pdf + CL01-unix-basics.txt).
+ */
+function walkTxt(dir, out = []) {
+  if (!existsSync(dir)) return out;
+  for (const name of readdirSync(dir)) {
+    if (name === 'private') continue;                                  // never index graded/personal files
+    const p = join(dir, name);
+    if (statSync(p).isDirectory()) walkTxt(p, out);
+    else if (name.endsWith('.txt')) out.push(p);
+  }
+  return out;
+}
+function chunkMaterials(courseCode) {
+  const chunks = [];
+  for (const file of walkTxt(join(COURSES_DIR, courseCode, 'materials'))) {
+    const raw = readFileSync(file, 'utf8');
+    const base = file.split('/').pop().replace(/\.txt$/, '');
+    const title = (raw.split('\n')[0] || base).replace(/ - text extracted.*$/, '').trim();
+    const parts = raw.split(/\n(?=\[Slide \d+\])/);                    // slide-by-slide when present
+    let cur = '', n = 0;
+    const flush = () => {
+      const text = cur.replace(/\s+/g, ' ').trim();
+      if (text.length > 80) chunks.push({ id: `mat-${base}-${n++}`, section: '', course: courseCode, lesson: 'MATERIALS', type: 'material', title: `${title} (part ${n})`, text });
+      cur = '';
+    };
+    for (const part of parts) { if (cur.length + part.length > 1500) flush(); cur += '\n' + part; }
+    flush();
+  }
+  return chunks;
+}
+
+/** Load the course's mastery unit files in a stub browser and turn them into chunks. */
+function chunkMastery(courseCode) {
+  const dir = join(COURSES_DIR, courseCode, 'mastery');
+  if (!existsSync(dir)) return [];
+  const noop = () => {};
+  const sb = { console, setTimeout, clearTimeout,
+    document: { createElement: () => ({ className: '', style: {}, classList: { add: noop, remove: noop, toggle: noop }, appendChild: noop, setAttribute: noop, addEventListener: noop }), addEventListener: noop, querySelector: () => null, querySelectorAll: () => [] },
+    localStorage: { getItem: () => null, setItem: noop, removeItem: noop }, location: { pathname: '/', hostname: 'localhost', protocol: 'http:' } };
+  sb.window = sb; vm.createContext(sb);
+  vm.runInContext(readFileSync(join(ROOT, 'shared', 'mastery.js'), 'utf8'), sb);
+  for (const f of readdirSync(dir).filter(f => f === 'config.js' || /^u\d+.*\.js$/.test(f)).sort((a, b) => (/checkpoint/.test(a) - /checkpoint/.test(b)) || a.localeCompare(b)))
+    vm.runInContext(readFileSync(join(dir, f), 'utf8'), sb, { filename: f });
+  const out = [];
+  for (const u of sb.Mastery.units) {
+    const L = u.learn || {};
+    out.push({ id: `mastery-${u.id}-learn`, section: 'lmastery', course: courseCode, lesson: 'MASTERY', type: 'section', title: `Mastery: ${u.title}`,
+      text: stripHtml([u.blurb, ...(L.big || []), ...(L.traps || []).map(t => 'Common trap: ' + t)].join(' ')) });
+    u.cards.forEach((c, i) => out.push({ id: `mastery-${u.id}-card${i}`, section: 'lmastery', course: courseCode, lesson: 'MASTERY', type: 'qa', title: `Mastery: ${u.short}`, text: stripHtml(c.f) + ' \u2014 ' + stripHtml(c.b) }));
+    u.items.concat(u.checkpoint || []).forEach((it, i) => {
+      const why = it.why || it.model; if (!why) return;
+      out.push({ id: `mastery-${u.id}-q${i}`, section: 'lmastery', course: courseCode, lesson: 'MASTERY', type: 'qa', title: `Mastery: ${u.short}`,
+        text: stripHtml(it.prompt + (it.code ? ' ' + it.code : '')) + ' \u2014 ' + stripHtml(why) });
+    });
+  }
+  return out;
+}
+
+/** Re-use embeddings from the existing index for chunks whose text is unchanged, so a rebuild never discards them. */
+function reuseEmbeddings(chunks, outPath) {
+  if (!existsSync(outPath)) return 0;
+  let prev; try { prev = JSON.parse(readFileSync(outPath, 'utf8')); } catch { return 0; }
+  const byId = new Map(prev.filter(c => Array.isArray(c.embedding)).map(c => [c.id, c]));
+  let n = 0;
+  for (const c of chunks) { const p = byId.get(c.id); if (p && p.text === c.text) { c.embedding = p.embedding; n++; } }
+  return n;
+}
+
 /* ---------------- embedding (Voyage AI) ---------------- */
 
 const VOYAGE_MODEL = 'voyage-3-lite';
@@ -312,14 +390,21 @@ async function main() {
   for (const courseCode of courseCodes) {
     const chunks = buildCourseIndex(courseCode);
     if (!chunks) continue;
+    const lessonCount = chunks.length;
+    chunks.push(...chunkMaterials(courseCode), ...chunkMastery(courseCode));
     console.log(`${courseCode}: extracted ${chunks.length} chunks` +
-      ` (${chunks.filter(c => c.type === 'section').length} section, ${chunks.filter(c => c.type === 'qa').length} qa)`);
-
-    if (!noEmbed && apiKey) {
-      await embedChunks(chunks, apiKey);
-    }
+      ` (${lessonCount} lesson, ${chunks.filter(c => c.type === 'material').length} materials, ${chunks.filter(c => c.lesson === 'MASTERY').length} mastery)`);
 
     const outPath = join(COURSES_DIR, courseCode, 'guide', 'rag-chunks.json');
+    const kept = reuseEmbeddings(chunks, outPath);
+    if (kept) console.log(`  kept ${kept} existing embeddings (text unchanged)`);
+
+    if (!noEmbed && apiKey) {
+      const todo = chunks.filter(c => !Array.isArray(c.embedding));
+      console.log(`  embedding ${todo.length} new/changed chunks`);
+      await embedChunks(todo, apiKey);
+    }
+
     writeFileSync(outPath, JSON.stringify(chunks, null, 2));
     console.log(`  wrote ${outPath}`);
   }

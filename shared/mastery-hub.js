@@ -35,6 +35,37 @@
     anchor.parentNode.insertBefore(panel, anchor);
     ui.unit = (M.units[0] || {}).id;
     render();
+    writeSummary();
+    applyHash();
+    window.addEventListener('hashchange', applyHash);
+  }
+
+  /* A small snapshot for the course page / hub home (they cannot load the whole engine). */
+  function writeSummary() {
+    var C = window.MASTERY_COURSE || {}; if (!C.course) return;
+    var cd = M.dueCards(null, 5), cnt = 0;
+    for (var i = 0; i < 14; i++) { if (S().days[new Date(now() - i * 864e5).toISOString().slice(0, 10)]) cnt++; }
+    var sum = { t: now(), course: C.course, dueCards: cd.due.length, newCards: cd.fresh.length, dueItems: M.dueItems(null).length, studied14: cnt, milestones: C.milestones || [],
+      units: M.units.map(function (u) {
+        var s = M.unitStats(u), cp = (S().checkpoints || {})[u.id];
+        return { id: u.id, title: u.title, short: u.short, m: s.m, n: s.n, pct: s.pct, due: M.dueItems(u).length + M.dueCards(u, 0).due.length,
+          cp: u.checkpoint.length ? { best: cp ? cp.best : null, n: u.checkpoint.length } : null };
+      }) };
+    try { localStorage.setItem('mastery-summary:' + C.course, JSON.stringify(sum)); } catch (e) { /* ignore */ }
+  }
+  M.afterSave = writeSummary;
+
+  /* deep links from the course page: guide/index.html#mastery or #mastery:session */
+  function applyHash() {
+    var h = (location.hash || '').replace(/^#/, '');
+    if (h.indexOf('mastery') !== 0) return;
+    var btn = document.querySelector('.lesson-bar button[data-l="lmastery"]');
+    showLesson('lmastery', btn);
+    var parts = h.split(':');                              // mastery[:view[:unit]]
+    if (parts[1] === 'session') { startSession(); return; }
+    if (['today', 'learn', 'practice', 'cards', 'exam', 'tutor'].indexOf(parts[1]) !== -1) ui.view = parts[1];
+    if (parts[2] && M.byId[parts[2]]) { ui.unit = parts[2]; ui.cardsUnit = parts[2]; }
+    render();
   }
 
   function render() {
@@ -93,7 +124,7 @@
     M.units.forEach(function (u) {
       var s = M.unitStats(u), due = M.dueItems(u).length, dc = M.dueCards(u, 0).due.length;
       var card = el('button', 'mq-unit'); card.type = 'button';
-      card.innerHTML = '<div class="mq-unit-t">' + esc(u.title) + '</div><div class="mq-unit-s">' + s.m + ' / ' + s.n + ' mastered' + (due + dc ? ' · <b>' + (due + dc) + ' due</b>' : '') + '</div>' + bar(s.pct);
+      card.innerHTML = '<div class="mq-unit-t">' + esc(u.title) + '</div><div class="mq-unit-s">' + s.m + ' / ' + s.n + ' mastered' + (due + dc ? ' \u00B7 <b>' + (due + dc) + ' due</b>' : '') + (u.checkpoint.length ? ' \u00B7 checkpoint ' + ((S().checkpoints || {})[u.id] ? (S().checkpoints[u.id].best + '/' + S().checkpoints[u.id].n) : 'not taken') : '') + '</div>' + bar(s.pct);
       card.onclick = function () { go('learn', { unit: u.id }); };
       g.appendChild(card);
     });
@@ -243,7 +274,9 @@
     var row = el('div', 'mq-actions');
     var p = el('button', 'mq-btn', 'Practice this unit →'); p.onclick = function () { go('practice', { unit: u.id, topic: null }); };
     var cb = el('button', 'mq-btn ghost', 'Recall cards (' + u.cards.length + ')'); cb.onclick = function () { go('cards', { cardsUnit: u.id }); };
-    row.appendChild(p); row.appendChild(cb); body.appendChild(row);
+    row.appendChild(p); row.appendChild(cb);
+    if (u.checkpoint.length) { var cpb = el('button', 'mq-btn ghost', 'HW-style checkpoint (' + u.checkpoint.length + ')'); cpb.onclick = function () { go('practice', { unit: u.id, tier: 'cp', topic: null }); }; row.appendChild(cpb); }
+    body.appendChild(row);
   }
 
   /* ============================================================ PRACTICE */
@@ -258,11 +291,20 @@
       seg.onclick = function () { ui.tier = ti; ui.topic = null; render(); };
       segs.appendChild(seg);
     });
+    if (u.checkpoint.length) {
+      var cpr = (S().checkpoints || {})[u.id];
+      var cs = el('button', 'mq-seg' + (ui.tier === 'cp' ? ' on' : '')); cs.type = 'button';
+      cs.innerHTML = '<span class="mq-seg-n">\u2605</span><span class="mq-seg-t">Checkpoint</span><span class="mq-seg-c">' + (cpr ? cpr.best + '/' + cpr.n : u.checkpoint.length + ' Qs') + '</span>' + bar(cpr ? Math.round(cpr.best / cpr.n * 100) : 0);
+      cs.onclick = function () { ui.tier = 'cp'; ui.topic = null; render(); };
+      segs.appendChild(cs);
+    }
     body.appendChild(segs);
 
     var main = el('div', 'mq-main'); body.appendChild(main);
     var due = M.dueItems(u).length;
-    if (ui.topic) {
+    if (ui.tier === 'cp') {
+      viewCheckpoint(main, u);
+    } else if (ui.topic) {
       main.appendChild(el('h3', 'mq-h', 'Topic drill: ' + esc(ui.topic)));
       var cl = el('button', 'mq-link', 'Clear filter'); cl.onclick = function () { ui.topic = null; render(); }; main.appendChild(cl);
       u.items.filter(function (i) { return i.topic === ui.topic; }).forEach(function (i) { main.appendChild(M.renderItem(i, { onChange: refresh }).node); });
@@ -294,6 +336,55 @@
     var items = M.dueItems(u);
     ui.session = { entries: items.map(function (i) { return { kind: 'item', i: i }; }), at: 0, ok: 0 };
     go('session');
+  }
+
+  /* ============================================================ CHECKPOINT (HW-style mini-checker) */
+  function viewCheckpoint(main, u) {
+    var cp = u.checkpoint, info = u.checkpointInfo || {}, rec = (S().checkpoints || {})[u.id];
+    main.appendChild(el('h3', 'mq-h', 'Checkpoint' + (info.title ? ' · ' + esc(info.title) : '')));
+    main.appendChild(el('p', 'mq-blurb', info.blurb || 'A homework-style mini-checker for this unit: auto-graded, no hints, unlimited retries, best score kept. Use it to find out what you actually know.'));
+    var topics = {}, order = [];
+    cp.forEach(function (i) { if (!topics[i.topic]) { topics[i.topic] = 0; order.push(i.topic); } topics[i.topic]++; });
+    var chips = el('div', 'mq-chips'); order.forEach(function (t) { chips.appendChild(el('span', 'mq-chip', esc(t) + ' · ' + topics[t])); }); main.appendChild(chips);
+    if (rec) main.appendChild(el('div', 'mq-note', 'Best <b>' + rec.best + ' / ' + rec.n + '</b> · last ' + rec.last + ' / ' + rec.n + ' · ' + rec.tries + ' attempt' + (rec.tries === 1 ? '' : 's')));
+    var start = el('button', 'mq-btn', rec ? 'Retake checkpoint' : 'Start checkpoint'); main.appendChild(start);
+    var run = el('div'); main.appendChild(run);
+    start.onclick = function () { start.style.display = 'none'; begin(); };
+
+    function begin() {
+      run.innerHTML = '';
+      var hd = el('div', 'mq-examhead'), sub = el('button', 'mq-btn', 'Submit checkpoint');
+      hd.appendChild(el('span', '', cp.length + ' questions · no feedback until you submit')); hd.appendChild(sub); run.appendChild(hd);
+      var rendered = [], lastTopic = null, n = 0;
+      cp.forEach(function (it) {
+        if (it.topic !== lastTopic) { run.appendChild(el('h4', 'mq-cp-topic', esc(it.topic) + ' <span class="mq-topic">' + topics[it.topic] + ' question' + (topics[it.topic] === 1 ? '' : 's') + '</span>')); lastTopic = it.topic; }
+        var r = M.renderItem(it, { exam: true });
+        r.node.insertBefore(el('div', 'mq-qn', 'Q' + (++n)), r.node.firstChild);
+        run.appendChild(r.node); rendered.push({ it: it, r: r });
+      });
+      var done = false;
+      sub.onclick = function () {
+        if (done) return; done = true; sub.disabled = true;
+        var ok = 0, byT = {};
+        rendered.forEach(function (x) {
+          var g = x.r.gradeSilently(), good = !!g.ok; if (good) ok++;
+          var t = byT[x.it.topic] || (byT[x.it.topic] = { ok: 0, n: 0 }); t.n++; if (good) t.ok++;
+          M.record(x.it, good, good, '', false);
+          x.r.node.classList.add(good ? 'exam-ok' : 'exam-bad');
+          if (!good) x.r.revealInto('<b>Missed.</b> ' + (x.it.why || '') + '<br><i>Queued for review.</i>');
+        });
+        var cps = S().checkpoints || (S().checkpoints = {}), prev = cps[u.id];
+        cps[u.id] = { best: Math.max(ok, prev ? prev.best : 0), last: ok, n: cp.length, tries: (prev ? prev.tries : 0) + 1, t: now() };
+        M.save();
+        var res = el('div', 'mq-result');
+        res.innerHTML = '<div class="mq-score">' + ok + ' / ' + cp.length + '</div><div>' + Math.round(ok / cp.length * 100) + '% · best ' + cps[u.id].best + ' / ' + cp.length + '</div>' +
+          '<div class="mq-sub">By topic</div>' + order.map(function (t) { var b = byT[t]; return '<div class="mq-weak"><span>' + esc(t) + '</span><span class="mq-topic">' + (b.ok === b.n ? '✓ ' : '') + b.ok + ' / ' + b.n + '</span></div>'; }).join('') +
+          '<p class="mq-blurb">Missed questions show their explanation below and are queued for tomorrow’s session. Weak topics are what to drill next.</p>';
+        var again = el('button', 'mq-btn', 'Retake'); again.onclick = function () { begin(); window.scrollTo({ top: 0 }); };
+        res.appendChild(again);
+        run.insertBefore(res, hd.nextSibling); window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+    }
   }
 
   /* ============================================================ CARDS */

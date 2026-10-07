@@ -47,7 +47,8 @@ sandbox.window = sandbox;
 vm.createContext(sandbox);
 const run = (file) => vm.runInContext(readFileSync(file, 'utf8'), sandbox, { filename: file });
 run(join(ROOT, 'shared', 'mastery.js'));
-const files = readdirSync(dir).filter(f => /^u\d+.*\.js$/.test(f)).sort();
+/* unit files first, then *checkpoint* files (they attach to an already-registered unit) */
+const files = readdirSync(dir).filter(f => /^u\d+.*\.js$/.test(f)).sort((a, b) => (/checkpoint/.test(a) - /checkpoint/.test(b)) || a.localeCompare(b));
 if (existsSync(join(dir, 'config.js'))) run(join(dir, 'config.js'));
 for (const f of files) run(join(dir, f));
 const M = sandbox.Mastery;
@@ -93,7 +94,9 @@ for (const u of M.units) {
   if (!u.cards.length) warn(u.id, 'no recall cards');
   if (!(u.learn.big || []).length) warn(u.id, 'no "big ideas" in learn');
   const ids = new Set();
-  u.items.forEach(it => {
+  u.checkpoint.filter(i => i.type === 'free' || i.type === 'explain').forEach(i => err(u.id + ':cp', 'checkpoint items must be auto-gradable (no free/explain): ' + i.topic));
+  if (u.checkpoint.length) console.log(`  checkpoint: ${u.checkpoint.length} questions in ${new Set(u.checkpoint.map(i => i.topic)).size} topics`);
+  u.items.concat(u.checkpoint).forEach(it => {
     nItems++; counts[it.type] = (counts[it.type] || 0) + 1;
     const id = `${it.id} [${it.type}${it.topic ? ' · ' + it.topic : ''}]`;
     if (ids.has(it.id)) err(id, 'duplicate item id (same prompt/code twice?)'); ids.add(it.id);

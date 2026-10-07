@@ -8,6 +8,7 @@ window.COURSE = {
   requisites: "Prerequisite: COMP 210; COMP 283 or MATH 381 or STOR 315; a grade of C or better in both prerequisite courses. Instructor: Connor McMahon.",
 
   guide: "guide/index.html",
+  mastery: true,
 
   lectures: [],
   exams: [],

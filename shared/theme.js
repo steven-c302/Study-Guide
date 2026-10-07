@@ -17,7 +17,26 @@
 
   apply(read());
 
+  /* Guide pages: collapse the long lesson bar to "Mastery + current lesson", with an expander. */
+  function enhanceLessonBar() {
+    var bar = document.querySelector('.lesson-bar');
+    if (!bar || bar.getAttribute('data-enh')) return;
+    var btns = bar.querySelectorAll('button[data-l]');
+    if (btns.length < 9) return;
+    bar.setAttribute('data-enh', '1'); bar.classList.add('collapsed');
+    var t = document.createElement('button');
+    t.type = 'button'; t.className = 'lb-toggle';
+    function label() { t.textContent = bar.classList.contains('collapsed') ? 'All lessons (' + btns.length + ') \u25BE' : 'Hide list \u25B4'; }
+    label();
+    t.onclick = function () { bar.classList.toggle('collapsed'); label(); };
+    bar.appendChild(t);
+    bar.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('button[data-l]')) setTimeout(function () { bar.classList.add('collapsed'); label(); }, 0);
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(enhanceLessonBar, 0);                      // after other scripts have injected their own buttons
     var btn = document.createElement('button');
     btn.id = 'theme-toggle';
     btn.type = 'button';

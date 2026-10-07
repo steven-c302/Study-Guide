@@ -11,6 +11,9 @@
    - Confidence ratings: "sure but wrong" = misconception, studied first
    - Wrong answers never reveal the right one; hints before reveals
 
+   A unit may also carry `checkpoint:[items]` + `checkpointInfo:{title,source,blurb}`: an HW-style
+   mini-checker (see mastery-hub.js).
+   Units are listed in `order` (optional number; default = load order).
    Authoring: units register themselves with Mastery.unit({...}) using
    the helpers in Mastery.h. See _TEMPLATE.js and README.md in
    courses/<COURSE>/mastery/.
@@ -62,13 +65,16 @@
   function courseKey() { return 'mastery2:' + ((window.MASTERY_COURSE && window.MASTERY_COURSE.course) || window.GUIDE_COURSE || location.pathname); }
   var S = load();
   function load() {
-    try { var r = JSON.parse(localStorage.getItem(courseKey())); if (r && r.items) { r.days = r.days || {}; r.log = r.log || []; r.cards = r.cards || {}; r.ui = r.ui || {}; return r; } } catch (e) { /* ignore */ }
-    return { items: {}, cards: {}, log: [], days: {}, ui: {}, unlockAll: false };
+    try { var r = JSON.parse(localStorage.getItem(courseKey())); if (r && r.items) { r.days = r.days || {}; r.log = r.log || []; r.cards = r.cards || {}; r.ui = r.ui || {}; r.checkpoints = r.checkpoints || {}; return r; } } catch (e) { /* ignore */ }
+    return { items: {}, cards: {}, log: [], days: {}, ui: {}, checkpoints: {}, unlockAll: false };
   }
-  function save() { try { localStorage.setItem(courseKey(), JSON.stringify(S)); } catch (e) { /* storage blocked */ } }
+  function save() {
+    try { localStorage.setItem(courseKey(), JSON.stringify(S)); } catch (e) { /* storage blocked */ }
+    if (M.afterSave) { try { M.afterSave(); } catch (e) { /* summary is best-effort */ } }
+  }
   M.S = function () { return S; };
   M.save = save;
-  M.resetAll = function () { S = { items: {}, cards: {}, log: [], days: {}, ui: {}, unlockAll: false }; save(); };
+  M.resetAll = function () { S = { items: {}, cards: {}, log: [], days: {}, ui: {}, checkpoints: {}, unlockAll: false }; save(); };
   function touch() { var d = today(); S.days[d] = (S.days[d] || 0) + 1; }
   function st(id) { return S.items[id] || (S.items[id] = { box: 0, due: 0, tries: 0, mastered: false }); }
   function dueIn(box) { return now() + INTERVALS[Math.max(0, Math.min(5, box))] * DAY; }
@@ -94,6 +100,19 @@
   /* ============================================================
      UNIT REGISTRY + AUTHORING HELPERS
      ============================================================ */
+  /* Checkpoint = HW-style mini-checker for a unit: auto-gradable items, ordered by topic, unlimited
+     retries, best score kept. Kept out of u.items so it never inflates mastery %. */
+  function attachCheckpoint(u, items, info) {
+    items.forEach(function (it) {
+      it._unit = u.id; it._tier = -1; it._u = u; it._cp = true;
+      it.id = it.id || (u.id + ':cp:' + hash(it.type + '|' + it.prompt + '|' + (it.code || '')));
+      M.items[it.id] = it; u.checkpoint.push(it);
+    });
+    if (info) u.checkpointInfo = info;
+  }
+  /* Mastery.checkpoint('u09', [items], { title, source, blurb })  (call after the unit is registered) */
+  M.checkpoint = function (unitId, items, info) { var u = M.byId[unitId]; if (!u) throw new Error('unknown unit ' + unitId); attachCheckpoint(u, items, info); return u; };
+
   M.unit = function (spec) {
     var u = { id: spec.id, title: spec.title, short: spec.short || spec.title, lessons: spec.lessons || [], learn: spec.learn || {}, cards: [], tiers: [], items: [], ai: spec.ai !== false, blurb: spec.blurb || '' };
     TIER_KEYS.forEach(function (k, ti) {
@@ -106,13 +125,17 @@
       });
       u.tiers.push(tier);
     });
+    u.checkpoint = []; u.checkpointInfo = {};
+    attachCheckpoint(u, spec.checkpoint || [], spec.checkpointInfo);
     (spec.cards || []).forEach(function (c) {
       var card = { f: c[0], b: c[1], unit: u.id };
       card.id = u.id + ':c' + hash(c[0]);
       u.cards.push(card);
     });
     (u.learn.examples || []).forEach(function (ex) { if (ex.item) { ex.item._noRecord = true; ex.item._unit = u.id; ex.item._u = u; ex.item.id = ex.item.id || (u.id + ':ex:' + hash(ex.item.prompt)); } });
+    u.order = spec.order != null ? spec.order : 100 + M.units.length;   // lower sorts first; default = registration order
     M.units.push(u); M.byId[u.id] = u;
+    M.units.sort(function (a, b) { return a.order - b.order; });
     return u;
   };
 
@@ -534,7 +557,7 @@
     return { m: m, n: n, pct: n ? Math.round(m / n * 100) : 0 };
   };
   M.dueItems = function (u) {
-    var pool = u ? u.items : M.units.reduce(function (a, x) { return a.concat(x.items); }, []);
+    var pool = u ? u.items.concat(u.checkpoint) : M.units.reduce(function (a, x) { return a.concat(x.items, x.checkpoint); }, []);
     return pool.filter(function (i) { var s = S.items[i.id]; return s && s.tries && (!s.mastered || s.due <= now()); });
   };
   M.cardState = function (c) { return S.cards[c.id] || { box: 0, due: 0, seen: false }; };   // read-only default; rateCard stores

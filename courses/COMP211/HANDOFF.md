@@ -90,3 +90,12 @@ The site auto-deploys via GitHub Pages at `https://steven-c302.github.io/Study-G
 - AI (tutor, teach-it-back, variants) is `netlify/functions/study-ai.mjs`; needs `ANTHROPIC_API_KEY` + `STUDY_ACCESS_CODE` in Netlify and a
   $5 limit in the Anthropic Console. Code-level cap is $4/month. `node tools/test-study-ai.mjs` tests it offline.
 - Theme is `shared/theme.css` (Mono light / Night dark); don't hardcode colors.
+
+### Adding slides and readings (materials library + search)
+
+- Put slides in `materials/lectures/` (e.g. `CL02-intro-to-c.pdf`) and list them in `materials.js`. Save a text extraction next to the PDF
+  (`CL02-intro-to-c.txt`; first line is the title, `[Slide N]` markers optional). `node tools/build-rag-index.mjs COMP211 [--no-embed]` then makes
+  it searchable by the Ask feature and the AI tutor (existing embeddings are kept; new chunks get embedded when `VOYAGE_API_KEY` is set).
+- **Graded work / anything with your name or grades** goes in `materials/private/` (git-ignored, never indexed or deployed). The honor code
+  forbids posting assignments publicly and this repo is public. Turn it into original practice questions in `mastery/` instead.
+- Extracting PDF text on this Mac: PDFKit via a tiny Swift script (no installs needed); `pdftoppm` is not installed.

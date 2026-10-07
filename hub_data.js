@@ -17,7 +17,7 @@ window.HUB = {
     {
       code: "COMP 211", slug: "COMP211",
       title: "Systems Fundamentals",
-      credits: 3, term: "Next semester", color: "#159957",
+      credits: 3, term: "Fall 2026", color: "#159957", current: true,
       desc: "Systems programming: data representation, pointers, execution models, memory management, runtime environments, the process model, I/O, system calls, and CLI tooling (shell, compiler, linker, debugger, version control).",
       guide: true
     },

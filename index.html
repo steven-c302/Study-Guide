@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Steven's University Study Hub</title>
+<title>Study Hub</title>
+<link rel="stylesheet" href="shared/theme.css">
 <link rel="stylesheet" href="shared/hub.css">
+<script src="shared/theme.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -12,38 +14,65 @@
     <h1 id="hub-title">Study Hub</h1>
     <p id="hub-sub"></p>
   </div>
-  <div class="grid" id="course-grid"></div>
+  <div id="today"></div>
+  <div id="courses"></div>
   <div class="footer">
-    Add a course by copying the <code>courses/_TEMPLATE</code> folder, renaming it, and adding an entry to <code>hub_data.js</code>.
-    Drop lecture slides and past exams into each course's <code>materials/</code> folder and list them in its <code>config.js</code>.
+    Add a course by copying <code>courses/_TEMPLATE</code>, renaming it, and adding an entry to <code>hub_data.js</code>.
+    Lecture slides and past exams go in each course's <code>materials/</code> folder and are listed in its <code>config.js</code>
+    (or <code>materials.js</code>). Graded work goes in <code>materials/private/</code>, which is never published.
   </div>
 </div>
 <script src="hub_data.js"></script>
 <script>
-  document.getElementById('hub-title').textContent = (HUB.student ? HUB.student + "'s " : "") + "University Study Hub";
+(function () {
+  var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+  document.getElementById('hub-title').textContent = (HUB.student ? HUB.student + "'s " : "") + "Study Hub";
   document.getElementById('hub-sub').textContent = HUB.subtitle || "";
-  const grid = document.getElementById('course-grid');
-  HUB.courses.forEach(c => {
-    const a = document.createElement('a');
-    a.className = 'course-card';
-    a.href = 'courses/' + c.slug + '/course.html';
-    a.style.borderLeftColor = c.color || 'var(--accent)';
-    a.innerHTML =
-      '<div class="code" style="color:' + (c.color||'var(--accent2)') + '">' + c.code + '</div>' +
-      '<div class="title">' + c.title + '</div>' +
-      '<div class="desc">' + (c.desc||'') + '</div>' +
-      '<div class="meta"><span class="pill">' + c.credits + ' credits</span>' +
-      '<span class="pill term">' + (c.term||'') + '</span>' +
-      (c.guide ? '<span class="pill" style="border-color:' + (c.color||'var(--accent)') + ';color:' + (c.color||'var(--accent2)') + '">study guide</span>' : '') +
-      '</div>';
-    grid.appendChild(a);
+
+  function summary(slug) { try { return JSON.parse(localStorage.getItem('mastery-summary:' + slug)); } catch (e) { return null; } }
+  var courses = HUB.courses.slice().sort(function (a, b) { return (b.current ? 1 : 0) - (a.current ? 1 : 0); });
+
+  /* ---- Today: one line per course that has Mastery data ---- */
+  var today = document.getElementById('today'), html = '';
+  courses.forEach(function (c) {
+    var s = summary(c.slug); if (!s) return;
+    var due = (s.dueCards || 0) + (s.dueItems || 0), nw = s.newCards || 0;
+    var base = 'courses/' + c.slug + '/guide/index.html';
+    html += '<a class="today-card" href="' + base + '#mastery:session"><div><b>' + esc(c.code) + '</b><div class="sub">' +
+      (due ? due + ' to review' + (nw ? ' · ' + nw + ' new' : '') : (nw ? nw + ' new cards ready' : 'All caught up')) +
+      '</div></div><span class="btn primary" style="pointer-events:none">' + (due || nw ? 'Start session' : 'Open Mastery') + '</span></a>';
   });
-  // "add a course" card
-  const add = document.createElement('a');
-  add.className = 'course-card add-card';
-  add.href = 'courses/_TEMPLATE/course.html';
-  add.innerHTML = '<div>+ Add a course<br><span style="font-size:12px">(copy the _TEMPLATE folder)</span></div>';
-  grid.appendChild(add);
+  if (html) today.innerHTML = '<p class="eyebrow">Today</p><div class="today">' + html + '</div>';
+
+  /* ---- Courses ---- */
+  var root = document.getElementById('courses'), cur = courses.filter(function (c) { return c.current; }), other = courses.filter(function (c) { return !c.current; });
+  function card(c) {
+    var s = summary(c.slug), prog = '';
+    if (s && s.units && s.units.length) {
+      var m = 0, n = 0; s.units.forEach(function (u) { m += u.m; n += u.n; });
+      var pct = n ? Math.round(m / n * 100) : 0;
+      prog = '<div class="prog">Mastery ' + pct + '% · ' + m + ' of ' + n + ' questions<div class="bar"><i style="width:' + pct + '%"></i></div></div>';
+    }
+    var a = document.createElement('a');
+    a.className = 'course-card'; a.href = 'courses/' + c.slug + '/course.html';
+    a.style.setProperty('--accent-c', c.color || 'var(--ink)');
+    a.innerHTML = '<div class="row"><span class="code">' + esc(c.code) + '</span>' + (c.current ? '<span class="pill on">Current</span>' : '') + '</div>' +
+      '<div class="title">' + esc(c.title) + '</div><div class="desc">' + esc(c.desc || '') + '</div>' + prog +
+      '<div class="meta"><span class="pill">' + esc(c.term || '') + '</span><span class="pill">' + (c.credits || 3) + ' credits</span>' + (c.guide ? '<span class="pill">study guide</span>' : '') + '</div>';
+    return a;
+  }
+  function section(label, list, addCard) {
+    if (!list.length && !addCard) return;
+    var wrap = document.createElement('div');
+    wrap.innerHTML = '<p class="eyebrow section-label">' + label + '</p>';
+    var g = document.createElement('div'); g.className = 'grid';
+    list.forEach(function (c) { g.appendChild(card(c)); });
+    if (addCard) { var add = document.createElement('a'); add.className = 'course-card add-card'; add.href = 'courses/_TEMPLATE/course.html'; add.innerHTML = '<div>+ Add a course<br><span style="font-size:12px">copy the _TEMPLATE folder</span></div>'; g.appendChild(add); }
+    wrap.appendChild(g); root.appendChild(wrap);
+  }
+  if (cur.length) { section('Current', cur, false); section('Other courses', other, true); }
+  else section('Courses', other, true);
+})();
 </script>
 </body>
 </html>

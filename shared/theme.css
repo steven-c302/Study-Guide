@@ -146,3 +146,8 @@ header{position:static !important}
   nav.topics{overflow-x:auto; flex-wrap:nowrap !important}
   nav.topics button{flex:0 0 auto; white-space:nowrap}
 }
+
+/* ---------- guide header: collapsed lesson bar ---------- */
+.lesson-bar.collapsed button[data-l]:not(.active):not([data-l="lmastery"]){display:none}
+.lb-toggle{background:transparent !important;color:var(--topink) !important;border:1px dashed color-mix(in srgb,var(--topink) 40%,transparent) !important;opacity:.85;font-weight:600}
+.lb-toggle:hover{opacity:1;border-style:solid !important}
