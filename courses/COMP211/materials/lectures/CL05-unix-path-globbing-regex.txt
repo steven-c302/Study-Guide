@@ -1,0 +1,744 @@
+CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) - text extracted from the slides for search
+
+[Slide 1]
+Unix Basics
+COMP211 Connor McMahon
+[Slide 2]
+Reminders
+- HW1 is due today.
+- If you have not already signed up for a checkoff slot, do that now!
+- If you haven’t gotten your setup from HW0 checked, do that today!
+- You will complete the checkoff inside your container.
+2
+[Slide 3]
+$PATH
+3
+[Slide 4]
+Paths
+- We know what an absolute path and a relative path are.
+- An absolute path starts from the root. Example:
+- /home/alice/projects/hello
+- A relative path starts from wherever we currently are. Examples:
+- ./hello
+- ../hello
+- projects/hello
+4
+[Slide 5]
+Paths
+- Now suppose we've written and compiled a program called hello:
+- $ gcc hello.c -o hello
+- We can run it with:
+- $ ./hello
+- You might wonder:
+- Why do I need the ./?
+5
+[Slide 6]
+Paths
+- Additionally, why do I type:
+- $ ls
+- $ pwd
+- $ wc
+- And not
+- $ ./ls
+- $ ./pwd
+- $ ./wc
+- That's where $PATH comes in.
+6
+[Slide 7]
+What does ./hello actually mean?
+- Remember that . means the current directory.
+- So:
+- $ ./hello
+- is simply a relative path.
+- You're telling the shell:
+- Go into the current directory (.), find the file called hello, and execute it.
+- It's conceptually the same as giving its absolute path:
+- $ /home/alice/projects/hello
+- Both commands tell the shell exactly where the executable is located.
+7
+[Slide 8]
+What does ./hello actually mean?
+- So what happens if we leave off the path?
+- $ hello
+- Now we haven't told the shell where hello is.
+- When a command contains no /, the shell searches for it.
+- Where does it search?
+8
+[Slide 9]
+What does ./hello actually mean?
+- $ ./hello
+- contains a /
+- meaning “Here is a path. Run this file."
+- $ hello
+- contains no /
+- meaning "Find a command named hello for me.”
+- And where does the shell look?
+- $PATH
+9
+[Slide 10]
+$PATH is the shell's command search path
+- Try:
+- $ echo $PATH
+- You might see something like:
+- /usr/local/bin:/usr/bin:/bin:/home/alice/
+- That's a list of directories separated by :
+- It tells your shell:
+- When I type a command without specifying its location, search these directories for it.
+10
+[Slide 11]
+$PATH is the shell's command search path
+- So imagine you type:
+- $ wc
+- Your shell effectively searches:
+- $ /usr/local/bin/wc
+- $ /usr/bin/wc <- found it!
+- and then executes the one it found.
+11
+[Slide 12]
+$PATH is the shell's command search path
+- So that's why:
+- $ ls
+- works while:
+- $ hello
+- doesn’t.
+- Your hello executable is sitting in your current directory, but your current
+directory usually isn't in $PATH.
+12
+[Slide 13]
+Example
+- You are currently in: /home/student/project
+- Your filesystem contains:
+- All three hello files are executable.
+- Your $PATH is: /home/student/bin:/usr/bin:/bin
+13
+/
+├── usr/
+│ └── bin/
+│ └── hello
+│
+└── home/
+└── student/
+├── bin/
+│ └── hello
+│
+└── project/
+└── hello
+Command Which hello runs?
+./hello
+/usr/bin/hello
+../bin/hello
+hello
+[Slide 14]
+Example
+- You are currently in: /home/student/project
+- Your filesystem contains:
+- All three hello files are executable.
+- Your $PATH is: /home/student/bin:/usr/bin:/bin
+14
+/
+├── usr/
+│ └── bin/
+│ └── hello
+│
+└── home/
+└── student/
+├── bin/
+│ └── hello
+│
+└── project/
+└── hello
+Command Which hello runs?
+./hello /home/student/project/hello
+/usr/bin/hello /usr/bin/hello
+../bin/hello /home/student/bin/hello
+hello /home/student/bin/hello
+[Slide 15]
+Active Learning
+1. Why does $ ./hello run the version in project/?
+2. Why doesn't typing $ hello run the version in the current directory?
+3. For $ hello, why does /home/student/bin/hello run instead of
+/usr/bin/hello?
+4. Now change $PATH to: /usr/bin:/home/student/bin:/bin
+5. Without moving or modifying any files, what does: $ hello run now?
+Why?
+6. How could you modify $PATH so that you can type $ hello from any
+directory and have /home/student/project/hello run, without
+moving the executable?
+15
+[Slide 16]
+Active Learning
+1.. $ ./hello runs the version in project/ because . means “the
+current directory.” Since the current directory is
+/home/student/project, $./hello refers to:
+/home/student/project/hello
+2. Typing $ hello does not automatically run the version in the current
+directory because the shell does not normally search the current directory
+for commands. Instead, when a command contains no /, the shell searches
+the directories listed in $PATH.
+3. With: /home/student/bin:/usr/bin:/bin the shell searches from
+left to right. It finds hello in: /home/student/bin before it ever checks
+/usr/bin, so /home/student/bin/hello runs.
+16
+[Slide 17]
+Active Learning
+4. After changing $PATH to: /usr/bin:/home/student/bin:/bin the search
+order has changed. /usr/bin is now checked before /home/student/bin.
+5. Now: hello runs: /usr/bin/hello because the shell searches $PATH from left
+to right and finds hello in /usr/bin first.
+6. You could add /home/student/project to the beginning of $PATH:
+export PATH="/home/student/project:$PATH"
+Then when you type:
+hello
+the shell checks /home/student/project first and finds:
+/home/student/project/hello
+Because that directory is in $PATH, you can run hello from any current working
+directory.
+17
+[Slide 18]
+Why isn't the current directory in $PATH?
+- You might wonder: why doesn't the shell just search the current directory too?
+- There's an important security reason.
+- Imagine you download some files and enter the directory:
+- $ cd ~/Downloads/suspicious-stuff
+- Someone has put a malicious executable there called:
+- ls
+- If the shell always searched the current directory first, then when you innocently
+typed:
+- $ ls
+- you could accidentally run:
+- $ ./ls
+- instead of the real system ls.
+18
+[Slide 19]
+Why isn't the current directory in $PATH?
+- By requiring:
+- $ ./hello
+- you're explicitly saying:
+- Yes, I purposefully want to execute the hello program located right here.
+19
+[Slide 20]
+Shell Globbing
+20
+[Slide 21]
+Globbing
+- Globbing is a way of using patterns to match groups of filenames instead of
+typing them one by one.
+- The shell (bash, zsh, etc.) expands these patterns before running the
+command.
+21
+Pattern Meaning
+* any number of characters
+? exactly one character
+[abc] one character from the set
+[a-z] one character in a range
+[Slide 22]
+Globbing
+- Globbing saves time and reduces mistakes
+- For example, instead of typing
+- rm file1.txt file2.txt file3.txt file4.txt
+- You can type
+- rm *.txt
+- This command will delete all files in the current working directory that end
+in .txt
+22
+[Slide 23]
+Shell Glob Examples
+23
+Pattern Meaning Expansion Examples
+*.txt Anything ending in .txt foo.txt
+a.txt
+data_??.csv data_ + exactly 2 chars +
+.csv
+data_01.csv
+data_ab.csv
+data_XY.csv
+[ab]*.md Starts with a or b, ends with
+.md
+about.md
+blogpost.md
+b_notes.md
+[Slide 24]
+How does globbing work in the shell?
+- The shell expands filename patterns before running a command.
+- For example, suppose a directory contains:
+- cat.jpg
+- dog.txt
+- notes.txt
+- photo.png
+- If you type:
+- cat *.txt
+- The shell sees *.txt, searches the current directory, and expands the command to
+- cat dog.txt notes.txt
+- Then it runs cat.
+- Importantly, cat itself never sees *.txt.
+24
+[Slide 25]
+Regular Expressions
+25
+[Slide 26]
+Regular Expressions
+- A regular expression (regex) is a pattern used to search, match, or
+manipulate text.
+26
+[Slide 27]
+Examples of Where Regular Expressions Are Used
+- Web Development
+- Form validation
+- URL Routing
+- Input sanitation
+- Scraping
+- ML Preprocessing
+- Clean data (e.g. strip HTML tags, normalize whitespace)
+- Extract dates, IDs, and other metadata
+- Debugging
+- Find patterns in logs
+- Filter stack traces
+- Search large codebases
+27
+[Slide 28]
+Character Class
+- A character class is a pattern that represents a set of characters and
+matches exactly one character from that set.
+28
+Regex Meaning
+[abc] match a or b or c
+[a-z] any lowercase letter
+[A-Z] any uppercase letter
+[0-9] any digit
+[Slide 29]
+b[ae][dt]
+29
+String Matches?
+bat yes
+Bat no
+bad yes
+bed yes
+bea no
+ba no
+[Slide 30]
+Quantifiers (how many times)
+30
+Regex Meaning
+* 0 or more
++ 1 or more
+? 0 or 1
+{n} exactly n
+{n,} n or more
+{n,m} between n and m
+[Slide 31]
+Anchors (position)
+31
+Regex Meaning
+^ start of line
+$ end of line
+[Slide 32]
+^ID-[0-9]{3}$
+32
+String Matches?
+ID-123 yes
+ID-12 No, only 2 digits
+ID-999 yes
+abcID-123 No, extra text before
+id-123 No, lowercase id
+ID-123xyz No, extra text after
+[Slide 33]
+Compare with No Anchors
+- Without anchors
+- ID-[0-9]{3}
+- This would match inside:
+- abcID-123xyz
+- With anchors, ^ID-[0-9]{3}$
+- Only matches if the whole string is exactly that pattern.
+33
+[Slide 34]
+Escaping
+- In regular expressions, the dot (.) means “Match any single character (except
+newline)”
+- Escaping uses an escape character (often \) to change how the character or
+sequence that follows it is interpreted.
+- Escaping tells the regex engine: “I want this character itself, not what it
+normally means.”
+34
+[Slide 35]
+Brief Aside: Escaping Is a General Concept
+- We have also seen escaping with special characters!
+- In many programming contexts, certain characters have a special meaning.
+- A backslash (\) can be used to change how the character that follows it is
+interpreted.
+- For example, in C:
+- printf("Hello\nWorld");
+- \n is interpreted as a newline, rather than the two characters \ and n.
+35
+[Slide 36]
+Regular Expression Example
+- Match a string that:
+- Starts with one lowercase letter
+- Then exactly 2 digits
+- Ends with .txt
+- Should match:
+- a12.txt
+- z99.txt
+- Should NOT match:
+- A12.txt (uppercase)
+- a1.txt (only 1 digit)
+- a123.txt (3 digits)
+- a12.txtt (wrong extension)
+36
+[Slide 37]
+Regular Expression Example
+- Match a string that:
+- Starts with one lowercase letter
+- Then exactly 2 digits
+- Ends with .txt
+- Should match:
+- a12.txt
+- z99.txt
+- Should NOT match:
+- A12.txt (uppercase)
+- a1.txt (only 1 digit)
+- a123.txt (3 digits)
+- a12.txtt (wrong extension)
+37
+^[a-z][0-9]{2}\.txt$
+[Slide 38]
+Expansion vs. Matching
+- Globbing = expansion
+- Regex = matching
+38
+Feature Globbing Regex
+Operates on Filenames Text
+Purpose Select files Match strings
+Done by Shell Program
+Result Expanded
+arguments True/False matches
+[Slide 39]
+Glob vs. Regex Syntax Comparison
+39
+Meaning Glob Regex
+Any sequence * .*
+Any single char ? .
+Literal dot . \.
+Character class [abc] [abc]
+Repetition (does not exist) {m,n}, +, *
+[Slide 40]
+grep and find
+40
+[Slide 41]
+The find Command
+- find searches the filesystem for files or directories
+- It starts at a given directory and searches recursively
+- Results are based on conditions such as:
+- File name
+- File type
+- Size, time, permissions (and more)
+41
+[Slide 42]
+find –name Format
+- find <where to search> -name <pattern>
+- Example:
+- find ./ -name dog.c
+- ./ = start searching from the current directory
+- -name = match files by name
+- dog.c = exact file name to match
+- find uses shell-style glob patterns, not regular expressions
+42
+[Slide 43]
+find Example
+- find ./ -name dog.c
+- ./ start searching from the current directory
+- -name match files by name
+- dog.c match exactly files named dog.c
+- Output
+./src/dog.c
+./tests/dog.c
+./dog.c
+43
+.
+├── src/
+│ ├── main.c
+│ ├── dog.c
+│ └── cat.c
+├── tests/
+│ ├── dog.c
+│ └── test_cat.c
+├── docs/
+│ └── dog.txt
+└── dog.c
+[Slide 44]
+find Example
+- find ./src -name dog.c
+- ./src start searching inside src/ only
+- -name match files by name
+- dog.c match exactly files named dog.c
+- Output
+- ./src/dog.c
+44
+.
+├── src/
+│ ├── main.c
+│ ├── dog.c
+│ └── cat.c
+├── tests/
+│ ├── dog.c
+│ └── test_cat.c
+├── docs/
+│ └── dog.txt
+└── dog.c
+[Slide 45]
+Recall:
+45
+Pattern Meaning
+* any number of characters
+? exactly one character
+[abc] one character from the
+set
+[a-z] one character in a range
+[Slide 46]
+What is the output of the following commands?
+- Assume commands are run from /home
+- find ./carla -name "*.c”
+- find . -name "comp*”
+- find ./john -name "*.c”
+46
+/home
+|-- john
+| `-- psyc101
+| `-- notes
+| |-- lec1.note
+| |-- lec2.note
+| `
+-- lec3.note
+`
+-- carla
+|-- comp211
+| |-- labs
+| | `
+-- lab0.c
+| `
+-- notes
+| |-- lec1.note
+| `
+-- lec2.note
+`
+--comp301
+[Slide 47]
+What is the output of the following commands?
+- Assume commands are run from /home
+- find ./carla -name "*.c”
+- ./carla/comp211/labs/lab0.c
+- find . -name "comp*”
+- ./carla/comp211
+- ./carla/comp301
+- find ./john -name "*.c”
+- (no output)
+47
+/home
+|-- john
+| `-- psyc101
+| `-- notes
+| |-- lec1.note
+| |-- lec2.note
+| `
+-- lec3.note
+`
+-- carla
+|-- comp211
+| |-- labs
+| | `
+-- lab0.c
+| `
+-- notes
+| |-- lec1.note
+| `
+-- lec2.note
+`
+--comp301
+[Slide 48]
+Find Examples
+- Write a find command to locate all files ending
+in.note under /home/john. Assume command
+is run from /. What would be returned?
+- What does the command output? Assume
+command is run from /home
+- find ./carla -name “lab?.c”
+48
+/home
+|-- john
+| `-- psyc101
+| `-- notes
+| |-- lec1.note
+| |-- lec2.note
+| `
+-- lec3.note
+`
+-- carla
+|-- comp211
+| |-- labs
+| | |-- lab0.c
+| | `
+-- lab1.c
+| `
+-- notes
+| |-- lec1.note
+| `
+-- lec2.note
+`
+--comp301
+[Slide 49]
+Examples
+- Write a find command to locate all files ending
+in.note under /home/john. Assume command
+is run from /. What would be returned?
+- find ./home/john -name "*.note”
+- ./home/john/psyc101/notes/lec1.note
+- ./home/john/psyc101/notes/lec2.note
+- ./home/john/psyc101/notes/lec3.note
+- What does the command output? Assume
+command is run from /home
+- find ./carla -name “lab?.c”
+- ./carla/comp211/labs/lab0.c
+- ./carla/comp211/labs/lab1.c
+49
+/home
+|-- john
+| `-- psyc101
+| `-- notes
+| |-- lec1.note
+| |-- lec2.note
+| `
+-- lec3.note
+`
+-- carla
+|-- comp211
+| |-- labs
+| | |-- lab0.c
+| | `
+-- lab1.c
+| `
+-- notes
+| |-- lec1.note
+| `
+-- lec2.note
+`
+--comp301
+[Slide 50]
+The grep Command
+- grep searches for text patterns inside files
+- It scans file contents line by line
+- Often used to find:
+- Variable names
+- Error messages
+- Specific words or phrases
+50
+[Slide 51]
+grep Syntax
+- grep <pattern> <file>
+- Example:
+- grep "main" dog.c
+- Searches for the word main
+- Looks inside the file dog.c
+- Prints matching lines
+- grep uses regular expression patterns
+51
+[Slide 52]
+grep Example
+- Assume we have a file called log.txt with the following contents:
+- grep "ERROR" log.txt
+- grep search text
+- "ERROR" regex pattern (simple literal string)
+- log.txt file to search
+- Output
+52
+INFO Server start
+DEBUG Loading configuration
+ERROR Failed to connect to database
+INFO Retrying connection
+ERROR Timeout while connecting
+INFO Server stopped
+ERROR Failed to connect to database
+ERROR Timeout while connecting
+[Slide 53]
+grep Example
+- The file users.txt contains
+- Find only the usernames that end with exactly 2 digits.
+- grep "_[0-9]{2}$" users.txt
+53
+alice_01
+bob_2
+carol_003
+dave_12
+eve_x
+frank_007
+[Slide 54]
+grep Example
+- Write a grep command that searches inside
+project/data/users.txt and prints
+only the lines that:
+- start with a lowercase letter,
+- Followed by any sequence of characters
+- Followed by one underscore (_),
+- and end with 2 or 3 digits.
+- Assume we are in the parent directory of
+project
+54
+project/
+├── src/
+│ ├── main.c
+│ ├── server.c
+│ ├── client.c
+│ └── server_test.txt
+├── logs/
+│ ├── server.log
+│ ├── client.log
+│ └── old_server.log
+├── data/
+│ ├── users.txt
+│ └── backup_users.txt
+├── scripts/
+│ ├── deploy.sh
+│ └── cleanup.sh
+└── README.md
+grep -E
+[Slide 55]
+grep Example
+- Write a grep command that searches inside
+project/data/users.txt and prints
+only the lines that:
+- start with a lowercase letter,
+- Followed by any sequence of characters
+- Followed by one underscore (_),
+- and end with 2 or 3 digits.
+55
+project/
+├── src/
+│ ├── main.c
+│ ├── server.c
+│ ├── client.c
+│ └──
+server_test.txt
+├── logs/
+│ ├── server.log
+│ ├── client.log
+│ └── old_server.log
+├── data/
+│ ├── users.txt
+│ └──
+backup_users.txt
+├── scripts/
+│ ├── deploy.sh
+│ └── cleanup.sh
+└── README.md
+grep -E "^[a-z].*_[0-9]{2,3}$" project/data/users.txt
+[Slide 56]
+Explanation
+- grep -E "^[a-z].*_[0-9]{2,3}$" project/data/users.txt
+56
+Part Meaning
+^ start of line
+[a-z] starts with lowercase
+.* anything (including other
+underscores)
+_
+at least one underscore somewhere
+[0-9]{2,3} ends with 2 or 3 digits
+$ end of line

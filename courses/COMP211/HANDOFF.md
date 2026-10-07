@@ -1,6 +1,6 @@
-# HANDOFF — COMP 211 Study Guide (paste into a new session)
+# COMP 211 Study Guide: maintainer notes
 
-You are continuing an **interactive HTML study guide for COMP 211 (Systems Fundamentals)**, UNC, **Fall 2026**,
+This is an **interactive HTML study guide for COMP 211 (Systems Fundamentals)**, UNC, **Fall 2026**,
 taught by **Connor McMahon**. Files live at `Projects/Study-Guide/courses/COMP211/`.
 
 ## Course facts worth having
@@ -10,8 +10,8 @@ taught by **Connor McMahon**. Files live at `Projects/Study-Guide/courses/COMP21
   unlimited submissions, *no late work / no drops / no regrades* · **labs** up to 2 days late, first 2 free
   then &minus;20% · **quizzes** 50 min, paper, closed-book · **checkoffs**, short oral assessments.
 - Final exam: Section 1 Tue Dec 8 2026 8–11 AM; Section 2 Sat Dec 5 2026 4–7 PM.
-- Slides on Canvas before class; a **solutions version** is posted after class — always ask the user for that
-  one, it is the answer key to the in-class active-learning problems.
+- Slides on Canvas before class; a **solutions version** is posted after class — always get
+  that one, it is the answer key to the in-class active-learning problems.
 - Honor code: **no posting assignments on GitHub or other public websites.** Course notes are fine;
   **lab/homework code must not go into this repo**, which is public.
 
@@ -50,9 +50,8 @@ Prep module and L7 is RD07; nothing covering the lecture(s) between Checkoff 1 P
 
 ## Adding a lecture
 
-1. Ask the user for the slides (`.pdf`/`.pptx`) and any reading-quiz screenshots. Read the PDF with the Read
-   tool using the `pages` parameter (max 20 pages per call).
-2. Build questions from the user's **actual handouts and in-class problems first**, then add your own.
+1. Get the slides (`.pdf`/`.pptx`) and any reading-quiz screenshots, and extract the text (see the PDF tip below).
+2. Build questions from the **actual handouts and in-class problems first**, then add your own.
 3. Edit `guide/index.html`: add a lesson-bar button
    `<button data-l="lN" onclick="showLesson('lN',this)">Lesson N · Title</button>`, an empty
    `<div class="lesson" id="lN"></div>`, and `<script src="COMP211_Study_Guide_LN.js"></script>`
@@ -69,14 +68,13 @@ Prep module and L7 is RD07; nothing covering the lecture(s) between Checkoff 1 P
 
 - Injected HTML lives in a **template literal**: no unescaped backticks, no `${`, and a literal backslash must
   be written `\\` (writing `\0` injects a real NUL byte into the page). ASCII tree art needs `` \` ``.
-- Keep each module under ~78 KB — the Write tool truncates past that.
-- Write files with the Write/Edit tools, then deliver with `SendUserFile` + `device_commit_files`.
+- Keep each module under ~78 KB so files stay manageable and editors/tools don't truncate them.
 - Tone: concise and warm; explain *why*, not just *what*. Verify every answer against the slides and the
-  reading, and correct any mistake on the user's handout rather than echoing it.
+  reading, and correct any mistake on a handout rather than echoing it.
 
 ## After each change
 
-Give the user the git commands to commit and push from `Projects/Study-Guide` — they do that step themselves.
+Commit and push from `Projects/Study-Guide`.
 The site auto-deploys via GitHub Pages at `https://steven-c302.github.io/Study-Guide/`.
 
 ## Mastery section (added Oct 2026)
@@ -98,4 +96,4 @@ The site auto-deploys via GitHub Pages at `https://steven-c302.github.io/Study-G
   it searchable by the Ask feature and the AI tutor (existing embeddings are kept; new chunks get embedded when `VOYAGE_API_KEY` is set).
 - **Graded work / anything with your name or grades** goes in `materials/private/` (git-ignored, never indexed or deployed). The honor code
   forbids posting assignments publicly and this repo is public. Turn it into original practice questions in `mastery/` instead.
-- Extracting PDF text on this Mac: PDFKit via a tiny Swift script (no installs needed); `pdftoppm` is not installed.
+- PDF tip: `pdftotext` (poppler) works if installed; on macOS without it, a ~10-line Swift script using PDFKit extracts the text with no installs.

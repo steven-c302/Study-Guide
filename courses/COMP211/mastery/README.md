@@ -15,8 +15,8 @@ programming (below), and it is meant to grow as the semester does.
 | **Exam** | Timed, interleaved, no feedback until you submit; skews to trace/debug/integrate like real exam problems; results by unit and tier; misses queue for tomorrow. |
 | **Tutor ★** | AI: Socratic chat grounded in this guide, Teach-it-back, and fresh variants of questions you missed. |
 
-Units now: `u01` number systems, `u02` bitwise, `u03` shell, `u04` C basics, `u05` stack & pointers,
-`u06` debugging, `u07` cross-topic integration (the "putting it together" problems).
+Units are listed in lecture order first, then topic reviews:
+`u08` CL01 Unix basics · `u09` CL02 Intro to C · `u10` CL03 I/O redirection, pipes & strings · `u11` CL04 stack frames · `u12` CL05 $PATH, globbing, regex, find & grep; then cumulative reviews `u01` number systems, `u02` bitwise, `u03` shell, `u04` C basics, `u05` stack & pointers, `u06` debugging, `u07` cross-topic integration (the "putting it together" problems). RD04 (file permissions) is not covered yet.
 
 ## Why it is built this way (research)
 
@@ -31,8 +31,8 @@ Units now: `u01` number systems, `u02` bitwise, `u03` shell, `u04` C basics, `u0
 
 Each homework covers one unit, so each unit can carry a **checkpoint**: a HW-style mini-checker with the homework's own
 topics and question styles but *fresh* questions. It is auto-graded with no hints, unlimited retries and best score kept, shows a
-per-topic breakdown, and queues misses for review. Units with one: `u08` (HW00 Unix basics, 21 questions) and `u09` (HW1 Intro to C,
-34 questions). To add one for a new homework:
+per-topic breakdown, and queues misses for review. Units with one: `u08` (HW00 Unix basics, 21 questions), `u09` (HW1 Intro to C, 34 questions), and HW2, which spans two units: `u11`
+(stack frames, 17 questions) and `u12` ($PATH, find, globbing and regex, 27 questions). To add one for a new homework:
 
 1. Put the graded PDF in `materials/private/` (git-ignored; it has your name and grades) and extract its text
    (PDFKit via a tiny Swift script works on this Mac).
@@ -55,7 +55,9 @@ count, per-unit progress and checkpoint scores appear there. Deep links: `guide/
    wrong answer key fails instead of reaching you.
 6. Rebuild the tutor index when lesson text changes: `node tools/build-rag-index.mjs COMP211` (needs `VOYAGE_API_KEY`; without it the tutor falls back to keyword search over the chunks file).
 
-### Prompt to paste with new slides
+### Prompt for an AI coding assistant (optional)
+
+If you use an AI coding assistant to draft new units, give it the slides plus this:
 
 > I'm adding COMP211 lecture slides. Read them, then update the Mastery section: (1) add or extend the right unit file in
 > `courses/COMP211/mastery/` using `_TEMPLATE.js` and `shared/mastery.js` helpers; (2) write ~4 Recognize, 5 Trace, 4 Debug & Build,

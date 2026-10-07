@@ -81,7 +81,7 @@ To add materials to the hosted copy, upload the file to the repo on github.com (
 
 ## Build a study guide for a course
 
-Ask Claude: *"Add Lesson 1 for COMP 211"* and upload the lecture slides (and any quiz). Claude builds an interactive lesson module (active-recall questions, code exercises, diagrams) into that course's `guide/`, the same way COMP 210 was built.
+To add a lesson, take the lecture slides (and any quiz) and add an interactive lesson module (active-recall questions, code exercises, diagrams) to that course's `guide/`, following the pattern used for COMP 210. `courses/COMP211/HANDOFF.md` and `courses/COMP211/mastery/README.md` describe the workflow.
 
 ## Engine cleanup (COMP211 / COMP227 / INLS382)
 

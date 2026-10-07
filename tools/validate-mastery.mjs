@@ -98,7 +98,7 @@ for (const u of M.units) {
   if (u.checkpoint.length) console.log(`  checkpoint: ${u.checkpoint.length} questions in ${new Set(u.checkpoint.map(i => i.topic)).size} topics`);
   u.items.concat(u.checkpoint).forEach(it => {
     nItems++; counts[it.type] = (counts[it.type] || 0) + 1;
-    const id = `${it.id} [${it.type}${it.topic ? ' · ' + it.topic : ''}]`;
+    const id = `${it.id} [${it.type}${it.topic ? ' · ' + it.topic : ''}] "${plain(it.prompt).replace(/\s+/g, ' ').slice(0, 72)}"`;
     if (ids.has(it.id)) err(id, 'duplicate item id (same prompt/code twice?)'); ids.add(it.id);
     const key = (it.prompt + (it.code || '')).trim();
     if (seenPrompt.has(key)) err(id, 'identical to ' + seenPrompt.get(key)); seenPrompt.set(key, it.id);

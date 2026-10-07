@@ -12,7 +12,7 @@ window.COURSE = {
   lectures: [],
   exams: [],
   notes: [
-    { title: "Getting started", body: "Add lecture slides to <code>materials/lectures/</code> and exams to <code>materials/exams/</code>, then list them in <code>config.js</code>. Ask Claude to build interactive lessons (with worked stats problems) into the Study Guide." }
+    { title: "Getting started", body: "Add lecture slides to <code>materials/lectures/</code> and exams to <code>materials/exams/</code>, then list them in <code>config.js</code>. Then build interactive lessons (with worked stats problems) into the Study Guide." }
   ],
   resources: []
 };

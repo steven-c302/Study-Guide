@@ -17,7 +17,7 @@ window.COURSE = {
     { title: "Course structure",
       body: "SSM is learned by using it &mdash; the situation the class inquires into is the class itself. Meetings are organized around <b>Finding Out</b> entries (each with required reading and a topic, e.g. \"What a rich picture is and isn't\"). Check the <b>guidelines</b> and <b>schedule</b> pages on the course site for meeting-by-meeting detail." },
     { title: "Adding more",
-      body: "Drop future readings' PDFs and any quiz screenshots into a chat with Claude and ask for the next lesson. Slides/quiz questions get folded in with correct answers and a note on where each is covered, the same way COMP 210 and COMP 211 were built." }
+      body: "Add future readings' PDFs and any quiz screenshots as the next lesson. Slides/quiz questions get folded in with correct answers and a note on where each is covered, the same way COMP 210 and COMP 211 were built." }
   ],
   resources: [
     { title: "Checkland, P. & Poulter, J. — Learning for Action (2006), Preface & Preamble", url: "", note: "A ten-minute account of SSM" },

@@ -5436,6 +5436,447 @@
     "text": "[Slide 53] Characters 53 #include <stdio.h> int main() { int c = getchar(); while (c != EOF) { putchar(c); c = getchar(); } } #include <stdio.h> int main() { int c; while ((c = getchar()) != EOF) { putchar(c); } } The program on the right is a more concise version of the program on the left. First, C gets the next char. Then the while checks if that char is EOF. [Slide 54] Characters - Given the input, “HeLlO, WorLD!” what would the program’s output be? 54 #include <stdio.h> int main() { int c; while ((c = getchar()) != EOF) { if (c >= 'a' && c <= 'z') { c = c - ('a' - 'A’); } putchar(c); } } A.hello, world! B.HLO, WLD C.HELLO, WORLD! D.el, or! [Slide 55] Characters - Given the following input, what would the program’s output be? 55 #include <stdio.h> int main() { int c; while ((c = getchar()) != EOF) { if (c >= 'a' && c <= 'z') { c = c - ('a' - 'A’); } putchar(c); } } HeLlO, WorLD! A.hello, world! B.HLO, WLD C.HELLO, WORLD! D.el, or!"
   },
   {
+    "id": "mat-CL03-io-redirection-and-strings-0",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 1)",
+    "text": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) - text extracted from the slides for search [Slide 1] Arrays I/O Redirection Strings COMP211 Connor McMahon [Slide 2] Reminder Make sure you have a TA verify your setup from HW0 by Thursday. 2 [Slide 3] Arrays 3 [Slide 4] Arrays 4 int main() { int c; int ndigit[10] = {0}; } Let’s write a program that counts the number of occurrences of each digit. An array to hold the count of each digit. C does not automatically zero- initialize arrays, so we must explicitly set each value to 0. [Slide 5] Arrays 5 int main() { int c; int ndigit[10] = {0}; } Let’s write a program that counts the number of occurrences of each digit. A Magic Number! Oh No! [Slide 6] Magic Numbers - A magic number is a numeric value written directly in code without a clear explanation of what the number represents. - We can use #define to give the value a meaningful name, making the program easier to read and maintain. 6 [Slide 7] Arrays 7 #define NUM_DIGITS 10 int main() { int c; int ndigit[NUM_DIGITS] = {0}; } [Slide 8] #define - #define is a preprocessor directive in C used to create constants or macros. - It is handled by the C preprocessor, before the actual compilation begins. - Basic Syntax - #define NAME value - NAME = identifier you create - value = text that will replace NAME in the program 8"
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-1",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 2)",
+    "text": "[Slide 9] C Preprocessor - The preprocessor is a program that prepares your C source code for the compiler. It looks for instructions beginning with #, called preprocessor directives. - For example: - The preprocessor replaces MAX_STUDENTS with 30 before the compiler processes the program. Conceptually, the compiler receives something like: 9 #define MAX_STUDENTS 30 int classSize = MAX_STUDENTS; int classSize = 30; [Slide 10] #define vs Variables Feature #define Variable Memory allocated No Yes Type checking No Yes Can change value No Yes Preprocessor replacement Yes No 10 [Slide 11] Build Process 11 Stage What it does 1. Preprocessor Handles #include, #define, and other preprocessor directives 2. Compiler Translates the resulting C code into assembly language 3. Assembler Translates assembly instructions into machine code 4. Linker (we will cover this step later) Combines your machine code with libraries and other object files to create the final executable [Slide 12] Full ASCII Table 12 [Slide 13] Arrays 13 #define NUM_DIGITS 10 int main() { int c; int ndigit[NUM_DIGITS] = {0}; while ((c = getchar()) != EOF) { if (c >= '0' && c <= '9') { // increment the count of the current character } } } Let’s write a program that counts the number of occurrences of each digit. Checking to see if the input is a digit."
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-2",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 3)",
+    "text": "[Slide 14] Arrays 14 #define NUM_DIGITS 10 int main() { int c; int ndigit[NUM_DIGITS] = {0}; while ((c = getchar()) != EOF) { if (c >= '0' && c <= '9') { // increment the count of the current character } } } How do we increment the count of the current character? ndigit[c]++; ndigit['c' - '0']++; ndigit[c - '0']++; ndigit[c - 48]++; [Slide 15] Arrays 15 #define NUM_DIGITS 10 int main() { int c; int ndigit[NUM_DIGITS] = {0}; while ((c = getchar()) != EOF) { if (c >= '0' && c <= '9') { ++ndigit[c - '0']; } } } How do we increment the count of the current character?"
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-3",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 4)",
+    "text": "[Slide 16] Arrays - ndigit[c]++; - This directly uses the character c as the array index. Since c represents the ASCII value of the input character, the index will be between 48 and 57 for digits ('0' to '9’). ndigit only has 10 elements (indices 0-9), so this will index out of bounds. - ndigit['c' - '0']++; - The expression 'c' - '0' is incorrect because 'c' is treated as a literal character, not the value of the variable c. 'c' - '0’ = 99 – 48 = 51 - ndigit[c - '0']++; - This is the correct approach. Subtracting '0' from the character c converts the ASCII value of the digit (e.g., 48 for '0', 49 for '1') to its numeric equivalent (e.g., 0 for '0', 1 for '1’). - ndigit[c - 48]++; - Subtracting 48 (the ASCII value of '0') from c is functionally equivalent to subtracting '0'. This will correctly map the ASCII value of the digit to its numeric equivalent. - While this works, it is less readable. Using '0' instead of 48 makes the intent clear. 16 [Slide 17] Array Size - C arrays - Just blocks of contiguous memory - Do not store their own size - Programmer must track and pass size separately - Java arrays - Are objects with built-in metadata - Always know their own length (.length) - No need to manage size manually 17 void printArray(int arr[], int size) { for (int i = 0; i < size; i++) { printf(\"%d \", arr[i]); } } void printArray(int[] arr) { for (int i = 0; i < arr.length; i++) { System.out.print(arr[i] + \" \"); } } [Slide 18] I/O Redirection 18"
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-4",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 5)",
+    "text": "[Slide 19] I/O Redirection - A file descriptor is a non-negative integer that uniquely identifies an open file within a process. - The operating system uses file descriptors to manage input and output resources such as files, devices, and network connections. - A file stream is a higher-level abstraction built on top of file descriptors. It provides buffered input and output operations through standard library functions. - Every process begins with three open file streams by default: - Standard input (stdin): the source from which a process reads its input - Standard output (stdout): the default destination for normal program output - Standard error (stderr): the destination used for error messages and diagnostics 19 [Slide 20] I/O Redirection - When a new process starts, these three streams are automatically opened and associated with the following file descriptors: - 0: stdin - 1: stdout - 2: stderr - These default streams allow programs to communicate with the user and the system without needing to explicitly open any files. 20 [Slide 21] Standard In (stdin) 21 [Slide 22] stdin - By default, stdin reads input from the terminal (keyboard) - You can change where stdin comes from (redirection) - Syntax: - command < input_file - Meaning: - Program reads input from a file instead of the keyboard 22"
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-5",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 6)",
+    "text": "[Slide 23] Why stdin Redirection Is Useful - Automates program input - Avoids manual typing - Allows programs to work together - Makes programs reusable in scripts - Example uses: - Feeding test data to programs - Processing large files - Running batch jobs 23 [Slide 24] Demo Program: readstdin.c 24 #include <stdio.h> int main(void) { int c; printf(\"Reading from stdin...\\n\"); while ((c = getchar()) != EOF) { putchar(c); } printf(\"\\nReached EOF.\\n\"); return 0; } c is an int, not a char, because getchar() needs to be able to return every possible character plus the special value EOF. [Slide 25] Demo 1: Reading from the Terminal - Step 1: Compile the program gcc readstdin.c -o readstdin - Step 2: Run the program ./readstdin - Step 3: Then type an input. For example: hello this came from my keyboard - The program reads each character with getchar() and prints it with putchar(). - To tell the program that stdin has ended, press Ctrl+D on Linux/macOS. On Windows Command Prompt, use Ctrl+Z, then Enter. 25 [Slide 26] Demo 2: Redirecting stdin - Step 1. Create a file: echo \"Hello from a file!\" > input.txt - Step 2: Now run: ./readstdin < input.txt - You'll get something like: Reading from stdin... Hello from a file! Reached EOF. - The important part is that the C program did not change at all. getchar() is still reading stdin. 26 [Slide 27] Standard Out 27"
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-6",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 7)",
+    "text": "[Slide 28] Default Behavior of stdout - By default, stdout writes to the terminal - You can change where stdout goes (redirection) - Syntax: command > output_file - This will overwrite output_file command >> output_file - This will append to output_file 28 [Slide 29] Why Redirect stdout? - Save program output to files - Avoid cluttering the terminal - Enable automation and scripting 29 [Slide 30] Demo Program 30 #include <stdio.h> int main(void) { char message[] = \"Hello from stdout!\\n\"; for (int i = 0; message[i] != '\\0'; i++) { putchar(message[i]); } return 0; } [Slide 31] Demo 1: stdout goes to the terminal - Normally: ./writestdout - You'll see: Hello from stdout! - So putchar() doesn't really mean \"print this character on the screen.\" It means write this character to stdout. - By default, your shell connects stdout to the terminal. 31 [Slide 32] Demo 2: Redirect stdout to a file - Now run: ./writestdout > output.txt - Nothing appears on the terminal. - Instead: cat output.txt shows: Hello from stdout! - The shell has changed where stdout points - Instead of pointing to the terminal, it points to output.txt 32 [Slide 33] Append vs. Overwrite - There's also an important distinction between: ./writestdout > output.txt and: ./writestdout >> output.txt - > replaces/truncates the file before writing, while >> appends to the end. 33"
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-7",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 8)",
+    "text": "[Slide 34] Append vs. Overwrite Example ./writestdout > output.txt ./writestdout >> output.txt ./writestdout >> output.txt cat output.txt produces: Hello from stdout! Hello from stdout! Hello from stdout! 34 [Slide 35] stderr 35 [Slide 36] stderr - stderr stands for standard error - Used for: - Error messages - Warnings - Diagnostics 36 [Slide 37] Demo 37 #include <stdio.h> int main(void) { char message[] = \"Error: something went wrong!\\n\"; for (int i = 0; message[i] != '\\0'; i++) { fputc(message[i], stderr); } return 0; } [Slide 38] fputc - Unlike putchar(), which always writes to stdout: putchar('A’); - fputc() lets us specify the stream: fputc('A', stdout); fputc('A', stderr); 38 [Slide 39] Demo 1 gcc writestderr.c -o writestderr ./writestderr You'll see: Error: something went wrong! By default, stderr is connected to the terminal 39 [Slide 40] Demo 2 - The shell uses file descriptor 2 for stderr, so you can redirect it with 2>: ./writestderr 2> error.txt - Now the error doesn't appear on the terminal. - Instead: cat error.txt gives: Error: something went wrong! 40 [Slide 41] Why 2> instead of >? - The three standard streams correspond to three standard file descriptors: - So: ./program > output.txt is essentially shorthand for: ./program 1> output.txt - But stderr requires: ./program 2> error.txt 41 Stream File descriptor Default destination stdin 0 Terminal stdout 1 Terminal stderr 2 Terminal"
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-8",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 9)",
+    "text": "[Slide 42] Demo: Seeing the difference between stdout and stderr 42 #include <stdio.h> int main(void) { char output[] = \"This is normal output.\\n\"; char error[] = \"This is an error message.\\n\"; for (int i = 0; output[i] != '\\0'; i++) { fputc(output[i], stdout); } for (int i = 0; error[i] != '\\0'; i++) { fputc(error[i], stderr); } return 0; } [Slide 43] Demo 1 ./program - both appear on your terminal: This is normal output. This is an error message. ./program > output.txt - Your terminal still shows: This is an error message. while output.txt contains: This is normal output. - That's because > only redirected stdout: 43 [Slide 44] Demo 2 - You could separate them completely: ./program > output.txt 2> error.txt - This separation is the main reason stderr exists: normal program output can go one place while diagnostic/error messages go somewhere else. 44 [Slide 45] Active Learning 45 #include <stdio.h> int main(void) { int c; while ((c = getchar()) != EOF) { putchar(c); } fprintf(stderr, \"Done!\\n\"); return 0; } Suppose input.txt contains: Hello! You run: ./program < input.txt > output.txt 2> error.txt 1. What does getchar() read from? 2. Where does putchar() send \"Hello!\"? 3. Where does fprintf(stderr, \"Done!\\n\") send its output? 4. What is inside output.txt after the program finishes? 5. What is inside error.txt after the program finishes? 6. What, if anything, appears on the terminal? fprintf() is like printf(), except you explicitly tell it which output stream to write to."
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-9",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 10)",
+    "text": "[Slide 46] Active Learning - What does getchar() read from? - It reads from stdin. Because of < input.txt, the shell has connected stdin to input.txt. - Where does putchar() send \"Hello!\"? - putchar() writes to stdout. Because of > output.txt, stdout is connected to output.txt. - Where does fprintf(stderr, \"Done!\\n\") go? - It writes to stderr. Because of 2> error.txt, stderr is connected to error.txt. - What is inside output.txt? - Hello! - What is inside error.txt? - Done! - What appears on the terminal? - Nothing, because all three standard streams have been redirected away from the terminal. 46 [Slide 47] Pipes 47 [Slide 48] Pipes - A pipe connects the output of one command to the input of another - It redirects: - stdout of the first command - to stdin of the second command - Syntax - command1 | command2 - command1 writes to stdout - command2 reads from stdin 48 [Slide 49] Why Pipes are Powerful - Avoid intermediate files - Encourage small, reusable commands - Enable complex tasks with simple tools - Pipes are heavily used in: - Shell scripts - Log processing - Data analysis 49 [Slide 50] Demo: producer.c 50 #include <stdio.h> int main(void) { char message[] = \"Hello through the pipe!\\n\"; for (int i = 0; message[i] != '\\0'; i++) { putchar(message[i]); } return 0; } Compile it: gcc producer.c -o producer Normally: ./producer gives: Hello through the pipe! because its stdout goes to the terminal."
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-10",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 11)",
+    "text": "[Slide 51] Demo: consumer.c 51 #include <stdio.h> int main(void) { int c; while ((c = getchar()) != EOF) { putchar(toupper(c)); } return 0; } Compile it: gcc consumer.c -o consumer Normally: ./consumer waits for you to type because its stdin is connected to the terminal. [Slide 52] Connecting Producer and Consumer with a Pipe - Run: ./producer | ./consumer - produces: HELLO THROUGH THE PIPE! - The | tells the shell to connect - the first program's stdout - to the second program's stdin 52 [Slide 53] Pipes Can be Chained - You can have several programs connected together: ./producer | ./consumer | wc -c - wc is a standard Unix/Linux command whose name means word count. - It reads text from a file or from stdin and counts things such as lines, words, and bytes. - You can ask for a specific count: wc -l file.txt # count lines wc -w file.txt # count words wc -c file.txt # count bytes 53 [Slide 54] Active Learning 54 #include <stdio.h> int main(void) { printf(\"apple\\n\"); printf(\"banana\\n\"); printf(\"cherry\\n\"); return 0; } #include <stdio.h> int main(void) { int c; while ((c = getchar()) != EOF) { if (c == 'a' || c == 'e’ || c == 'i' || c == 'o' || c == 'u') { putchar(‘ - '); } else { putchar(c); } } return 0; } producer.c consumer.c"
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-11",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 12)",
+    "text": "[Slide 55] Active Learning 1. What text does producer write to its stdout? 2. Where is producer's stdout connected? 3. What happens to the \\n characters? 4. What exact output appears on the terminal? 5. What does result.txt contain after the command is run? 55 Compile: gcc producer.c -o producer gcc consumer.c -o consumer Then run: ./producer | ./consumer > result.txt [Slide 56] Active Learning 1. What text does producer write to its stdout? apple banana cherry 2. Where is producer's stdout connected? - To the stdin of consumer. 4. What happens to the \\n characters? - They are written unchanged, so the line breaks are preserved. 5. What exact output appears on the terminal? - Nothing, because consumer's stdout is redirected into result.txt. 6. What does result.txt contain after the command is run? -ppl- b-n-n- ch-rry 56 [Slide 57] Strings 57 [Slide 58] String Reading Summary - In C, strings are implemented as arrays of char values - Every C string must end with a null terminator (‘\\0’) - The null terminator marks the end of the string in memory - C provides a standard library for working with strings - Included with #include <string.h> - String-handling functions in this library rely on the null terminator to determine where the string ends - When printing a string using printf, use the %s format specifier 58"
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-12",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 13)",
+    "text": "[Slide 59] strlen vs sizeof - The length of a string is not necessarily the same as the size of the array that stores it. - strlen is used to count the number of characters in a string (excluding the null terminator) - sizeof is used to determine the total size of the array (in bytes) 59 #include <stdio.h> #include <string.h> int main(void) { char my_str[5]; my_str[0] = 'h'; my_str[1] = 'i'; my_str[2] = '\\0'; printf(\"strlen(my_str) = %lu, sizeof(my_str) = %lu\\n\", strlen(my_str), sizeof(my_str)); } learncli$ gcc temp3.c learncli$ ./a.out strlen(my_str) = 2, sizeof(my_str) = 5 [Slide 60] Double Quotes vs Array - When you create a string using double quotes (“ ”), the compiler automatically adds a null terminator to the end. 60 #include <stdio.h> #include <string.h> int main(void) { char my_str1[] = {'h', 'i', '\\0'}; char my_str2[] = \"hi\"; printf(\"strlen(my_str1) = %lu, sizeof(my_str1) = %lu\\n\", strlen(my_str1), sizeof(my_str1)); printf(\"strlen(my_str2) = %lu, sizeof(my_str2) = %lu\\n\", strlen(my_str2), sizeof(my_str2)); } learncli$ gcc temp3.c learncli$ ./a.out strlen(my_str1) = 2, sizeof(my_str1) = 3 strlen(my_str2) = 2, sizeof(my_str2) = 3"
+  },
+  {
+    "id": "mat-CL03-io-redirection-and-strings-13",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL03 - Arrays, I/O Redirection and Strings (COMP 211, Connor McMahon) (part 14)",
+    "text": "[Slide 61] 61 #include <stdio.h> #include <string.h> int main(void) { /* 1. \" \" automatically includes a null terminator */ /* A sequence of characters enclosed in double quotes (\" \") is called a string literal. */ char str1[] = \"hello\"; // {'h','e','l','l','o','\\0'} /* 2. ' ' does NOT include a null terminator */ char str2[5] = {'h', 'e', 'l', 'l', 'o'}; // NOT a valid C string /* 3. Character array larger than the string – totally fine */ char str3[10] = \"hi\"; // only uses 3 chars: 'h','i','\\0' /* 4. Null terminator placed early */ char str4[10] = {'h', 'i', '\\0', 'X', 'Y', 'Z', '\\0'}; /* Print strings */ printf(\"str1: \\\"%s\\\" (strlen = %lu)\\n\", str1, strlen(str1)); /* WARNING: Uncommenting this causes undefined behavior */ // printf(\"str2: \\\"%s\\\"\\n\", str2); printf(\"str3: \\\"%s\\\" (strlen = %lu)\\n\", str3, strlen(str3)); printf(\"str4: \\\"%s\\\" (strlen = %lu)\\n\", str4, strlen(str4)); /* 5. Demonstrating array size vs string length */ printf(\"Array size of str3: %lu\\n\", sizeof(str3)); printf(\"String length of str3: %lu\\n\", strlen(str3)); return 0; }"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-0",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 1)",
+    "text": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) - text extracted from the slides for search [Slide 1] Function Stack Frames COMP211 Connor McMahon [Slide 2] Reminder Make sure you have a TA verify your setup from HW0 by Thursday. 2 [Slide 3] Stack Frames - The Stack: - An area of memory used to manage function calls - Stack Frame: - Each stack frame is like a mini workspace for a function. - It holds everything the function needs to do its job, including: - Return Address: The location in the program to return to after the function finishes. - Arguments: Values passed into the function. - Local Variables: Variables declared inside the function. 3 [Slide 4] Motivation - Understanding stack frames helps you understand what is actually happening when functions call other functions. - It also explains several important programming concepts, including: - Why local variables disappear when a function returns - How nested and recursive function calls work - Why returning a pointer to a local variable can cause problems - How the program knows where to continue after a function returns - Why very deep recursion can cause a stack overflow - How debuggers display the call stack when a program crashes 4"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-1",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 2)",
+    "text": "[Slide 5] Caller and Callee - Caller: the part of the program that calls a function - Callee: the function that is called - How a Function Call Works - The caller passes data (arguments) to the function - The callee: - Receives the arguments - Executes its code - Produces a result (return value) - Control returns to the caller 5 [Slide 6] Stack Pointer - Stack pointer - Holds the memory address of the current top of the stack. - When a function is called, the stack pointer is adjusted to make room for the new stack frame. - When the function returns, it is adjusted back, effectively removing that frame. 6 [Slide 7] Example 1 7 [Slide 8] 8 void C(int z) { int c = z + 1; } void B(int y) { int b = y * 2; C(b); } void A() { int a = 10; B(a); } int main() { A(); } [Slide 9] 9 void C(int z) { int c = z + 1; } void B(int y) { int b = y * 2; C(b); } void A() { int a = 10; B(a); } int main() { A(); } Stack Frame: - Each stack frame is like a mini workspace for a function. - It holds everything the function needs to do its job, including: - Return Address: The location in the program to return to after the function finishes. - Arguments: Values passed into the function. - Local Variables: Variables declared inside the function. [Slide 10] 10 void C(int z) { int c = z + 1; } void B(int y) { int b = y * 2; C(b); } void A() { int a = 10; B(a); } int main() { A(); } Stack main’s stack frame Stack pointer When main is called, a new stack frame is created for it on the stack."
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-2",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 3)",
+    "text": "[Slide 11] 11 void C(int z) { int c = z + 1; } void B(int y) { int b = y * 2; C(b); } void A() { int a = 10; B(a); } int main() { A(); } Stack main’s stack frame A’s stack frame Stack pointer When main calls A, a new stack frame for A is created below main’s frame, causing the stack to grow downward. [Slide 12] 12 void C(int z) { int c = z + 1; } void B(int y) { int b = y * 2; C(b); } void A() { int a = 10; B(a); } int main() { A(); } Stack main’s stack frame A’s stack frame B’s stack frame Stack pointer When A calls B, a new stack frame for B is created below A’s frame, causing the stack to grow downward. [Slide 13] 13 void C(int z) { int c = z + 1; } void B(int y) { int b = y * 2; C(b); } void A() { int a = 10; B(a); } int main() { A(); } Stack main’s stack frame A’s stack frame B’s stack frame C’s stack frame Stack pointer When B calls C, a new stack frame for C is created below B’s frame, causing the stack to grow downward. [Slide 14] 14 void C(int z) { int c = z + 1; } void B(int y) { int b = y * 2; C(b); } void A() { int a = 10; B(a); } int main() { A(); } Stack main’s stack frame A’s stack frame B’s stack frame When C returns, the stack pointer moves back, effectively removing C’s stack frame. The data from C may still remain in memory, but that memory is no longer valid and can be reused. Stack pointer C’s stack frame"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-3",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 4)",
+    "text": "[Slide 15] 15 void C(int z) { int c = z + 1; } void B(int y) { int b = y * 2; C(b); } void A() { int a = 10; B(a); } int main() { A(); } Stack main’s stack frame A’s stack frame B’s stack frame When B returns, the stack pointer moves back, effectively removing B’s stack frame. The data from B may still remain in memory, but that memory is no longer valid and can be reused. Stack pointer C’s stack frame [Slide 16] 16 void C(int z) { int c = z + 1; } void B(int y) { int b = y * 2; C(b); } void A() { int a = 10; B(a); } int main() { A(); } Stack main’s stack frame A’s stack frame B’s stack frame When A returns, the stack pointer moves back, effectively removing A’s stack frame. The data from A may still remain in memory, but that memory is no longer valid and can be reused. Stack pointer C’s stack frame [Slide 17] Example 2 17 [Slide 18] 18 int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); }"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-4",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 5)",
+    "text": "[Slide 19] 19 int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } Stack Frame: - Each stack frame is like a mini workspace for a function. - It holds everything the function needs to do its job, including: - Return Address: The location in the program to return to after the function finishes. - Arguments: Values passed into the function. - Local Variables: Variables declared inside the function. [Slide 20] 20 Stack main’s stack frame Stack pointer When main is called, a new stack frame is created for it on the stack. int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } [Slide 21] 21 Stack main’s stack frame Stack pointer int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } calculate’s stack frame When main calls calculate, a new stack frame for calcuate is created below main’s frame, causing the stack to grow downward."
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-5",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 6)",
+    "text": "[Slide 22] 22 Stack main’s stack frame Stack pointer int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } calculate’s stack frame squares’s stack frame When calculate calls square, a new stack frame for square is created below calculate’s frame, causing the stack to grow downward. [Slide 23] 23 Stack main’s stack frame Stack pointer int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } calculate’s stack frame squares’s stack frame When square returns, the stack pointer moves back, effectively removing square’s stack frame. The data from square may still remain in memory, but that memory is no longer valid and can be reused. [Slide 24] 24 Stack main’s stack frame Stack pointer int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } calculate’s stack frame addOne’s stack frame When calculate calls addOne, a new stack frame for addOne is created below calculate’s frame, causing the stack to grow downward. This new frame may reuse the same stack memory that was previously occupied by square’s frame."
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-6",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 7)",
+    "text": "[Slide 25] 25 Stack main’s stack frame Stack pointer int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } calculate’s stack frame addOne’s stack frame When addOne returns, the stack pointer moves back, effectively removing addOne’s stack frame. The data from addOne may still remain in memory, but that memory is no longer valid and can be reused. [Slide 26] 26 Stack main’s stack frame Stack pointer int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } calculate’s stack frame addOne’s stack frame When calculate returns, the stack pointer moves back, effectively removing calculate’s stack frame. The data from calculate may still remain in memory, but that memory is no longer valid and can be reused. [Slide 27] 27 Stack main’s stack frame sp int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } How you will draw this memory diagram on paper"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-7",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 8)",
+    "text": "[Slide 28] 28 Stack main’s stack frame int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } How you will draw this memory diagram on paper calculate’s stack frame sp [Slide 29] 29 Stack main’s stack frame int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } How you will draw this memory diagram on paper calculate’s stack frame sp sqaure’s stack frame [Slide 30] 30 Stack main’s stack frame int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } How you will draw this memory diagram on paper calculate’s stack frame sp square’s stack frame [Slide 31] 31 Stack main’s stack frame int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } How you will draw this memory diagram on paper calculate’s stack frame sp square’s stack frame addOne’s stack frame"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-8",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 9)",
+    "text": "[Slide 32] 32 Stack main’s stack frame int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } How you will draw this memory diagram on paper calculate’s stack frame sp square’s stack frame addOne’s stack frame [Slide 33] 33 Stack main’s stack frame int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } int main() { calculate(); } How you will draw this memory diagram on paper calculate’s stack frame sp square’s stack frame addOne’s stack frame [Slide 34] Example 3 34 [Slide 35] 35 Stack Draw the memory diagram just before main returns. void E() { int e = 50; } void D() { int d = 40; E(); } void C() { int c = 30; } void B() { int b = 20; C(); } void A() { int a = 10; B(); D(); } int main() { A(); } [Slide 36] 36 Stack main’s stack frame A’ stack frame sp B’s stack frame D’s stack frame Draw the memory diagram just before main returns. void E() { int e = 50; } void D() { int d = 40; E(); } void C() { int c = 30; } void B() { int b = 20; C(); } void A() { int a = 10; B(); D(); } int main() { A(); } C’s stack frame E’s stack frame [Slide 37] High-Level Memory Diagrams 37 [Slide 38] Byte - A bit is the smallest piece of data - It can be 0 or 1 - A byte is 8 bits 38 1 0 0 1 0 1 1 1 8 bits = 1 byte"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-9",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 10)",
+    "text": "[Slide 39] Fixed-Size Integers - int can be different sizes on different systems - Fixed-size integers are integers with guaranteed sizes, giving you control over memory and value range. - This makes code: - More predictable - More portable - Better for memory-limited systems (like embedded devices) - #include <stdint.h> 39 [Slide 40] Fixed-Size Integers Type Bits Used Bytes When to use int8_t 8 bits 1 byte tiny values, sensors, raw data int16_t 16 bits 2 bytes small counters, audio samples int32_t 32 bits 4 bytes general-purpose numbers int64_t 64 bits 8 bytes large counts, timestamps, big calculations 40 [Slide 41] Memory Diagram Example - When main starts: - The stack has one frame for main which contains space for its - Return address - Arguments - Local Variables 41 main #include <stdint.h> int8_t add(int8_t a, int8_t b); int main(void) { int8_t x = 5, y = -10; int8_t result = 2 * add(x, y); return 0; } int8_t add(int8_t a, int8_t b) { int8_t result = a + b; return result; } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 Stack sp"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-10",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 11)",
+    "text": "[Slide 42] Memory Diagram Example - When main starts: - The stack has one frame for main which contains space for its - Return address: main returns to the operating system (we’ll call the return address here 0) - Arguments: There are no arguments - Local Variables: x, y, result 42 main RA (8): 0 x (1): ? y (1): ? result (1): #include <stdint.h> int8_t add(int8_t a, int8_t b); int main(void) { int8_t x = 5, y = -10; int8_t result = 2 * add(x, y); return 0; } int8_t add(int8_t a, int8_t b) { int8_t result = a + b; return result; } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 Stack sp [Slide 43] Memory Diagram Example - When variables are initialized, their values are stored in their designated locations within the stack frame. 43 main RA (8): 0 x (1) : 5 y (1): -10 result (1): #include <stdint.h> int8_t add(int8_t a, int8_t b); int main(void) { int8_t x = 5, y = -10; int8_t result = 2 * add(x, y); return 0; } int8_t add(int8_t a, int8_t b) { int8_t result = a + b; return result; } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 Stack sp"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-11",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 12)",
+    "text": "[Slide 44] Memory Diagram Example - Then a frame for add is created which contains space for its arguments, local variables, and return address (RA). - RA is the line the program will return to 44 main RA (8): 0 x (1): 5 y (1): 10 result (1): RV (add)(1): add RA (8): 7 a(1): 5 b(1): -10 result(1): #include <stdint.h> int8_t add(int8_t a, int8_t b); int main(void) { int8_t x = 5, y = -10; int8_t result = 2 * add(x, y); return 0; } int8_t add(int8_t a, int8_t b) { int8_t result = a + b; return result; } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 Stack sp [Slide 45] Memory Diagram Example - When a value is assigned to result, it is stored in its allocated spot within the stack frame. 45 main RA (8): 0 x (1): 5 y (1): 10 result (1): RV (add)(1): add RA (8): 7 a (1): 5 b (1): -10 result (1): -5 #include <stdint.h> int8_t add(int8_t a, int8_t b); int main(void) { int8_t x = 5, y = -10; int8_t result = 2 * add(x, y); return 0; } int8_t add(int8_t a, int8_t b) { int8_t result = a + b; return result; } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 Stack sp"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-12",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 13)",
+    "text": "[Slide 46] Memory Diagram Example - Before add returns, it will place the return value in main’s frame so that main can access it. 46 main RA (8): 0 x (1): 5 y (1): 10 result (1): RV (add)(1): -5 add RA (8): 7 a (1): 5 b (1): -10 result (1): -5 #include <stdint.h> int8_t add(int8_t a, int8_t b); int main(void) { int8_t x = 5, y = -10; int8_t result = 2 * add(x, y); return 0; } int8_t add(int8_t a, int8_t b) { int8_t result = a + b; return result; } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 Stack sp [Slide 47] Memory Diagram Example - When add returns, its frame is deallocated. 47 main RA (8): 0 x (1): 5 y (1): 10 result (1): RV (add)(1): -5 #include <stdint.h> int8_t add(int8_t a, int8_t b); int main(void) { int8_t x = 5, y = -10; int8_t result = 2 * add(x, y); return 0; } int8_t add(int8_t a, int8_t b) { int8_t result = a + b; return result; } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 Stack add RA (8): 7 a (1): 5 b (1): -10 result (1): -5 To represent that a frame has been deallocated, place an X over it. sp [Slide 48] Memory Diagram Example - The local variable result is assigned 48 main RA (8): 0 x (1): 5 y (1): 10 result (1): -10 RV (add)(1): -5 #include <stdint.h> int8_t add(int8_t a, int8_t b); int main(void) { int8_t x = 5, y = -10; int8_t result = 2 * add(x, y); return 0; } int8_t add(int8_t a, int8_t b) { int8_t result = a + b; return result; } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 Stack add RA (8): 7 a (1): 5 b (1): -10 result (1): -5 sp"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-13",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 14)",
+    "text": "[Slide 49] Memory Diagram Example - When main returns, its frame is deallocated, the process terminates, and control returns to the operating system. 49 #include <stdint.h> int8_t add(int8_t a, int8_t b); int main(void) { int8_t x = 5, y = -10; int8_t result = 2 * add(x, y); return 0; } int8_t add(int8_t a, int8_t b) { int8_t result = a + b; return result; } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 main RA (8): 0 x (1): 5 y (1): 10 result (1): -10 RV (add)(1): -5 Stack add RA (8): 7 a (1): 5 b (1): -10 result (1): -5 To represent that a frame has been deallocated, place an X over it. [Slide 50] Process - A process is a running instance of a program. - A program is passive - It is just code stored in memory - A process is active - It represents that program in execution, with its own memory, CPU state, and resources. 50 [Slide 51] Memory Diagram Example with an Array 51 #include <stdint.h> #define ARR_SIZE 5 int32_t example(int32_t arr[ARR_SIZE], int32_t size, int32_t sum) { sum = 0; for (int16_t i = 0; i < size; i++) { sum += arr[i]; arr[i]++; } return arr[0]; } int main(void) { int32_t a[ARR_SIZE] = {1, 2, 3, 4, 5}; int32_t sum = 5; int32_t ret_val = example(a, ARR_SIZE, sum); } Preprocessor Directive 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-14",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 15)",
+    "text": "[Slide 52] Preprocessor Directive - When the preprocessor sees a #define, it replaces every occurrence of a name with its defined value literally, as if you had typed it yourself. - What this means for memory diagrams: - The preprocessor directive is not stored in the stack, it ends up as part of the code. 52 [Slide 53] Memory Diagram Example with an Array 53 #include <stdint.h> #define ARR_SIZE 5 int32_t example(int32_t arr[ARR_SIZE], int32_t size, int32_t sum) { sum = 0; for (int16_t i = 0; i < size; i++) { sum += arr[i]; arr[i]++; } return arr[0]; } int main(void) { int32_t a[ARR_SIZE] = {1, 2, 3, 4, 5}; int32_t sum = 7; int32_t ret_val = example(a, ARR_SIZE, sum); } main RA (8): 0 a(20): [1, 2, 3, 4, 5] sum(4): 7 ret_val(4): RV(4)(example): Stack 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 sp [Slide 54] 54 Arrays are not copied when passed to functions. Only a pointer to the first element is passed. [Slide 55] 55 All pointers are 8 bytes. [Slide 56] Pass by Pointer - When an array is passed to a function, the function receives a pointer to the original array. - What does this mean for our program? - The array is not copied - Both main’s a and example’s arr refer to the same array in memory - Changes made in example affect the original array 56"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-15",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 16)",
+    "text": "[Slide 57] Memory Diagram Example with an Array - To represent a pointer to a variable stored on the stack - Write “pointer to stack” - Draw an arrow to the variable 57 main RA (8): 0 a(20): [1, 2, 3, 4, 5] sum(4): 7 ret_val(4): RV(4)(example): Stack example RA (8): 17 arr(8): pointer to stack size(4): sum(4): i(2): #include <stdint.h> #define ARR_SIZE 5 int32_t example(int32_t arr[ARR_SIZE], int32_t size, int32_t sum) { sum = 0; for (int16_t i = 0; i < size; i++) { sum += arr[i]; arr[i]++; } return arr[0]; } int main(void) { int32_t a[ARR_SIZE] = {1, 2, 3, 4, 5}; int32_t sum = 7; int32_t ret_val = example(a, ARR_SIZE, sum); } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 sp [Slide 58] Memory Diagram Example with an Array - size and sum are passed by value 58 main RA (8): 0 a(20): [1, 2, 3, 4, 5] sum(4): 7 ret_val(4): RV(4)(example): Stack example RA (8): 17 arr(8): pointer to stack size(4): 5 sum(4): 7 i(2): #include <stdint.h> #define ARR_SIZE 5 int32_t example(int32_t arr[ARR_SIZE], int32_t size, int32_t sum) { sum = 0; for (int16_t i = 0; i < size; i++) { sum += arr[i]; arr[i]++; } return arr[0]; } int main(void) { int32_t a[ARR_SIZE] = {1, 2, 3, 4, 5}; int32_t sum = 7; int32_t ret_val = example(a, ARR_SIZE, sum); } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 sp"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-16",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 17)",
+    "text": "[Slide 59] 59 A copy of the variable is passed The function works with its own copy Changes do NOT affect the original variable A pointer (address) to the variable is passed The function accesses the original data Changes DO affect the original variable Pass-by-value Pass-by-pointer [Slide 60] Memory Diagram Example with an Array - sum becomes 0. - Notice that sum in main’s frame does not change because sum was passed by value - Be sure your memory diagram shows old values by crossing them out. 60 main RA (8): 0 a(20): [1, 2, 3, 4, 5] sum(4): 7 ret_val(4): RV(4)(example): Stack example RA (8): 17 arr(8): pointer to stack size(4): 5 sum(4): 7 0 i(2): #include <stdint.h> #define ARR_SIZE 5 int32_t example(int32_t arr[ARR_SIZE], int32_t size, int32_t sum) { sum = 0; for (int16_t i = 0; i < size; i++) { sum += arr[i]; arr[i]++; } return arr[0]; } int main(void) { int32_t a[ARR_SIZE] = {1, 2, 3, 4, 5}; int32_t sum = 7; int32_t ret_val = example(a, ARR_SIZE, sum); } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 sp"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-17",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 18)",
+    "text": "[Slide 61] Memory Diagram Example with an Array - i is initialized to 0 61 main RA (8): 0 a(20): [1, 2, 3, 4, 5] sum(4): 7 ret_val(4): RV(4)(example): Stack example RA (8): 17 arr(8): pointer to stack size(4): 5 sum(4): 7 0 i(2): 0 #include <stdint.h> #define ARR_SIZE 5 int32_t example(int32_t arr[ARR_SIZE], int32_t size, int32_t sum) { sum = 0; for (int16_t i = 0; i < size; i++) { sum += arr[i]; arr[i]++; } return arr[0]; } int main(void) { int32_t a[ARR_SIZE] = {1, 2, 3, 4, 5}; int32_t sum = 7; int32_t ret_val = example(a, ARR_SIZE, sum); } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 sp [Slide 62] Memory Diagram Example with an Array - sum is updated - Again, notice that only example’s copy is updated. 62 main RA (8): 0 a(20): [1, 2, 3, 4, 5] sum(4): 7 ret_val(4): RV(4)(example): Stack example RA (8): 17 arr(8): pointer to stack size(4): 5 sum(4): 7 0 1 i(2): 0 #include <stdint.h> #define ARR_SIZE 5 int32_t example(int32_t arr[ARR_SIZE], int32_t size, int32_t sum) { sum = 0; for (int16_t i = 0; i < size; i++) { sum += arr[i]; arr[i]++; } return arr[0]; } int main(void) { int32_t a[ARR_SIZE] = {1, 2, 3, 4, 5}; int32_t sum = 7; int32_t ret_val = example(a, ARR_SIZE, sum); } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 sp"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-18",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 19)",
+    "text": "[Slide 63] Memory Diagram Example with an Array - arr[0] is updated - Notice, this updates the array in main’s frame! 63 main RA (8): 0 a(20): [1 2, 2, 3, 4, 5] sum(4): 7 ret_val(4): RV(4)(example): Stack example RA (8): 17 arr(8): pointer to stack size(4): 5 sum(4): 7 0 1 i(2): 0 #include <stdint.h> #define ARR_SIZE 5 int32_t example(int32_t arr[ARR_SIZE], int32_t size, int32_t sum) { sum = 0; for (int16_t i = 0; i < size; i++) { sum += arr[i]; arr[i]++; } return arr[0]; } int main(void) { int32_t a[ARR_SIZE] = {1, 2, 3, 4, 5}; int32_t sum = 7; int32_t ret_val = example(a, ARR_SIZE, sum); } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 sp [Slide 64] Memory Diagram Example with an Array - Complete the loop. - Notice that i ends at 5 64 main RA (8): 0 a(20): [1 2, 2 3, 3 4, 4 5, 5 6] sum(4): 7 ret_val(4): RV(4)(example): Stack example RA (8): 17 arr(8): pointer to stack size(4): 5 sum(4): 7 0 1 3 6 10 15 i(2): 0 1 2 3 4 5 #include <stdint.h> #define ARR_SIZE 5 int32_t example(int32_t arr[ARR_SIZE], int32_t size, int32_t sum) { sum = 0; for (int16_t i = 0; i < size; i++) { sum += arr[i]; arr[i]++; } return arr[0]; } int main(void) { int32_t a[ARR_SIZE] = {1, 2, 3, 4, 5}; int32_t sum = 7; int32_t ret_val = example(a, ARR_SIZE, sum); } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 sp"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-19",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 20)",
+    "text": "[Slide 65] Memory Diagram Example with an Array - Just before example returns, it places the return value in main’s frame. 65 main RA (8): 0 a(20): [1, 2, 3, 4, 5] [2, 3, 4, 5, 6] sum(4): 7 ret_val(4): RV(4)(example): 2 Stack example RA (8): 17 arr(8): pointer to stack size(4): 5 sum(4): 7 0 1 3 6 10 15 i(2): 0 1 2 3 4 5 #include <stdint.h> #define ARR_SIZE 5 int32_t example(int32_t arr[ARR_SIZE], int32_t size, int32_t sum) { sum = 0; for (int16_t i = 0; i < size; i++) { sum += arr[i]; arr[i]++; } return arr[0]; } int main(void) { int32_t a[ARR_SIZE] = {1, 2, 3, 4, 5}; int32_t sum = 7; int32_t ret_val = example(a, ARR_SIZE, sum); } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 sp [Slide 66] Memory Diagram Example with an Array - When example returns, the return value is assigned to a local variable. 66 main RA (8): 0 a(20): [1, 2, 3, 4, 5] [2, 3, 4, 5, 6] sum(4): 7 ret_val(4): 2 RV(4)(example): 2 Stack example RA (8): 17 arr(8): pointer to stack size(4): 5 sum(4): 7 0 1 3 6 10 15 i(2): 0 1 2 3 4 5 #include <stdint.h> #define ARR_SIZE 5 int32_t example(int32_t arr[ARR_SIZE], int32_t size, int32_t sum) { sum = 0; for (int16_t i = 0; i < size; i++) { sum += arr[i]; arr[i]++; } return arr[0]; } int main(void) { int32_t a[ARR_SIZE] = {1, 2, 3, 4, 5}; int32_t sum = 7; int32_t ret_val = example(a, ARR_SIZE, sum); } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 sp"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-20",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 21)",
+    "text": "[Slide 67] 67 A copy of the variable is passed The function works with its own copy Changes do NOT affect the original variable A pointer (address) to the variable is passed The function accesses the original data Changes DO affect the original variable Pass-by-value Pass-by-pointer [Slide 68] Draw the Memory Diagram Just After example Returns 68 #include <stdint.h> #include <stdio.h> #define ARR_SIZE 3 int32_t example(int32_t a[ARR_SIZE], int32_t b[ARR_SIZE], int32_t size, int32_t c) { for (int64_t i = 0; i < size; i++) { a[i] = b[i] + i; b[i] = a[i] - c; c++; } return c; } int main(void) { int32_t x[ARR_SIZE] = {10, 20, 30}; int32_t y[ARR_SIZE] = {40, 50, 60}; int32_t demo = x[0] + y[0]; int32_t ret_val = example(x, y, ARR_SIZE, demo); } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 Stack"
+  },
+  {
+    "id": "mat-CL04-function-stack-frames-21",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL04 - Function Stack Frames (COMP 211, Connor McMahon) (part 22)",
+    "text": "[Slide 69] Draw the Memory Diagram Just After example Returns 69 #include <stdint.h> #include <stdio.h> #define ARR_SIZE 3 int32_t example(int32_t a[ARR_SIZE], int32_t b[ARR_SIZE], int32_t size, int32_t c) { for (int64_t i = 0; i < size; i++) { a[i] = b[i] + i; b[i] = a[i] - c; c++; } return c; } int main(void) { int32_t x[ARR_SIZE] = {10, 20, 30}; int32_t y[ARR_SIZE] = {40, 50, 60}; int32_t demo = x[0] + y[0]; int32_t ret_val = example(x, y, ARR_SIZE, demo); } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 main RA (8): 0 x(12): [10, 20, 30] [40, 51, 62] y(12): [40, 50, 60] [-10, 0, 10] demo(4): 50 ret_val(4): 53 RV(4)(example): 53 Stack example RA (8): 19 a(8): pointer to stack b(8): pointer to stack size(4): 3 c(4): 50 51 52 53 i(8): 0 1 2 3 sp"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-0",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 1)",
+    "text": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) - text extracted from the slides for search [Slide 1] Unix Basics COMP211 Connor McMahon [Slide 2] Reminders - HW1 is due today. - If you have not already signed up for a checkoff slot, do that now! - If you haven’t gotten your setup from HW0 checked, do that today! - You will complete the checkoff inside your container. 2 [Slide 3] $PATH 3 [Slide 4] Paths - We know what an absolute path and a relative path are. - An absolute path starts from the root. Example: - /home/alice/projects/hello - A relative path starts from wherever we currently are. Examples: - ./hello - ../hello - projects/hello 4 [Slide 5] Paths - Now suppose we've written and compiled a program called hello: - $ gcc hello.c -o hello - We can run it with: - $ ./hello - You might wonder: - Why do I need the ./? 5 [Slide 6] Paths - Additionally, why do I type: - $ ls - $ pwd - $ wc - And not - $ ./ls - $ ./pwd - $ ./wc - That's where $PATH comes in. 6 [Slide 7] What does ./hello actually mean? - Remember that . means the current directory. - So: - $ ./hello - is simply a relative path. - You're telling the shell: - Go into the current directory (.), find the file called hello, and execute it. - It's conceptually the same as giving its absolute path: - $ /home/alice/projects/hello - Both commands tell the shell exactly where the executable is located. 7"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-1",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 2)",
+    "text": "[Slide 8] What does ./hello actually mean? - So what happens if we leave off the path? - $ hello - Now we haven't told the shell where hello is. - When a command contains no /, the shell searches for it. - Where does it search? 8 [Slide 9] What does ./hello actually mean? - $ ./hello - contains a / - meaning “Here is a path. Run this file.\" - $ hello - contains no / - meaning \"Find a command named hello for me.” - And where does the shell look? - $PATH 9 [Slide 10] $PATH is the shell's command search path - Try: - $ echo $PATH - You might see something like: - /usr/local/bin:/usr/bin:/bin:/home/alice/ - That's a list of directories separated by : - It tells your shell: - When I type a command without specifying its location, search these directories for it. 10 [Slide 11] $PATH is the shell's command search path - So imagine you type: - $ wc - Your shell effectively searches: - $ /usr/local/bin/wc - $ /usr/bin/wc <- found it! - and then executes the one it found. 11 [Slide 12] $PATH is the shell's command search path - So that's why: - $ ls - works while: - $ hello - doesn’t. - Your hello executable is sitting in your current directory, but your current directory usually isn't in $PATH. 12"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-2",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 3)",
+    "text": "[Slide 13] Example - You are currently in: /home/student/project - Your filesystem contains: - All three hello files are executable. - Your $PATH is: /home/student/bin:/usr/bin:/bin 13 / ├── usr/ │ └── bin/ │ └── hello │ └── home/ └── student/ ├── bin/ │ └── hello │ └── project/ └── hello Command Which hello runs? ./hello /usr/bin/hello ../bin/hello hello [Slide 14] Example - You are currently in: /home/student/project - Your filesystem contains: - All three hello files are executable. - Your $PATH is: /home/student/bin:/usr/bin:/bin 14 / ├── usr/ │ └── bin/ │ └── hello │ └── home/ └── student/ ├── bin/ │ └── hello │ └── project/ └── hello Command Which hello runs? ./hello /home/student/project/hello /usr/bin/hello /usr/bin/hello ../bin/hello /home/student/bin/hello hello /home/student/bin/hello [Slide 15] Active Learning 1. Why does $ ./hello run the version in project/? 2. Why doesn't typing $ hello run the version in the current directory? 3. For $ hello, why does /home/student/bin/hello run instead of /usr/bin/hello? 4. Now change $PATH to: /usr/bin:/home/student/bin:/bin 5. Without moving or modifying any files, what does: $ hello run now? Why? 6. How could you modify $PATH so that you can type $ hello from any directory and have /home/student/project/hello run, without moving the executable? 15"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-3",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 4)",
+    "text": "[Slide 16] Active Learning 1.. $ ./hello runs the version in project/ because . means “the current directory.” Since the current directory is /home/student/project, $./hello refers to: /home/student/project/hello 2. Typing $ hello does not automatically run the version in the current directory because the shell does not normally search the current directory for commands. Instead, when a command contains no /, the shell searches the directories listed in $PATH. 3. With: /home/student/bin:/usr/bin:/bin the shell searches from left to right. It finds hello in: /home/student/bin before it ever checks /usr/bin, so /home/student/bin/hello runs. 16 [Slide 17] Active Learning 4. After changing $PATH to: /usr/bin:/home/student/bin:/bin the search order has changed. /usr/bin is now checked before /home/student/bin. 5. Now: hello runs: /usr/bin/hello because the shell searches $PATH from left to right and finds hello in /usr/bin first. 6. You could add /home/student/project to the beginning of $PATH: export PATH=\"/home/student/project:$PATH\" Then when you type: hello the shell checks /home/student/project first and finds: /home/student/project/hello Because that directory is in $PATH, you can run hello from any current working directory. 17"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-4",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 5)",
+    "text": "[Slide 18] Why isn't the current directory in $PATH? - You might wonder: why doesn't the shell just search the current directory too? - There's an important security reason. - Imagine you download some files and enter the directory: - $ cd ~/Downloads/suspicious-stuff - Someone has put a malicious executable there called: - ls - If the shell always searched the current directory first, then when you innocently typed: - $ ls - you could accidentally run: - $ ./ls - instead of the real system ls. 18 [Slide 19] Why isn't the current directory in $PATH? - By requiring: - $ ./hello - you're explicitly saying: - Yes, I purposefully want to execute the hello program located right here. 19 [Slide 20] Shell Globbing 20 [Slide 21] Globbing - Globbing is a way of using patterns to match groups of filenames instead of typing them one by one. - The shell (bash, zsh, etc.) expands these patterns before running the command. 21 Pattern Meaning * any number of characters ? exactly one character [abc] one character from the set [a-z] one character in a range [Slide 22] Globbing - Globbing saves time and reduces mistakes - For example, instead of typing - rm file1.txt file2.txt file3.txt file4.txt - You can type - rm *.txt - This command will delete all files in the current working directory that end in .txt 22"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-5",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 6)",
+    "text": "[Slide 23] Shell Glob Examples 23 Pattern Meaning Expansion Examples *.txt Anything ending in .txt foo.txt a.txt data_??.csv data_ + exactly 2 chars + .csv data_01.csv data_ab.csv data_XY.csv [ab]*.md Starts with a or b, ends with .md about.md blogpost.md b_notes.md [Slide 24] How does globbing work in the shell? - The shell expands filename patterns before running a command. - For example, suppose a directory contains: - cat.jpg - dog.txt - notes.txt - photo.png - If you type: - cat *.txt - The shell sees *.txt, searches the current directory, and expands the command to - cat dog.txt notes.txt - Then it runs cat. - Importantly, cat itself never sees *.txt. 24 [Slide 25] Regular Expressions 25 [Slide 26] Regular Expressions - A regular expression (regex) is a pattern used to search, match, or manipulate text. 26 [Slide 27] Examples of Where Regular Expressions Are Used - Web Development - Form validation - URL Routing - Input sanitation - Scraping - ML Preprocessing - Clean data (e.g. strip HTML tags, normalize whitespace) - Extract dates, IDs, and other metadata - Debugging - Find patterns in logs - Filter stack traces - Search large codebases 27 [Slide 28] Character Class - A character class is a pattern that represents a set of characters and matches exactly one character from that set. 28 Regex Meaning [abc] match a or b or c [a-z] any lowercase letter [A-Z] any uppercase letter [0-9] any digit"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-6",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 7)",
+    "text": "[Slide 29] b[ae][dt] 29 String Matches? bat yes Bat no bad yes bed yes bea no ba no [Slide 30] Quantifiers (how many times) 30 Regex Meaning * 0 or more + 1 or more ? 0 or 1 {n} exactly n {n,} n or more {n,m} between n and m [Slide 31] Anchors (position) 31 Regex Meaning ^ start of line $ end of line [Slide 32] ^ID-[0-9]{3}$ 32 String Matches? ID-123 yes ID-12 No, only 2 digits ID-999 yes abcID-123 No, extra text before id-123 No, lowercase id ID-123xyz No, extra text after [Slide 33] Compare with No Anchors - Without anchors - ID-[0-9]{3} - This would match inside: - abcID-123xyz - With anchors, ^ID-[0-9]{3}$ - Only matches if the whole string is exactly that pattern. 33 [Slide 34] Escaping - In regular expressions, the dot (.) means “Match any single character (except newline)” - Escaping uses an escape character (often \\) to change how the character or sequence that follows it is interpreted. - Escaping tells the regex engine: “I want this character itself, not what it normally means.” 34 [Slide 35] Brief Aside: Escaping Is a General Concept - We have also seen escaping with special characters! - In many programming contexts, certain characters have a special meaning. - A backslash (\\) can be used to change how the character that follows it is interpreted. - For example, in C: - printf(\"Hello\\nWorld\"); - \\n is interpreted as a newline, rather than the two characters \\ and n. 35"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-7",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 8)",
+    "text": "[Slide 36] Regular Expression Example - Match a string that: - Starts with one lowercase letter - Then exactly 2 digits - Ends with .txt - Should match: - a12.txt - z99.txt - Should NOT match: - A12.txt (uppercase) - a1.txt (only 1 digit) - a123.txt (3 digits) - a12.txtt (wrong extension) 36 [Slide 37] Regular Expression Example - Match a string that: - Starts with one lowercase letter - Then exactly 2 digits - Ends with .txt - Should match: - a12.txt - z99.txt - Should NOT match: - A12.txt (uppercase) - a1.txt (only 1 digit) - a123.txt (3 digits) - a12.txtt (wrong extension) 37 ^[a-z][0-9]{2}\\.txt$ [Slide 38] Expansion vs. Matching - Globbing = expansion - Regex = matching 38 Feature Globbing Regex Operates on Filenames Text Purpose Select files Match strings Done by Shell Program Result Expanded arguments True/False matches [Slide 39] Glob vs. Regex Syntax Comparison 39 Meaning Glob Regex Any sequence * .* Any single char ? . Literal dot . \\. Character class [abc] [abc] Repetition (does not exist) {m,n}, +, * [Slide 40] grep and find 40 [Slide 41] The find Command - find searches the filesystem for files or directories - It starts at a given directory and searches recursively - Results are based on conditions such as: - File name - File type - Size, time, permissions (and more) 41"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-8",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 9)",
+    "text": "[Slide 42] find –name Format - find <where to search> -name <pattern> - Example: - find ./ -name dog.c - ./ = start searching from the current directory - -name = match files by name - dog.c = exact file name to match - find uses shell-style glob patterns, not regular expressions 42 [Slide 43] find Example - find ./ -name dog.c - ./ start searching from the current directory - -name match files by name - dog.c match exactly files named dog.c - Output ./src/dog.c ./tests/dog.c ./dog.c 43 . ├── src/ │ ├── main.c │ ├── dog.c │ └── cat.c ├── tests/ │ ├── dog.c │ └── test_cat.c ├── docs/ │ └── dog.txt └── dog.c [Slide 44] find Example - find ./src -name dog.c - ./src start searching inside src/ only - -name match files by name - dog.c match exactly files named dog.c - Output - ./src/dog.c 44 . ├── src/ │ ├── main.c │ ├── dog.c │ └── cat.c ├── tests/ │ ├── dog.c │ └── test_cat.c ├── docs/ │ └── dog.txt └── dog.c [Slide 45] Recall: 45 Pattern Meaning * any number of characters ? exactly one character [abc] one character from the set [a-z] one character in a range [Slide 46] What is the output of the following commands? - Assume commands are run from /home - find ./carla -name \"*.c” - find . -name \"comp*” - find ./john -name \"*.c” 46 /home |-- john | `-- psyc101 | `-- notes | |-- lec1.note | |-- lec2.note | ` -- lec3.note ` -- carla |-- comp211 | |-- labs | | ` -- lab0.c | ` -- notes | |-- lec1.note | ` -- lec2.note ` --comp301"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-9",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 10)",
+    "text": "[Slide 47] What is the output of the following commands? - Assume commands are run from /home - find ./carla -name \"*.c” - ./carla/comp211/labs/lab0.c - find . -name \"comp*” - ./carla/comp211 - ./carla/comp301 - find ./john -name \"*.c” - (no output) 47 /home |-- john | `-- psyc101 | `-- notes | |-- lec1.note | |-- lec2.note | ` -- lec3.note ` -- carla |-- comp211 | |-- labs | | ` -- lab0.c | ` -- notes | |-- lec1.note | ` -- lec2.note ` --comp301 [Slide 48] Find Examples - Write a find command to locate all files ending in.note under /home/john. Assume command is run from /. What would be returned? - What does the command output? Assume command is run from /home - find ./carla -name “lab?.c” 48 /home |-- john | `-- psyc101 | `-- notes | |-- lec1.note | |-- lec2.note | ` -- lec3.note ` -- carla |-- comp211 | |-- labs | | |-- lab0.c | | ` -- lab1.c | ` -- notes | |-- lec1.note | ` -- lec2.note ` --comp301"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-10",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 11)",
+    "text": "[Slide 49] Examples - Write a find command to locate all files ending in.note under /home/john. Assume command is run from /. What would be returned? - find ./home/john -name \"*.note” - ./home/john/psyc101/notes/lec1.note - ./home/john/psyc101/notes/lec2.note - ./home/john/psyc101/notes/lec3.note - What does the command output? Assume command is run from /home - find ./carla -name “lab?.c” - ./carla/comp211/labs/lab0.c - ./carla/comp211/labs/lab1.c 49 /home |-- john | `-- psyc101 | `-- notes | |-- lec1.note | |-- lec2.note | ` -- lec3.note ` -- carla |-- comp211 | |-- labs | | |-- lab0.c | | ` -- lab1.c | ` -- notes | |-- lec1.note | ` -- lec2.note ` --comp301 [Slide 50] The grep Command - grep searches for text patterns inside files - It scans file contents line by line - Often used to find: - Variable names - Error messages - Specific words or phrases 50 [Slide 51] grep Syntax - grep <pattern> <file> - Example: - grep \"main\" dog.c - Searches for the word main - Looks inside the file dog.c - Prints matching lines - grep uses regular expression patterns 51"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-11",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 12)",
+    "text": "[Slide 52] grep Example - Assume we have a file called log.txt with the following contents: - grep \"ERROR\" log.txt - grep search text - \"ERROR\" regex pattern (simple literal string) - log.txt file to search - Output 52 INFO Server start DEBUG Loading configuration ERROR Failed to connect to database INFO Retrying connection ERROR Timeout while connecting INFO Server stopped ERROR Failed to connect to database ERROR Timeout while connecting [Slide 53] grep Example - The file users.txt contains - Find only the usernames that end with exactly 2 digits. - grep \"_[0-9]{2}$\" users.txt 53 alice_01 bob_2 carol_003 dave_12 eve_x frank_007 [Slide 54] grep Example - Write a grep command that searches inside project/data/users.txt and prints only the lines that: - start with a lowercase letter, - Followed by any sequence of characters - Followed by one underscore (_), - and end with 2 or 3 digits. - Assume we are in the parent directory of project 54 project/ ├── src/ │ ├── main.c │ ├── server.c │ ├── client.c │ └── server_test.txt ├── logs/ │ ├── server.log │ ├── client.log │ └── old_server.log ├── data/ │ ├── users.txt │ └── backup_users.txt ├── scripts/ │ ├── deploy.sh │ └── cleanup.sh └── README.md grep -E"
+  },
+  {
+    "id": "mat-CL05-unix-path-globbing-regex-12",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "CL05 - Unix Basics: PATH, globbing, regex, find, grep (COMP 211, Connor McMahon) (part 13)",
+    "text": "[Slide 55] grep Example - Write a grep command that searches inside project/data/users.txt and prints only the lines that: - start with a lowercase letter, - Followed by any sequence of characters - Followed by one underscore (_), - and end with 2 or 3 digits. 55 project/ ├── src/ │ ├── main.c │ ├── server.c │ ├── client.c │ └── server_test.txt ├── logs/ │ ├── server.log │ ├── client.log │ └── old_server.log ├── data/ │ ├── users.txt │ └── backup_users.txt ├── scripts/ │ ├── deploy.sh │ └── cleanup.sh └── README.md grep -E \"^[a-z].*_[0-9]{2,3}$\" project/data/users.txt [Slide 56] Explanation - grep -E \"^[a-z].*_[0-9]{2,3}$\" project/data/users.txt 56 Part Meaning ^ start of line [a-z] starts with lowercase .* anything (including other underscores) _ at least one underscore somewhere [0-9]{2,3} ends with 2 or 3 digits $ end of line"
+  },
+  {
     "id": "mat-RD00-DiS-17.1.2-unix-notes-0",
     "section": "",
     "course": "COMP211",
@@ -5452,6 +5893,24 @@
     "type": "material",
     "title": "RD01 reading notes - Dive into Systems 16.1 (getting started in C), 16.2 (input/output), 16.3 (conditionals and loops), 16.5 (arrays and strings) - study notes written for this guide (part 1)",
     "text": "RD01 reading notes - Dive into Systems 16.1 (getting started in C), 16.2 (input/output), 16.3 (conditionals and loops), 16.5 (arrays and strings) - study notes written for this guide 16.1 A C program is a set of functions with a required main. main returns an int (0 = success). Source files end in .c. Libraries are brought in with #include at the top of the file (for example stdio.h, math.h). C is procedural and has no classes; Java is object oriented and runs on a JVM, while C is compiled to a binary the OS runs directly. Compile: gcc file.c makes a.out; gcc -o name file.c names the output; run with ./name. -Wall adds warnings, -g adds debug info, -lm links the math library. If compilation fails the executable is not rebuilt, but an older one may still exist. Variables are declared before use: int x; char letter; float winpct; double pi; unsigned int y; int i, j, k;. Sizes: char 1, short 2, int 4, long 4 or 8, long long 8, float 4, double 8. sizeof gives the byte size (print with %lu). 'h' is a char (ASCII 104); \"h\" is a string literal. Integer division truncates (11 / 2 is 5, 11 / 2.0 is 5.5); % needs integers. x++ uses the value then increments; ++x increments first. Mixed int/float operations convert the int to float. printf does not add a newline; write \\n yourself. 16.2 printf takes a format string plus one argument per placeholder. %d decimal int, %g or %f float/double, %s string, %c character (shows the ASCII character for a numeric value). Escapes: \\n newline, \\t tab. scanf reads values the user types and stores them at the memory addresses you give with &: scanf(\"%d\", &num1). It skips whitespace between numeric values, is picky about format, and is not robust to bad input (it can loop forever; Ctrl-C ends it). stdio.h must be included. 16.3 if / else if / else work as in Java. C has no boolean type: 0 is false, any nonzero value is true. Relational operators == != < <= > >=; logical ! && ||. && and || short-circuit: evaluation stops as soon as the result is known. Use parentheses around complex conditions for readability. Loops: while tests first; do-while runs the body at least once; for (init; test; step) evaluates init once, then test, body, step repeatedly. while and for are equally powerful. C has no enhanced for loop. 16.5 Arrays: int nums[10]; int small[] = {1, 3, 5}; capacity is fixed at declaration; valid indices are 0 to capacity-1. C does no bounds checking at compile time or run time: reading or writing past the end is undefined behavior. Passing an array to a function passes its base address, so changes to elements persist in the caller; scalar parameters are copied. Functions usually take a size parameter because the array alone does not tell the function its capacity. void print_array(int arr[], int size). Strings are char arrays ending in the null character '\\0'; \"hi\" needs at least 3 chars. string.h: strlen (length without the null), strcpy (copies up to and including the null; destination must be large enough, otherwise undefined behavior and a security risk). printf %s prints characters until it reaches '\\0'."
+  },
+  {
+    "id": "mat-RD02-DiS-strings-io-pipes-notes-0",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "RD02 reading notes - Dive into Systems 16.5 (strings), 17.12 (I/O redirection), 17.13 (pipes) - study notes written for this guide (part 1)",
+    "text": "RD02 reading notes - Dive into Systems 16.5 (strings), 17.12 (I/O redirection), 17.13 (pipes) - study notes written for this guide Strings (16.5): C has no string type; a string is an array of char ending with the null character '\\0'. To store \"hi\" you need capacity 3 (h, i, \\0); \"hello\" needs 6. printf(\"%s\") prints characters until it reaches '\\0'. strlen returns the number of characters before the null (not the array capacity). If the array is not null-terminated, library functions run past the end (undefined behavior). strcpy copies up to and including the null and assumes the destination is big enough: unsafe if it is not, and the programmer is responsible for valid strings. Java hides these details; C does not. I/O redirection (17.12): every process starts with three open streams: stdin (file descriptor 0, keyboard), stdout (1, terminal), stderr (2, terminal). A file descriptor is a positive integer referring to an open file; Unix treats devices like terminals as files too. Operators handled by the shell: < redirects stdin; > (same as 1>) redirects stdout and overwrites; >> appends stdout; 2> redirects stderr; &> redirects both stdout and stderr to one file (shorthand for 1> file 2>&1). Examples: wc < quote; cat quote > another; cat blah 2> error_out; echo \"Again:\" >> another; cat blah quote &> err_out; grep teach < another 1> grep_out 2> grep_error. Redirections are processed left to right, so 2>&1 must come after the stdout target to follow it. Pipes (17.13): cmd1 | cmd2 sends cmd1's stdout to cmd2's stdin with no intermediate file. Pipes chain: cat quote | grep th | wc. ls | wc counts lines/words/chars of ls output; ls | xargs wc runs wc on every file listed by ls."
+  },
+  {
+    "id": "mat-RD03-DiS-16.4-functions-notes-0",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "RD03 reading notes - Dive into Systems 16.4 (functions in C) and the array/strings background in 16.5 - study notes written for this guide (part 1)",
+    "text": "RD03 reading notes - Dive into Systems 16.4 (functions in C) and the array/strings background in 16.5 - study notes written for this guide C is imperative and procedural: programs are organized as functions, starting at main (Java organizes into classes and objects; a Java program with one class, no data members and only public static methods looks most like a C program). A function definition is: return type, name, parameter list, body. A prototype (declaration) gives only the name, return type and parameter list. All functions must be declared before they are called (so the compiler knows the type information), which is why prototypes often sit above main. A function that returns nothing has return type void. A call looks like function_name(argument_list); arguments are expressions. Arguments are passed by value: each parameter receives a copy of the argument's value, so changing a parameter inside the function is not visible to the caller (in the max example, x = y changes only max's own x). The execution stack tracks active functions; each call creates a stack frame (activation record) holding the function's parameters and locals; it is pushed on call and popped on return. Only variables in the active frame are in scope. Functions break code into manageable pieces and reduce duplication; document each with what it does, each parameter, and what it returns. Arrays and functions (16.5): pass the array name (its base address); the function can change elements of the caller's array, but scalar parameters like size are copies. Functions usually take a size parameter because the array does not tell the function its capacity."
   },
   {
     "id": "mastery-u08-learn",
@@ -6784,6 +7243,1653 @@
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
     "text": "Which command puts both the normal output and the warnings into all.txt ? — &> (or > all.txt 2>&1 ) sends both stdout and stderr to the same file."
+  },
+  {
+    "id": "mastery-u10-learn",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "section",
+    "title": "Mastery: CL03 · Arrays, I/O redirection, pipes & strings (+ RD02)",
+    "text": "Counting with arrays and #define, the three standard streams, redirecting them with >> 2>, connecting programs with pipes, and how C strings really work. A C array is a block of memory that does not store its size : you track it yourself, often with a #define . #define NAME value is text substitution by the preprocessor before compiling: no memory, no type, cannot change. It removes “magic numbers.” The build has four stages: preprocessor ( #include , #define ) → compiler (C to assembly) → assembler (to machine code) → linker (combines with libraries into the executable). Every process starts with three streams: stdin = 0 , stdout = 1 , stderr = 2 , all attached to the terminal. A file descriptor is a non-negative integer naming an open file. The shell rewires the streams before the program runs: < file (stdin), > file (overwrite stdout), >> file (append), 2> file (stderr). The program is unaware: getchar still reads stdin. putchar and printf always write to stdout . To write to stderr use fputc(c, stderr) or fprintf(stderr, ...) . stderr exists so errors can go somewhere different from normal output. A pipe a | b connects a’s stdout to b’s stdin with no temporary file. Stderr is not piped. wc -l / -w / -c count lines, words, bytes. A string is a char array ending in '\\0' . strlen counts characters before the null; sizeof is the array’s total size. A {'h','i'} array with no null is not a string. Common trap: ndigit[c]++ uses the character code (48..57) as an index: out of bounds. You need c - '0' . And 'c' - '0' is the letter c (99), not your variable. Common trap: Using > twice destroys the first run’s output; >> appends. Common trap: printf errors do not go to stderr, so 2> err.txt stays empty. Common trap: Redirection order matters: > out.txt 2>&1 sends both to the file, but 2>&1 > out.txt sends stderr to the terminal . Common trap: #define MAX 3+1 then MAX*2 is 3+1*2 = 5, not 8: it is only text."
+  },
+  {
+    "id": "mastery-u10-card0",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "What is a magic number and how do you avoid it? — A numeric value in code with no explanation of what it means. Give it a name with #define NAME value ."
+  },
+  {
+    "id": "mastery-u10-card1",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "What does #define really do? — The preprocessor replaces every occurrence of the name with the value as plain text before compiling. No memory, no type checking, can’t change at run time."
+  },
+  {
+    "id": "mastery-u10-card2",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "#define vs a variable? — Define: no memory, no type check, cannot change, replaced by the preprocessor. Variable: has memory and a type, can change, no replacement."
+  },
+  {
+    "id": "mastery-u10-card3",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "The four build stages? — Preprocessor (#include, #define) → compiler (to assembly) → assembler (to machine code) → linker (combine with libraries)."
+  },
+  {
+    "id": "mastery-u10-card4",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Why index with c - '0' ? — It converts a digit character ('0'..'9' = 48..57) to its value 0..9, a valid index. c - 48 works too but hides the intent."
+  },
+  {
+    "id": "mastery-u10-card5",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Do C arrays know their size? — No. They are contiguous memory with no stored length; pass the size separately ( void f(int arr[], int size) )."
+  },
+  {
+    "id": "mastery-u10-card6",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "File descriptor numbers for stdin, stdout, stderr? — 0, 1, 2."
+  },
+  {
+    "id": "mastery-u10-card7",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "What is a file descriptor? — A non-negative integer that identifies an open file (or device) within a process."
+  },
+  {
+    "id": "mastery-u10-card8",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "< , > , >> , 2> , &> ? — stdin from a file · stdout overwrite · stdout append · stderr to a file · both stdout and stderr to one file."
+  },
+  {
+    "id": "mastery-u10-card9",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Where do putchar and printf write? How do you write to stderr? — Always stdout. Use fputc(c, stderr) or fprintf(stderr, ...) ."
+  },
+  {
+    "id": "mastery-u10-card10",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Why does stderr exist? — So error messages and diagnostics can be separated from normal output (and redirected differently)."
+  },
+  {
+    "id": "mastery-u10-card11",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "What does cmd1 | cmd2 do? — Connects cmd1’s stdout to cmd2’s stdin with no intermediate file. Stderr is not piped."
+  },
+  {
+    "id": "mastery-u10-card12",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "wc -l , wc -w , wc -c ? — Count lines, words, bytes."
+  },
+  {
+    "id": "mastery-u10-card13",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "How are strings stored in C? — As char arrays ending with the null terminator '\\0' . printf %s prints until it finds it."
+  },
+  {
+    "id": "mastery-u10-card14",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "strlen vs sizeof ? — strlen: characters before the first null (run time). sizeof: total bytes of the array (compile time)."
+  },
+  {
+    "id": "mastery-u10-card15",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Which creates a valid string: {'h','i','\\0'} or {'h','i'} or \"hi\" ? — The first and third. A string literal adds the null automatically; the second has no terminator, so it is not a string."
+  },
+  {
+    "id": "mastery-u10-q0",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "What does the preprocessor do with #define NUM_DIGITS 10 ? — The compiler never sees the name; it sees 10."
+  },
+  {
+    "id": "mastery-u10-q1",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "In C, how does a function know how many elements an int arr[] parameter has? — This is why signatures look like void f(int arr[], int size) ."
+  },
+  {
+    "id": "mastery-u10-q2",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Which are the file descriptor numbers for stdin, stdout, stderr (in that order)? — stdin 0, stdout 1, stderr 2: this is why the operator for stderr is 2> ."
+  },
+  {
+    "id": "mastery-u10-q3",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Which statement writes a character to stderr ? — Only functions that take an explicit stream (fputc, fprintf) can target stderr."
+  },
+  {
+    "id": "mastery-u10-q4",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "In ./a | ./b , what is connected? — A pipe redirects the left command’s stdout into the right command’s stdin."
+  },
+  {
+    "id": "mastery-u10-q5",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Select all valid C strings (null-terminated). — A string needs a null terminator and room for it."
+  },
+  {
+    "id": "mastery-u10-q6",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "The program counts the digit characters in the input 2024 . Fill in these final counts. #define NUM_DIGITS 10 int ndigit[NUM_DIGITS] = {0}; for (const char *p = \"2024\"; *p; p++) { int c = *p; if (c >= '0' && c <= '9') ++ndigit[c - '0']; } — The characters are 2, 0, 2, 4: so 2 appears twice, 0 and 4 once, and 3 never. = {0} zero-initialized the rest."
+  },
+  {
+    "id": "mastery-u10-q7",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "producer prints kiwi then plum . consumer uppercases every letter. What are the two lines of result.txt after ./producer | ./consumer > result.txt ? — The pipe passes producer’s stdout to consumer’s stdin; the final redirect sends consumer’s output to the file, leaving the terminal empty."
+  },
+  {
+    "id": "mastery-u10-q8",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "The input has two lines: a b and c , each ending in a newline (so 6 bytes). Fill in each command’s output number. — -l counts newlines (2), -w counts whitespace-separated words (a, b, c), -c counts bytes: a, space, b, newline, c, newline = 6."
+  },
+  {
+    "id": "mastery-u10-q9",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Fill in the three values. char s3[10] = \"hi\"; char s4[10] = {'h', 'i', '\\0', 'X', 'Y', 'Z', '\\0'}; printf(\"%zu\\n%zu\\n%zu\\n\", strlen(s3), strlen(s4), sizeof(s3)); — Both strings end at their first null after “hi.” The XYZ in s4 sits after the first null, so it is invisible to strlen. sizeof is the declared array size, 10."
+  },
+  {
+    "id": "mastery-u10-q10",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Fill in the three values. char a[] = {'h', 'i', '\\0'}; char b[] = \"hi\"; printf(\"%zu\\n%zu\\n%zu\\n\", sizeof(a), sizeof(b), strlen(b)); — A string literal automatically includes the null terminator, so both arrays are 3 bytes. strlen does not count the null."
+  },
+  {
+    "id": "mastery-u10-q11",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "A program prints one line ( hello ) each time it runs. After these three commands, how many lines does log.txt have, and what does cat other.txt show? — The first run is erased by the second > , then >> appends one more: 2 lines. other.txt got a single run."
+  },
+  {
+    "id": "mastery-u10-q12",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "This is meant to count digit characters but writes outside the array. Which line is the root cause? — Use ++ndigit[c - '0'] to convert the digit character to its value first."
+  },
+  {
+    "id": "mastery-u10-q13",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "This prints hello followed by garbage. Which line is the root cause? — Make the array at least 6 bytes: char str[] = \"hello\"; adds the terminator for you."
+  },
+  {
+    "id": "mastery-u10-q14",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "A program prints errors with printf(\"Error: bad input\\n\"); , but ./prog 2> err.txt leaves err.txt empty and the error still shows on screen. Which line should change? — fprintf(stderr, \"Error: bad input\\n\"); sends it to file descriptor 2, which 2> captures."
+  },
+  {
+    "id": "mastery-u10-q15",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Run prog reading from in.txt , sending normal output to out.txt and errors to err.txt . ./prog __0__ in.txt __1__ out.txt __2__ err.txt — < stdin, > stdout, 2> stderr."
+  },
+  {
+    "id": "mastery-u10-q16",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Arrange a program that copies stdin to stdout and then prints Done! to stderr. Two lines do not belong. — c must be an int to hold EOF, and printf would send “Done!” to stdout instead of stderr."
+  },
+  {
+    "id": "mastery-u10-q17",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "You want a program’s errors only saved to errors.log , with normal output still on the screen. Which command? — File descriptor 2 is stderr, so 2> redirects only that."
+  },
+  {
+    "id": "mastery-u10-q18",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "The program p prints out to stdout and err to stderr. Redirections are processed left to right. What ends up in out.txt in each case? (Answer both , out , or err .) — Case 1: stdout goes to the file first; then 2>&1 points stderr at wherever stdout now goes (the file), so both land there. Case 2: stderr is first pointed at the terminal (stdout’s old target), and only then is stdout moved to the file, so err stays on the terminal."
+  },
+  {
+    "id": "mastery-u10-q19",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "What does this print? #define MAX 3 + 1 int x = MAX * 2; printf(\"%d\", x); — The preprocessor substitutes text: 3 + 1 * 2 , and multiplication happens first: 3 + 2 = 5, not 8. (A parenthesized #define MAX (3 + 1) would give 8.)"
+  },
+  {
+    "id": "mastery-u10-q20",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Fill in the results. char word[] = \"banana\"; int count = 0; for (int i = 0; word[i] != '\\0'; i++) { if (word[i] == 'a') count++; } printf(\"%d %zu %zu\", count, strlen(word), sizeof(word)); — The loop stops at the null terminator and counts the three a’s. banana has 6 characters; the array also holds the terminator, so 7 bytes."
+  },
+  {
+    "id": "mastery-u10-q21",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "nums.txt contains the numbers 4, 8, 15, 16, 23 (one per line). producer prints a file’s lines unchanged. Fill in the results. — sort puts 4 first. There are 5 lines. Only 15 and 16 contain the digit 1, so grep keeps two lines and wc counts them."
+  },
+  {
+    "id": "mastery-u10-q22",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Write a complete C program that reads stdin and copies the digit characters to stdout and every other character to stderr. Then give a command that runs it on data.txt , saving the digits to digits.txt and everything else to rest.txt . — #include <stdio.h> int main(void) { int c; while ((c = getchar()) != EOF) { if (c >= '0' && c <= '9') putchar(c); else fputc(c, stderr); } return 0; } ./a.out < data.txt > digits.txt 2> rest.txt"
+  },
+  {
+    "id": "mastery-u10-q23",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Teach it. Explain what stdin, stdout and stderr are, their file descriptor numbers, who does the redirecting, and why a program does not need to change when you redirect it. — The shell connects each of the three descriptors to a file or the terminal and then launches the program. The program keeps calling getchar/putchar on the same streams; only where they point has changed."
+  },
+  {
+    "id": "mastery-u10-q24",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Explain the difference between a > file and a | b , and why pipes are powerful. — Redirection connects a stream to a file; a pipe connects one process’s output stream to another’s input stream. That makes small single-purpose programs composable."
+  },
+  {
+    "id": "mastery-u10-q25",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Explain how a C string is stored, what the null terminator is for, and the difference between strlen and sizeof . Include why char s[5] = {'h','e','l','l','o'} is a problem. — The array holds the characters, and the null byte tells functions where the string stops. strlen scans for it at run time; sizeof is fixed by the declaration."
+  },
+  {
+    "id": "mastery-u11-learn",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "section",
+    "title": "Mastery: CL04 · Function stack frames & memory diagrams (+ RD03)",
+    "text": "What a call does to memory, how to draw it the way the course expects, what is copied versus shared, and what the reading adds about functions, prototypes and pass-by-value. The stack manages function calls. Each call gets a stack frame (an activation record) holding the return address (RA) , the arguments and the local variables . Caller makes the call; callee is the function called. The stack pointer (sp) marks the current top of the stack. In the course’s diagrams the stack grows downward, toward lower addresses : a new frame is drawn below the caller’s, and sp moves down with it. On return, the callee places its return value in the caller’s frame (labelled RV(callee) ), its frame is deallocated (put an X through it) and sp moves back up . The old bytes may still be there physically, but the memory is no longer valid and gets reused by the next call. Draw sizes in bytes: RA (8) , an int8_t is 1, int32_t 4, a pointer 8. main ’s RA is just “return to the OS” (shown as 0). Return addresses are line numbers in the diagrams. Pass by value: scalar arguments are copies ; changing them never changes the caller. Arrays are not copied: the callee gets an 8-byte pointer ( pointer to stack , drawn with an arrow) to the caller’s array, so element changes are visible. #define names are replaced by the preprocessor, so they take no space in any frame. Functions must be declared before use : put a prototype (name, return type, parameters) above main . Common trap: Drawing a callee’s frame above the caller, or letting a deallocated frame stay un-X’d. Common trap: Forgetting the RV(...) slot: the return value goes in the caller’s frame, not the callee’s. Common trap: Copying a whole array into the callee’s frame. Only an 8-byte pointer goes in. Common trap: Giving a #define constant its own box in the diagram. Common trap: Thinking local variables survive the call: they die with their frame, which is why returning a pointer to a local is a bug and why unbounded recursion overflows the stack."
+  },
+  {
+    "id": "mastery-u11-card0",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What is the stack and what is a stack frame? — The stack is the area of memory managing function calls. A stack frame is one function’s workspace: return address, arguments and local variables."
+  },
+  {
+    "id": "mastery-u11-card1",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Caller vs callee? — The caller makes the call; the callee is the function being called. Every call has one of each."
+  },
+  {
+    "id": "mastery-u11-card2",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What is the stack pointer (sp)? — It holds the address of the current top of the stack. It moves to make room on a call and moves back on a return."
+  },
+  {
+    "id": "mastery-u11-card3",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Which direction does the stack grow in the course diagrams? — Toward lower addresses: a new frame is drawn below the caller’s frame."
+  },
+  {
+    "id": "mastery-u11-card4",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What does the return address (RA) record? — Where in the caller execution continues after the callee returns. ( main ’s RA is the OS, drawn as 0.)"
+  },
+  {
+    "id": "mastery-u11-card5",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Where does the return value go and how is it labelled? — Into the caller’s frame, labelled RV(callee) ."
+  },
+  {
+    "id": "mastery-u11-card6",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What do you do to the diagram when a function returns? — Put an X through its frame and move sp back up. Its data may remain but is invalid and will be reused."
+  },
+  {
+    "id": "mastery-u11-card7",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Why do local variables disappear when a function returns? — They live in the callee’s frame, which is deallocated on return."
+  },
+  {
+    "id": "mastery-u11-card8",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "How is an array parameter represented in a frame? — As an 8-byte pointer to stack with an arrow to the original array in the caller’s frame. Nothing is copied."
+  },
+  {
+    "id": "mastery-u11-card9",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Pass by value vs pass by pointer? — By value: the callee gets a copy, so changes are invisible to the caller. By pointer: the callee gets an address and can change the original."
+  },
+  {
+    "id": "mastery-u11-card10",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Sizes to draw: RA, int8_t, int16_t, int32_t, int64_t, pointer? — 8, 1, 2, 4, 8, 8 bytes."
+  },
+  {
+    "id": "mastery-u11-card11",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Does #define SIZE 5 get a box in a stack frame? — No. The preprocessor replaces it with 5 in the code, so it is not stored in any frame."
+  },
+  {
+    "id": "mastery-u11-card12",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What is a function prototype and why put it above main? — It declares a function’s name, return type and parameter list so it can be called before its full definition appears."
+  },
+  {
+    "id": "mastery-u11-card13",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Why must functions be declared before they are called? — The compiler must know a function’s type information (return type and parameters) before the call."
+  },
+  {
+    "id": "mastery-u11-card14",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What goes wrong with deep or endless recursion? — Each call pushes another frame; the stack runs out of space (a stack overflow)."
+  },
+  {
+    "id": "mastery-u11-card15",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What is a process? — A running instance of a program (active), with its own memory, CPU state and resources. A program on its own is passive code."
+  },
+  {
+    "id": "mastery-u11-q0",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Main calls foo . In the course’s memory diagrams, where is foo’s frame drawn and which way does the stack grow? — New frames are drawn below the caller and sp moves down."
+  },
+  {
+    "id": "mastery-u11-q1",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What happens to the stack pointer when a new function’s frame is created? — sp always points at the top (the newest frame)."
+  },
+  {
+    "id": "mastery-u11-q2",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What does the return address (RA) in a frame represent? — The CPU needs it to resume the caller at the right line."
+  },
+  {
+    "id": "mastery-u11-q3",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Main calls add , which returns a value main needs. What label marks that location in main’s frame? — The return value is placed in the caller’s frame as RV(callee) ."
+  },
+  {
+    "id": "mastery-u11-q4",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Why do we put an X through a stack frame after its function returns? — Deallocated means invalid, not zeroed."
+  },
+  {
+    "id": "mastery-u11-q5",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Select all things that may be stored in a function’s stack frame. — Arguments, locals and the return address."
+  },
+  {
+    "id": "mastery-u11-q6",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What does a function prototype specify? — It lets main call functions defined later in the file."
+  },
+  {
+    "id": "mastery-u11-q7",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "How does the reading characterize C compared to Java? — A C program is a collection of functions starting at main."
+  },
+  {
+    "id": "mastery-u11-q8",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Using the course sizes (RA is 8 bytes), how many bytes does each frame take? int8_t add(int8_t a, int8_t b) { int8_t result = a + b; return result; } /* main: */ int8_t x = 5, y = -10; int8_t result = 2 * add(x, y); // main also holds RV(add) (1 byte) — add: RA 8 + a 1 + b 1 + result 1 = 11. main: RA 8 + x 1 + y 1 + result 1 + RV(add) 1 = 12."
+  },
+  {
+    "id": "mastery-u11-q9",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Fill in each variable as the program runs. void C(int z) { int c = z + 1; } void B(int y) { int b = y * 2; C(b); } void A() { int a = 10; B(a); } int main() { A(); } — a (10) is copied into y; b = 20 is copied into z; c = z + 1 = 21. At C’s deepest point four frames exist: main, A, B, C."
+  },
+  {
+    "id": "mastery-u11-q10",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Fill in the values. ( square returns before addOne is called.) int square(int x) { int result = x * x; return result; } int addOne(int x) { int result = x + 1; return result; } int calculate() { int answer = addOne(square(5)); return answer; } — The inner call finishes first: square(5) = 25 is placed in RV(square), its frame is X’d, and only then is addOne(25) called. addOne’s frame may reuse the memory square’s frame used."
+  },
+  {
+    "id": "mastery-u11-q11",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Fill in the values after the call returns. int32_t example(int32_t a[3], int32_t b[3], int32_t size, int32_t c) { for (int64_t i = 0; i < size; i++) { a[i] = b[i] + i; b[i] = a[i] - c; c++; } return c; } /* main: */ int32_t x[3] = {10, 20, 30}; int32_t y[3] = {40, 50, 60}; int32_t demo = x[0] + y[0]; int32_t ret_val = example(x, y, 3, demo); — Both arrays are shared (changed in main), while c is a copy that counts 50, 51, 52, 53 and is returned. demo, passed by value, stays 50."
+  },
+  {
+    "id": "mastery-u11-q12",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Fill in main’s values after the call. #define ARR_SIZE 5 int32_t example(int32_t arr[ARR_SIZE], int32_t size, int32_t sum) { sum = 0; for (int16_t i = 0; i < size; i++) { sum += arr[i]; arr[i]++; } return arr[0]; } /* main: */ int32_t a[ARR_SIZE] = {1, 2, 3, 4, 5}; int32_t sum = 7; int32_t ret_val = example(a, ARR_SIZE, sum); — Every element is incremented through the pointer (arrays are shared). The callee’s sum is a copy (it reaches 15 and is discarded), so main’s sum stays 7. It returns arr[0], which is now 2."
+  },
+  {
+    "id": "mastery-u11-q13",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Fill in main’s values after the call. void bump(int32_t n, int32_t a[]) { n = n * 2; a[1] = a[1] * 2; } /* main: */ int32_t n = 3; int32_t a[3] = {1, 2, 3}; bump(n, a); — n is a copy and doubles only inside bump. a is a pointer to main’s array, so the doubled a[1] (4) is visible afterwards."
+  },
+  {
+    "id": "mastery-u11-q14",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Fill in the result and the maximum number of frames on the stack at once (including main ). int sum_to(int n) { if (n == 0) return 0; return n + sum_to(n - 1); } /* main: */ int r = sum_to(3); — sum_to(3) = 3 + 2 + 1 + 0 = 6. At the deepest point the stack holds main, sum_to(3), sum_to(2), sum_to(1) and sum_to(0): five frames. Each recursive call gets its own n."
+  },
+  {
+    "id": "mastery-u11-q15",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "make() is supposed to give the caller an array, but the values are unreliable. Which line is the root cause? — The local array lives in make’s frame. After return the frame is invalid and gets reused, so the pointer leads to dead memory."
+  },
+  {
+    "id": "mastery-u11-q16",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "This function is meant to add 1 + 2 + … + n, but calling it crashes with a stack overflow. Which line is the root cause? — Add a stopping condition such as if (n == 0) return 0; so the recursion unwinds."
+  },
+  {
+    "id": "mastery-u11-q17",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Put the events in order for this program, drawn the course way. Two events are impossible. — The callee gets a frame, copies the argument, computes, stores the return value in the caller’s frame, then its frame is X’d and sp moves back; only then does main finish its assignment."
+  },
+  {
+    "id": "mastery-u11-q18",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Fill in the byte sizes shown in the diagram of this function’s frame (course sizes). int32_t example(int32_t arr[], int32_t size) { int16_t i; } /* frame: */ RA (8) arr (__0__): pointer to stack size (__1__) i (__2__) — An array parameter is a pointer (8 bytes). int32_t is 4 bytes. int16_t is 2 bytes."
+  },
+  {
+    "id": "mastery-u11-q19",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "In calculate , square(5) returns, and then addOne is called. Where can addOne’s frame be placed? — After square returns, sp moves back, so the next call can occupy that same memory."
+  },
+  {
+    "id": "mastery-u11-q20",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Given void f(int32_t a, int32_t b[], int32_t *c, char s[]) , select all parameters drawn as an 8-byte “pointer to stack” in f’s frame. — Array parameters decay to pointers and explicit pointers are pointers; a plain scalar is copied by value."
+  },
+  {
+    "id": "mastery-u11-q21",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Fill in main’s values. (An int8_t holds −128 to 127 and wraps when stored.) int8_t scale(int8_t v[], int32_t n, int8_t k) { for (int32_t i = 0; i < n; i++) { v[i] = v[i] * k; } k = 0; return v[0]; } /* main: */ int8_t d[3] = {60, 2, 3}; int8_t r = scale(d, 3, 3); — 60 × 3 = 180, which wraps when stored into an int8_t: 180 − 256 = −76. The array is shared so main sees it; r is the returned (wrapped) value; the callee’s k = 0 was only a copy."
+  },
+  {
+    "id": "mastery-u11-q22",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Fill in the results. void inc(int *p) { (*p)++; } void twice(int *p) { inc(p); inc(p); } /* main: */ int k = 5; twice(&k); — Both frames get the address of main’s k, so each inc writes into main’s frame: 5 → 6 → 7. At the deepest point the stack holds main, twice and inc."
+  },
+  {
+    "id": "mastery-u11-q23",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Fill in the results for this program. void E() { int e = 50; } void D() { int d = 40; E(); } void C() { int c = 30; } void B() { int b = 20; C(); } void A() { int a = 10; B(); D(); } int main() { A(); } — The deepest chains are main → A → B → C and main → A → D → E: four frames. By the time main returns, A and everything below it have returned and been X’d, leaving only main."
+  },
+  {
+    "id": "mastery-u11-q24",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Which statement about #define SIZE 5 and int values[SIZE]; in main is correct? — After preprocessing the code reads int values[5]; ."
+  },
+  {
+    "id": "mastery-u11-q25",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Describe, as you would draw it on paper, the memory diagram just after twice_all returns. Include every frame (with fields, byte sizes and values), the arrow, the RV slot, any X’d frame and where sp is. #define N 3 int32_t twice_all(int32_t v[N], int32_t k) { for (int32_t i = 0; i < N; i++) { v[i] = v[i] * k; } k = 0; return v[N - 1]; } int main(void) { int32_t nums[N] = {1, 2, 3}; int32_t k = 4; int32_t last = twice_all(nums, k); } — Only main ’s frame is live, with sp at its edge: RA (8): 0 , nums (12): [4, 8, 12] , k (4): 4 , last (4): 12 , and the leftover RV(twice_all) (4): 12 . twice_all’s frame below it is X’d out (its RA, v (8): pointer to stack , k (4) crossed 4 → 0, and i (4) would show 3). There is no box for N: it was replaced by 3 by the preprocessor. nums changed because v pointed at it; main’s k is still 4 because the callee’s k was a copy."
+  },
+  {
+    "id": "mastery-u11-q26",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Write a prototype and a full definition for int max3(int a, int b, int c) that returns the largest of three ints, using a documentation comment in the style the reading recommends. Then explain where the prototype goes and why. — int max3(int a, int b, int c); // prototype, above main /* max3: finds the largest of three integers * a, b, c: the values to compare * returns: the largest of a, b and c */ int max3(int a, int b, int c) { int best = a; if (b > best) best = b; if (c > best) best = c; return best; } The prototype goes above main (or the whole definition does) because C needs a function’s return type and parameters before it is called. Parameters are copies, so changing best or a never affects the caller."
+  },
+  {
+    "id": "mastery-u11-q27",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Teach it. Walk through everything that happens in memory when main calls add(x, y) and gets a value back: frames, arguments, return address, return value, sp, and what happens afterwards. — Call pushes a frame (RA, args, locals). The callee works, stores the result in RV(add) in main’s frame, and returns: its frame is X’d and sp moves back, so main can continue at the saved return address."
+  },
+  {
+    "id": "mastery-u11-q28",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Explain how the stack explains two classic problems: returning a pointer to a local variable, and an infinite recursion crashing the program. — The stack only holds data for functions that are still active. Dead frames are reclaimed, so pointers into them dangle; and the stack is finite, so unbounded calls exhaust it."
+  },
+  {
+    "id": "mastery-u11-q29",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "You know Java. Explain how functions in C differ from methods, what “passed by value” means, and why prototypes matter. — A C function is a free-standing unit with a typed signature. Its parameters are copies living in its own frame; the compiler needs a prototype before the call to check types."
+  },
+  {
+    "id": "mastery-u11-q30",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "In the course’s memory diagrams, which way does the stack grow as functions are called? — Each call places a new frame below the caller’s, and sp moves down."
+  },
+  {
+    "id": "mastery-u11-q31",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What does the stack pointer (sp) represent? — sp moves down when a frame is created and back up when it is removed."
+  },
+  {
+    "id": "mastery-u11-q32",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "A function returns. What happens to the stack pointer? — The callee’s frame is deallocated, so sp returns to the top of the caller’s frame."
+  },
+  {
+    "id": "mastery-u11-q33",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What does a frame’s return address (RA) tell the program? — It is a location in the caller’s code."
+  },
+  {
+    "id": "mastery-u11-q34",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "A diagram entry reads count (2): 7 . What does the 2 represent? — The number in parentheses is the size in bytes (an int16_t)."
+  },
+  {
+    "id": "mastery-u11-q35",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Main calls a function named scale that returns a value main needs. Which label marks that slot in main’s frame? — RV stands for return value, labelled with the callee’s name."
+  },
+  {
+    "id": "mastery-u11-q36",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "When a function returns, which of these should you do in the diagram? Select all that apply. — The frame is deallocated and sp moves back; the old bytes are simply invalid."
+  },
+  {
+    "id": "mastery-u11-q37",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Which of these may be stored in a function’s stack frame? Select all that apply. — Locals, parameters and the return address."
+  },
+  {
+    "id": "mastery-u11-q38",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "The active frames are, from higher to lower addresses: main , mid , leaf . leaf is executing and then returns to mid . What do the active frames look like now? — Only the returning function’s frame is removed."
+  },
+  {
+    "id": "mastery-u11-q39",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "int inner(int n) { return n + 1; } int outer(int x) { int y = inner(x); return y * 2; } int main() { int r = outer(4); return 0; } While inner is executing, what is the order of active frames from highest to lowest address? — Each call is pushed below its caller, so the nesting order is main, outer, inner."
+  },
+  {
+    "id": "mastery-u11-q40",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Put these events in order for the program below. int inc(int n) { int r = n + 1; return r; } int main() { int y = inc(9); } Two events are impossible. — Frame, argument, local, return value into the caller’s RV slot, deallocate, sp back, then the caller finishes its assignment."
+  },
+  {
+    "id": "mastery-u11-q41",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Put these events in order for this nested call. Two events are impossible. int sq(int a) { int s = a * a; return s; } int twice_sq(int b) { int t = sq(b); return t * 2; } int main() { int z = twice_sq(3); } — Calls nest: sq runs and returns entirely inside twice_sq, whose own frame is deallocated afterwards, before main assigns z."
+  },
+  {
+    "id": "mastery-u11-q42",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "What does it mean to pass an argument by value ? — Changing the parameter changes only the copy."
+  },
+  {
+    "id": "mastery-u11-q43",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "void set(int32_t v) { v = 99; } int main() { int32_t v = 5; set(v); } What is main’s v after set returns? — The parameter is a copy in set’s frame."
+  },
+  {
+    "id": "mastery-u11-q44",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "void fill(int32_t arr[]) { arr[0] = 7; } int main() { int32_t a[3] = {1, 2, 3}; fill(a); } What is a[0] after fill returns? — arr is a pointer to the caller’s array, so the write is visible."
+  },
+  {
+    "id": "mastery-u11-q45",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Fill in main’s values after the call. void change(int32_t k, int32_t arr[]) { k = k + 10; arr[2] = arr[2] + 10; } /* main: */ int32_t k = 1; int32_t nums[3] = {4, 5, 6}; change(k, nums); — k is passed by value, so main’s k is unchanged. The array is passed as a pointer, so nums[2] becomes 16 in main."
+  },
+  {
+    "id": "mastery-u11-q46",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL04 Stack frames",
+    "text": "Which statements are true when an array is passed to a function? Select all that apply. — A pointer crosses into the callee; the data does not."
+  },
+  {
+    "id": "mastery-u12-learn",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "section",
+    "title": "Mastery: CL05 · $PATH, globbing, regex, find & grep",
+    "text": "How the shell finds a command, how globs expand before a command runs, how regular expressions match text, and how find and grep use them. A command containing a slash ( ./hello , ../bin/hello , /usr/bin/hello ) is a path : run exactly that file. A command with no slash ( hello , ls ) makes the shell search $PATH . $PATH is a colon-separated list of directories searched left to right; first match wins . To make your own program win, prepend its directory: export PATH=\"/home/me/project:$PATH\" . The current directory is deliberately not on PATH: otherwise a malicious file named ls in a downloaded folder could run instead of the real one. ./ says “yes, I mean this one.” Globbing is filename expansion by the shell, before the command runs : * any characters, ? exactly one, [abc] / [a-z] one from a set or range. cat *.txt becomes cat dog.txt notes.txt ; cat never sees the star. Regex is a pattern a program uses to match text: classes [abc] , quantifiers * + ? {n} {n,} {n,m} , anchors ^ $ , and \\ to escape ( . means any one character, \\. a literal dot). Glob vs regex: any sequence is * vs .* ; any one char ? vs . ; literal dot . vs \\. . find -name takes a glob (quote it); grep takes a regex (use -E for {n,m} , + , ? ). Common trap: Typing hello for a program in the current directory. No slash means a PATH search, which does not look in . . Common trap: Appending to PATH when you needed to prepend: a directory at the end loses to any earlier match. Common trap: An unquoted glob in find -name *.c : the shell expands it first, so find receives file names instead of a pattern. Write -name \"*.c\" . Common trap: grep \"_[0-9]{2}$\" without -E treats the braces literally and matches nothing. Common trap: Un-anchored regexes match inside longer text: ID-[0-9]{3} matches abcID-123xyz ; ^ID-[0-9]{3}$ does not."
+  },
+  {
+    "id": "mastery-u12-card0",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "What does ./hello mean? — A relative path: the file hello in the current directory. Anything with a slash is run as that exact path."
+  },
+  {
+    "id": "mastery-u12-card1",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "What happens when you type a command with no slash? — The shell searches the directories in $PATH , in order, and runs the first match."
+  },
+  {
+    "id": "mastery-u12-card2",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "What is $PATH ? — A colon-separated list of directories the shell searches for commands, e.g. /usr/local/bin:/usr/bin:/bin ."
+  },
+  {
+    "id": "mastery-u12-card3",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Why is the current directory not on PATH? — Security: a malicious executable named like a real command ( ls ) in a folder you enter could silently run instead of the real one."
+  },
+  {
+    "id": "mastery-u12-card4",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "How do you let hello run from any directory without moving it? — export PATH=\"/path/to/dir:$PATH\" . Prepending makes it win over later directories."
+  },
+  {
+    "id": "mastery-u12-card5",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Does PATH order matter? — Yes. Search is left to right and stops at the first match, so earlier directories shadow later ones."
+  },
+  {
+    "id": "mastery-u12-card6",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "What are the glob wildcards? — * any number of characters · ? exactly one · [abc] one from the set · [a-z] one in the range."
+  },
+  {
+    "id": "mastery-u12-card7",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Who expands a glob, and when? — The shell, before the command runs. cat *.txt becomes cat dog.txt notes.txt and cat never sees the star."
+  },
+  {
+    "id": "mastery-u12-card8",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "What is a regular expression? — A pattern used by a program (grep, etc.) to search or match text."
+  },
+  {
+    "id": "mastery-u12-card9",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Regex character classes? — [abc] a, b or c · [a-z] lowercase · [A-Z] uppercase · [0-9] digit (each matches exactly one character)."
+  },
+  {
+    "id": "mastery-u12-card10",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Regex quantifiers? — * 0 or more · + 1 or more · ? 0 or 1 · {n} exactly n · {n,} n or more · {n,m} n to m."
+  },
+  {
+    "id": "mastery-u12-card11",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Regex anchors? — ^ start of line, $ end of line. Without anchors a pattern can match inside longer text."
+  },
+  {
+    "id": "mastery-u12-card12",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "What does escaping do? Example? — A backslash makes the next character literal: \\. is a real dot, whereas . means any character. (Also \\n in C is a newline.)"
+  },
+  {
+    "id": "mastery-u12-card13",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Glob vs regex translation? — any sequence: * vs .* · any one char: ? vs . · literal dot: . vs \\. · class: same · repetition: glob has none."
+  },
+  {
+    "id": "mastery-u12-card14",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Expansion vs matching? — Globbing expands to filenames (done by the shell, result is arguments). Regex matches text (done by a program, result is true/false per line)."
+  },
+  {
+    "id": "mastery-u12-card15",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "How does find work? — find <where> -name <pattern> searches the directory recursively. -name uses a glob , so quote it: find . -name \"*.c\" ."
+  },
+  {
+    "id": "mastery-u12-card16",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "How does grep work? — grep <regex> <file> prints the lines that match. Use -E for extended syntax like {2,3} , + , ? ."
+  },
+  {
+    "id": "mastery-u12-q0",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "What is the difference between typing ./hello and hello ? — A slash means “run this path”; no slash means “find a command with this name.”"
+  },
+  {
+    "id": "mastery-u12-q1",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "PATH=/home/me/bin:/usr/bin:/bin , and both /home/me/bin/tool and /usr/bin/tool exist. Which runs for tool ? — First match wins, scanning left to right."
+  },
+  {
+    "id": "mastery-u12-q2",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Why is the current directory not searched by default? — Requiring ./ forces you to say you mean the local file."
+  },
+  {
+    "id": "mastery-u12-q3",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "You type cat *.txt . Which statement is true? — Globbing is expansion by the shell."
+  },
+  {
+    "id": "mastery-u12-q4",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "What does * mean on its own in a glob and in a regex ? — This is the classic glob/regex mix-up."
+  },
+  {
+    "id": "mastery-u12-q5",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which kind of pattern does find -name use? — Example: find . -name \"*.c\" ."
+  },
+  {
+    "id": "mastery-u12-q6",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which kind of pattern does grep use by default (and what flag enables {2,3} and + )? — grep searches file contents line by line with a regex."
+  },
+  {
+    "id": "mastery-u12-q7",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Select all correct translations or facts. — Same classes [abc] , different star, dot and repetition."
+  },
+  {
+    "id": "mastery-u12-q8",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "You are in /home/student/project with PATH=/home/student/bin:/usr/bin:/bin . Executables named hello exist in project , /home/student/bin and /usr/bin . Give the absolute path that runs. — Paths with slashes run that exact file (relative or absolute). A bare name is searched in PATH order, finding /home/student/bin first."
+  },
+  {
+    "id": "mastery-u12-q9",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Starting from PATH=/home/student/bin:/usr/bin:/bin , you run export PATH=\"/home/student/project:$PATH\" . Which hello runs for the bare command hello from any directory? And what is the new PATH? — The new directory is first in the list, so it wins; $PATH expands to the old value, which stays after it."
+  },
+  {
+    "id": "mastery-u12-q10",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Files: data_01.csv data_ab.csv data_1.csv data_001.csv about.md blogpost.md b_notes.md cats.md . Give each expansion (alphabetical, space separated). — data_??.csv needs exactly two characters between the underscore and .csv (data_1 has one, data_001 has three). [ab]*.md is any .md starting with a or b; cats.md starts with c."
+  },
+  {
+    "id": "mastery-u12-q11",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Does each whole string match ^ID-[0-9]{3}$ ? (yes/no) — It must start with ID-, then exactly three digits, then end. Too few digits, extra text before or after, and lowercase all fail."
+  },
+  {
+    "id": "mastery-u12-q12",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Does each whole word match b[ae][dt] ? (yes/no) — A b, then one of a or e, then one of d or t. Capital B fails; bea ends in a (not d or t); ba is too short."
+  },
+  {
+    "id": "mastery-u12-q13",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "The tree under /home has carla/comp211/labs/lab0.c , carla/comp211/notes/lec1.note , carla/comp211/notes/lec2.note , carla/comp301/ (empty) and john/psyc101/notes/lec1.note . From /home give each output (one path per line, sorted; nothing if empty). — -name matches the base name with a glob and find searches recursively. No .c files exist under john, so it prints nothing. Both comp211 and comp301 begin with comp."
+  },
+  {
+    "id": "mastery-u12-q14",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "users.txt contains alice_01, bob_2, carol_003, dave_12, eve_x, frank_007 (one per line). What do these print? (Lines joined by a space; nothing if empty.) — Without -E the braces are taken literally, so nothing matches. With -E , {2} means exactly two digits after the underscore at the end of the line: alice_01 and dave_12 (carol_003 has three, bob_2 one)."
+  },
+  {
+    "id": "mastery-u12-q15",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Same users.txt . What does grep -E \"^[a-z].*_[0-9]{2,3}$\" users.txt print? (Lines joined by a space, in file order.) — A lowercase first letter, anything, an underscore, then two or three digits at the end. bob_2 has one digit and eve_x has none."
+  },
+  {
+    "id": "mastery-u12-q16",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "After compiling, hello says “command not found,” even though the file is right there. Which line is the root cause? — ./hello contains a slash, so it is run as a path."
+  },
+  {
+    "id": "mastery-u12-q17",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "You put your own python3 wrapper in ~/tools and added it to PATH, but typing python3 still runs the system one. Which line is the cause? — Use export PATH=\"$HOME/tools:$PATH\" to put it first."
+  },
+  {
+    "id": "mastery-u12-q18",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "find . -name *.c fails with an error in a directory that contains main.c and util.c , but works in a directory with a single .c file. Which part is the problem? — Quote patterns meant for find so the shell does not expand them."
+  },
+  {
+    "id": "mastery-u12-q19",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Find every .md file anywhere under the directory docs . find __0__ -name \"__1__\" — First argument: where to search. -name takes a quoted glob."
+  },
+  {
+    "id": "mastery-u12-q20",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Match lines that are exactly ID- followed by three digits. grep -E \"^ID-[0-9]{__0__}__1__\" file.txt — Anchor the start with ^ (already present) and the end with $ ; {3} is exactly three digits."
+  },
+  {
+    "id": "mastery-u12-q21",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which regex matches the text notes.txt but not notesXtxt ? — A backslash makes the dot literal."
+  },
+  {
+    "id": "mastery-u12-q22",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Arrange the steps so that hello can be typed from any directory. Two lines would break something. — Build it, put it in a directory, add that directory to the front of the existing PATH, and run it. Setting PATH to just your directory would lose every system command; deleting the file defeats the purpose."
+  },
+  {
+    "id": "mastery-u12-q23",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "The directory has notes.md (contains the word TODO), docs/a.md (no TODO), docs/b.md (contains TODO) and src/x.c . From that directory give each result. — find searches recursively and finds three .md files. ls *.md expands only in the current directory (the shell glob does not descend). grep -rl TODO . lists the files containing the word."
+  },
+  {
+    "id": "mastery-u12-q24",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Write the regex equivalent of each glob (any reasonable anchoring accepted). — Star becomes .* , a single-character ? becomes . , and the literal dot must be escaped as \\. ."
+  },
+  {
+    "id": "mastery-u12-q25",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command prints only lines that start with a lowercase letter, contain an underscore, and end with two or three digits? ( users.txt from before.) — Extended syntax, a start anchor, any middle, an underscore, then {2,3} digits and an end anchor."
+  },
+  {
+    "id": "mastery-u12-q26",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Your PATH is /usr/local/bin:/home/me/tools:/usr/bin , with an executable analyze in each of /usr/local/bin , /home/me/tools and the current directory /home/me/lab . You then run export PATH=\"/home/me/tools:$PATH\" . Which analyze does the bare command run, and which does ./analyze run? — Prepending moves tools to the front for bare commands; the slash version ignores PATH."
+  },
+  {
+    "id": "mastery-u12-q27",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Your cwd is /home/student/lab and the tree is /home/student/lab/analyze , /home/student/tools/analyze , /usr/local/bin/analyze (all executable), with PATH=/usr/local/bin:/home/student/tools:/usr/bin:/bin . (1) Which file runs for analyze , ./analyze and ../tools/analyze ? (2) Write the command that makes the lab copy run when you type just analyze from any directory. (3) Explain why that is a security trade-off. — (1) analyze → /usr/local/bin/analyze (first match in PATH); ./analyze → /home/student/lab/analyze ; ../tools/analyze → /home/student/tools/analyze . (2) export PATH=\"/home/student/lab:$PATH\" puts the lab directory first. (3) Anything placed early in PATH can shadow real commands. A malicious or mistaken file in that directory (e.g. one named ls) would run in place of the system version, which is the reason the current directory is not on PATH by default."
+  },
+  {
+    "id": "mastery-u12-q28",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Given a project with src/*.c , docs/*.md and data/users.txt (one name per line), write: (1) a command listing every .c file under src ; (2) a command printing the lines of data/users.txt that start with a capital letter and end with a digit; (3) a command that counts how many lines of users.txt contain an underscore. Say which pattern language each uses. — (1) find src -name \"*.c\" (glob, quoted). (2) grep \"^[A-Z].*[0-9]$\" data/users.txt (regex: start, capital, anything, digit at the end). (3) grep -c \"_\" data/users.txt or grep \"_\" data/users.txt | wc -l . find uses shell-style globs ; grep uses regular expressions ."
+  },
+  {
+    "id": "mastery-u12-q29",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Teach it. Explain what the shell does when you type hello , ./hello and /usr/bin/hello ; what $PATH is; why order matters; and why the current directory is not on it. — Slash = path, no slash = PATH search. Because search stops at the first hit, ordering decides which program runs; leaving . out prevents impostor commands."
+  },
+  {
+    "id": "mastery-u12-q30",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Explain the difference between globbing and regular expressions: who does each, what each operates on, and how * , ? and . differ. — Globbing selects files by name and happens in the shell; regex matches text inside a program. The wildcards look similar but mean different things, so translate carefully."
+  },
+  {
+    "id": "mastery-u12-q31",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "You are in /home/ana/work . Executable report files exist in /opt/bin , /home/ana/scripts and /home/ana/work . PATH=/opt/bin:/home/ana/scripts:/usr/bin . Which program runs for ./report ? (Give the absolute path.) — A slash makes it a path relative to the current directory, so PATH is not consulted."
+  },
+  {
+    "id": "mastery-u12-q32",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Same setup. Which program runs for the bare command report ? (Absolute path.) — No slash, so the shell searches PATH left to right and runs the first match, in /opt/bin ."
+  },
+  {
+    "id": "mastery-u12-q33",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Same setup. Which program runs for ../scripts/report ? (Absolute path.) — .. climbs from work to /home/ana, then down into scripts. It is a path, so PATH is not used."
+  },
+  {
+    "id": "mastery-u12-q34",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Now PATH=/home/ana/scripts:/opt/bin:/usr/bin . Which program runs for the bare command report ? (Absolute path.) — The scripts directory is now first in the search order, so its copy is found first."
+  },
+  {
+    "id": "mastery-u12-q35",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "From the project root, which command finds every file named exactly notes.txt (anywhere below)? — -name with a quoted exact name matches only that base name in every subdirectory."
+  },
+  {
+    "id": "mastery-u12-q36",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds every file whose name ends in .md anywhere in the project? — Quote the glob so find receives the pattern: -name \"*.md\" ."
+  },
+  {
+    "id": "mastery-u12-q37",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds every file whose name begins with test ? — test* is test followed by anything."
+  },
+  {
+    "id": "mastery-u12-q38",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds every .txt file inside docs/ and its subdirectories (and nowhere else)? — The first argument chooses where to search; -name \"*.txt\" chooses what to match."
+  },
+  {
+    "id": "mastery-u12-q39",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds files that begin with test , then exactly one character , then .c ? — ? matches exactly one character: test1.c and test2.c, but not test10.c."
+  },
+  {
+    "id": "mastery-u12-q40",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "You are in the project directory. Which command lists every .txt file in it? — The shell expands *.txt to every matching name before ls runs."
+  },
+  {
+    "id": "mastery-u12-q41",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command lists the files that begin with data and end in .csv ? — data*.csv covers data1, data2 and data-old."
+  },
+  {
+    "id": "mastery-u12-q42",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command lists all .c files inside the src/ directory? — Put the directory in the pattern: src/*.c ."
+  },
+  {
+    "id": "mastery-u12-q43",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command lists all the .c and .h files in src/ with a single pattern? — [ch] matches one character, c or h."
+  },
+  {
+    "id": "mastery-u12-q44",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command copies every .txt file in the current directory into backup/ ? — The shell expands *.txt to the file list and the last argument is the destination directory."
+  },
+  {
+    "id": "mastery-u12-q45",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command copies every file whose name begins with report (report1.txt, report2.txt, report10.txt) into backup/ ? — report* matches any ending."
+  },
+  {
+    "id": "mastery-u12-q46",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command displays the contents of all the Markdown ( .md ) files? — *.md expands to README.md and TODO.md, and cat prints both."
+  },
+  {
+    "id": "mastery-u12-q47",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command deletes every .png image in the directory? — The shell expands *.png to image1.png and image2.png before rm runs."
+  },
+  {
+    "id": "mastery-u12-q48",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "students.txt holds names and a few codes. Which command finds every line containing Maria ? — A plain literal pattern matches anywhere in the line."
+  },
+  {
+    "id": "mastery-u12-q49",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds every line that starts with M ? — ^ anchors to the start of the line."
+  },
+  {
+    "id": "mastery-u12-q50",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds every line that ends with a ? — $ anchors to the end of the line."
+  },
+  {
+    "id": "mastery-u12-q51",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds lines that start with M and end with a , with anything in between? — .* stands for any run of characters."
+  },
+  {
+    "id": "mastery-u12-q52",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds lines containing Noa followed by zero or more h characters? — The star applies to the preceding h, allowing zero or more of them."
+  },
+  {
+    "id": "mastery-u12-q53",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds lines that are grade followed by exactly one character (and nothing else)? — Anchor both ends so only grade1 and grade2 match."
+  },
+  {
+    "id": "mastery-u12-q54",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds every line containing any digit ? — [0-9] is any one digit, anywhere."
+  },
+  {
+    "id": "mastery-u12-q55",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds lines that begin with M, N or O ? — ^[MNO] means a line starting with one of those letters."
+  },
+  {
+    "id": "mastery-u12-q56",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds lines that end with a digit ? — Put the anchor after the class: [0-9]$ ."
+  },
+  {
+    "id": "mastery-u12-q57",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL05 PATH/glob/regex",
+    "text": "Which command finds lines containing at least one lowercase vowel ? — A bare class matches anywhere in the line."
   },
   {
     "id": "mastery-u01-learn",

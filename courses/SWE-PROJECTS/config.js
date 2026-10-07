@@ -12,7 +12,7 @@ window.COURSE = {
   lectures: [],
   exams: [],
   notes: [
-    { title: "Purpose", body: "This section tracks web-stack fundamentals (MERN, Next.js) and AI-engineering concepts (RAG, vector embeddings, structured output, MCP, tool-calling) as Steven learns them for real projects — not coursework. Ask Claude to add a new topic here any time a project introduces a new tool or pattern worth understanding deeply." }
+    { title: "Purpose", body: "This section tracks web-stack fundamentals (MERN, Next.js) and AI-engineering concepts (RAG, vector embeddings, structured output, MCP, tool-calling) as Steven learns them for real projects — not coursework. Add a new topic here any time a project introduces a new tool or pattern worth understanding deeply." }
   ],
   resources: [
     { title: "MDN — Express basics", url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Express_Nodejs" },

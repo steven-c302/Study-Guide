@@ -148,6 +148,16 @@ header{position:static !important}
 }
 
 /* ---------- guide header: collapsed lesson bar ---------- */
-.lesson-bar.collapsed button[data-l]:not(.active):not([data-l="lmastery"]){display:none}
+.lesson-bar.collapsed button[data-l]:not(.active):not([data-l="lmastery"]):not(.lb-prev):not(.lb-next){display:none}
 .lb-toggle{background:transparent !important;color:var(--topink) !important;border:1px dashed color-mix(in srgb,var(--topink) 40%,transparent) !important;opacity:.85;font-weight:600}
 .lb-toggle:hover{opacity:1;border-style:solid !important}
+
+/* previous / next lesson neighbours (collapsed bar) */
+.lesson-bar .lb-prev,.lesson-bar .lb-next{max-width:min(260px,42vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lesson-bar .lb-prev::before{content:"\2039  ";opacity:.7}
+.lesson-bar .lb-next::after{content:"  \203A";opacity:.7}
+
+/* keep the header's rows on the same left edge as the page content (they were centered separately) */
+header{padding-left:max(24px,calc((100vw - 1150px)/2 + 24px)) !important;padding-right:max(24px,calc((100vw - 1150px)/2 + 24px)) !important}
+header .lesson-bar,header .progress-wrap,header .progress-txt{max-width:none !important;margin-left:0 !important;margin-right:0 !important}
+.lesson-bar.collapsed button.active{max-width:min(260px,42vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

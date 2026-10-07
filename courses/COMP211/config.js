@@ -20,7 +20,7 @@ window.COURSE = {
     { title: "Honor code reminder",
       body: "The course prohibits <b>posting assignments on GitHub or other public websites</b>. This repo is public &mdash; keep lab and homework <i>code</i> out of it. Notes and study material are fine." },
     { title: "Adding more",
-      body: "Drop lecture slides into <code>materials/lectures/</code> and past quizzes into <code>materials/exams/</code>, then list them here in <code>config.js</code>. Ask Claude to build the next lecture into the Study Guide (see <code>HANDOFF.md</code>)." }
+      body: "Drop lecture slides into <code>materials/lectures/</code> and past quizzes into <code>materials/exams/</code>, then list them here in <code>config.js</code>. Then add the next lecture to the Study Guide (see <code>HANDOFF.md</code>)." }
   ],
   resources: [
     { title: "Dive into Systems — Command Line Basics (§17.1)", url: "https://diveintosystems.org/book/Appendix2/cmdln_basics.html", note: "RD00 · Unix File System" },

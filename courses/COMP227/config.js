@@ -27,7 +27,7 @@ window.COURSE = {
     { title: "Policy reminder",
       body: "All tutoring and extra help must occur during official UTA-supported course activities (classes, office hours, cohort/group sessions) &mdash; no help outside those contexts, even for a friend or roommate, since it would create unequal access to your time. Violating UTA policies (including this one) may result in dismissal." },
     { title: "Adding more",
-      body: "Drop future readings, slides, or quiz screenshots into a chat with Claude and ask for the next lesson. Slides/quiz questions get folded in with correct answers and a note on where each is covered, the same way COMP 210/211 and INLS 382 were built." }
+      body: "Add future readings, slides, or quiz screenshots as the next lesson. Slides/quiz questions get folded in with correct answers and a note on where each is covered, the same way COMP 210/211 and INLS 382 were built." }
   ],
   resources: [
     { title: "UNC CS Undergraduate Teaching Assistant Manual (Tessa Joseph-Nicholas, Spring 2026)", url: "", note: "Reading Quiz 1 · pp. 1-27" },

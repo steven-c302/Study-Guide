@@ -30,6 +30,35 @@
     label();
     t.onclick = function () { bar.classList.toggle('collapsed'); label(); };
     bar.appendChild(t);
+
+    /* Previous / next lesson: tag the neighbours of the active lesson so the collapsed bar shows
+       "Mastery | < previous | current | next > | All lessons". Mastery and Ask are not part of the sequence. */
+    var SKIP = { lmastery: 1, lask: 1 };
+    function seq() { return Array.prototype.filter.call(bar.querySelectorAll('button[data-l]'), function (b) { return !SKIP[b.getAttribute('data-l')]; }); }
+    var lastActive = -2;                                   // only react when the ACTIVE lesson changes (not to our own class edits)
+    function neighbours() {
+      var list = seq(), i = -1;
+      list.forEach(function (b, k) { if (b.classList.contains('active')) i = k; });
+      if (i === lastActive) return;
+      lastActive = i;
+      Array.prototype.forEach.call(bar.querySelectorAll('.lb-prev,.lb-next'), function (b) { b.classList.remove('lb-prev', 'lb-next'); b.removeAttribute('title'); });
+      if (i < 0) return;
+      if (i > 0) { list[i - 1].classList.add('lb-prev'); list[i - 1].setAttribute('title', 'Previous lesson ( [ )'); }
+      if (i < list.length - 1) { list[i + 1].classList.add('lb-next'); list[i + 1].setAttribute('title', 'Next lesson ( ] )'); }
+      /* narrow screens scroll the bar sideways: once the neighbours are visible, bring previous / current / next into view */
+      requestAnimationFrame(function () {
+        var from = list[Math.max(i - 1, 0)];
+        bar.scrollLeft += from.getBoundingClientRect().left - bar.getBoundingClientRect().left - 8;
+      });
+    }
+    neighbours();
+    new MutationObserver(neighbours).observe(bar, { attributes: true, subtree: true, attributeFilter: ['class'] });
+    document.addEventListener('keydown', function (e) {                  // [ and ] step through lessons
+      var tag = (e.target && e.target.tagName) || '';
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(tag) || (e.target && e.target.isContentEditable) || e.metaKey || e.ctrlKey || e.altKey) return;
+      var b = e.key === '[' ? bar.querySelector('.lb-prev') : e.key === ']' ? bar.querySelector('.lb-next') : null;
+      if (b) { e.preventDefault(); b.click(); }
+    });
     bar.addEventListener('click', function (e) {
       if (e.target.closest && e.target.closest('button[data-l]')) setTimeout(function () { bar.classList.add('collapsed'); label(); }, 0);
     });
