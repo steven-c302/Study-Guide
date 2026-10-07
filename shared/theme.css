@@ -1,0 +1,148 @@
+/* ============================================================
+   SHARED THEME — "Mono" (light) + "Night" (dark)
+
+   Loaded AFTER each guide's inline <style> so it re-skins the existing
+   markup by redefining the same CSS variables (--bg, --panel, --ink,
+   --brand, ...) and overriding the handful of hardcoded colors.
+
+   Design rules (from the rebrand research):
+   - Color carries MEANING only: green = correct, red = trap/wrong,
+     amber = warning. Everything else is neutral. (Saturated decorative
+     color raises extraneous cognitive load.)
+   - Never color alone: correct/wrong/warn also get a glyph.
+   - ~68-72 character line length, 1.65 line height, >=16px body.
+   - Light = near-black on warm off-white. Dark = desaturated off-black
+     (not pure black) with pastel accents to limit glare.
+
+   Mode: follows the OS by default; shared/theme.js adds a toggle that
+   sets <html data-theme="light|dark">.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  color-scheme: light;
+  --bg:#f7f7f5; --panel:#ffffff; --panel2:#efefea; --line:#dcdcd6;
+  --ink:#161616; --text:#161616; --muted:#6a6a66;
+  --accent:#161616; --accent2:#161616; --brand:#161616; --brand-d:#000000; --onbrand:#f7f7f5;
+  --green:#2e7d32; --red:#c62828; --amber:#b26a00;
+  --blue:#1f4e8c; --purple:#5b4b8a; --dir:#1f4e8c;
+  --code:#efefea; --codeink:#161616;
+  --top:#111111; --topink:#f7f7f5;
+  --syn-kw:#161616; --syn-ty:#161616; --syn-st:#4a4a46; --syn-cm:#7a7a74; --syn-fn:#161616; --syn-nm:#161616; --syn-pp:#4a4a46;
+  --font:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#16181d; --panel:#1d2026; --panel2:#232730; --line:#2c313b;
+    --ink:#dcdfe6; --text:#dcdfe6; --muted:#8d94a3;
+    --accent:#6fb7c4; --accent2:#8cc8d3; --brand:#6fb7c4; --brand-d:#58a3b1; --onbrand:#0f1a1d;
+    --green:#6dbf8b; --red:#e57373; --amber:#e0b04f;
+    --blue:#7aa7e0; --purple:#c3a6ff; --dir:#7aa7e0;
+    --code:#12141a; --codeink:#dcdfe6;
+    --top:#16181d; --topink:#e7e9ee;
+    --syn-kw:#c3a6ff; --syn-ty:#8cc8d3; --syn-st:#9ad9a6; --syn-cm:#7d8596; --syn-fn:#e0b04f; --syn-nm:#f0a98a; --syn-pp:#e57373;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#16181d; --panel:#1d2026; --panel2:#232730; --line:#2c313b;
+  --ink:#dcdfe6; --text:#dcdfe6; --muted:#8d94a3;
+  --accent:#6fb7c4; --accent2:#8cc8d3; --brand:#6fb7c4; --brand-d:#58a3b1; --onbrand:#0f1a1d;
+  --green:#6dbf8b; --red:#e57373; --amber:#e0b04f;
+  --blue:#7aa7e0; --purple:#c3a6ff; --dir:#7aa7e0;
+  --code:#12141a; --codeink:#dcdfe6;
+  --top:#16181d; --topink:#e7e9ee;
+  --syn-kw:#c3a6ff; --syn-ty:#8cc8d3; --syn-st:#9ad9a6; --syn-cm:#7d8596; --syn-fn:#e0b04f; --syn-nm:#f0a98a; --syn-pp:#e57373;
+}
+
+/* ---------- base typography ---------- */
+body{font-family:var(--font); font-size:16px; line-height:1.65; background:var(--bg); color:var(--ink)}
+main p, main li{max-width:72ch}
+h2{border-bottom-color:var(--line)}
+h3{color:var(--ink)}
+code,pre,kbd,.term,.tree,.term-input span{font-family:var(--mono) !important}
+code,pre code{font-size:.88em}
+
+/* ---------- header / navigation ---------- */
+header{background:var(--top) !important; color:var(--topink); border-bottom:1px solid var(--line); box-shadow:none !important}
+header a, header a:visited{color:var(--topink) !important; opacity:.8}
+header h1{font-weight:700; letter-spacing:-.01em}
+.lesson-bar button{background:transparent !important; color:var(--topink) !important; border:1px solid color-mix(in srgb,var(--topink) 28%,transparent) !important; font-weight:600}
+.lesson-bar button:hover{border-color:var(--topink) !important}
+.lesson-bar button.active{background:var(--topink) !important; color:var(--top) !important; border-color:var(--topink) !important}
+.progress-wrap{background:color-mix(in srgb,var(--topink) 18%,transparent) !important}
+.progress-bar{background:var(--topink) !important}
+nav.topics button{background:var(--panel); color:var(--muted); border-color:var(--line)}
+nav.topics button:hover{color:var(--ink); border-color:var(--ink)}
+nav.topics button.active{background:var(--brand); color:var(--onbrand); border-color:var(--brand)}
+
+/* ---------- surfaces ---------- */
+.card{background:var(--panel); border-color:var(--line)}
+.concept{background:var(--panel2); border-left-color:var(--ink)}
+.concept b{color:var(--ink)}
+.warn{background:color-mix(in srgb,var(--amber) 11%,var(--panel)); border-left-color:var(--amber)}
+.warn b{color:var(--amber)}
+.warn::before{content:"\25B2  "; color:var(--amber); font-size:.8em}
+.danger{background:color-mix(in srgb,var(--red) 10%,var(--panel)); border-left-color:var(--red)}
+.danger b{color:var(--red)}
+.danger::before{content:"\2715  "; color:var(--red); font-size:.8em}
+
+/* ---------- code ---------- */
+code,pre{background:var(--code); color:var(--codeink); border-color:var(--line)}
+pre code{background:none}
+.kw{color:var(--syn-kw); font-weight:600} .ty{color:var(--syn-ty)} .st{color:var(--syn-st)}
+.cm{color:var(--syn-cm); font-style:italic} .fn{color:var(--syn-fn); font-weight:600}
+.nm{color:var(--syn-nm)} .pp{color:var(--syn-pp)}
+.term,.tree{background:var(--code) !important; border-color:var(--line)}
+.term .ps,.term-input span{color:var(--accent)}
+.term .cmdline{color:var(--ink)} .term .err{color:var(--red)} .term .dirout,.tree .d{color:var(--dir)}
+.tree .cwd{background:color-mix(in srgb,var(--accent) 22%,transparent); color:var(--ink)}
+.tree .hid{color:var(--muted)}
+
+/* ---------- questions ---------- */
+.opt{background:var(--panel2); color:var(--ink); border-color:var(--line)}
+.opt:hover{border-color:var(--ink)}
+.opt.correct{background:color-mix(in srgb,var(--green) 16%,var(--panel)); border-color:var(--green)}
+.opt.correct::after{content:"  \2713"; color:var(--green); font-weight:700}
+.opt.wrong{background:color-mix(in srgb,var(--red) 14%,var(--panel)); border-color:var(--red)}
+.opt.wrong::after{content:"  \2715"; color:var(--red); font-weight:700}
+.fb.ok{background:color-mix(in srgb,var(--green) 12%,var(--panel)); border-color:var(--green)}
+.fb.no{background:color-mix(in srgb,var(--red) 11%,var(--panel)); border-color:var(--red)}
+.fb.revealed{background:color-mix(in srgb,var(--amber) 12%,var(--panel)); border-color:var(--amber)}
+.q .prompt .tag{background:var(--panel2); color:var(--muted); border-color:var(--line)}
+input[type=text],textarea,select{background:var(--code); color:var(--ink); border-color:var(--line); font-family:var(--mono)}
+input[type=text]:focus,textarea:focus,select:focus{outline:2px solid var(--accent); outline-offset:1px}
+.btn{background:var(--brand); color:var(--onbrand)}
+.btn:hover{background:var(--brand-d)}
+.btn.ghost{background:transparent; color:var(--muted); border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--ink); color:var(--ink)}
+.match-term,.ma-item{background:var(--panel2); border-color:var(--line)}
+table.cmp th{background:var(--panel2)} table.cmp th,table.cmp td{border-color:var(--line)}
+kbd{background:var(--panel2); border-color:var(--line)}
+
+/* ---------- interactive widgets ---------- */
+.bit{background:var(--code); border-color:var(--line); color:var(--muted)}
+.bit.on{border-color:var(--ink); background:var(--panel2); color:var(--ink)}
+.bit .pv{color:var(--muted)}
+.ro{background:var(--code); border-color:var(--line)} .ro .val{color:var(--ink)}
+.stage{background:var(--code); border-color:var(--line)} .stage .t{color:var(--ink)}
+.stage.on{border-color:var(--ink); background:var(--panel2)}
+.step-desc{background:var(--panel2)} .step-desc b{color:var(--ink)}
+
+/* ---------- theme toggle (injected by shared/theme.js) ---------- */
+#theme-toggle{position:fixed; right:14px; bottom:14px; z-index:200; font:600 12px/1 var(--font);
+  padding:9px 12px; border-radius:99px; cursor:pointer; background:var(--panel); color:var(--ink);
+  border:1px solid var(--line); box-shadow:0 2px 8px rgba(0,0,0,.18)}
+#theme-toggle:hover{border-color:var(--ink)}
+@media print{#theme-toggle{display:none}}
+
+/* ---------- header must not pin itself over the content (it is ~5 rows tall) ---------- */
+header{position:static !important}
+@media (max-width:900px){
+  .lesson-bar{flex-wrap:nowrap !important; overflow-x:auto; padding-bottom:8px; scrollbar-width:thin}
+  .lesson-bar button{flex:0 0 auto; white-space:nowrap}
+  nav.topics{overflow-x:auto; flex-wrap:nowrap !important}
+  nav.topics button{flex:0 0 auto; white-space:nowrap}
+}

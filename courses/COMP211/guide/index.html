@@ -139,6 +139,9 @@
   .stage .t{font-weight:700;color:var(--accent);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
   .stage .s{font-family:"SF Mono",monospace;font-size:11px;color:var(--muted);margin-top:6px}
 </style>
+<link rel="stylesheet" href="../../../shared/theme.css">
+<link rel="stylesheet" href="../../../shared/mastery.css">
+<script src="../../../shared/theme.js"></script>
 </head>
 <body>
 <header>
@@ -162,6 +165,7 @@
     <button data-l="l13" onclick="showLesson('l13',this)">HW03 &middot; Number Rep, Arithmetic &amp; Bitwise</button>
     <button data-l="l14" onclick="showLesson('l14',this)">CL09 &middot; Applications of Bitwise Operators (RD08)</button>
     <button data-l="l15" onclick="showLesson('l15',this)">CL10 &middot; Debugging (RD09)</button>
+    <button data-l="l19" onclick="showLesson('l19',this)">Checkoff 2 Prep &middot; Debugging</button>
 <button data-l="l17" onclick="showLesson('l17',this)">CL11 &middot; Unix Basics: Shell Config &amp; Env Vars (RD10)</button>
 <button data-l="l18" onclick="showLesson('l18',this)">CL12 &middot; Quiz 1 Applied Review</button>
   </div>
@@ -185,12 +189,24 @@
 <div class="lesson" id="l13"></div>
 <div class="lesson" id="l14"></div>
 <div class="lesson" id="l15"></div>
+<div class="lesson" id="l19"></div>
 <div class="lesson" id="l17"></div>
 <div class="lesson" id="l18"></div>
 
-<footer>COMP 211 &middot; Systems Fundamentals. Built from CL00 Welcome, CL01 Unix Basics, CL02 Intro to C, CL03 IO Redirection and Strings, CL04 Function Stack Frames, the Unix Basics (FA26) lecture on $PATH/globbing/regex/find/grep, <i>Dive into Systems</i> &sect;16.1&ndash;16.3, &sect;16.5, &sect;17.1, &sect;4.6, &sect;4.6.5, RD02, RD03, RD07 (Bitwise Operators), and Checkoff 1 Prep (CLI practical) drilled from a released sample checkoff, HW01 (Intro to C), and HW03 (Number Representation, Binary Arithmetic &amp; Bitwise Operators) reviewed
+<footer>COMP 211 &middot; Systems Fundamentals. Built from CL00 Welcome, CL01 Unix Basics, CL02 Intro to C, CL03 IO Redirection and Strings, CL04 Function Stack Frames, the Unix Basics (FA26) lecture on $PATH/globbing/regex/find/grep, <i>Dive into Systems</i> &sect;16.1&ndash;16.3, &sect;16.5, &sect;17.1, &sect;4.6, &sect;4.6.5, RD02, RD03, RD07 (Bitwise Operators), and Checkoff 1 Prep (CLI practical) and Checkoff 2 Prep (debugging practical) drilled from released sample checkoffs, HW01 (Intro to C), and HW03 (Number Representation, Binary Arithmetic &amp; Bitwise Operators) reviewed
 question by question.</footer>
 
+<script>window.GUIDE_COURSE = 'COMP211';</script>
+<script src="../../../shared/mastery.js"></script>
+<script src="../mastery/config.js"></script>
+<script src="../mastery/u01-number-systems.js"></script>
+<script src="../mastery/u02-bitwise.js"></script>
+<script src="../mastery/u03-shell.js"></script>
+<script src="../mastery/u04-c-basics.js"></script>
+<script src="../mastery/u05-stack-pointers.js"></script>
+<script src="../mastery/u06-debugging.js"></script>
+<script src="../mastery/u07-integration.js"></script>
+<script src="../../../shared/mastery-hub.js"></script>
 <script src="COMP211_Study_Guide_L16.js"></script>
 <script src="COMP211_Study_Guide_L0.js"></script>
 <script src="COMP211_Study_Guide_L1.js"></script>
@@ -207,6 +223,7 @@ question by question.</footer>
 <script src="COMP211_Study_Guide_L13.js"></script>
 <script src="COMP211_Study_Guide_L14.js"></script>
 <script src="COMP211_Study_Guide_L15.js"></script>
+<script src="COMP211_Study_Guide_L19.js"></script>
 <script src="COMP211_Study_Guide_L17.js"></script>
 <script src="COMP211_Study_Guide_L18.js"></script>
 <script>window.GUIDE_COURSE = 'COMP211';</script>

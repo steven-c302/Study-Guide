@@ -46,6 +46,8 @@ bits/ASCII), every in-class active-learning problem worked through, self-checks 
 drill module built from a released sample checkoff. Lesson 6 (numbered) does not exist — L6 is the Checkoff 1
 Prep module and L7 is RD07; nothing covering the lecture(s) between Checkoff 1 Prep and RD07 exists yet.
 
+**Update:** `COMP211_Study_Guide_L19.js` is the **Checkoff 2 Prep (Debugging practical)** module (sample checkoff's 10 sections, fresh `ship.c` drill, oral prompts, common mistakes); it sits after CL10 in the lesson bar.
+
 ## Adding a lecture
 
 1. Ask the user for the slides (`.pdf`/`.pptx`) and any reading-quiz screenshots. Read the PDF with the Read
@@ -76,3 +78,15 @@ Prep module and L7 is RD07; nothing covering the lecture(s) between Checkoff 1 P
 
 Give the user the git commands to commit and push from `Projects/Study-Guide` — they do that step themselves.
 The site auto-deploys via GitHub Pages at `https://steven-c302.github.io/Study-Guide/`.
+
+## Mastery section (added Oct 2026)
+
+`guide/` is the lecture-by-lecture reference. **`mastery/`** is the practice engine behind the **★ Mastery** tab
+(Today / Learn / Practice / Cards / Exam / Tutor). Read `courses/COMP211/mastery/README.md` first.
+
+- New lecture material → add or extend a unit file (`uNN-*.js`, copy `_TEMPLATE.js`), add its `<script>` to `guide/index.html`
+  before `shared/mastery-hub.js`, then run `node tools/validate-mastery.mjs`. Answer keys with `verify:` are compiled/run, so wrong keys fail.
+- Cross-topic exam-style problems go in `u07-integration.js`.
+- AI (tutor, teach-it-back, variants) is `netlify/functions/study-ai.mjs`; needs `ANTHROPIC_API_KEY` + `STUDY_ACCESS_CODE` in Netlify and a
+  $5 limit in the Anthropic Console. Code-level cap is $4/month. `node tools/test-study-ai.mjs` tests it offline.
+- Theme is `shared/theme.css` (Mono light / Night dark); don't hardcode colors.
