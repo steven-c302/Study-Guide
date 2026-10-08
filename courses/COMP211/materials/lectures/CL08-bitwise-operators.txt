@@ -1,0 +1,379 @@
+CL08 - Bitwise Operators (COMP 211, Connor McMahon) - text extracted from the slides for search
+
+
+[Slide 1]
+Bitwise Operators
+COMP211 Connor McMahon
+[Slide 2]
+Reminders
+- Lab 0
+- Make sure you accept the Lab 0 assignment today!!!
+- The lab is due on Tuesday
+- HW2 is due today
+- There is no class or office hours on Monday (Labor Day)
+2
+[Slide 3]
+Fill in the blanks using the
+provided options. n is an
+integer.
+3
+Answer bank
+n
+~n
+0b 0…0
+0b 1…1
+n | __________ = n
+n | __________ = 0b1…1
+n & __________ = n
+n & __________ = 0b0…0
+n ^ __________ = n
+n ^ __________ = 0b0…0
+n ^ __________ = 0b1…1
+[Slide 4]
+integer.
+4
+Answer bank
+n
+~n
+0b 0…0
+0b 1…1
+n | __0b0…0 ___ = n
+n | _____n_____ = n
+n | ___________ = 0b1…1
+n & __0b1…1___ = n
+[Slide 5]
+5
+n | 0b0…0 = n
+n | n = n
+n | 0b1…1 = 0b1…1
+n | ~n = 0b1…1
+n & 0b1…1 = n
+n & n = n
+n & 0b0…0 = 0b0…0
+n & ~n = 0b0…0
+n ^ 0b0…0 = n
+n ^ n = 0b0…0
+n ^ ~n = 0b1…1
+integer.
+Answer bank
+n
+~n
+0b 0…0
+0b 1…1
+[Slide 6]
+Shifting
+6
+[Slide 7]
+Left Shift
+- Syntax
+- number << n
+- Effect:
+- Shifts all bits to the left by n places.
+- Fills the rightmost n bits with 0s.
+- Equivalent to multiplying the number by 2n
+.
+7
+[Slide 8]
+Left Shift
+8
+uint8_t a = 5;
+uint8_t b = a << 1;
+uint8_t c = a << 2;
+uint8_t d = a << 3;
+a = 0b0000_0101 = 5
+b = 0b0000_1010 = 10 = 5 x 21
+c = 0b0001_0100 = 20 = 5 x 22
+d = 0b0010_1000 = 40 = 5 x 23
+[Slide 9]
+Logical Right Shift
+- Used for unsigned numbers
+- Syntax
+- number >> n
+- Effect:
+- Shifts all bits to the right by n places.
+- Fills the leftmost n bits with 0s.
+- Equivalent to integer division by 2n, truncating any decimal part.
+9
+[Slide 10]
+10
+uint8_t a = 5;
+uint8_t b = a >> 1;
+uint8_t c = a >> 2;
+uint8_t d = a >> 3;
+b = 0b0000_0010 = 2
+c = 0b0000_0001 = 1
+d = 0b0000_0000 = 0
+[Slide 11]
+Arithmetic Right Shift
+- Used for signed numbers
+- Syntax
+- number >> n
+- Effect:
+- Fills the leftmost n bits with a copy of the msb.
+- Equivalent to integer division by 2n, rounding towards negative infinity.
+- In C, unsigned right shifts are logical, while signed right shifts are
+implementation-defined (usually arithmetic).
+11
+[Slide 12]
+Arithmetic Right Shift on a Positive Number
+12
+int8_t a = 5;
+int8_t b = a >> 1;
+int8_t c = a >> 2;
+int8_t d = a >> 3;
+[Slide 13]
+Arithmetic Right Shift on a Negative Number
+13
+int8_t a = -5;
+a = 0b1111_1011 = -5
+b = 0b1111_1101 = -3
+c = 0b1111_1110 = -2
+d = 0b1111_1111 = -1
+[Slide 14]
+What does this program output?
+14
+#include <stdint.h>
+#include <stdio.h>
+int main(void) {
+uint8_t b = 2;
+int8_t c = 10;
+int8_t d = -2;
+printf("%d\n", b >> 1);
+printf("%d\n", b << 5);
+printf("%d\n", c >> 2);
+printf("%d\n", d << 1);
+printf("%d\n", d >> 1);
+printf("%d\n", (uint8_t)(d >> 1));
+printf("%d\n", (uint8_t)(d) >> 1);
+}
+[Slide 15]
+15
+1
+64
+2
+-4
+-1
+255
+127
+uint8_t b = 2;
+int8_t c = 10;
+int8_t d = -2;
+}
+[Slide 16]
+Masks
+16
+[Slide 17]
+Masks
+- A mask is a binary pattern used to select (get), set, clear, or toggle
+specific bits within a number.
+- Select(get) = read
+- Set = make 1
+- Clear = make 0
+- Toggle = flip from 0 to 1 or 1 to 0
+17
+[Slide 18]
+Select (get)
+18
+[Slide 19]
+get_bit
+- Let’s write a function getBit that will return whether a given bit is on (1) or off (0)
+19
+int8_t get_bit(int8_t num, int8_t bit);
+printf("%d\n", get_bit(9, 1));
+printf("%d\n", get_bit(9, 3));
+printf("%d\n", get_bit(18, 4));
+return 0;
+}
+Expected Output
+0
+1
+1
+[Slide 20]
+get_bit
+20
+int8_t get_bit(int8_t num, int8_t bit) {
+int8_t mask = 1 << bit;
+int8_t isolate_bit = num & mask;
+return (isolate_bit != 0);
+}
+printf("%d\n", get_bit(8, 1));
+printf("%d\n", get_bit(8, 3));
+printf("%d\n", get_bit(16, 4));
+return 0;
+}
+Example Inputs
+num = 9
+bit = 1
+num = 18
+bit = 4
+num
+mask
+isolate_bit
+RV
+[Slide 21]
+get_bit
+21
+Example Inputs
+num = 9
+bit = 1
+num = 18
+bit = 4
+num 0b0000_1001 0b0001_0010
+mask 0b0000_0010 0b0001_0000
+isolate_bit 0b0000_0000 0b0001_0000
+RV 0 1
+}
+return 0;
+}
+[Slide 22]
+Set
+22
+[Slide 23]
+set_bit_2
+- Let’s write a function called set_bit_2 that will set bit 2 of the input num to 1
+23
+int8_t set_bit_2(int8_t num);
+printf("%d\n", set_bit_2(10));
+printf("%d\n", set_bit_2(8));
+printf("%d\n", set_bit_2(12));
+return 0;
+}
+10 = 0b0000_1010 -> 0b0000_1110
+8 = 0b0000_1000 -> 0b0000_1100
+12 = 0b0000_1100 -> 0b0000_1100
+[Slide 24]
+set_bit_2
+24
+int8_t set_bit_2(int8_t num) {
+int8_t mask = 0b00000100;
+return (mask | num);
+}
+return 0;
+}
+[Slide 25]
+set_bit
+- Let’s write a function set_bit that will set bit i of num to 1
+25
+int8_t set_bit(int8_t num, int8_t i);
+printf("%d\n", set_bit(10, 1));
+printf("%d\n", set_bit(8, 0));
+printf("%d\n", set_bit(12, 4));
+return 0;
+}
+10 = 0b0000_1010 -> 0b0000_1010 = 10
+8 = 0b0000_1000 -> 0b0000_1001 = 9
+12 = 0b0000_1100 -> 0b0001_1100 = 28
+[Slide 26]
+set_bit
+26
+int8_t set_bit(int8_t num, int8_t i) {
+}
+return 0;
+}
+[Slide 27]
+set_bit
+27
+int8_t mask = 1 << i;
+}
+return 0;
+}
+[Slide 28]
+Clear
+28
+[Slide 29]
+clear_bit2
+- Let’s write a function, clear_bit2, that takes an integer as input, sets bit 2
+to 0, and returns the modified result.
+- First, let’s write some test cases:
+29
+#define NUM_TESTS 3
+int8_t clear_bit2(int8_t number);
+int main() {
+int8_t tests[NUM_TESTS] = {14, 12, 8};
+for (int i = 0; i < NUM_TESTS; i++) {
+printf("Original: %d, Modified: %d\n",
+tests[i], clear_bit2(tests[i]));
+}
+return 0;
+}
+...
+Original: 14, Modified: 10
+Original: 12, Modified: 8
+Original: 8, Modified: 8
+Program Output:
+0b0000_1110
+0b0000_1100
+0b0000_1000
+0b0000_1010 = 10
+0b0000_1000 = 8
+14 =
+12 =
+8 =
+[Slide 30]
+clear_bit2
+30
+int main() {
+printf("Original: %d, Modified: %d\n", tests[i], clear_bit2(tests[i]));
+}
+return 0;
+}
+int8_t clear_bit2(int8_t number) {
+int8_t mask = _____________;
+return __________________;
+}
+[Slide 31]
+clear_bit2
+31
+int main() {
+}
+return 0;
+}
+int8_t mask = ~(0b100);
+return number & mask;
+}
+[Slide 32]
+clear_bit
+- Let’s write a function that will clear bit i of the input num
+32
+int8_t clear_bit(int8_t num, int8_t i);
+int main() {
+int tests[NUM_TESTS] = {14, 12, 8};
+printf("Original: %d, Modified: %d\n", tests[i], clear_bit(tests[i], i + 2));
+}
+return 0;
+}
+Original: 12, Modified: 4
+0b0000_1110
+0b0000_1100
+0b0000_1000
+0b0000_0100 = 8
+14 =
+12 =
+8 =
+[Slide 33]
+clear_bit
+33
+int8_t clear_bit(int8_t num, int8_t i) {
+}
+int main() {
+}
+return 0;
+}
+[Slide 34]
+clear_bit
+34
+int8_t mask = ~(1 << i);
+return num & mask;
+}
+int main() {
+}
+return 0;
+}
+num = 14
+i = 2
+num = 8
+i = 4
+num 0b0000_1110 0b0000_1000
+(1 << i) 0b0000_0100 0b0001_0000
+mask 0b1111_1011 0b1110_1111
+RV 0b0000_1010 0b0000_1000

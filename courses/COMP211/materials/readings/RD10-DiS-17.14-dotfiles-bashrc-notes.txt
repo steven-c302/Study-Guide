@@ -1,0 +1,5 @@
+RD10 reading notes - Dive into Systems 17.14 (dot files and .bashrc) - study notes written for this guide
+Dot files are configuration files whose names begin with a period. They are hidden by default (ls -a shows them) and customize how programs behave when they start: .bashrc configures the Bash shell (environment variables, aliases), .vimrc configures the vim editor (colors, encoding), .xsession configures the X Windows session.
+.bashrc is loaded when Bash starts. Changes to it do not affect an already-running shell; run source ~/.bashrc (or start a new shell) to apply them.
+Environment variables control how features work. PATH lists, in order, the directories the shell searches for programs when a command is typed. env prints all environment variables, echo $PATH shows one, and which ls shows which executable will run. To extend PATH in .bashrc: PATH=$PATH:/home/sarita/mybin (appends to the end of the existing value).
+Aliases are shortcuts for commands, defined in .bashrc: alias rm="rm -i" (confirm before deleting) and alias gt31="cd ~/classes/CS31" (jump to a directory).

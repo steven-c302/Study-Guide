@@ -11,7 +11,7 @@
   Mastery.unit({
     id: 'u12', order: 4, title: 'CL05 · $PATH, globbing, regex, find & grep', short: 'CL05 PATH/glob/regex',
     blurb: 'How the shell finds a command, how globs expand before a command runs, how regular expressions match text, and how find and grep use them.',
-    lessons: [{ id: 'l5', label: 'CL05 · $PATH, Globbing & Regex' }, { id: 'l12', label: 'HW2 · Stack Frames, Globbing & Regex' }],
+    lessons: [{ id: 'l5', label: 'CL05 · $PATH, Globbing & Regex' }, { id: 'l12', label: 'HW02 · Stack Frames, Globbing & Regex' }],
     learn: {
       big: [
         'A command containing a <b>slash</b> (<code>./hello</code>, <code>../bin/hello</code>, <code>/usr/bin/hello</code>) is a <b>path</b>: run exactly that file. A command with <b>no slash</b> (<code>hello</code>, <code>ls</code>) makes the shell <b>search <code>$PATH</code></b>.',

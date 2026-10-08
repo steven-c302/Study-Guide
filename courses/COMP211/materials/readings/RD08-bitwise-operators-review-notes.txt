@@ -1,0 +1,4 @@
+RD08 reading notes - Bitwise operators review (DiS 4.6, based on the previous lecture, 2.4 Bitwise Operators) - study notes written for this guide
+Identities for any integer n: n | 0b000...0 = n; n | 0b111...1 = all ones; n | ~n = all ones; n & 0b111...1 = n; n & n = n; n & ~n = all zeros; n ^ n = all zeros; n ^ 0 = n.
+Shifts: x << k multiplies by 2^k (if no bits overflow); x >> k divides by 2^k. A logical right shift (unsigned) fills the left with zeros; an arithmetic right shift (signed) preserves the sign bit. In C an unsigned right shift is logical and a signed right shift is implementation-defined (usually arithmetic). With int8_t x = -5 and an arithmetic shift, x >> 1 is -3.
+Masks select, set, clear or toggle specific bits. Test bit i: num & (1 << i). Set bit i: num | (1 << i). Toggle: num ^ (1 << i). Clear: num & ~(1 << i).

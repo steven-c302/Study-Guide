@@ -6,7 +6,7 @@
   Mastery.unit({
     id: 'u05', title: 'Stack frames, pointers & pass-by-value', short: 'Stack & pointers',
     blurb: 'What a function call physically does to memory, what is copied versus shared, and how a pointer lets a callee reach back into its caller. The single most exam-relevant mental model in the course.',
-    lessons: [{ id: 'l4', label: 'CL04 · Function Stack Frames' }, { id: 'l12', label: 'HW2 · Stack Frames' }],
+    lessons: [{ id: 'l4', label: 'CL04 · Function Stack Frames' }, { id: 'l12', label: 'HW02 · Stack Frames' }],
     learn: {
       big: [
         'Every call pushes a <b>stack frame</b> holding the <b>return address</b> (where to resume in the caller), the <b>arguments</b>, and the <b>locals</b>. Returning <b>pops</b> it: <code>sp</code> moves back and that memory is dead.',

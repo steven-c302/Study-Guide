@@ -1,0 +1,597 @@
+CL06 - Number Representation (COMP 211, Connor McMahon) - text extracted from the slides for search
+
+
+[Slide 1]
+Number Representation
+COMP211 Connor McMahon
+[Slide 2]
+Base-10
+2
+[Slide 3]
+Decimal Notation
+3
+507210
+one’s position (100)
+ten’s position (101)
+hundred’s position (102)
+thousands' position (103)
+[Slide 4]
+4
+507210
+(5 x 103) + (0 x 102) + (7 x 101) + (2 x 100)
+5000 + 0 + 70 + 2
+507210
+[Slide 5]
+Base-2
+5
+[Slide 6]
+6
+Decimal Binary
+507210
+10112
+Bit 0 (20 position)
+Bit 1 (21 position)
+Bit 2 (22 position)
+Bit 3 (23 position)
+[Slide 7]
+Convert from Binary to Decimal
+7
+10112
+[Slide 8]
+8
+10112
+(1 x 23) + (0 x 22) + (1 x 21) + (1 x 20)
+8 + 0 + 2 + 1
+1110
+[Slide 9]
+Binary
+9
+Decimal Binary
+0 0b 0000
+1 0b 0001
+2 0b 0010
+3 0b 0011
+4 0b 0100
+5 0b 0101
+6 0b 0110
+7 0b 0111
+8 0b 1000
+9 0b 1001
+10 0b 1010
+11 0b 1011
+12 0b 1100
+13 0b 1101
+14 0b 1110
+15 0b 1111
+You should know the
+binary
+representation of the
+numbers 0 through
+15 by heart <3
+[Slide 10]
+Decimal vs Binary
+10
+Binary Powers of 2
+0b 0001 20 = 1
+0b 0010 21 = 2
+0b 0100 22 = 4
+0b 1000 23 = 8
+Decimal Powers of 10
+1 100 = 1
+10 101 = 10
+100 102 = 100
+1000 103 = 1000
+[Slide 11]
+Binary
+- There are two ways to indicate that a number is binary
+- Prepend 0b
+- Ex: 0b1001
+- Subscript 2
+- Ex: 10012
+- Place binary numbers in groups of four to make it easier to read
+- Normally, spaces are used when handwritten
+- Ex: 0b1010 1111 0101
+- And underscores are used for typed values
+- Ex: 0b1010_1111_0101
+- If you cannot evenly break up the number into groups of four, start making the groups
+from the right
+- Ex: 0b10_1010_0011
+11
+[Slide 12]
+Binary Bit Positions
+- We’ll often want to reference individual digits of a binary number
+- To do this, we need to give a name to each bit
+- The bits are named n-1 to 0 where n is the number of bits in the number
+12
+1 0 1 12
+Bit 0
+Bit 1
+Bit 2
+Bit 3
+[Slide 13]
+Converting from Decimal to Binary
+13
+[Slide 14]
+Powers of 2
+Decimal Binary Powers of 2
+0 0b 0000
+1 0b 0001 20
+2 0b 0010 21
+3 0b 0011
+4 0b 0100 22
+5 0b 0101
+6 0b 0110
+7 0b 0111
+8 0b 1000 23
+9 0b 1001
+10 0b 1010
+11 0b 1011
+12 0b 1100
+13 0b 1101
+14 0b 1110
+15 0b 1111 14
+[Slide 15]
+Powers of 2
+0 0b 0000
+1 0b 0001 20
+2 0b 0010 21
+3 0b 0011 21 + 20
+4 0b 0100 22
+5 0b 0101
+6 0b 0110
+7 0b 0111
+8 0b 1000 23
+9 0b 1001
+10 0b 1010
+11 0b 1011
+12 0b 1100
+13 0b 1101
+14 0b 1110
+15 0b 1111 15
+3 = 21 + 20 = 0b0011
+There is a 1 in
+the 21 and 20
+positions.
+All other numbers
+can be formed by
+adding powers of 2.
+[Slide 16]
+Powers of 2
+0 0b 0000
+1 0b 0001 20
+2 0b 0010 21
+4 0b 0100 22
+5 0b 0101 22 + 20
+6 0b 0110
+7 0b 0111
+8 0b 1000 23
+9 0b 1001
+10 0b 1010
+11 0b 1011
+12 0b 1100
+13 0b 1101
+14 0b 1110
+15 0b 1111 16
+5 = 22 + 20 = 0b0101
+the 22 and 20
+positions.
+[Slide 17]
+Powers of 2
+0 0b 0000
+1 0b 0001 20
+2 0b 0010 21
+4 0b 0100 22
+6 0b 0110 22 + 21
+7 0b 0111 22 + 21+ 20
+8 0b 1000 23
+9 0b 1001
+10 0b 1010
+11 0b 1011
+12 0b 1100
+13 0b 1101
+14 0b 1110
+15 0b 1111 17
+7 = 22 + 21+ 20
+= 0b0111
+the 22, 21
+, and 20
+positions.
+[Slide 18]
+Powers of 2
+0 0b 0000
+1 0b 0001 20
+2 0b 0010 21
+4 0b 0100 22
+8 0b 1000 23
+9 0b 1001 23 + 20
+10 0b 1010 23 + 21
+11 0b 1011 23 + 21+ 20
+12 0b 1100 23 + 22
+13 0b 1101 23 + 22 + 20
+14 0b 1110 23 + 22 + 21
+15 0b 1111 23 + 22+ 21+ 20 18
+[Slide 19]
+Convert from Decimal to Binary
+- To convert a decimal number to binary, identify the combination of
+powers of 2 that sum to the given number.
+19
+[Slide 20]
+1. Determine the largest power
+of 2 that is less than or equal
+to the current number
+20
+Ex: convert 114 to binary
+largest power of 2 less than 114 is 64
+[Slide 21]
+2. Place a 1 in the
+corresponding bit position of
+the final answer
+21
+64 32 16 8 4 2 1
+0b
+[Slide 22]
+22
+1
+0b
+[Slide 23]
+3. Subtract the power of two
+from the current number
+23
+1
+0b
+114 – 64 = 50
+[Slide 24]
+4. Repeat until the current
+number is 0
+24
+1
+0b
+114 – 64 = 50
+[Slide 25]
+25
+114
+64
+50 1
+0b
+[Slide 26]
+26
+114
+64
+50
+32
+18
+16
+2
+2
+0
+1 1 1 0 0 1 0
+0b
+[Slide 27]
+Active Learning: Convert between Decimal and Binary
+27
+Q3. 98 Q4. 132
+Q1. 0b 0010 0011 Q2. 0b 0101 0100
+[Slide 28]
+Hexadecimal (Base-16)
+30
+[Slide 29]
+Hexadecimal (Hex)
+- Method of representing binary that is
+easier for humans to read
+- Base of 16
+- There are 16 digits ranging from 0 – F
+- Denoted by prepending a 0x or
+subscripting a 16
+31
+Decimal Binary Hexadecimal
+0 0b 0000 0x0
+1 0b 0001 0x1
+2 0b 0010 0x2
+3 0b 0011 0x3
+4 0b 0100 0x4
+5 0b 0101 0x5
+6 0b 0110 0x6
+7 0b 0111 0x7
+8 0b 1000 0x8
+9 0b 1001 0x9
+10 0b 1010 0xA
+11 0b 1011 0xB
+12 0b 1100 0xC
+13 0b 1101 0xD
+14 0b 1110 0xE
+15 0b 1111 0xF
+hex and binary
+numbers 0 through 15
+by heart <3
+[Slide 30]
+32
+0 0b 0000 0x0
+1 0b 0001 0x1
+2 0b 0010 0x2
+3 0b 0011 0x3
+4 0b 0100 0x4
+5 0b 0101 0x5
+6 0b 0110 0x6
+7 0b 0111 0x7
+8 0b 1000 0x8
+9 0b 1001 0x9
+10 0b 1010 0xA
+11 0b 1011 0xB
+12 0b 1100 0xC
+13 0b 1101 0xD
+14 0b 1110 0xE
+15 0b 1111 0xF
+How do you think you
+represent the decimal number
+16 in hexadecimal notation?
+[Slide 31]
+Convert between Binary and Hex
+34
+[Slide 32]
+Convert from Binary to Hex
+35
+Ex: Convert 0b111010 to hex
+[Slide 33]
+1. Group the digits into groups of 4
+from right to left
+36
+0b 11 1010
+[Slide 34]
+2. Prepend any leading zeros needed
+to make the leftmost group have
+four binary digits
+37
+0b 11 1010
+0b 0011 1010
+[Slide 35]
+3. Convert each group to the
+corresponding hex character
+38
+0b 11 1010
+0b 0011 1010
+0x 3A
+[Slide 36]
+Convert from Hex to Binary
+39
+Ex: Convert 0x3F54 to binary
+[Slide 37]
+1. Convert each hex digit to its
+corresponding binary digits
+40
+0b 0011 1111 0101 0100
+[Slide 38]
+2. You can optionally drop the leading
+zeros
+41
+0b 11 1111 0101 0100
+[Slide 39]
+Unsigned Numbers
+42
+[Slide 40]
+What range of unsigned numbers can you represent with n bits?
+43
+[Slide 41]
+One’s Complement
+45
+Motivation: Provides a way to represent negative numbers in binary!
+[Slide 42]
+One’s Complement: Positive Values
+- Positive values are represented the same as unsigned binary
+- Except that all positive values must begin with a leading 0.
+46
+Decimal
+Value
+Unsigned Representation
+(with fewest # of bits)
+Representation (with fewest # of
+bits)
+5 0b101
+10 0b1010
+15 0b1111
+211 0b1101_0011
+[Slide 43]
+47
+Decimal
+Value
+bits)
+5 0b101 0b0101
+10 0b1010 0b0_1010
+15 0b1111 0b0_1111
+211 0b1101_0011 0b0_1101_0011
+[Slide 44]
+Negative Values in One’s Complement
+- To represent a negative number, start with its positive counterpart and flip all
+the bits.
+48
+Decimal
+Value
+Representation (with fewest #
+of bits)
+-5
+-10
+-15
+-211
+Decimal
+Value
+of bits)
+5 0b0101
+10 0b0_1010
+15 0b0_1111
+211 0b0_1101_0011
+All positive values have an msb of 0.
+[Slide 45]
+the bits.
+49
+Decimal
+Value
+of bits)
+-5 0b1010
+-10 0b1_0101
+-15 0b1_0000
+-211 0b1_0010_1100
+Decimal
+Value
+of bits)
+5 0b0101
+10 0b0_1010
+15 0b0_1111
+All positive values have an msb of 0. All negative values have an msb of 1.
+[Slide 46]
+One’s Complement Examples
+50
+Represent -5 in 7-bit one’s
+complement binary.
+Represent 4 in 6-bit one’s
+1. Write 5 in unsigned notation using 7 bits
+2. Flip the bits
+1. Write 4 in unsigned notation using 6 bits
+We don’t flip the bits because this is a positive value!
+[Slide 47]
+One’s Complement Shortcomings
+- In one’s complement, zero has two representations:
+- all zeros (000...0)
+- all ones (111...1).
+- This is a drawback because it wastes a possible bit pattern that could have
+been used to represent an additional unique value.
+52
+[Slide 48]
+Two’s Complement
+53
+[Slide 49]
+One’s Complement vs Two’s Complement Number Line
+54
+1002 1012 1102 1112 0002 0012 0102 0112
+-3 -2 -1 -0 +0 1 2 3
+One’s
+Complement
+Number Line
+[Slide 50]
+55
+One’s
+Complement
+Number Line
+Two’s
+Complement
+Number Line
+0002 0012 0102 0112
+0 1 2 3
+same
+[Slide 51]
+56
+One’s
+Complement
+Number Line
+Two’s
+Complement
+Number Line
+1112 0002 0012 0102 0112
+0 1 2 3
+[Slide 52]
+57
+One’s
+Complement
+Number Line
+Two’s
+Complement
+Number Line
+-1 0 1 2 3
+[Slide 53]
+58
+One’s
+Complement
+Number Line
+Two’s
+Complement
+Number Line
+1102 1112 0002 0012 0102 0112
+-2 -1 0 1 2 3
+[Slide 54]
+59
+One’s
+Complement
+Number Line
+Two’s
+Complement
+Number Line
+1012 1102 1112 0002 0012 0102 0112
+-3 -2 -1 0 1 2 3
+[Slide 55]
+60
+One’s
+Complement
+Number Line
+Two’s
+Complement
+Number Line
+-4 -3 -2 -1 0 1 2 3
+Now, we can represent an additional value!
+[Slide 56]
+Decimal Two’s Complement Representation
+Step 1. Find the one’s complement representation
+Step 2. If negative, add one
+61
+[Slide 57]
+Example: Decimal Two’s Complement Representation
+- Express -7 in 6-bit two’s complement form.
+Step 1. Find the one’s complement form
+62
+[Slide 58]
+Step 1. Find the one’s complement
+- One’s complement form of +7: 0b00 0111
+- One’s complement form of -7: 0b11 1000
+- 0b11_1001
+63
+[Slide 59]
+Two’s complement decimal
+- Step 1: Check the Most Significant Bit (MSB)
+64
+If the MSB is 0, the number is positive.
+- Step 2: You can interpret it the same way as an unsigned binary
+number.
+If the MSB is 1, the number is negative.
+- Step 2: Flip the bits (invert all bits: change 0 to 1 and 1 to 0).
+- Step 3: Add 1 to the flipped bits.
+- Step 4: The original number is the negative of this result.
+[Slide 60]
+Example: Two’s complement decimal
+- Convert the following two’s complement binary number to decimal: 0b1101.
+- Step 1: The MSB is 1, so the number is negative.
+65
+- 0b0010
+- 0b0011
+- The number in step 3 is 3, so the answer is -3
+[Slide 61]
+- We only have one zero now!
+- The most significant bit (msb) represents the sign of the value
+- 0 means its positive
+- 1 means its negative
+66
+[Slide 62]
+Two’s Complement – your turn!
+67
+Q1: Express -15 in 7-bit two’s complement form. Q2: What is the minimum number of bits required
+to represent 20 in two’s complement?
+Q3: Convert the following two’s complement binary
+number to decimal: 0b11111110.
+Q4: Convert the following two’s complement binary
+number to decimal: 0b 0011 1000
+[Slide 63]
+Representations Summary
+- Remember, bits are just bits! We can’t determine their value until we know
+the representation used to encode them.
+- Representations we have learned so far
+- Unsigned
+- One’s Complement
+- Two’s Complement
+69
+[Slide 64]
+Representations – your turn!
+What is the value of the following binary numbers interpreted in unsigned,
+one’s complement, and two’s complement notation?
+70
+Q1. 11112 Q2. 01012 Q3. 10102
+unsigned:
+1’s complement:
+2’s complement:
+unsigned:
+unsigned:

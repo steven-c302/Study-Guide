@@ -1,0 +1,379 @@
+CL09 - Applications of Bitwise Operators (COMP 211, Connor McMahon) - text extracted from the slides for search
+
+[Slide 1]
+Bitwise Operators
+COMP211 Connor McMahon
+[Slide 2]
+Masks
+2
+[Slide 3]
+Masks
+• A mask is a binary pattern used to select (get), set, clear, or toggle
+specific bits within a number.
+• Select(get) = read
+• Set = make 1
+• Clear = make 0
+• Toggle = flip from 0 to 1 or 1 to 0
+3
+[Slide 4]
+Clear
+4
+[Slide 5]
+clear_bit2
+• Let’s write a function, clear_bit2, that takes an integer as input, sets bit 2
+to 0, and returns the modified result.
+• First, let’s write some test cases:
+5
+#define NUM_TESTS 3
+int8_t clear_bit2(int8_t number);
+int main() {
+int8_t tests[NUM_TESTS] = {14, 12, 8};
+for (int i = 0; i < NUM_TESTS; i++) {
+printf("Original: %d, Modified: %d\n",
+tests[i], clear_bit2(tests[i]));
+}
+return 0;
+}
+...
+Original: 14, Modified: 10
+Original: 12, Modified: 8
+Original: 8, Modified: 8
+Program Output:
+0b0000_1110
+0b0000_1100
+0b0000_1000
+0b0000_1010 = 10
+0b0000_1000 = 8
+0b0000_1000 = 8
+14 =
+12 =
+8 =
+[Slide 6]
+clear_bit2
+6
+#define NUM_TESTS 3
+int8_t clear_bit2(int8_t number);
+int main() {
+int8_t tests[NUM_TESTS] = {14, 12, 8};
+for (int i = 0; i < NUM_TESTS; i++) {
+printf("Original: %d, Modified: %d\n", tests[i], clear_bit2(tests[i]));
+}
+return 0;
+}
+int8_t clear_bit2(int8_t number) {
+int8_t mask = ~(0b100);
+return number & mask;
+}
+[Slide 7]
+clear_bit2 Example
+7
+int8_t clear_bit2(int8_t number) {
+int8_t mask = ~(0b100);
+return number & mask;
+}
+number
+0b0000_1111
+mask
+~(0b100)
+~(0b0000_0100)
+0b1111_1011
+number & mask
+0b0000_1111
+0b1111_1011
+0b0000_1011
+&
+[Slide 8]
+clear_bit2 Example
+8
+int8_t clear_bit2(int8_t number) {
+int8_t mask = ~(0b100);
+return number & mask;
+}
+number
+0b1010_1010
+mask
+~(0b100)
+~(0b0000_0100)
+0b1111_1011
+number & mask
+0b1010_1010
+0b1111_1011
+0b1010_1010
+&
+[Slide 9]
+clear_bit
+• Let’s write a function that will clear bit i of the input num
+9
+#define NUM_TESTS 3
+int8_t clear_bit(int8_t num, int8_t i);
+int main() {
+int tests[NUM_TESTS] = {14, 12, 8};
+for (int i = 0; i < NUM_TESTS; i++) {
+printf("Original: %d, Modified: %d\n", tests[i], clear_bit(tests[i], i + 2));
+}
+return 0;
+}
+Original: 14, Modified: 10
+Original: 12, Modified: 4
+Original: 8, Modified: 8
+Program Output:
+0b0000_1110
+0b0000_1100
+0b0000_1000
+0b0000_1010 = 10
+0b0000_0100 = 8
+0b0000_1000 = 8
+14 =
+12 =
+8 =
+[Slide 10]
+clear_bit
+• Let’s write a function that will clear bit i of the input num
+10
+#define NUM_TESTS 3
+int8_t clear_bit(int8_t num, int8_t i) {
+}
+int main() {
+int tests[NUM_TESTS] = {14, 12, 8};
+for (int i = 0; i < NUM_TESTS; i++) {
+printf("Original: %d, Modified: %d\n", tests[i], clear_bit(tests[i], i + 2));
+}
+return 0;
+}
+[Slide 11]
+clear_bit
+• Let’s write a function that will clear bit i of the input num
+11
+#define NUM_TESTS 3
+int8_t clear_bit(int8_t num, int8_t i) {
+int8_t mask = ~(1 << i);
+return num & mask;
+}
+int main() {
+int tests[NUM_TESTS] = {14, 12, 8};
+for (int i = 0; i < NUM_TESTS; i++) {
+printf("Original: %d, Modified: %d\n", tests[i], clear_bit(tests[i], i + 2));
+}
+return 0;
+}
+[Slide 12]
+clear_bit Example
+12
+int8_t clear_bit(int8_t num, int8_t i) {
+int8_t mask = ~(1 << i);
+return num & mask;
+}
+number
+0b1110_1010
+mask
+~(1<<5)
+~(0b0010_0000)
+0b1101_1111
+number & mask
+0b1110_1010
+0b1101_1111
+0b1100_1010
+&
+i=5
+[Slide 13]
+Update
+13
+[Slide 14]
+update_bit
+• Write a function that will set bit i of num to x
+14
+#include <stdint.h>
+#include <stdio.h>
+int8_t update_bit(int8_t num, int8_t i, int8_t x) {
+}
+int main(void) {
+printf("%d\n", update_bit(0b0101, 2, 0));
+printf("%d\n", update_bit(0b0101, 1, 1));
+return 0;
+}
+Example Output
+1
+7
+[Slide 15]
+update_bit
+• Write a function that will set bit i of num to x
+15
+#include <stdint.h>
+#include <stdio.h>
+int8_t update_bit(int8_t num, int8_t i, int8_t x) {
+int8_t mask = ~(1 << i);
+int8_t clear_bit_i = num & mask;
+return clear_bit_i | (x << i);
+}
+int main(void) {
+printf("%d\n", update_bit(0b0101, 2, 0));
+printf("%d\n", update_bit(0b0101, 1, 1));
+return 0;
+}
+Example Output
+1
+7
+[Slide 16]
+Applications of Bitwise Operators
+16
+[Slide 17]
+Applications of Bit Manipulation
+• Performance optimization in arithmetic operations
+• Bit shifting is much more efficient than multiplying and dividing
+• Example: To multiply a number x by 4
+• x *= 4
+• x << 2
+• Used in: Embedded systems, game engines, and performance-critical code.
+17
+This is much faster!
+[Slide 18]
+Performance Optimizations in Arithmetic Operations
+• Using only bitwise operations and addition, write a line of C that will multiply a
+number n by 20.
+• Hint: What combination of powers of 2 add up to 20?
+18
+[Slide 19]
+Performance Optimizations in Arithmetic Operations
+• Using only bitwise operations and addition, write a line of C that will multiply a
+number n by 20.
+• Hint: What combination of powers of 2 add up to 20?
+• n = 16n + 4n
+• n = n << 4 + n << 2
+19
+[Slide 20]
+Applications of Bit Manipulation
+• Data Compression and Encoding
+• Bit-packing: Store multiple small values (like flags, booleans, or short integers) into a
+single larger data type using shifts and bitwise OR.
+• Used in: Video encoding and file compression algorithms
+20
+[Slide 21]
+Bit Packing
+• Write a line of code that combines two 4-bit values (nibbles) into a single
+uint8_t.
+• The final uint8_t should be formatted as {high_nibble, low_nibble}
+• Example:
+• high_nibble = 0b0101
+• low_nibble = 0b 1100
+• result = {high_nibble, low_nibble} = 0b0101
+_
+1100
+21
+uint8_t packed =
+[Slide 22]
+Bit Packing
+• Write a line of code that combines two 4-bit values (nibbles) into a single
+uint8_t.
+• The final uint8_t should be formatted as {high_nibble, low_nibble}
+• Example:
+• high_nibble = 0b0101
+• low_nibble = 0b1100
+• result = {high_nibble, low_nibble} = 0b0101_1100
+22
+uint8_t packed = (high_nibble << 4) | low_nibble;
+[Slide 23]
+Subtractive Color Model
+• Describes how pigments combine to produce colors by reflecting light
+• Primary colors: yellow, blue, and red
+• As color is added, the result is darker
+• Absence of color: white
+• All colors: black
+23
+yellow
+red
+blue
+green orange
+black
+purple
+[Slide 24]
+Additive Color Model
+• Describes how lights combines to produce colors
+• Primary colors: red, green, and blue
+• As color is added, the result becomes lighter
+• Absence of color: black
+• All colors: white
+24
+green
+blue
+cyan yellow
+white
+magenta red
+[Slide 25]
+Additive Color Model
+25
+Complete Image
+Red Channel Green Channel Blue Channel
+[Slide 26]
+Hex Color Codes
+• The values in an RGB color code represent the intensity of each color
+channel. Each channel's intensity ranges from:
+• 0 (0x00) → No intensity (the channel is completely off)
+• 255 (0xFF) → Full intensity (the channel is at its maximum brightness)
+26
+Color code for Carolina Blue!
+Hex Value
+0x7B
+0xAF
+0xD4
+[Slide 27]
+Extracting Color Channels
+27
+uint32_t color = 0x7BAFD4; // Example color (Hex: Carolina Blue)
+// Extract Red, Green, and Blue values
+uint32_t red =
+uint32_t green =
+uint32_t blue =
+0x7BAFD4
+Red = 0x7B
+Green = 0xAF
+Blue = 0xD4
+[Slide 28]
+Extracting Color Channels
+28
+uint32_t color = 0x7BAFD4; // Example color (Hex: Carolina Blue)
+// Extract Red, Green, and Blue values
+uint32_t red =
+uint32_t green =
+uint32_t blue = color & 0xFF;
+0x7BAFD4
+Isolating Blue
+0x0000FF
+0x0000D4
+&
+[Slide 29]
+Extracting Color Channels
+29
+uint32_t color = 0x7BAFD4; // Example color (Hex: Carolina Blue)
+// Extract Red, Green, and Blue values
+uint32_t red =
+uint32_t green =
+uint32_t blue = color & 0xFF;
+0x7BAFD4
+Isolating Blue
+0x0000FF
+0x0000D4
+&
+[Slide 30]
+Extracting Color Channels
+30
+uint32_t color = 0x7BAFD4; // Example color (Hex: Carolina Blue)
+// Extract Red, Green, and Blue values
+uint32_t red = (color >> 16) & 0xFF;
+uint32_t green = (color >> 8) & 0xFF;
+uint32_t blue = color & 0xFF;
+0x007BAF
+Isolating Green
+0x0000FF
+0x0000AF
+0x7BAFD4 >> 8 = 0x007BAF
+&
+0x00007B
+Isolating Red
+0x0000FF
+0x00007B
+0x7BAFD4 >> 16 = 0x00007B
+& 0x7BAFD4
+Isolating Blue
+0x0000FF
+0x0000D4
+&

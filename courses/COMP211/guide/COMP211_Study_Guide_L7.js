@@ -15,7 +15,7 @@ document.getElementById('l7').innerHTML = `
 
 <!-- ============ BITWISE VS LOGICAL ============ -->
 <section class="topic active" id="l7-bitwise">
-  <h2>Lesson 8 &middot; Bitwise vs. Logical Operators</h2>
+  <h2>CL08 &middot; Bitwise vs. Logical Operators</h2>
 
   <div class="concept"><b>Bitwise operators</b> operate on the <b>individual bits</b> of a number's binary
   representation, one bit position at a time, producing a result of the <b>same width</b>. This is
@@ -141,7 +141,7 @@ document.getElementById('l7').innerHTML = `
 
 <!-- ============ BIT SHIFTS ============ -->
 <section class="topic" id="l7-shifts">
-  <h2>Lesson 8 &middot; Bit Shifts (&sect;4.6.5)</h2>
+  <h2>CL08 &middot; Bit Shifts (&sect;4.6.5)</h2>
 
   <div class="concept">A <b>bit shift</b> moves every bit in a number's binary representation <b>left</b> or
   <b>right</b> by a specified number of positions. It is still a bitwise operation — the output has the same
@@ -197,7 +197,7 @@ shift left 2 &rarr; 10110100   (leading "00" fell off and is discarded; two 0s a
 
 <!-- ============ MASKS & BIT MANIPULATION (CL08 lecture) ============ -->
 <section class="topic" id="l7-masks">
-  <h2>Lesson 8 &middot; Masks &amp; Bit Manipulation (CL08)</h2>
+  <h2>CL08 &middot; Masks &amp; Bit Manipulation (CL08)</h2>
 
   <div class="concept">A <b>mask</b> is a binary pattern used to <b>select (get)</b>, <b>set</b>, <b>clear</b>,
   or <b>toggle</b> specific bits within a number, by combining it with the mask using a bitwise operator.
@@ -297,7 +297,7 @@ set_bit(12, 4) : 0b0000_1100 -&gt; 0b0001_1100 = 28</pre>
 clear_bit(12, 2) : 0b0000_1100 -&gt; 0b0000_1000 = 8
 clear_bit(8,  2) : 0b0000_1000 -&gt; 0b0000_1000 = 8   (bit 2 was already 0 &mdash; no change)</pre>
     <div class="concept">AND-with-inverted-mask is the standard "clear this one bit, don't touch the
-    rest" idiom &mdash; the same principle as ANDing with a mask of 1s and 0s that Lesson 8's AND section
+    rest" idiom &mdash; the same principle as ANDing with a mask of 1s and 0s that CL08's AND section
     already introduced.</div>
   </div>
 

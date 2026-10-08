@@ -9,7 +9,7 @@
   Mastery.unit({
     id: 'u11', order: 3, title: 'CL04 · Function stack frames & memory diagrams (+ RD03)', short: 'CL04 Stack frames',
     blurb: 'What a call does to memory, how to draw it the way the course expects, what is copied versus shared, and what the reading adds about functions, prototypes and pass-by-value.',
-    lessons: [{ id: 'l4', label: 'CL04 · Function Stack Frames (RD03)' }, { id: 'l12', label: 'HW2 · Stack Frames, Globbing & Regex' }],
+    lessons: [{ id: 'l4', label: 'CL04 · Function Stack Frames (RD03)' }, { id: 'l12', label: 'HW02 · Stack Frames, Globbing & Regex' }],
     learn: {
       big: [
         'The <b>stack</b> manages function calls. Each call gets a <b>stack frame</b> (an activation record) holding the <b>return address (RA)</b>, the <b>arguments</b> and the <b>local variables</b>. <b>Caller</b> makes the call; <b>callee</b> is the function called.',

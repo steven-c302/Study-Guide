@@ -16,7 +16,7 @@ programming (below), and it is meant to grow as the semester does.
 | **Tutor ★** | AI: Socratic chat grounded in this guide, Teach-it-back, and fresh variants of questions you missed. |
 
 Units are listed in lecture order first, then topic reviews:
-`u08` CL01 Unix basics · `u09` CL02 Intro to C · `u10` CL03 I/O redirection, pipes & strings · `u11` CL04 stack frames · `u12` CL05 $PATH, globbing, regex, find & grep; then cumulative reviews `u01` number systems, `u02` bitwise, `u03` shell, `u04` C basics, `u05` stack & pointers, `u06` debugging, `u07` cross-topic integration (the "putting it together" problems). RD04 (file permissions) is not covered yet.
+`u08` CL01 Unix basics · `u09` CL02 Intro to C · `u10` CL03 I/O redirection, pipes & strings · `u11` CL04 stack frames · `u12` CL05 $PATH, globbing, regex, find & grep · `u13` CL06 number representation · `u14` CL07 signed integers & binary arithmetic · `u15` CL08 bitwise operators · `u16` CL09 applications of bitwise operators · `u17` CL10 debugging with VS Code · `u18` CL11 shell config, env vars & .bashrc · `u19` CL12 Quiz 1 applied review; then cumulative reviews `u01` number systems, `u02` bitwise, `u03` shell, `u04` C basics, `u05` stack & pointers, `u06` debugging, `u07` cross-topic integration (the "putting it together" problems). RD04 (file permissions) is not covered yet.
 
 ## Why it is built this way (research)
 
@@ -32,7 +32,7 @@ Units are listed in lecture order first, then topic reviews:
 Each homework covers one unit, so each unit can carry a **checkpoint**: a HW-style mini-checker with the homework's own
 topics and question styles but *fresh* questions. It is auto-graded with no hints, unlimited retries and best score kept, shows a
 per-topic breakdown, and queues misses for review. Units with one: `u08` (HW00 Unix basics, 21 questions), `u09` (HW1 Intro to C, 34 questions), and HW2, which spans two units: `u11`
-(stack frames, 17 questions) and `u12` ($PATH, find, globbing and regex, 27 questions). To add one for a new homework:
+(stack frames, 17 questions) and `u12` ($PATH, find, globbing and regex, 27 questions). HW4 is the checkpoint on `u17` (debugger problems, 27 questions). HW3 spans three units: `u13` (conversions, bits, ranges, interpretations, 16 questions), `u14` (extension, addition, subtraction, 24 questions) and `u15` (bitwise operations, shifts, masks, 18 questions). To add one for a new homework:
 
 1. Put the graded PDF in `materials/private/` (git-ignored; it has your name and grades) and extract its text
    (PDFKit via a tiny Swift script works on this Mac).

@@ -24,7 +24,7 @@ document.getElementById('l10').innerHTML = `
 
 <!-- ============ DECIMAL & BINARY NOTATION ============ -->
 <section class="topic active" id="l10-notation">
-  <h2>Lesson 6 &middot; Decimal &amp; Binary Notation</h2>
+  <h2>CL06 &middot; Decimal &amp; Binary Notation</h2>
 
   <div class="concept">Both decimal and binary are <b>positional</b> number systems: the value of a digit
   depends on <i>where</i> it sits, not just what symbol it is. In decimal, each position is a power of
@@ -112,7 +112,7 @@ document.getElementById('l10').innerHTML = `
 
 <!-- ============ BINARY <-> DECIMAL CONVERSION ============ -->
 <section class="topic" id="l10-conv">
-  <h2>Lesson 6 &middot; Binary &lt;-&gt; Decimal Conversion</h2>
+  <h2>CL06 &middot; Binary &lt;-&gt; Decimal Conversion</h2>
 
   <h3>Binary &rarr; decimal</h3>
   <div class="card">
@@ -171,7 +171,7 @@ document.getElementById('l10').innerHTML = `
 
 <!-- ============ HEXADECIMAL ============ -->
 <section class="topic" id="l10-hex">
-  <h2>Lesson 6 &middot; Hexadecimal</h2>
+  <h2>CL06 &middot; Hexadecimal</h2>
 
   <div class="concept">Hexadecimal is base <b>16</b>: sixteen digits, <code>0&ndash;9</code> then
   <code>A&ndash;F</code> standing in for 10&ndash;15. It's written with a <code>0x</code> prefix
@@ -244,7 +244,7 @@ document.getElementById('l10').innerHTML = `
 
 <!-- ============ UNSIGNED & THE PROBLEM OF NEGATIVES ============ -->
 <section class="topic" id="l10-unsigned">
-  <h2>Lesson 6 &middot; Unsigned &amp; the Problem of Negatives</h2>
+  <h2>CL06 &middot; Unsigned &amp; the Problem of Negatives</h2>
 
   <div class="concept">Plain binary as covered so far is <b>unsigned</b>: every bit pattern maps to zero or a
   positive value, and there is no way to write a negative number. That limitation is exactly what motivates
@@ -270,7 +270,7 @@ document.getElementById('l10').innerHTML = `
 
 <!-- ============ ONE'S COMPLEMENT ============ -->
 <section class="topic" id="l10-ones">
-  <h2>Lesson 6 &middot; One's Complement</h2>
+  <h2>CL06 &middot; One's Complement</h2>
 
   <div class="concept">One's complement is a way to represent negative numbers in binary. <b>Positive</b>
   values are written exactly like unsigned binary, <b>except</b> they must begin with a leading <b>0</b> bit
@@ -330,7 +330,7 @@ document.getElementById('l10').innerHTML = `
 
 <!-- ============ TWO'S COMPLEMENT ============ -->
 <section class="topic" id="l10-twos">
-  <h2>Lesson 6 &middot; Two's Complement</h2>
+  <h2>CL06 &middot; Two's Complement</h2>
 
   <div class="concept">Two's complement fixes one's complement's wasted double-zero: by reclaiming the extra
   all-ones pattern, an <i>n</i>-bit range gains exactly <b>one more representable negative value</b> at the low
@@ -400,7 +400,7 @@ original value = -3</pre>
 
 <!-- ============ PRACTICE & RD05 SELF-CHECK ============ -->
 <section class="topic" id="l10-rd05">
-  <h2>Lesson 6 &middot; Practice &amp; RD05 Self-Check</h2>
+  <h2>CL06 &middot; Practice &amp; RD05 Self-Check</h2>
   <p class="muted">Worked practice from the CL06 slides, plus the RD05 reading-quiz questions
   (<i>Dive Into Systems</i> &sect;4.1 and &sect;4.3). Answer cold, then read the explanation.</p>
 
@@ -750,7 +750,7 @@ original value = -3</pre>
 
 <!-- ============ RANGES ============ -->
 <section class="topic" id="l10-ranges">
-  <h2>Lesson 6 &middot; Ranges</h2>
+  <h2>CL07 &middot; Ranges</h2>
 
   <div class="concept">A fixed <i>n</i>-bit representation can only hold so many distinct values
   (2<sup>n</sup> of them, since each bit is independently 0 or 1). Which values those 2<sup>n</sup> bit
@@ -784,7 +784,7 @@ original value = -3</pre>
 
 <!-- ============ BINARY ADDITION & OVERFLOW ============ -->
 <section class="topic" id="l10-addition">
-  <h2>Lesson 6 &middot; Binary Addition &amp; Overflow</h2>
+  <h2>CL07 &middot; Binary Addition &amp; Overflow</h2>
 
   <div class="concept">Binary addition works exactly like decimal addition by hand: add column by column from
   the right, and when a column's sum is 2 or more, write down the low bit and <b>carry</b> a 1 into the next
@@ -848,7 +848,7 @@ original value = -3</pre>
 
 <!-- ============ TWO'S COMPLEMENT ADD/SUB/OVERFLOW ============ -->
 <section class="topic" id="l10-twoscomp">
-  <h2>Lesson 6 &middot; Two's Complement Addition, Subtraction &amp; Overflow</h2>
+  <h2>CL07 &middot; Two's Complement Addition, Subtraction &amp; Overflow</h2>
 
   <h3>Addition</h3>
   <div class="card">
@@ -926,7 +926,7 @@ original value = -3</pre>
 
 <!-- ============ TWO'S COMPLEMENT IN C ============ -->
 <section class="topic" id="l10-c">
-  <h2>Lesson 6 &middot; Two's Complement in C</h2>
+  <h2>CL07 &middot; Two's Complement in C</h2>
 
   <div class="concept">C's <code>int</code> (and <code>int8_t</code>, <code>int16_t</code>, etc.) are
   <b>signed two's complement</b> by default. The exact same bit pattern in memory is interpreted completely
