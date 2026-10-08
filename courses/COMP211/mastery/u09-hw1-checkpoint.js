@@ -72,6 +72,6 @@
   Mastery.checkpoint('u09', items, {
     title: 'HW1-style mini-checker (Intro to C)',
     source: 'Mirrors HW1: Intro to C',
-    blurb: 'Same topics and question styles as HW1 (placeholders, special characters, sizeof, booleans, getchar/putchar, state variables, nested loops, functions and arrays, strlen, garbage values, I/O redirection) with fresh questions. Auto-graded, no hints, unlimited retries; your best score is kept. Anything you miss shows its explanation and joins tomorrow\u2019s review.'
+    blurb: 'Same topics and question styles as HW1 (placeholders, special characters, sizeof, booleans, getchar/putchar, state variables, nested loops, functions and arrays, strlen, garbage values, I/O redirection) with fresh questions. Auto-graded, no hints, unlimited retries; your best score is kept. Anything you miss shows its explanation and joins tomorrow\u2019s review. Placeholder questions feel hard? Read Learn \u2192 \u201Cprintf placeholders\u201D (sections 1 to 6) first, then try the printf practice in the ladder.'
   });
 })();

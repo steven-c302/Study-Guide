@@ -6660,6 +6660,96 @@
     "text": "Array facts in C? — Fixed size set at declaration, indices 0 to size-1, no bounds checking (undefined behavior). A function that changes an array parameter changes the caller’s array, so pass the size too."
   },
   {
+    "id": "mastery-u09-card20",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What are the three rules for matching printf arguments? — One argument per placeholder, in the same order, and each argument’s type must suit its placeholder."
+  },
+  {
+    "id": "mastery-u09-card21",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "Which placeholder for an int , a double , a char , a string, a sizeof ? — %d , %f , %c , %s , %zu (or %lu )."
+  },
+  {
+    "id": "mastery-u09-card22",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What does %f print by default? — Six digits after the decimal point: printf(\"%f\", 3.14) prints 3.140000 ."
+  },
+  {
+    "id": "mastery-u09-card23",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What does %.2f do? Is it rounded or cut? — Prints exactly 2 digits after the point, rounded to nearest and zero-padded: 5.678 → 5.68, 2.5 → 2.50."
+  },
+  {
+    "id": "mastery-u09-card24",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "%5d vs %-5d vs %05d for 42? — 42 (padded left) · 42 (padded right) · 00042 (zero padded)."
+  },
+  {
+    "id": "mastery-u09-card25",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "How do you print a literal percent sign? — %% . A single % starts a placeholder."
+  },
+  {
+    "id": "mastery-u09-card26",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "printf(\"%c\", 66) and printf(\"%d\", 'A') ? — B and 65 . A char is a small number; the placeholder picks the view."
+  },
+  {
+    "id": "mastery-u09-card27",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "Which placeholder does qty * price need, with int qty , double price ? — %f (e.g. %.2f ): int times double is a double."
+  },
+  {
+    "id": "mastery-u09-card28",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What happens with printf(\"%d\", 4.5) ? — The double’s bits are read as an int: garbage. Use %f or cast with (int) ."
+  },
+  {
+    "id": "mastery-u09-card29",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "Method to build a format string from a target? — Cut the target into pieces; mark the variable parts; pick placeholders by type; assemble in order with arguments in the same order; check counts and types."
+  },
+  {
     "id": "mastery-u09-q0",
     "section": "lmastery",
     "course": "COMP211",
@@ -6945,7 +7035,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "What is printed? int items = 6; double each = 2.5; printf(\"I sold %d items at $%.2f each.\", items, each); — %d takes items (6) and %.2f takes each with two decimals (2.50)."
+    "text": "Which placeholder prints a double such as 3.14 ? — %f handles float and double."
   },
   {
     "id": "mastery-u09-q32",
@@ -6954,7 +7044,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "What is the exact output? int qty = 9; double price = 5.678; char grade = 'B'; printf(\"Qty: %d | Price: $%.2f | Grade: %c | Total: %.1f\", qty, price, grade, qty * price); — 9 × 5.678 = 51.102, shown with one decimal as 51.1. %c prints B without quotes."
+    "text": "How many arguments must follow the format string in printf(\"%d + %d = %d\", ...) ? — One argument per placeholder."
   },
   {
     "id": "mastery-u09-q33",
@@ -6963,7 +7053,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "Variables: char pet[] = \"cat\"; int age = 4; . You want printf to produce My cat is 4 years old. Which format string is correct? — A string uses %s , an int uses %d , in the order of the arguments."
+    "text": "What does printf(\"%.2f\", 3.14159) print? — .2 keeps two digits after the decimal point, rounded."
   },
   {
     "id": "mastery-u09-q34",
@@ -6972,7 +7062,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "What does this print? (A tab is shown as → below.) printf(\"Dir:\\tC:\\\\Temp\\n\\\"done\\\"\"); — \\t is a tab, \\\\ is one backslash, \\n starts a new line, and \\\" is a literal quote."
+    "text": "What does printf(\"%f\", 3.14) print by default? — Add a precision ( %.2f ) to control the digits."
   },
   {
     "id": "mastery-u09-q35",
@@ -6981,7 +7071,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "You want printf to produce these two lines exactly: Menu: \"Soup\" costs 5% Thanks! Which format string is correct? — Escape the quotes ( \\\" ), write %% for a literal percent sign, and use \\n for the line break."
+    "text": "How do you make printf print a literal percent sign? — In a format string %% prints one % ."
   },
   {
     "id": "mastery-u09-q36",
@@ -6990,7 +7080,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "How many characters are in the string \"a\\tb\\n\" ? ( strlen counts each escape sequence as one character.) — The characters are: a, tab, b, newline. Each escape sequence is a single character."
+    "text": "printf(\"%d\", 'A') prints which output? — A char is a small number; %d shows the number."
   },
   {
     "id": "mastery-u09-q37",
@@ -6999,7 +7089,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "On this machine char is 1 byte, short is 2 bytes and float is 4 bytes. What is the exact output? printf(\"%zu %zu %zu\", sizeof(char), sizeof(short), sizeof(float)); — sizeof reports each type’s size in bytes, printed with the %zu placeholder."
+    "text": "What does the 5 in %5d mean? — 42 prints as three spaces then 42."
   },
   {
     "id": "mastery-u09-q38",
@@ -7008,7 +7098,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "Assume int is 4 bytes and double is 8 bytes. Fill in what each sizeof evaluates to. double d = 1.5; int arr[5]; printf(\"%zu\\n%zu\\n\", sizeof(d), sizeof(arr)); — A double takes 8 bytes. An array of 5 ints takes 5 × 4 = 20 bytes (sizeof sees the whole array when it is declared in the same scope)."
+    "text": "Select all correct pairings of argument type and placeholder. — Match each placeholder to the argument’s type."
   },
   {
     "id": "mastery-u09-q39",
@@ -7017,7 +7107,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "Assume char is 1 byte, int is 4 bytes and double is 8 bytes, with char g = 'A'; int n = 95; double avg = 92.5; . Which statement is true? — sizeof depends only on the type: char 1, int 4, double 8."
+    "text": "Fill in what each call prints. printf(\"%f\\n\", 3.14); printf(\"%.2f\\n\", 3.14159); printf(\"%.0f\\n\", 2.6); printf(\"%.1f\\n\", 7 / 2.0); — %f defaults to six digits. A precision rounds to that many digits; .0 leaves none (2.6 rounds to 3). 7/2.0 is the double 3.5."
   },
   {
     "id": "mastery-u09-q40",
@@ -7026,7 +7116,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "What is the exact output? int n = -3; if (n) { printf(\"True\"); } else { printf(\"False\"); } — Any nonzero value, including negative numbers, is true in C."
+    "text": "Fill in what each call prints. printf(\"%c\\n\", 66); printf(\"%d\\n\", 'A'); printf(\"%c%c%c\\n\", 72, 105, 33); printf(\"%d %c\\n\", 'a', 'a'); — The number 66 is the ASCII code of B. %d shows a char’s code; %c shows the character. 72, 105, 33 are H, i, !."
   },
   {
     "id": "mastery-u09-q41",
@@ -7035,7 +7125,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "What is the exact output? int a = 0, b = 5, c = -1; if (a) printf(\"A\"); if (b) printf(\"B\"); if (c) printf(\"C\"); printf(\"D\"); — a is 0 (false) so A is skipped. b and c are nonzero (true), so B and C print. D always prints."
+    "text": "Fill in what each call prints. printf(\"%x\\n\", 255); printf(\"%X\\n\", 255); printf(\"%zu\\n\", sizeof(int)); printf(\"%d%%\\n\", 95); — 255 is 0xFF in hex (lowercase for %x, uppercase for %X). sizeof(int) is 4 bytes. %% prints a percent sign after the 95."
   },
   {
     "id": "mastery-u09-q42",
@@ -7044,7 +7134,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "What does this print if the user types banana and presses Enter? int c; while ((c = getchar()) != '\\n') { if (c != 'a') { putchar(c); } } — The loop skips every ‘a’ and prints the rest: b, n, n. It stops at the newline."
+    "text": "Count the spaces each conversion produces for the value 42 (or 3.14159). Leading = before the digits, trailing = after. printf(\"%5d\", 42); printf(\"%-5d\", 42); printf(\"%8.2f\", 3.14159); — %5d makes a 5-column field: 42 uses 2, so 3 spaces on the left. The minus flag moves the padding to the right. %8.2f prints 3.14 (4 characters) in 8 columns: 4 spaces."
   },
   {
     "id": "mastery-u09-q43",
@@ -7053,7 +7143,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "What does this print if the user types Hi! and presses Enter? int c; while ((c = getchar()) != '\\n') { putchar(c); putchar(c); } — Every character is printed twice, in order."
+    "text": "Fill in what each call prints. printf(\"%05d\\n\", 42); printf(\"%d x $%.2f = $%.2f\\n\", 4, 2.5, 4 * 2.5); printf(\"%d %d\\n\", 7 / 2, 7 % 2); — The 0 flag pads with zeros. 4 × 2.5 is the double 10.0, shown as 10.00. 7/2 is integer division (3) and 7 % 2 is the remainder (1)."
   },
   {
     "id": "mastery-u09-q44",
@@ -7062,7 +7152,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "The input is eleven followed by EOF. What does this print? int c; while ((c = getchar()) != EOF) { if (c == 'e') putchar('#'); else putchar(c); } — Each ‘e’ becomes ‘#’ and every other character is copied: # l # v # n."
+    "text": "What does this print? char food[] = \"pizza\"; int slices = 3; printf(\"I ate %d slices of %s.\", slices, food); — The first placeholder ( %d ) takes slices , the second ( %s ) takes food ."
   },
   {
     "id": "mastery-u09-q45",
@@ -7071,7 +7161,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "The input is the three lines below, with no newline after c , then EOF. What is count at the end? a b c int c, count = 0; while ((c = getchar()) != EOF) { if (c == '\\n') { count++; } } — Only newline characters are counted. Three lines but only two newlines, because the last line is not terminated."
+    "text": "What does this print? (three items separated by spaces) char w[] = \"hello\"; printf(\"%s %c %c\", w, w[0], w[4]); — %s prints the whole string. w[0] and w[4] are single characters printed with %c ."
   },
   {
     "id": "mastery-u09-q46",
@@ -7080,7 +7170,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "The input is aBc 9 then EOF. What does this print? int c; while ((c = getchar()) != EOF) { if (c >= 'a' && c <= 'z') c = c - ('a' - 'A'); putchar(c); } — Lowercase letters shift down by 32 into uppercase. ‘B’, the space and ‘9’ are unchanged."
+    "text": "Count the spaces for the string \"hi\" . printf(\"%10s\", \"hi\"); printf(\"%-10s\", \"hi\"); — The field is 10 columns and “hi” uses 2, so 8 spaces: before it by default, after it with the minus flag."
   },
   {
     "id": "mastery-u09-q47",
@@ -7089,7 +7179,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "in_word is a state variable. The input is one two three , a newline, four , then EOF. What is the final count ? int c, in_word = 0, count = 0; while ((c = getchar()) != EOF) { if (c == ' ' || c == '\\n') { in_word = 0; } else if (in_word == 0) { in_word = 1; count++; } } — A word is counted at the moment the state flips from “outside” to “inside.” Extra spaces do not create extra words: one, two, three, four."
+    "text": "This is meant to print Total: 4.5 but prints a strange number. Which line is the root cause? — The placeholder must match the argument’s type: double needs %f ."
   },
   {
     "id": "mastery-u09-q48",
@@ -7098,7 +7188,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "The input is the three lines below (the middle line is empty ), each ending in a newline, then EOF. What does it print? ab cd int c, state = 0, count = 0; while ((c = getchar()) != EOF) { if (c == '\\n') state = 0; else if (state == 0) { state = 1; count++; } } printf(\"%d\", count); — The state turns on at the first character of a line. The empty line never has a first character, so only “ab” and “cd” count."
+    "text": "The program should print Sam scored 92 but prints garbage or crashes. Which line is the root cause? — Arguments follow the placeholders in order: name, score ."
   },
   {
     "id": "mastery-u09-q49",
@@ -7107,7 +7197,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "The input is \"a\" b \"c d\" \"e then EOF (the last quote is never closed). What does this print? int c, state = 0, count = 0; while ((c = getchar()) != EOF) { if (c == '\"') { if (state == 0) state = 1; else { state = 0; count++; } } } printf(\"%d\", count); — A quoted string is counted when its closing quote arrives. \"a\" and \"c d\" close; the final “e has no closing quote, so it is never counted."
+    "text": "This prints a broken line instead of 100% done . Which line is the problem? — printf(\"100%% done\\n\");"
   },
   {
     "id": "mastery-u09-q50",
@@ -7116,7 +7206,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "The input is x\"abc\"y\"de\" then EOF. What does this print? (It counts the characters that are inside quotes.) int c, inside = 0, count = 0; while ((c = getchar()) != EOF) { if (c == '\"') inside = !inside; else if (inside) count++; } printf(\"%d\", count); — The quote characters toggle the state and are not counted. Inside the quotes are abc (3) and de (2)."
+    "text": "The program prints a nonsense number for the count of items. Which line is the root cause? — int → %d . Using %f with an int reads the wrong bits."
   },
   {
     "id": "mastery-u09-q51",
@@ -7125,7 +7215,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "Fill in the five lines that this program prints (each line is five characters). for (int row = 0; row row) putchar('#'); else putchar('.'); } putchar('\\n'); } — In row r, columns greater than r print ‘#’: row 0 has four, row 1 has three, and so on down to none."
+    "text": "Variables: char item[] = \"mug\"; double price = 6.5; Fill in the two placeholders so it prints mug costs $6.50 . printf(\"%__0__ costs $%__1__\", item, price); — A string is %s . Two decimals with a double is %.2f ."
   },
   {
     "id": "mastery-u09-q52",
@@ -7134,7 +7224,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "Fill in the five lines (each line is five characters). for (int row = 0; row < 5; row++) { for (int col = 0; col < 5; col++) { if ((row + col) % 2 == 0) putchar('#'); else putchar('.'); } putchar('\\n'); } — A cell is ‘#’ when row + col is even, which alternates like a checkerboard and flips on every row."
+    "text": "Fill in the width so that the number 42 is printed in a field of 5 columns , padded on the left (3 spaces then 42). printf(\"%__0__d|\", 42); — %5d right-aligns in 5 columns, so there are 3 leading spaces."
   },
   {
     "id": "mastery-u09-q53",
@@ -7143,7 +7233,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "What is the exact output? int a[5] = {3, 6, 9, 12, 15}; printf(\"%d %d\", a[1], a[4]); — Indexing starts at 0: a[1] is the second element (6) and a[4] is the last (15)."
+    "text": "Variables: char name[] = \"Sam\"; int assignments = 8; double average = 91.67; Which format string prints Sam completed 8 assignments with an average of 91.7. ? — String, int, then a double with one decimal, in argument order."
   },
   {
     "id": "mastery-u09-q54",
@@ -7152,7 +7242,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "The input is hi 5 then EOF. What does the program print? void shout(char c) { if (c >= 'a' && c <= 'z') putchar(c - 32); else putchar(c); } int main(void) { int c; while ((c = getchar()) != EOF) shout(c); return 0; } — Lowercase letters are shifted to uppercase by subtracting 32; the space and the digit are printed unchanged."
+    "text": "Fill in the output of each call. (Remember: the type of an expression decides what it prints as.) int qty = 4; double price = 2.5; printf(\"%d x $%.2f = $%.2f\\n\", qty, price, qty * price); printf(\"%c %d %c\\n\", 'a' + 1, 'a' + 1, 'A' + 25); — qty * price is a double (10.0) so %.2f shows 10.00. 'a' + 1 is 98: %c shows b and %d shows 98. 'A' + 25 is 90, which is Z."
   },
   {
     "id": "mastery-u09-q55",
@@ -7161,7 +7251,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "The input is zxy then EOF. What does the program print? void show(char L[], int n, char c) { for (int i = 0; i < n; i++) { if (c == L[i]) putchar(L[n - 1 - i]); } } int main(void) { char L[] = {'x', 'y', 'z'}; int c; while ((c = getchar()) != EOF) show(L, 3, c); } — Each input character is located in the array and its mirror position is printed: z (index 2) → L[0] = x; x (index 0) → L[2] = z; y (index 1) → L[1] = y."
+    "text": "This loop prints three lines. Fill them in. for (int i = 1; i <= 3; i++) { printf(\"%d^2 = %d\\n\", i, i * i); } — Each pass uses the loop variable twice: once as itself and once squared."
   },
   {
     "id": "mastery-u09-q56",
@@ -7170,7 +7260,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "The input is cab then EOF. What does the program print? void next(char L[], int n, char c) { for (int i = 0; i < n; i++) { if (c == L[i]) putchar(L[(i + 2) % n]); } } int main(void) { char L[] = {'a', 'b', 'c', 'd'}; int c; while ((c = getchar()) != EOF) next(L, 4, c); } — Each character is replaced by the one two places later, wrapping with % n : c (index 2) → index 0 = a; a (0) → index 2 = c; b (1) → index 3 = d."
+    "text": "Which call is wrong (undefined or garbage) for int n = 7; double d = 7.0; char c = 'x'; char s[] = \"ok\"; ? — A double needs %f. Reading a double with %d is the classic placeholder mismatch."
   },
   {
     "id": "mastery-u09-q57",
@@ -7179,7 +7269,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "What does strlen return for each string? (Spaces count; the null terminator does not.) char w1[] = \"engine\"; char w2[] = \"a b c\"; printf(\"%zu\\n%zu\\n\", strlen(w1), strlen(w2)); — strlen counts every character before the terminating null: \"engine\" has 6, and \"a b c\" has three letters plus two spaces = 5."
+    "text": "Build the output. Each placeholder below is given; fill in what prints. int hits = 18, shots = 24; printf(\"%d/%d = %.1f%%\\n\", hits, shots, 100.0 * hits / shots); — 100.0 * 18 / 24 = 75.0 (a double). %.1f shows 75.0 and %% prints the percent sign."
   },
   {
     "id": "mastery-u09-q58",
@@ -7188,7 +7278,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "What does this print? char word[] = \"banana\"; word[2] = '\\0'; printf(\"%zu\", strlen(word)); — Writing a null into index 2 ends the string there, so strlen counts only “ba.”"
+    "text": "Write one printf statement for each target, using these variables: char name[] = \"Maya\"; int age = 19; double gpa = 3.846; char grade = 'A'; (1) Maya is 19. (2) GPA: 3.85 (grade A) (3) 100% sure: Maya followed by a newline — printf(\"%s is %d.\", name, age); printf(\"GPA: %.2f (grade %c)\", gpa, grade); printf(\"100%% sure: %s\\n\", name); Each has one argument per placeholder in order: string → %s , int → %d , double rounded to two decimals → %.2f , char → %c . The literal percent sign is written %% , and the newline is typed as \\n ."
   },
   {
     "id": "mastery-u09-q59",
@@ -7197,7 +7287,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "What does this print? (a single character) char word[] = \"pencil\"; putchar(word[strlen(word) - 1]); — strlen is 6, so the last character is at index 5: ‘l’. (Index 6 would be the null terminator.)"
+    "text": "This program has five placeholder bugs. Find each, say what is wrong, and write the corrected line. int apples = 6; double cost = 4.5; char fruit[] = \"pear\"; printf(\"Apples: %f\\n\", apples); printf(\"Cost: %d\\n\", cost); printf(\"%s costs %.2f\", cost, fruit); printf(\"Discount: 15% off\\n\"); printf(\"Count: %d\"); — 1) %f with an int: use %d . 2) %d with a double: use %.1f (or %f ). 3) Arguments swapped: should be printf(\"%s costs %.2f\", fruit, cost); . 4) A literal percent needs %% : printf(\"Discount: 15%% off\\n\"); . 5) Missing argument for %d : printf(\"Count: %d\", apples); . (Also no \\n on lines 3 and 5 if each should end a line.)"
   },
   {
     "id": "mastery-u09-q60",
@@ -7206,7 +7296,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "int v[5]; then only v[0] = 10; and v[1] = 20; are assigned. What can you say about printf(\"%d\", v[3]); ? — An uninitialized local variable or array element holds whatever bytes were in that memory. Reading it is not reliable."
+    "text": "Teach it. Explain how printf turns a format string and arguments into output: what a placeholder is, how arguments are matched, how to choose the right placeholder, how %.2f and %5d change the output, and what goes wrong when types or counts do not match. — printf walks the format string, copying plain text and swapping each placeholder for the next argument formatted as that placeholder says. If the types, order or count are wrong, it reads the wrong bits and prints garbage."
   },
   {
     "id": "mastery-u09-q61",
@@ -7215,7 +7305,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "int values[6]; for (int i = 0; i Which statement is true? — The loop writes elements 0, 2, 4 (0, 6, 12). Element 1 is uninitialized, so its value is unpredictable."
+    "text": "What is printed? int items = 6; double each = 2.5; printf(\"I sold %d items at $%.2f each.\", items, each); — %d takes items (6) and %.2f takes each with two decimals (2.50)."
   },
   {
     "id": "mastery-u09-q62",
@@ -7224,7 +7314,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "demo reads integers with scanf(\"%d\", &x) until EOF, stores at most 3, prints n= and sum= lines on stdout, and prints one warning line on stderr for every extra value. nums.txt contains 4 8 15 16 23 . After ./demo < nums.txt , fill in: — Only the first three values (4, 8, 15) are stored: sum 27. The extra 16 and 23 each cause a warning on stderr, so two warning lines."
+    "text": "What is the exact output? int qty = 9; double price = 5.678; char grade = 'B'; printf(\"Qty: %d | Price: $%.2f | Grade: %c | Total: %.1f\", qty, price, grade, qty * price); — 9 × 5.678 = 51.102, shown with one decimal as 51.1. %c prints B without quotes."
   },
   {
     "id": "mastery-u09-q63",
@@ -7233,10 +7323,280 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: CL02 Intro to C",
-    "text": "Which command sends only the warning messages to err.txt and leaves the normal output on the terminal? — 2> redirects file descriptor 2 (stderr) only."
+    "text": "Variables: char pet[] = \"cat\"; int age = 4; . You want printf to produce My cat is 4 years old. Which format string is correct? — A string uses %s , an int uses %d , in the order of the arguments."
   },
   {
     "id": "mastery-u09-q64",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What does this print? (A tab is shown as → below.) printf(\"Dir:\\tC:\\\\Temp\\n\\\"done\\\"\"); — \\t is a tab, \\\\ is one backslash, \\n starts a new line, and \\\" is a literal quote."
+  },
+  {
+    "id": "mastery-u09-q65",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "You want printf to produce these two lines exactly: Menu: \"Soup\" costs 5% Thanks! Which format string is correct? — Escape the quotes ( \\\" ), write %% for a literal percent sign, and use \\n for the line break."
+  },
+  {
+    "id": "mastery-u09-q66",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "How many characters are in the string \"a\\tb\\n\" ? ( strlen counts each escape sequence as one character.) — The characters are: a, tab, b, newline. Each escape sequence is a single character."
+  },
+  {
+    "id": "mastery-u09-q67",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "On this machine char is 1 byte, short is 2 bytes and float is 4 bytes. What is the exact output? printf(\"%zu %zu %zu\", sizeof(char), sizeof(short), sizeof(float)); — sizeof reports each type’s size in bytes, printed with the %zu placeholder."
+  },
+  {
+    "id": "mastery-u09-q68",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "Assume int is 4 bytes and double is 8 bytes. Fill in what each sizeof evaluates to. double d = 1.5; int arr[5]; printf(\"%zu\\n%zu\\n\", sizeof(d), sizeof(arr)); — A double takes 8 bytes. An array of 5 ints takes 5 × 4 = 20 bytes (sizeof sees the whole array when it is declared in the same scope)."
+  },
+  {
+    "id": "mastery-u09-q69",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "Assume char is 1 byte, int is 4 bytes and double is 8 bytes, with char g = 'A'; int n = 95; double avg = 92.5; . Which statement is true? — sizeof depends only on the type: char 1, int 4, double 8."
+  },
+  {
+    "id": "mastery-u09-q70",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What is the exact output? int n = -3; if (n) { printf(\"True\"); } else { printf(\"False\"); } — Any nonzero value, including negative numbers, is true in C."
+  },
+  {
+    "id": "mastery-u09-q71",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What is the exact output? int a = 0, b = 5, c = -1; if (a) printf(\"A\"); if (b) printf(\"B\"); if (c) printf(\"C\"); printf(\"D\"); — a is 0 (false) so A is skipped. b and c are nonzero (true), so B and C print. D always prints."
+  },
+  {
+    "id": "mastery-u09-q72",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What does this print if the user types banana and presses Enter? int c; while ((c = getchar()) != '\\n') { if (c != 'a') { putchar(c); } } — The loop skips every ‘a’ and prints the rest: b, n, n. It stops at the newline."
+  },
+  {
+    "id": "mastery-u09-q73",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What does this print if the user types Hi! and presses Enter? int c; while ((c = getchar()) != '\\n') { putchar(c); putchar(c); } — Every character is printed twice, in order."
+  },
+  {
+    "id": "mastery-u09-q74",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "The input is eleven followed by EOF. What does this print? int c; while ((c = getchar()) != EOF) { if (c == 'e') putchar('#'); else putchar(c); } — Each ‘e’ becomes ‘#’ and every other character is copied: # l # v # n."
+  },
+  {
+    "id": "mastery-u09-q75",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "The input is the three lines below, with no newline after c , then EOF. What is count at the end? a b c int c, count = 0; while ((c = getchar()) != EOF) { if (c == '\\n') { count++; } } — Only newline characters are counted. Three lines but only two newlines, because the last line is not terminated."
+  },
+  {
+    "id": "mastery-u09-q76",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "The input is aBc 9 then EOF. What does this print? int c; while ((c = getchar()) != EOF) { if (c >= 'a' && c <= 'z') c = c - ('a' - 'A'); putchar(c); } — Lowercase letters shift down by 32 into uppercase. ‘B’, the space and ‘9’ are unchanged."
+  },
+  {
+    "id": "mastery-u09-q77",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "in_word is a state variable. The input is one two three , a newline, four , then EOF. What is the final count ? int c, in_word = 0, count = 0; while ((c = getchar()) != EOF) { if (c == ' ' || c == '\\n') { in_word = 0; } else if (in_word == 0) { in_word = 1; count++; } } — A word is counted at the moment the state flips from “outside” to “inside.” Extra spaces do not create extra words: one, two, three, four."
+  },
+  {
+    "id": "mastery-u09-q78",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "The input is the three lines below (the middle line is empty ), each ending in a newline, then EOF. What does it print? ab cd int c, state = 0, count = 0; while ((c = getchar()) != EOF) { if (c == '\\n') state = 0; else if (state == 0) { state = 1; count++; } } printf(\"%d\", count); — The state turns on at the first character of a line. The empty line never has a first character, so only “ab” and “cd” count."
+  },
+  {
+    "id": "mastery-u09-q79",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "The input is \"a\" b \"c d\" \"e then EOF (the last quote is never closed). What does this print? int c, state = 0, count = 0; while ((c = getchar()) != EOF) { if (c == '\"') { if (state == 0) state = 1; else { state = 0; count++; } } } printf(\"%d\", count); — A quoted string is counted when its closing quote arrives. \"a\" and \"c d\" close; the final “e has no closing quote, so it is never counted."
+  },
+  {
+    "id": "mastery-u09-q80",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "The input is x\"abc\"y\"de\" then EOF. What does this print? (It counts the characters that are inside quotes.) int c, inside = 0, count = 0; while ((c = getchar()) != EOF) { if (c == '\"') inside = !inside; else if (inside) count++; } printf(\"%d\", count); — The quote characters toggle the state and are not counted. Inside the quotes are abc (3) and de (2)."
+  },
+  {
+    "id": "mastery-u09-q81",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "Fill in the five lines that this program prints (each line is five characters). for (int row = 0; row row) putchar('#'); else putchar('.'); } putchar('\\n'); } — In row r, columns greater than r print ‘#’: row 0 has four, row 1 has three, and so on down to none."
+  },
+  {
+    "id": "mastery-u09-q82",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "Fill in the five lines (each line is five characters). for (int row = 0; row < 5; row++) { for (int col = 0; col < 5; col++) { if ((row + col) % 2 == 0) putchar('#'); else putchar('.'); } putchar('\\n'); } — A cell is ‘#’ when row + col is even, which alternates like a checkerboard and flips on every row."
+  },
+  {
+    "id": "mastery-u09-q83",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What is the exact output? int a[5] = {3, 6, 9, 12, 15}; printf(\"%d %d\", a[1], a[4]); — Indexing starts at 0: a[1] is the second element (6) and a[4] is the last (15)."
+  },
+  {
+    "id": "mastery-u09-q84",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "The input is hi 5 then EOF. What does the program print? void shout(char c) { if (c >= 'a' && c <= 'z') putchar(c - 32); else putchar(c); } int main(void) { int c; while ((c = getchar()) != EOF) shout(c); return 0; } — Lowercase letters are shifted to uppercase by subtracting 32; the space and the digit are printed unchanged."
+  },
+  {
+    "id": "mastery-u09-q85",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "The input is zxy then EOF. What does the program print? void show(char L[], int n, char c) { for (int i = 0; i < n; i++) { if (c == L[i]) putchar(L[n - 1 - i]); } } int main(void) { char L[] = {'x', 'y', 'z'}; int c; while ((c = getchar()) != EOF) show(L, 3, c); } — Each input character is located in the array and its mirror position is printed: z (index 2) → L[0] = x; x (index 0) → L[2] = z; y (index 1) → L[1] = y."
+  },
+  {
+    "id": "mastery-u09-q86",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "The input is cab then EOF. What does the program print? void next(char L[], int n, char c) { for (int i = 0; i < n; i++) { if (c == L[i]) putchar(L[(i + 2) % n]); } } int main(void) { char L[] = {'a', 'b', 'c', 'd'}; int c; while ((c = getchar()) != EOF) next(L, 4, c); } — Each character is replaced by the one two places later, wrapping with % n : c (index 2) → index 0 = a; a (0) → index 2 = c; b (1) → index 3 = d."
+  },
+  {
+    "id": "mastery-u09-q87",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What does strlen return for each string? (Spaces count; the null terminator does not.) char w1[] = \"engine\"; char w2[] = \"a b c\"; printf(\"%zu\\n%zu\\n\", strlen(w1), strlen(w2)); — strlen counts every character before the terminating null: \"engine\" has 6, and \"a b c\" has three letters plus two spaces = 5."
+  },
+  {
+    "id": "mastery-u09-q88",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What does this print? char word[] = \"banana\"; word[2] = '\\0'; printf(\"%zu\", strlen(word)); — Writing a null into index 2 ends the string there, so strlen counts only “ba.”"
+  },
+  {
+    "id": "mastery-u09-q89",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "What does this print? (a single character) char word[] = \"pencil\"; putchar(word[strlen(word) - 1]); — strlen is 6, so the last character is at index 5: ‘l’. (Index 6 would be the null terminator.)"
+  },
+  {
+    "id": "mastery-u09-q90",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "int v[5]; then only v[0] = 10; and v[1] = 20; are assigned. What can you say about printf(\"%d\", v[3]); ? — An uninitialized local variable or array element holds whatever bytes were in that memory. Reading it is not reliable."
+  },
+  {
+    "id": "mastery-u09-q91",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "int values[6]; for (int i = 0; i Which statement is true? — The loop writes elements 0, 2, 4 (0, 6, 12). Element 1 is uninitialized, so its value is unpredictable."
+  },
+  {
+    "id": "mastery-u09-q92",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "demo reads integers with scanf(\"%d\", &x) until EOF, stores at most 3, prints n= and sum= lines on stdout, and prints one warning line on stderr for every extra value. nums.txt contains 4 8 15 16 23 . After ./demo < nums.txt , fill in: — Only the first three values (4, 8, 15) are stored: sum 27. The extra 16 and 23 each cause a warning on stderr, so two warning lines."
+  },
+  {
+    "id": "mastery-u09-q93",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL02 Intro to C",
+    "text": "Which command sends only the warning messages to err.txt and leaves the normal output on the terminal? — 2> redirects file descriptor 2 (stderr) only."
+  },
+  {
+    "id": "mastery-u09-q94",
     "section": "lmastery",
     "course": "COMP211",
     "lesson": "MASTERY",

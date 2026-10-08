@@ -113,6 +113,27 @@
   /* Mastery.checkpoint('u09', [items], { title, source, blurb })  (call after the unit is registered) */
   M.checkpoint = function (unitId, items, info) { var u = M.byId[unitId]; if (!u) throw new Error('unknown unit ' + unitId); attachCheckpoint(u, items, info); return u; };
 
+  /* Mastery.extend('u09', { sections:[{title, html}], cards:[[f,b]], examples:[...], tiers:{ trace:[items], ... } })
+     adds teaching sections, cards, worked examples and practice items to an already-registered unit,
+     so a deep-dive can live in its own file. */
+  M.extend = function (unitId, spec) {
+    var u = M.byId[unitId]; if (!u) throw new Error('unknown unit ' + unitId);
+    if (spec.sections) u.learn.sections = (u.learn.sections || []).concat(spec.sections);
+    (spec.examples || []).forEach(function (ex) {
+      if (ex.item) { ex.item._noRecord = true; ex.item._unit = u.id; ex.item._u = u; ex.item.id = ex.item.id || (u.id + ':ex:' + hash(ex.item.prompt)); }
+    });
+    if (spec.examples) u.learn.examples = (u.learn.examples || []).concat(spec.examples);
+    TIER_KEYS.forEach(function (k, ti) {
+      ((spec.tiers && spec.tiers[k]) || []).forEach(function (it) {
+        it._unit = u.id; it._tier = ti; it._u = u;
+        it.id = it.id || (u.id + ':' + hash(it.type + '|' + it.prompt + '|' + (it.code || '')));
+        M.items[it.id] = it; u.tiers[ti].items.push(it); u.items.push(it);
+      });
+    });
+    (spec.cards || []).forEach(function (c) { var card = { f: c[0], b: c[1], unit: u.id }; card.id = u.id + ':c' + hash(c[0]); u.cards.push(card); });
+    return u;
+  };
+
   M.unit = function (spec) {
     var u = { id: spec.id, title: spec.title, short: spec.short || spec.title, lessons: spec.lessons || [], learn: spec.learn || {}, cards: [], tiers: [], items: [], ai: spec.ai !== false, blurb: spec.blurb || '' };
     TIER_KEYS.forEach(function (k, ti) {

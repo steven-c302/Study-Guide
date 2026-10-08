@@ -8,7 +8,7 @@
    1. SCHEMA: required fields per item type, answer indexes in range,
       fill-blank tokens match blanks, rubric/pass sanity, duplicate prompts.
    2. VERIFIED ANSWERS (this is the point): an item may carry
-        verify: { src: "<full C program>", expect: ["line", ...] }
+        verify: { src: "<full C program>", expect: ["line", ...], outputOnly?: true }
           -> compiled with the system C compiler and run; each stdout line
              must equal expect[i], AND expect must equal the item's own
              answers (first alternative). So a wrong answer key fails here.
@@ -181,7 +181,7 @@ for (const u of M.units) {
         const want = answersOf(it);
         if (v.expect && JSON.stringify(out) !== JSON.stringify(v.expect)) err(id, `C output ${JSON.stringify(out)} != verify.expect ${JSON.stringify(v.expect)}`);
         if (!v.expect && !it.blanks) warn(id, 'C verify has no expect[] (only smoke-tested); add expect to pin the answer');
-        if (it.blanks && JSON.stringify(out) !== JSON.stringify(want)) err(id, `C output ${JSON.stringify(out)} != item answers ${JSON.stringify(want)}`);
+        if (it.blanks && !v.outputOnly && JSON.stringify(out) !== JSON.stringify(want)) err(id, `C output ${JSON.stringify(out)} != item answers ${JSON.stringify(want)}`);   // outputOnly: the answer is a fragment (e.g. a format string), the program shows what it produces
       } catch (e) { err(id, 'C verify failed: ' + String(e.stderr || e.message).split('\n').slice(0, 3).join(' | ')); }
     }
   });

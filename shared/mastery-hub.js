@@ -247,6 +247,9 @@
       var c = el('div', 'mq-card'); c.appendChild(el('div', 'mq-sub', 'Big ideas (know these cold)'));
       var ol = el('ol', 'mq-list-big'); L.big.forEach(function (x) { ol.appendChild(el('li', '', x)); }); c.appendChild(ol); body.appendChild(c);
     }
+    (L.sections || []).forEach(function (sec) {
+      var c = el('div', 'mq-card mq-sec'); c.appendChild(el('h4', 'mq-sec-t', sec.title)); c.appendChild(el('div', 'mq-sec-b', sec.html)); body.appendChild(c);
+    });
     if ((L.traps || []).length) {
       var t = el('div', 'mq-card mq-traps'); t.appendChild(el('div', 'mq-sub', '▲ Common traps'));
       var ul = el('ul', 'mq-list-big'); L.traps.forEach(function (x) { ul.appendChild(el('li', '', x)); }); t.appendChild(ul); body.appendChild(t);

@@ -157,3 +157,15 @@
 .mq-seg-bar{display:block;height:4px;border-radius:4px;background:var(--_p2,#efefea);overflow:hidden;margin-top:2px} .mq-seg-bar i{display:block;height:100%;background:var(--_acc,#161616)}
 
 .mq-cp-topic{margin:26px 0 4px;font-size:15px;border-bottom:1px solid var(--line,#dcdcd6);padding-bottom:4px}
+
+/* teaching sections (Learn view) */
+.mq-sec-t{margin:0 0 8px;font-size:16px}
+.mq-sec-b{max-width:80ch;font-size:15px}
+.mq-sec-b p{margin:0 0 10px}
+.mq-sec-b ul,.mq-sec-b ol{margin:6px 0 10px;padding-left:22px}
+.mq-sec-b li{margin:4px 0}
+.mq-sec-b table{border-collapse:collapse;width:100%;margin:8px 0 12px;font-size:13.5px;display:block;overflow-x:auto}
+.mq-sec-b th,.mq-sec-b td{border:1px solid var(--line,#dcdcd6);padding:6px 10px;text-align:left;vertical-align:top}
+.mq-sec-b th{background:var(--panel2,#efefea)}
+.mq-sec-b pre{margin:8px 0 12px}
+.mq-sec-b .out{display:inline-block;background:var(--panel2,#efefea);border:1px solid var(--line,#dcdcd6);border-radius:5px;padding:0 6px;font-family:var(--mono,monospace);font-size:.9em;white-space:pre}
