@@ -181,21 +181,21 @@ Folder:	C:\\CS101\\Labs</pre>
     </div>
     <div class="q" data-fill="1">
       <div class="prompt"><span class="tag">Fill in the blank</span>Write a format string whose output is exactly <code>Name:&lt;tab&gt;Alex</code> (a tab between "Name:" and "Alex").</div>
-      <input class="fillblank" data-answer="Name:\tAlex">
+      <input class="fillblank" data-answer="Name:\\tAlex~~~&quot;Name:\\tAlex&quot;~~~printf(&quot;Name:\\tAlex&quot;)~~~printf(&quot;Name:\\tAlex&quot;);">
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb"><code>"Name:\\tAlex"</code> &mdash; <code>\\t</code> is the escape for a horizontal
       tab.</div>
     </div>
     <div class="q" data-fill="1">
       <div class="prompt"><span class="tag">Fill in the blank</span>Write a format string whose output is exactly:<br><code>Hello!</code><br><code>Welcome to C!</code></div>
-      <input class="fillblank" data-answer="Hello!\nWelcome to C!">
+      <input class="fillblank" data-answer="Hello!\\nWelcome to C!~~~&quot;Hello!\\nWelcome to C!&quot;~~~printf(&quot;Hello!\\nWelcome to C!&quot;)~~~printf(&quot;Hello!\\nWelcome to C!&quot;);">
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb"><code>"Hello!\\nWelcome to C!"</code> &mdash; one <code>\\n</code> between the two
       lines.</div>
     </div>
     <div class="q" data-fill="1">
       <div class="prompt"><span class="tag">Fill in the blank</span>Write a format string whose output is exactly:<br><code>Welcome, "Sam"!</code><br><code>Your folder is:</code><br><code>C:\\Homework</code></div>
-      <input class="fillblank" data-answer="Welcome, &quot;Sam&quot;!\nYour folder is:\nC:\\Homework">
+      <input class="fillblank" data-answer="Welcome, \\&quot;Sam\\&quot;!\\nYour folder is:\\nC:\\\\Homework~~~&quot;Welcome, \\&quot;Sam\\&quot;!\\nYour folder is:\\nC:\\\\Homework&quot;~~~printf(&quot;Welcome, \\&quot;Sam\\&quot;!\\nYour folder is:\\nC:\\\\Homework&quot;)~~~printf(&quot;Welcome, \\&quot;Sam\\&quot;!\\nYour folder is:\\nC:\\\\Homework&quot;);">
       <button class="btn small" onclick="checkFill(this)">Check</button>
       <div class="fb"><code>"Welcome, \\"Sam\\"!\\nYour folder is:\\nC:\\\\Homework"</code> &mdash;
       three escapes stacked: <code>\\"</code> around Sam, <code>\\n</code> twice for the line breaks, and

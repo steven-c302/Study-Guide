@@ -199,7 +199,7 @@ int main(void) {
   <div class="q">
     <p>Write a <code>find</code> command that searches the current directory and all subdirectories for files ending in
     <code>.log</code>.</p>
-    <input class="fillblank" data-answer="find . -name \\"*.log\\"~~~find . -name '*.log'">
+    <input class="fillblank" data-answer="find . -name &quot;*.log&quot;~~~find . -name '*.log'">
     <button class="btn small" style="margin-top:8px" onclick="checkFill(this)">Check</button>
     <div class="fb"></div>
   </div>
