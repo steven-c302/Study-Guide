@@ -17,7 +17,7 @@ document.getElementById('l12').innerHTML = `
 
 <!-- ============ STACK FRAMES DEEP-DIVE ============ -->
 <section class="topic active" id="l12-frames">
-  <h2>HW2 &middot; Stack Frames Deep-Dive</h2>
+  <h2>HW02 &middot; Stack Frames Deep-Dive</h2>
   <p class="muted">Reinforces Lesson 4's memory-diagram model of function calls: where frames are drawn,
   how the stack pointer (sp) moves, and what "returning" actually does to the diagram.</p>
 
@@ -160,7 +160,7 @@ document.getElementById('l12').innerHTML = `
 
 <!-- ============ PASS BY VALUE VS. PASS BY POINTER ============ -->
 <section class="topic" id="l12-passing">
-  <h2>HW2 &middot; Pass by Value vs. Pass by Pointer</h2>
+  <h2>HW02 &middot; Pass by Value vs. Pass by Pointer</h2>
 
   <div class="concept">Passing <b>by value</b> gives the called function a <b>copy</b> of the argument, stored
   in its <i>own</i> frame slot &mdash; changing the parameter can never affect the caller's original variable.
@@ -251,7 +251,7 @@ int main() {
 
 <!-- ============ $PATH & RUNNING PROGRAMS ============ -->
 <section class="topic" id="l12-path">
-  <h2>HW2 &middot; $PATH &amp; Running Programs</h2>
+  <h2>HW02 &middot; $PATH &amp; Running Programs</h2>
 
   <div class="concept">Whether you type an <b>explicit path</b> (<code>./analyze</code>) or a <b>bare
   name</b> (<code>analyze</code>) changes how the shell decides which program actually runs.</div>
@@ -304,7 +304,7 @@ int main() {
 
 <!-- ============ SHELL GLOBBING PRACTICE ============ -->
 <section class="topic" id="l12-glob">
-  <h2>HW2 &middot; Shell Globbing Practice</h2>
+  <h2>HW02 &middot; Shell Globbing Practice</h2>
   <p class="muted">Two complementary skill sets: writing <code>find -name</code> patterns (which use a
   restricted glob-style syntax), and writing plain shell globs for <code>ls</code>/<code>cp</code>/<code>rm</code>
   directly on the command line.</p>
@@ -374,7 +374,7 @@ int main() {
 
 <!-- ============ REGEX PRACTICE ============ -->
 <section class="topic" id="l12-regex">
-  <h2>HW2 &middot; Regex Practice</h2>
+  <h2>HW02 &middot; Regex Practice</h2>
   <p class="muted">All ten patterns below are <code>grep</code> commands against a file <code>students.txt</code>
   &mdash; the same anchor (<code>^</code>/<code>$</code>), character-class, and repetition (<code>*</code>)
   syntax from Lesson 5, now drilled against concrete matching goals.</p>

@@ -48,18 +48,18 @@ what's still missing before the quiz.</p>
   <h3>Coverage checklist &middot; Lectures (CL00&ndash;CL12)</h3>
   <table class="cmp">
     <tr><th>Lecture</th><th>Topic</th><th>Status</th></tr>
-    <tr><td>CL00</td><td>Welcome, course logistics, binary &amp; bases</td><td>&#9989; <a href="#" onclick="showLesson('l0', document.querySelector('[data-l=\\'l0\\']')); return false;">Lesson 0</a></td></tr>
-    <tr><td>CL01</td><td>Unix Basics</td><td>&#9989; <a href="#" onclick="showLesson('l1', document.querySelector('[data-l=\\'l1\\']')); return false;">Lesson 1</a></td></tr>
-    <tr><td>CL02</td><td>Intro to C</td><td>&#9989; <a href="#" onclick="showLesson('l2', document.querySelector('[data-l=\\'l2\\']')); return false;">Lesson 2</a></td></tr>
-    <tr><td>CL03</td><td>I/O Redirection and Strings</td><td>&#9989; <a href="#" onclick="showLesson('l3', document.querySelector('[data-l=\\'l3\\']')); return false;">Lesson 3</a></td></tr>
-    <tr><td>CL04</td><td>Function Stack Frames</td><td>&#9989; <a href="#" onclick="showLesson('l4', document.querySelector('[data-l=\\'l4\\']')); return false;">Lesson 4</a></td></tr>
-    <tr><td>CL05</td><td>Unix Basics (FA26): $PATH, globbing, regex, find, grep</td><td>&#9989; <a href="#" onclick="showLesson('l5', document.querySelector('[data-l=\\'l5\\']')); return false;">Lesson 5</a></td></tr>
-    <tr><td>CL06</td><td>Number Representation</td><td>&#9989; <a href="#" onclick="showLesson('l10', document.querySelector('[data-l=\\'l10\\']')); return false;">Lesson 6</a></td></tr>
-    <tr><td>CL07</td><td>Signed Binary Integers &amp; Binary Arithmetic</td><td>&#9989; combined into <a href="#" onclick="showLesson('l10', document.querySelector('[data-l=\\'l10\\']')); return false;">Lesson 6</a></td></tr>
-    <tr><td>CL08</td><td>Bitwise Operators</td><td>&#9989; <a href="#" onclick="showLesson('l7', document.querySelector('[data-l=\\'l7\\']')); return false;">Lesson 8</a></td></tr>
-    <tr><td>CL09</td><td>Applications of Bitwise Operators</td><td>&#9989; <a href="#" onclick="showLesson('l14', document.querySelector('[data-l=\\'l14\\']')); return false;">Lesson 9</a></td></tr>
-    <tr><td>CL10</td><td>Debugging</td><td>&#9989; <a href="#" onclick="showLesson('l15', document.querySelector('[data-l=\\'l15\\']')); return false;">Lesson 10</a></td></tr>
-    <tr><td>CL11</td><td>Unix Basics: Shell Prompt Config, Environment Variables, $PATH, .bashrc &amp; Aliases</td><td>&#9989; <a href="#" onclick="showLesson('l17', document.querySelector('[data-l=\'l17\']')); return false;">Lesson 17</a></td></tr>
+    <tr><td>CL00</td><td>Welcome, course logistics, binary &amp; bases</td><td>&#9989; <a href="#" onclick="showLesson('l0', document.querySelector('[data-l=\\'l0\\']')); return false;">CL00</a></td></tr>
+    <tr><td>CL01</td><td>Unix Basics</td><td>&#9989; <a href="#" onclick="showLesson('l1', document.querySelector('[data-l=\\'l1\\']')); return false;">CL01</a></td></tr>
+    <tr><td>CL02</td><td>Intro to C</td><td>&#9989; <a href="#" onclick="showLesson('l2', document.querySelector('[data-l=\\'l2\\']')); return false;">CL02</a></td></tr>
+    <tr><td>CL03</td><td>I/O Redirection and Strings</td><td>&#9989; <a href="#" onclick="showLesson('l3', document.querySelector('[data-l=\\'l3\\']')); return false;">CL03</a></td></tr>
+    <tr><td>CL04</td><td>Function Stack Frames</td><td>&#9989; <a href="#" onclick="showLesson('l4', document.querySelector('[data-l=\\'l4\\']')); return false;">CL04</a></td></tr>
+    <tr><td>CL05</td><td>Unix Basics (FA26): $PATH, globbing, regex, find, grep</td><td>&#9989; <a href="#" onclick="showLesson('l5', document.querySelector('[data-l=\\'l5\\']')); return false;">CL05</a></td></tr>
+    <tr><td>CL06</td><td>Number Representation</td><td>&#9989; <a href="#" onclick="showLesson('l10', document.querySelector('[data-l=\\'l10\\']')); return false;">CL06/CL07</a></td></tr>
+    <tr><td>CL07</td><td>Signed Binary Integers &amp; Binary Arithmetic</td><td>&#9989; combined into <a href="#" onclick="showLesson('l10', document.querySelector('[data-l=\\'l10\\']')); return false;">CL06/CL07</a></td></tr>
+    <tr><td>CL08</td><td>Bitwise Operators</td><td>&#9989; <a href="#" onclick="showLesson('l7', document.querySelector('[data-l=\\'l7\\']')); return false;">CL08</a></td></tr>
+    <tr><td>CL09</td><td>Applications of Bitwise Operators</td><td>&#9989; <a href="#" onclick="showLesson('l14', document.querySelector('[data-l=\\'l14\\']')); return false;">CL09</a></td></tr>
+    <tr><td>CL10</td><td>Debugging</td><td>&#9989; <a href="#" onclick="showLesson('l15', document.querySelector('[data-l=\\'l15\\']')); return false;">CL10</a></td></tr>
+    <tr><td>CL11</td><td>Unix Basics: Shell Prompt Config, Environment Variables, $PATH, .bashrc &amp; Aliases</td><td>&#9989; <a href="#" onclick="showLesson('l17', document.querySelector('[data-l=\'l17\']')); return false;">CL11</a></td></tr>
     <tr><td>CL12</td><td>Quiz 1 Applied Review: character arrays (sizeof/strlen), bitwise image filters, stack diagrams, glob</td><td>&#9989; <a href="#" onclick="showLesson('l18', document.querySelector('[data-l=\'l18\']')); return false;">CL12 lesson</a></td></tr>
   </table>
 </div>
@@ -68,16 +68,16 @@ what's still missing before the quiz.</p>
   <h3>Coverage checklist &middot; Readings (RD00&ndash;RD10)</h3>
   <table class="cmp">
     <tr><th>Reading</th><th>Status</th></tr>
-    <tr><td>RD00</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l1', document.querySelector('[data-l=\\'l1\\']')); return false;">Lesson 1</a></td></tr>
-    <tr><td>RD01</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l2', document.querySelector('[data-l=\\'l2\\']')); return false;">Lesson 2</a></td></tr>
-    <tr><td>RD02</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l3', document.querySelector('[data-l=\\'l3\\']')); return false;">Lesson 3</a></td></tr>
-    <tr><td>RD03</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l4', document.querySelector('[data-l=\\'l4\\']')); return false;">Lesson 4</a></td></tr>
-    <tr><td>RD05</td><td>&#9989; covered in <a href="#" onclick="showLesson('l10', document.querySelector('[data-l=\\'l10\\']')); return false;">Lesson 6</a></td></tr>
-    <tr><td>RD06</td><td>&#9989; covered in <a href="#" onclick="showLesson('l10', document.querySelector('[data-l=\\'l10\\']')); return false;">Lesson 6</a></td></tr>
-    <tr><td>RD07</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l7', document.querySelector('[data-l=\\'l7\\']')); return false;">Lesson 8</a></td></tr>
-    <tr><td>RD08</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l14', document.querySelector('[data-l=\\'l14\\']')); return false;">Lesson 9</a></td></tr>
-    <tr><td>RD09</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l15', document.querySelector('[data-l=\\'l15\\']')); return false;">Lesson 10</a></td></tr>
-    <tr><td>RD10</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l17', document.querySelector('[data-l=\'l17\']')); return false;">Lesson 17</a></td></tr>
+    <tr><td>RD00</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l1', document.querySelector('[data-l=\\'l1\\']')); return false;">CL01</a></td></tr>
+    <tr><td>RD01</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l2', document.querySelector('[data-l=\\'l2\\']')); return false;">CL02</a></td></tr>
+    <tr><td>RD02</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l3', document.querySelector('[data-l=\\'l3\\']')); return false;">CL03</a></td></tr>
+    <tr><td>RD03</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l4', document.querySelector('[data-l=\\'l4\\']')); return false;">CL04</a></td></tr>
+    <tr><td>RD05</td><td>&#9989; covered in <a href="#" onclick="showLesson('l10', document.querySelector('[data-l=\\'l10\\']')); return false;">CL06/CL07</a></td></tr>
+    <tr><td>RD06</td><td>&#9989; covered in <a href="#" onclick="showLesson('l10', document.querySelector('[data-l=\\'l10\\']')); return false;">CL06/CL07</a></td></tr>
+    <tr><td>RD07</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l7', document.querySelector('[data-l=\\'l7\\']')); return false;">CL08</a></td></tr>
+    <tr><td>RD08</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l14', document.querySelector('[data-l=\\'l14\\']')); return false;">CL09</a></td></tr>
+    <tr><td>RD09</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l15', document.querySelector('[data-l=\\'l15\\']')); return false;">CL10</a></td></tr>
+    <tr><td>RD10</td><td>&#9989; self-check in <a href="#" onclick="showLesson('l17', document.querySelector('[data-l=\'l17\']')); return false;">CL11</a></td></tr>
   </table>
 </div>
 
@@ -87,11 +87,11 @@ what's still missing before the quiz.</p>
     <tr><th>Item</th><th>Status</th></tr>
     <tr><td>HW0 &middot; Unix Basics</td><td>&#9989; reviewed in <a href="#" onclick="showLesson('l9', document.querySelector('[data-l=\\'l9\\']')); return false;">HW00</a></td></tr>
     <tr><td>HW1 &middot; Intro to C</td><td>&#9989; reviewed in <a href="#" onclick="showLesson('l8', document.querySelector('[data-l=\\'l8\\']')); return false;">HW01</a></td></tr>
-    <tr><td>HW2 &middot; Stack Frames, Globbing &amp; Regex</td><td>&#9989; reviewed in <a href="#" onclick="showLesson('l12', document.querySelector('[data-l=\\'l12\\']')); return false;">HW2</a></td></tr>
+    <tr><td>HW02 &middot; Stack Frames, Globbing &amp; Regex</td><td>&#9989; reviewed in <a href="#" onclick="showLesson('l12', document.querySelector('[data-l=\\'l12\\']')); return false;">HW02</a></td></tr>
     <tr><td>HW3 &middot; Number Rep, Arithmetic &amp; Bitwise</td><td>&#9989; reviewed in <a href="#" onclick="showLesson('l13', document.querySelector('[data-l=\\'l13\\']')); return false;">HW03</a></td></tr>
     <tr><td>Lab 0</td><td>&#10060; <b>missing</b> &mdash; no dedicated lesson from the actual handout (Checkoff 1 Prep drills similar CLI skills, but isn't Lab 0 itself)</td></tr>
     <tr><td>Lab 1</td><td>&#10060; <b>missing</b> &mdash; send the handout/starter code</td></tr>
-    <tr><td>Additional reading: Stack Frames</td><td>&#9989; covered in <a href="#" onclick="showLesson('l4', document.querySelector('[data-l=\\'l4\\']')); return false;">Lesson 4</a></td></tr>
+    <tr><td>Additional reading: Stack Frames</td><td>&#9989; covered in <a href="#" onclick="showLesson('l4', document.querySelector('[data-l=\\'l4\\']')); return false;">CL04</a></td></tr>
   </table>
 </div>
 
@@ -100,10 +100,10 @@ what's still missing before the quiz.</p>
   <p>Work roughly in the order material was taught, since later lectures (bitwise operators, debugging) build
   on earlier ones (binary, C basics, stack frames):</p>
   <ol>
-    <li>Lesson 0 &rarr; Lesson 5 (CL00&ndash;CL05, plus their RD self-checks) &mdash; Unix, C basics, I/O, stack frames, $PATH/regex.</li>
-    <li>Lesson 6 (CL06/CL07, number representation &amp; binary arithmetic) &mdash; this is the densest math section; redo the RD05/RD06 material until the addition/subtraction overflow rules are automatic.</li>
-    <li>Lesson 8, 9, 10 (CL08&ndash;CL10, bitwise operators &rarr; applications &rarr; debugging) &mdash; do the RD07/RD08/RD09 self-checks back to back since they build on each other directly.</li>
-    <li>HW00, HW01, HW2, HW03 review lessons &mdash; these are real graded questions, good for a final gut-check.</li>
+    <li>CL00 &rarr; CL05 (plus their RD self-checks) &mdash; Unix, C basics, I/O and strings, stack frames, $PATH/regex.</li>
+    <li>CL06/CL07 (number representation &amp; binary arithmetic) &mdash; this is the densest math section; redo the RD05/RD06 material until the addition/subtraction overflow rules are automatic.</li>
+    <li>CL08, CL09, CL10 (bitwise operators &rarr; applications &rarr; debugging) &mdash; do the RD07/RD08/RD09 self-checks back to back since they build on each other directly.</li>
+    <li>HW00, HW01, HW02, HW03 review lessons &mdash; these are real graded questions, good for a final gut-check.</li>
     <li>Checkoff 1 Prep &mdash; useful CLI drilling even though it isn't itself on the quiz coverage sheet.</li>
     <li>CL11 (Unix Basics: shell config, environment variables, $PATH, .bashrc/aliases &amp; the RD10
     self-check), then CL12 (Quiz 1 Applied Review: character arrays, bitwise image filters, stack diagram, and glob

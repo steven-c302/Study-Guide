@@ -1,4 +1,4 @@
-/* U09 checkpoint: a HW1-style mini-checker for CL02 / Intro to C.
+/* U09 + U10 checkpoints: a HW1-style mini-checker for CL02 / Intro to C and CL03 / arrays, strings, I/O.
    Mirrors the homework's topics and question styles (placeholders, special characters, sizeof, booleans,
    getchar/putchar, state variables, nested loops, functions + arrays, strlen, garbage values, I/O redirection)
    with ORIGINAL questions. Every computable answer is machine-verified. */
@@ -69,9 +69,18 @@
     h.mc(IO, 'Which command sends <b>only</b> the warning messages to <code>err.txt</code> and leaves the normal output on the terminal?', ['<code>./demo &lt; nums.txt 2&gt; err.txt</code>', ['<code>./demo &lt; nums.txt &gt; err.txt</code>', 'That redirects stdout (the normal output), not the warnings.'], ['<code>./demo 2&lt; err.txt &lt; nums.txt</code>', 'That tries to read from err.txt; the 2 here names an input stream.'], ['<code>./demo &lt; nums.txt | err.txt</code>', 'A pipe sends output to another <i>command</i>, and err.txt is not one.']], 0, '<code>2&gt;</code> redirects file descriptor 2 (stderr) only.'),
     h.mc(IO, 'Which command puts <b>both</b> the normal output and the warnings into <code>all.txt</code>?', ['<code>./demo &lt; nums.txt &amp;&gt; all.txt</code>', ['<code>./demo &lt; nums.txt &gt; all.txt</code>', 'That captures stdout only; warnings still go to the terminal.'], ['<code>./demo &lt; nums.txt 2&gt; all.txt</code>', 'That captures only the warnings.'], ['<code>./demo &lt; nums.txt | all.txt</code>', 'A pipe needs a command on the right, not a file name.']], 0, '<code>&amp;&gt;</code> (or <code>&gt; all.txt 2&gt;&amp;1</code>) sends both stdout and stderr to the same file.')
   ];
-  Mastery.checkpoint('u09', items, {
-    title: 'HW1-style mini-checker (Intro to C)',
-    source: 'Mirrors HW1: Intro to C',
-    blurb: 'Same topics and question styles as HW1 (placeholders, special characters, sizeof, booleans, getchar/putchar, state variables, nested loops, functions and arrays, strlen, garbage values, I/O redirection) with fresh questions. Auto-graded, no hints, unlimited retries; your best score is kept. Anything you miss shows its explanation and joins tomorrow\u2019s review. Placeholder questions feel hard? Read Learn \u2192 \u201Cprintf placeholders\u201D (sections 1 to 6) first, then try the printf practice in the ladder.'
+  /* HW1 spans two lectures, like HW2: CL02 topics go on the CL02 unit, CL03 topics (arrays, strings, I/O redirection) on the CL03 unit. */
+  var CL03 = [FA, SL, GV, IO];
+  var items02 = items.filter(function (it) { return CL03.indexOf(it.topic) === -1; });
+  var items03 = items.filter(function (it) { return CL03.indexOf(it.topic) !== -1; });
+  Mastery.checkpoint('u09', items02, {
+    title: 'HW1-style mini-checker, Intro to C (CL02 half)',
+    source: 'Mirrors HW1 Q1\u2013Q7',
+    blurb: 'Same topics and question styles as the first half of HW1 (placeholders, special characters, sizeof, booleans, getchar/putchar, state variables, nested loops) with fresh questions. The arrays, strlen, garbage-value and I/O redirection half is the checkpoint on the CL03 unit. Auto-graded, no hints, unlimited retries; your best score is kept. Anything you miss shows its explanation and joins tomorrow\u2019s review. Placeholder questions feel hard? Read Learn \u2192 \u201Cprintf placeholders\u201D (sections 1 to 6) first, then try the practice questions.'
+  });
+  Mastery.checkpoint('u10', items03, {
+    title: 'HW1-style mini-checker, arrays, strings & I/O (CL03 half)',
+    source: 'Mirrors HW1 Q8\u2013Q11',
+    blurb: 'Same topics and question styles as the second half of HW1 (functions and arrays, strlen, garbage values, I/O redirection) with fresh questions. HW1 comes after CL03 because these questions need arrays, strings and redirection. The CL02 half is the checkpoint on the CL02 unit. Auto-graded, no hints, unlimited retries; your best score is kept.'
   });
 })();

@@ -950,8 +950,8 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "section",
-    "title": "HW2 &middot; Stack Frames Deep-Dive",
-    "text": "HW2 &middot; Stack Frames Deep-Dive Reinforces Lesson 4's memory-diagram model of function calls: where frames are drawn, how the stack pointer (sp) moves, and what \"returning\" actually does to the diagram. The basics, reinforced Question Answer Where is a callee's frame drawn relative to the caller's? Below the caller's frame Which direction does the stack grow in our memory diagrams? From higher memory addresses toward lower memory addresses What does the stack pointer (sp) represent? The memory address marking the current end of the stack What happens to sp when a new frame is created? It moves down , toward lower memory addresses What does the return address (RA) represent? Where execution should continue after the function returns Reading a frame entry Given a memory-diagram entry like x (4): 12 : The parenthesized number ( 4 ) is the number of bytes occupied by x — not its value, not its address, and not a line number. The value after the colon ( 12 ) is the actual stored value. If main calls a function add whose return value main needs, the label used for that return-value slot in main 's frame is RV(add) — distinct from RA (the return address ) and SP (the stack pointer). What happens when a function returns Two things happen to the memory diagram when a function returns: sp moves back up (toward higher addresses, undoing the down-move that created the frame), and the returning function's old frame gets an X put through it . Nothing is erased byte-by-byte and the memory doesn't stop existing — the X just marks that the frame is no longer valid , even though its old data may still physically remain in memory until something overwrites it. What belongs in a stack frame? A function's stack frame holds its parameters , its local variables , and information about where execution should return (RA/RV) — but not every global variable in the program (globals live elsewhere, not on the stack). A #define d constant does not get its own stack slot. Given #define SIZE 5 used to declare int values[SIZE]; , SIZE itself does not receive a location in the frame, because #define is a preprocessor directive — it's textually substituted before compilation even begins, so there's no SIZE variable left to store by the time the program runs. Arrays and pointers in frames When an array like numbers is passed to a function foo(int arr[]) , the memory diagram should show a pointer in foo 's frame with an arrow drawn back to the original array in the caller's frame — the array itself is never copied into the callee's frame. Multiple choice Where should a callee's stack frame be drawn relative to its caller's? Above the caller's frame Below the caller's frame Inside the caller's frame Either above or below The callee's frame is always drawn below the caller's — the stack grows toward lower memory addresses as new calls are made. Multiple choice Why put an X through a stack frame after its function returns, rather than treating that memory as gone? The memory no longer physically exists Every byte in the frame has automatically become zero The frame is no longer valid, although its old data may still physically remain in memory The function encountered an error The X is a validity marker, not proof of erasure — the bytes can still be sitting in memory (this is exactly why using a pointer to a returned-from frame is undefined behavior: the data might look fine, or might already be overwritten). Select all that apply Which of the following may be stored in a function's stack frame? A. Parameters to the function B. Local variables C. Information about where execution should return after the function finishes D. Every global variable in the program Check A, B, and C. Globals ( D ) live in a separate region of memory, not inside any individual function's frame. Tracing frame order across calls Suppose active frames are arranged, highest address first: main, foo, bar . While bar is executing, what do the active frames look like right after bar returns to foo ? Only bar 's frame is removed — the frames left are, from highest to lowest address, main, foo . Nothing about main or foo changes; a return only ever removes the single frame that's returning. Second example — given doubleIt(int n) called from compute(int x) called from main() , while doubleIt is executing, the active frames from highest to lowest memory address are: main &rarr; compute &rarr; doubleIt — each caller's frame sits above (higher address than) the frame of the function it called. Ordering the events of a function call For int foo() { return 5; } int main() { int x = foo(); } , put these five events in execution order: (1) foo's frame is deallocated, (2) main's frame is created, (3) foo's return value is placed in RV(foo), (4) foo's frame is created, (5) sp moves back up. Check main 's frame must exist first (2) before it can call foo , whose frame is then created (4); foo computes its result and places it in RV(foo) (3) before its frame is torn down (1) and sp moves back up (5). For doubleIt(int n) called as doubleIt(4) from main , order these seven events: (1) doubleIt's return value is placed in RV(doubleIt), (2) main's stack frame is created, (3) doubleIt's stack frame is deallocated, (4) doubleIt's stack frame is created, (5) result is assigned the value 8, (6) sp moves back up after doubleIt returns, (7) the argument n receives the value 4. Check main 's frame exists first (2), then doubleIt 's frame is created (4) and its parameter n receives 4 (7); inside the body, result is computed as 8 (5) and placed in the return slot (1); only then is the frame torn down (3) and sp restored (6). For addOne(int x) called from calculate(int n) called from main as calculate(5) , order these eleven events: (1) calculate's return value is placed in RV(calculate), (2) addOne's stack frame is deallocated, (3) calculate's stack frame is created, (4) addOne's return value is placed in RV(addOne), (5) main's stack frame is created, (6) calculate's stack frame is deallocated, (7) addOne's stack frame is created, (8) addOne's local variable result is assigned 6, (9) calculate's local variable answer is assigned 6, (10) sp moves back up after addOne returns, (11) sp moves back up after calculate returns. Check Each call nests one level deeper before anything unwinds: main &rarr; calculate &rarr; addOne all get created and run to completion of addOne first (5, 3, 7, 8, 4), then addOne unwinds (2, 10) before calculate finishes its own work (9, 1) and unwinds (6, 11)."
+    "title": "HW02 &middot; Stack Frames Deep-Dive",
+    "text": "HW02 &middot; Stack Frames Deep-Dive Reinforces Lesson 4's memory-diagram model of function calls: where frames are drawn, how the stack pointer (sp) moves, and what \"returning\" actually does to the diagram. The basics, reinforced Question Answer Where is a callee's frame drawn relative to the caller's? Below the caller's frame Which direction does the stack grow in our memory diagrams? From higher memory addresses toward lower memory addresses What does the stack pointer (sp) represent? The memory address marking the current end of the stack What happens to sp when a new frame is created? It moves down , toward lower memory addresses What does the return address (RA) represent? Where execution should continue after the function returns Reading a frame entry Given a memory-diagram entry like x (4): 12 : The parenthesized number ( 4 ) is the number of bytes occupied by x — not its value, not its address, and not a line number. The value after the colon ( 12 ) is the actual stored value. If main calls a function add whose return value main needs, the label used for that return-value slot in main 's frame is RV(add) — distinct from RA (the return address ) and SP (the stack pointer). What happens when a function returns Two things happen to the memory diagram when a function returns: sp moves back up (toward higher addresses, undoing the down-move that created the frame), and the returning function's old frame gets an X put through it . Nothing is erased byte-by-byte and the memory doesn't stop existing — the X just marks that the frame is no longer valid , even though its old data may still physically remain in memory until something overwrites it. What belongs in a stack frame? A function's stack frame holds its parameters , its local variables , and information about where execution should return (RA/RV) — but not every global variable in the program (globals live elsewhere, not on the stack). A #define d constant does not get its own stack slot. Given #define SIZE 5 used to declare int values[SIZE]; , SIZE itself does not receive a location in the frame, because #define is a preprocessor directive — it's textually substituted before compilation even begins, so there's no SIZE variable left to store by the time the program runs. Arrays and pointers in frames When an array like numbers is passed to a function foo(int arr[]) , the memory diagram should show a pointer in foo 's frame with an arrow drawn back to the original array in the caller's frame — the array itself is never copied into the callee's frame. Multiple choice Where should a callee's stack frame be drawn relative to its caller's? Above the caller's frame Below the caller's frame Inside the caller's frame Either above or below The callee's frame is always drawn below the caller's — the stack grows toward lower memory addresses as new calls are made. Multiple choice Why put an X through a stack frame after its function returns, rather than treating that memory as gone? The memory no longer physically exists Every byte in the frame has automatically become zero The frame is no longer valid, although its old data may still physically remain in memory The function encountered an error The X is a validity marker, not proof of erasure — the bytes can still be sitting in memory (this is exactly why using a pointer to a returned-from frame is undefined behavior: the data might look fine, or might already be overwritten). Select all that apply Which of the following may be stored in a function's stack frame? A. Parameters to the function B. Local variables C. Information about where execution should return after the function finishes D. Every global variable in the program Check A, B, and C. Globals ( D ) live in a separate region of memory, not inside any individual function's frame. Tracing frame order across calls Suppose active frames are arranged, highest address first: main, foo, bar . While bar is executing, what do the active frames look like right after bar returns to foo ? Only bar 's frame is removed — the frames left are, from highest to lowest address, main, foo . Nothing about main or foo changes; a return only ever removes the single frame that's returning. Second example — given doubleIt(int n) called from compute(int x) called from main() , while doubleIt is executing, the active frames from highest to lowest memory address are: main &rarr; compute &rarr; doubleIt — each caller's frame sits above (higher address than) the frame of the function it called. Ordering the events of a function call For int foo() { return 5; } int main() { int x = foo(); } , put these five events in execution order: (1) foo's frame is deallocated, (2) main's frame is created, (3) foo's return value is placed in RV(foo), (4) foo's frame is created, (5) sp moves back up. Check main 's frame must exist first (2) before it can call foo , whose frame is then created (4); foo computes its result and places it in RV(foo) (3) before its frame is torn down (1) and sp moves back up (5). For doubleIt(int n) called as doubleIt(4) from main , order these seven events: (1) doubleIt's return value is placed in RV(doubleIt), (2) main's stack frame is created, (3) doubleIt's stack frame is deallocated, (4) doubleIt's stack frame is created, (5) result is assigned the value 8, (6) sp moves back up after doubleIt returns, (7) the argument n receives the value 4. Check main 's frame exists first (2), then doubleIt 's frame is created (4) and its parameter n receives 4 (7); inside the body, result is computed as 8 (5) and placed in the return slot (1); only then is the frame torn down (3) and sp restored (6). For addOne(int x) called from calculate(int n) called from main as calculate(5) , order these eleven events: (1) calculate's return value is placed in RV(calculate), (2) addOne's stack frame is deallocated, (3) calculate's stack frame is created, (4) addOne's return value is placed in RV(addOne), (5) main's stack frame is created, (6) calculate's stack frame is deallocated, (7) addOne's stack frame is created, (8) addOne's local variable result is assigned 6, (9) calculate's local variable answer is assigned 6, (10) sp moves back up after addOne returns, (11) sp moves back up after calculate returns. Check Each call nests one level deeper before anything unwinds: main &rarr; calculate &rarr; addOne all get created and run to completion of addOne first (5, 3, 7, 8, 4), then addOne unwinds (2, 10) before calculate finishes its own work (9, 1) and unwinds (6, 11)."
   },
   {
     "id": "l12-frames-q0",
@@ -959,7 +959,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Stack Frames Deep-Dive",
+    "title": "HW02 &middot; Stack Frames Deep-Dive",
     "text": "Multiple choice Where should a callee's stack frame be drawn relative to its caller's? — The callee's frame is always drawn below the caller's — the stack grows toward lower memory addresses as new calls are made."
   },
   {
@@ -968,7 +968,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Stack Frames Deep-Dive",
+    "title": "HW02 &middot; Stack Frames Deep-Dive",
     "text": "Multiple choice Why put an X through a stack frame after its function returns, rather than treating that memory as gone? — The X is a validity marker, not proof of erasure — the bytes can still be sitting in memory (this is exactly why using a pointer to a returned-from frame is undefined behavior: the data might look fine, or might already be overwritten)."
   },
   {
@@ -977,7 +977,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Stack Frames Deep-Dive",
+    "title": "HW02 &middot; Stack Frames Deep-Dive",
     "text": "Select all that apply Which of the following may be stored in a function's stack frame? — A, B, and C. Globals ( D ) live in a separate region of memory, not inside any individual function's frame."
   },
   {
@@ -986,7 +986,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Stack Frames Deep-Dive",
+    "title": "HW02 &middot; Stack Frames Deep-Dive",
     "text": "main 's frame must exist first (2) before it can call foo , whose frame is then created (4); foo computes its result and places it in RV(foo) (3) before its frame is torn down (1) and sp moves back up (5)."
   },
   {
@@ -995,8 +995,8 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "section",
-    "title": "HW2 &middot; Pass by Value vs. Pass by Pointer",
-    "text": "HW2 &middot; Pass by Value vs. Pass by Pointer Passing by value gives the called function a copy of the argument, stored in its own frame slot — changing the parameter can never affect the caller's original variable. Passing by pointer gives the called function a pointer that can refer back to the original variable, so writes through that pointer do affect the caller's data. Pass by value void change(int32_t x) { x = 20; } int main() { int32_t x = 10; change(x); } // main's x is still 10 — change() only modified its own copy Correct statements about pass by value: the function receives a copy of the argument's value; the parameter has its own location in the called function's stack frame; changing the parameter does not change the caller's original variable. (\"Changing the parameter changes the caller's original variable\" is false — that's what makes pass by value pass by value .) Arrays are effectively passed by pointer void update(int32_t arr[]) { arr[0] = 100; } int main() { int32_t values[3] = {1, 2, 3}; update(values); } // values[0] is now 100 — update() wrote through to the original array In C, an array argument decays to a pointer to its first element. So even though there's no explicit * or & in the call, update can still modify the caller's original array: the entire array is not copied, the original stays in the caller's frame, the callee can change its elements, and those changes are still visible after the callee returns. Mixing value and array parameters Given void update(int32_t x, int32_t arr[]) { x = 100; arr[0] = 100; } called as update(x, nums) where main has x = 5 and nums = {1, 2, 3} : After update returns: x = 5, nums = {100, 2, 3} — the plain int32_t x parameter is pass-by-value (caller's x untouched), while the array parameter still refers back to the caller's original nums (its first element changes). Multiple choice What does it mean to pass an argument by value? The called function receives a copy of the argument's value The called function receives the memory address of the original variable The original variable is moved into the called function's stack frame Both functions use the same variable A copy, stored in the callee's own frame slot — the caller's variable is never touched. Multiple choice What does it mean to pass a variable by pointer? The called function receives a copy of the variable's value The called function receives a pointer that can refer to the original variable The original variable is copied into the called function's stack frame The caller's stack frame is removed A pointer refers back to the original storage location, so writes through it are visible to the caller. Given void change(int32_t x){ x = 20; } int main(){ int32_t x = 10; change(x); } — what is main 's x after change returns? Check Still 10 . change 's parameter x is a separate copy in its own frame — assigning to it never reaches back into main . Given void update(int32_t arr[]){ arr[0] = 100; } called on int32_t values[3] = {1,2,3}; update(values); — what is values[0] after update returns? Check Arrays decay to a pointer when passed — arr refers to the same memory as values , so the write through arr[0] is visible in main as 100 ."
+    "title": "HW02 &middot; Pass by Value vs. Pass by Pointer",
+    "text": "HW02 &middot; Pass by Value vs. Pass by Pointer Passing by value gives the called function a copy of the argument, stored in its own frame slot — changing the parameter can never affect the caller's original variable. Passing by pointer gives the called function a pointer that can refer back to the original variable, so writes through that pointer do affect the caller's data. Pass by value void change(int32_t x) { x = 20; } int main() { int32_t x = 10; change(x); } // main's x is still 10 — change() only modified its own copy Correct statements about pass by value: the function receives a copy of the argument's value; the parameter has its own location in the called function's stack frame; changing the parameter does not change the caller's original variable. (\"Changing the parameter changes the caller's original variable\" is false — that's what makes pass by value pass by value .) Arrays are effectively passed by pointer void update(int32_t arr[]) { arr[0] = 100; } int main() { int32_t values[3] = {1, 2, 3}; update(values); } // values[0] is now 100 — update() wrote through to the original array In C, an array argument decays to a pointer to its first element. So even though there's no explicit * or & in the call, update can still modify the caller's original array: the entire array is not copied, the original stays in the caller's frame, the callee can change its elements, and those changes are still visible after the callee returns. Mixing value and array parameters Given void update(int32_t x, int32_t arr[]) { x = 100; arr[0] = 100; } called as update(x, nums) where main has x = 5 and nums = {1, 2, 3} : After update returns: x = 5, nums = {100, 2, 3} — the plain int32_t x parameter is pass-by-value (caller's x untouched), while the array parameter still refers back to the caller's original nums (its first element changes). Multiple choice What does it mean to pass an argument by value? The called function receives a copy of the argument's value The called function receives the memory address of the original variable The original variable is moved into the called function's stack frame Both functions use the same variable A copy, stored in the callee's own frame slot — the caller's variable is never touched. Multiple choice What does it mean to pass a variable by pointer? The called function receives a copy of the variable's value The called function receives a pointer that can refer to the original variable The original variable is copied into the called function's stack frame The caller's stack frame is removed A pointer refers back to the original storage location, so writes through it are visible to the caller. Given void change(int32_t x){ x = 20; } int main(){ int32_t x = 10; change(x); } — what is main 's x after change returns? Check Still 10 . change 's parameter x is a separate copy in its own frame — assigning to it never reaches back into main . Given void update(int32_t arr[]){ arr[0] = 100; } called on int32_t values[3] = {1,2,3}; update(values); — what is values[0] after update returns? Check Arrays decay to a pointer when passed — arr refers to the same memory as values , so the write through arr[0] is visible in main as 100 ."
   },
   {
     "id": "l12-passing-q0",
@@ -1004,7 +1004,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Pass by Value vs. Pass by Pointer",
+    "title": "HW02 &middot; Pass by Value vs. Pass by Pointer",
     "text": "Multiple choice What does it mean to pass an argument by value? — A copy, stored in the callee's own frame slot — the caller's variable is never touched."
   },
   {
@@ -1013,7 +1013,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Pass by Value vs. Pass by Pointer",
+    "title": "HW02 &middot; Pass by Value vs. Pass by Pointer",
     "text": "Multiple choice What does it mean to pass a variable by pointer? — A pointer refers back to the original storage location, so writes through it are visible to the caller."
   },
   {
@@ -1022,7 +1022,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Pass by Value vs. Pass by Pointer",
+    "title": "HW02 &middot; Pass by Value vs. Pass by Pointer",
     "text": "Still 10 . change 's parameter x is a separate copy in its own frame — assigning to it never reaches back into main ."
   },
   {
@@ -1031,7 +1031,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Pass by Value vs. Pass by Pointer",
+    "title": "HW02 &middot; Pass by Value vs. Pass by Pointer",
     "text": "Arrays decay to a pointer when passed — arr refers to the same memory as values , so the write through arr[0] is visible in main as 100 ."
   },
   {
@@ -1040,8 +1040,8 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "section",
-    "title": "HW2 &middot; $PATH & Running Programs",
-    "text": "HW2 &middot; $PATH & Running Programs Whether you type an explicit path ( ./analyze ) or a bare name ( analyze ) changes how the shell decides which program actually runs. Worked scenario Current directory: /home/student/lab . Three executable files named analyze exist: /usr/local/bin/analyze , /home/student/tools/analyze , and /home/student/lab/analyze . $PATH is /usr/local/bin:/home/student/tools:/usr/bin:/bin . You type&hellip; What runs Why ./analyze /home/student/lab/analyze An explicit relative path always wins — $PATH is never consulted analyze /usr/local/bin/analyze A bare name is searched for in $PATH order; /usr/local/bin is listed first ../tools/analyze /home/student/tools/analyze Another explicit (relative) path — again, $PATH is irrelevant Any slash in what you type makes it an explicit path. The moment a command contains a / (whether ./ , ../ , or a full absolute path), the shell resolves it directly and never searches $PATH at all. Only a bare name with no slash triggers a $PATH search. Changing $PATH changes what a bare name resolves to If $PATH is changed to /home/student/tools:/usr/local/bin:/usr/bin:/bin (tools now listed first ), then typing analyze now runs /home/student/tools/analyze instead — the search order changed, so the first match along the new $PATH changed too, even though nothing about the files themselves moved. You're in /home/student/lab with an executable at that same path; typing ./analyze runs which absolute path? Check Explicit relative paths (anything with a / ) are resolved directly, never through $PATH . True / False Typing a bare command name with no slash triggers a search through $PATH , in order, for the first matching executable. True False True. The shell walks the colon-separated directories in $PATH left to right and runs the first executable match it finds."
+    "title": "HW02 &middot; $PATH & Running Programs",
+    "text": "HW02 &middot; $PATH & Running Programs Whether you type an explicit path ( ./analyze ) or a bare name ( analyze ) changes how the shell decides which program actually runs. Worked scenario Current directory: /home/student/lab . Three executable files named analyze exist: /usr/local/bin/analyze , /home/student/tools/analyze , and /home/student/lab/analyze . $PATH is /usr/local/bin:/home/student/tools:/usr/bin:/bin . You type&hellip; What runs Why ./analyze /home/student/lab/analyze An explicit relative path always wins — $PATH is never consulted analyze /usr/local/bin/analyze A bare name is searched for in $PATH order; /usr/local/bin is listed first ../tools/analyze /home/student/tools/analyze Another explicit (relative) path — again, $PATH is irrelevant Any slash in what you type makes it an explicit path. The moment a command contains a / (whether ./ , ../ , or a full absolute path), the shell resolves it directly and never searches $PATH at all. Only a bare name with no slash triggers a $PATH search. Changing $PATH changes what a bare name resolves to If $PATH is changed to /home/student/tools:/usr/local/bin:/usr/bin:/bin (tools now listed first ), then typing analyze now runs /home/student/tools/analyze instead — the search order changed, so the first match along the new $PATH changed too, even though nothing about the files themselves moved. You're in /home/student/lab with an executable at that same path; typing ./analyze runs which absolute path? Check Explicit relative paths (anything with a / ) are resolved directly, never through $PATH . True / False Typing a bare command name with no slash triggers a search through $PATH , in order, for the first matching executable. True False True. The shell walks the colon-separated directories in $PATH left to right and runs the first executable match it finds."
   },
   {
     "id": "l12-path-q0",
@@ -1049,7 +1049,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; $PATH & Running Programs",
+    "title": "HW02 &middot; $PATH & Running Programs",
     "text": "Explicit relative paths (anything with a / ) are resolved directly, never through $PATH ."
   },
   {
@@ -1058,7 +1058,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; $PATH & Running Programs",
+    "title": "HW02 &middot; $PATH & Running Programs",
     "text": "True / False Typing a bare command name with no slash triggers a search through $PATH , in order, for the first matching executable. — True. The shell walks the colon-separated directories in $PATH left to right and runs the first executable match it finds."
   },
   {
@@ -1067,8 +1067,8 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "section",
-    "title": "HW2 &middot; Shell Globbing Practice",
-    "text": "HW2 &middot; Shell Globbing Practice Two complementary skill sets: writing find -name patterns (which use a restricted glob-style syntax), and writing plain shell globs for ls / cp / rm directly on the command line. find -name patterns Goal Command Files named exactly notes.txt find . -name \"notes.txt\" Files ending in .md find . -name \"*.md\" Files whose names begin with test find . -name \"test*\" All .txt files inside docs/ and its subdirectories find docs -name \"*.txt\" Files beginning with test , then exactly one character, then .c find . -name \"test?.c\" In find -name patterns, * matches any number of characters (including zero) and ? matches exactly one character — and because find already recurses into subdirectories on its own, pointing it at a starting directory (like docs ) is enough to reach nested files without any extra flags. Plain shell globs Goal Command List every .txt file ls *.txt List files beginning with data and ending in .csv ls data*.csv List all .c files inside src/ ls src/*.c List all .c and .h files inside src/ ls src/*.[ch] Copy every .txt file into backup/ cp *.txt backup/ Copy all files beginning with report into backup/ cp report* backup/ Display the contents of all .md files cat *.md Delete every .png file rm *.png [ch] is a bracket set — it matches a single character that is either c or h , which is exactly what's needed to glob both .c and .h files with one pattern ( *.[ch] ) instead of writing two separate commands. Write the find command to list every file whose name ends in .md , anywhere under the current directory. Check find . -name \"*.md\" — * matches any run of characters before .md . Write the shell glob command to list all .c and .h files inside src/ in one command. Check The bracket set [ch] matches either letter in that single position, covering both extensions at once: ls src/*.[ch] . True / False find . -name \"test?.c\" matches a file named test.c (no character between test and .c ). True False False. ? requires exactly one character in that position, so it matches test1.c or testX.c but not test.c (zero characters) or test12.c (two characters)."
+    "title": "HW02 &middot; Shell Globbing Practice",
+    "text": "HW02 &middot; Shell Globbing Practice Two complementary skill sets: writing find -name patterns (which use a restricted glob-style syntax), and writing plain shell globs for ls / cp / rm directly on the command line. find -name patterns Goal Command Files named exactly notes.txt find . -name \"notes.txt\" Files ending in .md find . -name \"*.md\" Files whose names begin with test find . -name \"test*\" All .txt files inside docs/ and its subdirectories find docs -name \"*.txt\" Files beginning with test , then exactly one character, then .c find . -name \"test?.c\" In find -name patterns, * matches any number of characters (including zero) and ? matches exactly one character — and because find already recurses into subdirectories on its own, pointing it at a starting directory (like docs ) is enough to reach nested files without any extra flags. Plain shell globs Goal Command List every .txt file ls *.txt List files beginning with data and ending in .csv ls data*.csv List all .c files inside src/ ls src/*.c List all .c and .h files inside src/ ls src/*.[ch] Copy every .txt file into backup/ cp *.txt backup/ Copy all files beginning with report into backup/ cp report* backup/ Display the contents of all .md files cat *.md Delete every .png file rm *.png [ch] is a bracket set — it matches a single character that is either c or h , which is exactly what's needed to glob both .c and .h files with one pattern ( *.[ch] ) instead of writing two separate commands. Write the find command to list every file whose name ends in .md , anywhere under the current directory. Check find . -name \"*.md\" — * matches any run of characters before .md . Write the shell glob command to list all .c and .h files inside src/ in one command. Check The bracket set [ch] matches either letter in that single position, covering both extensions at once: ls src/*.[ch] . True / False find . -name \"test?.c\" matches a file named test.c (no character between test and .c ). True False False. ? requires exactly one character in that position, so it matches test1.c or testX.c but not test.c (zero characters) or test12.c (two characters)."
   },
   {
     "id": "l12-glob-q0",
@@ -1076,7 +1076,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Shell Globbing Practice",
+    "title": "HW02 &middot; Shell Globbing Practice",
     "text": "find . -name \"*.md\" — * matches any run of characters before .md ."
   },
   {
@@ -1085,7 +1085,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Shell Globbing Practice",
+    "title": "HW02 &middot; Shell Globbing Practice",
     "text": "The bracket set [ch] matches either letter in that single position, covering both extensions at once: ls src/*.[ch] ."
   },
   {
@@ -1094,7 +1094,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Shell Globbing Practice",
+    "title": "HW02 &middot; Shell Globbing Practice",
     "text": "True / False find . -name \"test?.c\" matches a file named test.c (no character between test and .c ). — False. ? requires exactly one character in that position, so it matches test1.c or testX.c but not test.c (zero characters) or test12.c (two characters)."
   },
   {
@@ -1103,8 +1103,8 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "section",
-    "title": "HW2 &middot; Regex Practice",
-    "text": "HW2 &middot; Regex Practice All ten patterns below are grep commands against a file students.txt — the same anchor ( ^ / $ ), character-class, and repetition ( * ) syntax from Lesson 5, now drilled against concrete matching goals. Goal Command Key idea Every line containing Alice grep \"Alice\" students.txt Plain substring match — no metacharacters needed Every line that starts with A grep \"^A\" students.txt ^ anchors to the start of the line Every line that ends with a grep \"a$\" students.txt $ anchors to the end of the line Lines starting with A and ending with a , anything between grep \"^A.*a$\" students.txt .* = any number of any character Lines containing Bob followed by zero or more b characters grep \"Bobb*\" students.txt * repeats the single character right before it (here, the second b ) zero or more times Lines containing student followed by exactly one character grep \"student.\" students.txt Unescaped . = exactly one any character Lines containing any digit 0–9 grep \"[0-9]\" students.txt [0-9] is a character-class range Lines beginning with A, B, or C grep \"^[ABC]\" students.txt Combine an anchor with a character class Lines ending with a digit grep \"[0-9]$\" students.txt Combine a character class with the end anchor Lines containing at least one lowercase vowel grep \"[aeiou]\" students.txt Character classes don't need ranges — an explicit list works too Bobb* , not Bob* . A common mistake is writing grep \"Bob*\" for \"Bob followed by zero or more b s\" — but that pattern actually means \"Bo, followed by zero or more b s\" (the * only repeats the single character immediately to its left, which is the second b in Bob , not the whole word). Writing Bobb* correctly repeats the extra b's after \"Bob\". Write a grep command to find every line that starts with A . Check grep \"^A\" students.txt — ^ anchors the match to the very start of the line. Write a grep command to find lines containing student followed by exactly one character. Check grep \"student.\" — the trailing unescaped . matches exactly one arbitrary character right after \"student\" (e.g. student1 , student2 ). Multiple choice What does the regex Bob* actually match? \"Bob\" followed by zero or more additional b's \"Bo\" followed by zero or more b's (so \"Bo\", \"Bob\", \"Bobb\", ...) Exactly the literal string \"Bob*\" Any line containing the letter B * applies only to the single character immediately preceding it — here, the second b in \"Bob\" — so it matches \"Bo\", \"Bob\", \"Bobb\", etc. To require \"Bob\" plus zero-or-more extra b's, you need Bobb* . True / False [0-9] and [aeiou] are both examples of character classes — the first uses a range, the second an explicit list. True False True. A character class matches exactly one character from whatever set is inside the brackets, whether that set is written as a range ( 0-9 ) or spelled out ( aeiou )."
+    "title": "HW02 &middot; Regex Practice",
+    "text": "HW02 &middot; Regex Practice All ten patterns below are grep commands against a file students.txt — the same anchor ( ^ / $ ), character-class, and repetition ( * ) syntax from Lesson 5, now drilled against concrete matching goals. Goal Command Key idea Every line containing Alice grep \"Alice\" students.txt Plain substring match — no metacharacters needed Every line that starts with A grep \"^A\" students.txt ^ anchors to the start of the line Every line that ends with a grep \"a$\" students.txt $ anchors to the end of the line Lines starting with A and ending with a , anything between grep \"^A.*a$\" students.txt .* = any number of any character Lines containing Bob followed by zero or more b characters grep \"Bobb*\" students.txt * repeats the single character right before it (here, the second b ) zero or more times Lines containing student followed by exactly one character grep \"student.\" students.txt Unescaped . = exactly one any character Lines containing any digit 0–9 grep \"[0-9]\" students.txt [0-9] is a character-class range Lines beginning with A, B, or C grep \"^[ABC]\" students.txt Combine an anchor with a character class Lines ending with a digit grep \"[0-9]$\" students.txt Combine a character class with the end anchor Lines containing at least one lowercase vowel grep \"[aeiou]\" students.txt Character classes don't need ranges — an explicit list works too Bobb* , not Bob* . A common mistake is writing grep \"Bob*\" for \"Bob followed by zero or more b s\" — but that pattern actually means \"Bo, followed by zero or more b s\" (the * only repeats the single character immediately to its left, which is the second b in Bob , not the whole word). Writing Bobb* correctly repeats the extra b's after \"Bob\". Write a grep command to find every line that starts with A . Check grep \"^A\" students.txt — ^ anchors the match to the very start of the line. Write a grep command to find lines containing student followed by exactly one character. Check grep \"student.\" — the trailing unescaped . matches exactly one arbitrary character right after \"student\" (e.g. student1 , student2 ). Multiple choice What does the regex Bob* actually match? \"Bob\" followed by zero or more additional b's \"Bo\" followed by zero or more b's (so \"Bo\", \"Bob\", \"Bobb\", ...) Exactly the literal string \"Bob*\" Any line containing the letter B * applies only to the single character immediately preceding it — here, the second b in \"Bob\" — so it matches \"Bo\", \"Bob\", \"Bobb\", etc. To require \"Bob\" plus zero-or-more extra b's, you need Bobb* . True / False [0-9] and [aeiou] are both examples of character classes — the first uses a range, the second an explicit list. True False True. A character class matches exactly one character from whatever set is inside the brackets, whether that set is written as a range ( 0-9 ) or spelled out ( aeiou )."
   },
   {
     "id": "l12-regex-q0",
@@ -1112,7 +1112,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Regex Practice",
+    "title": "HW02 &middot; Regex Practice",
     "text": "grep \"^A\" students.txt — ^ anchors the match to the very start of the line."
   },
   {
@@ -1121,7 +1121,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Regex Practice",
+    "title": "HW02 &middot; Regex Practice",
     "text": "grep \"student.\" — the trailing unescaped . matches exactly one arbitrary character right after \"student\" (e.g. student1 , student2 )."
   },
   {
@@ -1130,7 +1130,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Regex Practice",
+    "title": "HW02 &middot; Regex Practice",
     "text": "Multiple choice What does the regex Bob* actually match? — * applies only to the single character immediately preceding it — here, the second b in \"Bob\" — so it matches \"Bo\", \"Bob\", \"Bobb\", etc. To require \"Bob\" plus zero-or-more extra b's, you need Bobb* ."
   },
   {
@@ -1139,7 +1139,7 @@
     "course": "COMP211",
     "lesson": "L12",
     "type": "qa",
-    "title": "HW2 &middot; Regex Practice",
+    "title": "HW02 &middot; Regex Practice",
     "text": "True / False [0-9] and [aeiou] are both examples of character classes — the first uses a range, the second an explicit list. — True. A character class matches exactly one character from whatever set is inside the brackets, whether that set is written as a range ( 0-9 ) or spelled out ( aeiou )."
   },
   {
@@ -8064,114 +8064,6 @@
     "text": "Fill in the five lines (each line is five characters). for (int row = 0; row < 5; row++) { for (int col = 0; col < 5; col++) { if ((row + col) % 2 == 0) putchar('#'); else putchar('.'); } putchar('\\n'); } — A cell is ‘#’ when row + col is even, which alternates like a checkerboard and flips on every row."
   },
   {
-    "id": "mastery-u09-q83",
-    "section": "lmastery",
-    "course": "COMP211",
-    "lesson": "MASTERY",
-    "type": "qa",
-    "title": "Mastery: CL02 Intro to C",
-    "text": "What is the exact output? int a[5] = {3, 6, 9, 12, 15}; printf(\"%d %d\", a[1], a[4]); — Indexing starts at 0: a[1] is the second element (6) and a[4] is the last (15)."
-  },
-  {
-    "id": "mastery-u09-q84",
-    "section": "lmastery",
-    "course": "COMP211",
-    "lesson": "MASTERY",
-    "type": "qa",
-    "title": "Mastery: CL02 Intro to C",
-    "text": "The input is hi 5 then EOF. What does the program print? void shout(char c) { if (c >= 'a' && c <= 'z') putchar(c - 32); else putchar(c); } int main(void) { int c; while ((c = getchar()) != EOF) shout(c); return 0; } — Lowercase letters are shifted to uppercase by subtracting 32; the space and the digit are printed unchanged."
-  },
-  {
-    "id": "mastery-u09-q85",
-    "section": "lmastery",
-    "course": "COMP211",
-    "lesson": "MASTERY",
-    "type": "qa",
-    "title": "Mastery: CL02 Intro to C",
-    "text": "The input is zxy then EOF. What does the program print? void show(char L[], int n, char c) { for (int i = 0; i < n; i++) { if (c == L[i]) putchar(L[n - 1 - i]); } } int main(void) { char L[] = {'x', 'y', 'z'}; int c; while ((c = getchar()) != EOF) show(L, 3, c); } — Each input character is located in the array and its mirror position is printed: z (index 2) → L[0] = x; x (index 0) → L[2] = z; y (index 1) → L[1] = y."
-  },
-  {
-    "id": "mastery-u09-q86",
-    "section": "lmastery",
-    "course": "COMP211",
-    "lesson": "MASTERY",
-    "type": "qa",
-    "title": "Mastery: CL02 Intro to C",
-    "text": "The input is cab then EOF. What does the program print? void next(char L[], int n, char c) { for (int i = 0; i < n; i++) { if (c == L[i]) putchar(L[(i + 2) % n]); } } int main(void) { char L[] = {'a', 'b', 'c', 'd'}; int c; while ((c = getchar()) != EOF) next(L, 4, c); } — Each character is replaced by the one two places later, wrapping with % n : c (index 2) → index 0 = a; a (0) → index 2 = c; b (1) → index 3 = d."
-  },
-  {
-    "id": "mastery-u09-q87",
-    "section": "lmastery",
-    "course": "COMP211",
-    "lesson": "MASTERY",
-    "type": "qa",
-    "title": "Mastery: CL02 Intro to C",
-    "text": "What does strlen return for each string? (Spaces count; the null terminator does not.) char w1[] = \"engine\"; char w2[] = \"a b c\"; printf(\"%zu\\n%zu\\n\", strlen(w1), strlen(w2)); — strlen counts every character before the terminating null: \"engine\" has 6, and \"a b c\" has three letters plus two spaces = 5."
-  },
-  {
-    "id": "mastery-u09-q88",
-    "section": "lmastery",
-    "course": "COMP211",
-    "lesson": "MASTERY",
-    "type": "qa",
-    "title": "Mastery: CL02 Intro to C",
-    "text": "What does this print? char word[] = \"banana\"; word[2] = '\\0'; printf(\"%zu\", strlen(word)); — Writing a null into index 2 ends the string there, so strlen counts only “ba.”"
-  },
-  {
-    "id": "mastery-u09-q89",
-    "section": "lmastery",
-    "course": "COMP211",
-    "lesson": "MASTERY",
-    "type": "qa",
-    "title": "Mastery: CL02 Intro to C",
-    "text": "What does this print? (a single character) char word[] = \"pencil\"; putchar(word[strlen(word) - 1]); — strlen is 6, so the last character is at index 5: ‘l’. (Index 6 would be the null terminator.)"
-  },
-  {
-    "id": "mastery-u09-q90",
-    "section": "lmastery",
-    "course": "COMP211",
-    "lesson": "MASTERY",
-    "type": "qa",
-    "title": "Mastery: CL02 Intro to C",
-    "text": "int v[5]; then only v[0] = 10; and v[1] = 20; are assigned. What can you say about printf(\"%d\", v[3]); ? — An uninitialized local variable or array element holds whatever bytes were in that memory. Reading it is not reliable."
-  },
-  {
-    "id": "mastery-u09-q91",
-    "section": "lmastery",
-    "course": "COMP211",
-    "lesson": "MASTERY",
-    "type": "qa",
-    "title": "Mastery: CL02 Intro to C",
-    "text": "int values[6]; for (int i = 0; i Which statement is true? — The loop writes elements 0, 2, 4 (0, 6, 12). Element 1 is uninitialized, so its value is unpredictable."
-  },
-  {
-    "id": "mastery-u09-q92",
-    "section": "lmastery",
-    "course": "COMP211",
-    "lesson": "MASTERY",
-    "type": "qa",
-    "title": "Mastery: CL02 Intro to C",
-    "text": "demo reads integers with scanf(\"%d\", &x) until EOF, stores at most 3, prints n= and sum= lines on stdout, and prints one warning line on stderr for every extra value. nums.txt contains 4 8 15 16 23 . After ./demo < nums.txt , fill in: — Only the first three values (4, 8, 15) are stored: sum 27. The extra 16 and 23 each cause a warning on stderr, so two warning lines."
-  },
-  {
-    "id": "mastery-u09-q93",
-    "section": "lmastery",
-    "course": "COMP211",
-    "lesson": "MASTERY",
-    "type": "qa",
-    "title": "Mastery: CL02 Intro to C",
-    "text": "Which command sends only the warning messages to err.txt and leaves the normal output on the terminal? — 2> redirects file descriptor 2 (stderr) only."
-  },
-  {
-    "id": "mastery-u09-q94",
-    "section": "lmastery",
-    "course": "COMP211",
-    "lesson": "MASTERY",
-    "type": "qa",
-    "title": "Mastery: CL02 Intro to C",
-    "text": "Which command puts both the normal output and the warnings into all.txt ? — &> (or > all.txt 2>&1 ) sends both stdout and stderr to the same file."
-  },
-  {
     "id": "mastery-u10-learn",
     "section": "lmastery",
     "course": "COMP211",
@@ -8557,6 +8449,114 @@
     "type": "qa",
     "title": "Mastery: CL03 I/O & strings",
     "text": "Explain how a C string is stored, what the null terminator is for, and the difference between strlen and sizeof . Include why char s[5] = {'h','e','l','l','o'} is a problem. — The array holds the characters, and the null byte tells functions where the string stops. strlen scans for it at run time; sizeof is fixed by the declaration."
+  },
+  {
+    "id": "mastery-u10-q26",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "What is the exact output? int a[5] = {3, 6, 9, 12, 15}; printf(\"%d %d\", a[1], a[4]); — Indexing starts at 0: a[1] is the second element (6) and a[4] is the last (15)."
+  },
+  {
+    "id": "mastery-u10-q27",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "The input is hi 5 then EOF. What does the program print? void shout(char c) { if (c >= 'a' && c <= 'z') putchar(c - 32); else putchar(c); } int main(void) { int c; while ((c = getchar()) != EOF) shout(c); return 0; } — Lowercase letters are shifted to uppercase by subtracting 32; the space and the digit are printed unchanged."
+  },
+  {
+    "id": "mastery-u10-q28",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "The input is zxy then EOF. What does the program print? void show(char L[], int n, char c) { for (int i = 0; i < n; i++) { if (c == L[i]) putchar(L[n - 1 - i]); } } int main(void) { char L[] = {'x', 'y', 'z'}; int c; while ((c = getchar()) != EOF) show(L, 3, c); } — Each input character is located in the array and its mirror position is printed: z (index 2) → L[0] = x; x (index 0) → L[2] = z; y (index 1) → L[1] = y."
+  },
+  {
+    "id": "mastery-u10-q29",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "The input is cab then EOF. What does the program print? void next(char L[], int n, char c) { for (int i = 0; i < n; i++) { if (c == L[i]) putchar(L[(i + 2) % n]); } } int main(void) { char L[] = {'a', 'b', 'c', 'd'}; int c; while ((c = getchar()) != EOF) next(L, 4, c); } — Each character is replaced by the one two places later, wrapping with % n : c (index 2) → index 0 = a; a (0) → index 2 = c; b (1) → index 3 = d."
+  },
+  {
+    "id": "mastery-u10-q30",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "What does strlen return for each string? (Spaces count; the null terminator does not.) char w1[] = \"engine\"; char w2[] = \"a b c\"; printf(\"%zu\\n%zu\\n\", strlen(w1), strlen(w2)); — strlen counts every character before the terminating null: \"engine\" has 6, and \"a b c\" has three letters plus two spaces = 5."
+  },
+  {
+    "id": "mastery-u10-q31",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "What does this print? char word[] = \"banana\"; word[2] = '\\0'; printf(\"%zu\", strlen(word)); — Writing a null into index 2 ends the string there, so strlen counts only “ba.”"
+  },
+  {
+    "id": "mastery-u10-q32",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "What does this print? (a single character) char word[] = \"pencil\"; putchar(word[strlen(word) - 1]); — strlen is 6, so the last character is at index 5: ‘l’. (Index 6 would be the null terminator.)"
+  },
+  {
+    "id": "mastery-u10-q33",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "int v[5]; then only v[0] = 10; and v[1] = 20; are assigned. What can you say about printf(\"%d\", v[3]); ? — An uninitialized local variable or array element holds whatever bytes were in that memory. Reading it is not reliable."
+  },
+  {
+    "id": "mastery-u10-q34",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "int values[6]; for (int i = 0; i Which statement is true? — The loop writes elements 0, 2, 4 (0, 6, 12). Element 1 is uninitialized, so its value is unpredictable."
+  },
+  {
+    "id": "mastery-u10-q35",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "demo reads integers with scanf(\"%d\", &x) until EOF, stores at most 3, prints n= and sum= lines on stdout, and prints one warning line on stderr for every extra value. nums.txt contains 4 8 15 16 23 . After ./demo < nums.txt , fill in: — Only the first three values (4, 8, 15) are stored: sum 27. The extra 16 and 23 each cause a warning on stderr, so two warning lines."
+  },
+  {
+    "id": "mastery-u10-q36",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Which command sends only the warning messages to err.txt and leaves the normal output on the terminal? — 2> redirects file descriptor 2 (stderr) only."
+  },
+  {
+    "id": "mastery-u10-q37",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: CL03 I/O & strings",
+    "text": "Which command puts both the normal output and the warnings into all.txt ? — &> (or > all.txt 2>&1 ) sends both stdout and stderr to the same file."
   },
   {
     "id": "mastery-u11-learn",
