@@ -14,13 +14,17 @@ window.COURSE = {
   notes: [
     { title: "Study guide — what's in it so far",
       body: "<b>Lesson 1 &middot; Rich Pictures &amp; the Basics of SSM</b> is built from the Preamble and Chapter 1 (\"A Skeleton Account of SSM\") of Checkland &amp; Poulter's <i>Learning for Action</i>: problematical situations vs. \"problems,\" worldview (Weltanschauung), the four core systems ideas, purposeful activity models, the SSM learning cycle, the LUMAS model, hard vs. soft systems thinking, and a preview of what a rich picture is (and isn't) ahead of the full \"finding out\" toolkit in Chapter 2. Open the <b>Study Guide</b> tab." },
+    { title: "Models to Argue With (Lessons 2–4)",
+      body: "<b>Lesson 2</b> (Oct 5): Ch.4 &mdash; data/capta/information, IS vs. IT, the four hospital/information cases, aspect vs. relevant system, primary-task vs. issue-based. <b>Lesson 3</b> (Oct 7): Do P, by Q, in order to achieve R; the nurse's system written twice; the &#10007; card; the unit test for PT vs. IB. <b>Lesson 4</b> (Oct 12): T changes one entity, CATWOE on the bus, writing the card, declaring a worldview and the steelman, plus a unit cheat-sheet with due dates." },
     { title: "Course structure",
       body: "SSM is learned by using it &mdash; the situation the class inquires into is the class itself. Meetings are organized around <b>Finding Out</b> entries (each with required reading and a topic, e.g. \"What a rich picture is and isn't\"). Check the <b>guidelines</b> and <b>schedule</b> pages on the course site for meeting-by-meeting detail." },
     { title: "Adding more",
-      body: "Add future readings' PDFs and any quiz screenshots as the next lesson. Slides/quiz questions get folded in with correct answers and a note on where each is covered, the same way COMP 210 and COMP 211 were built." }
+      body: "Add the next meeting's slides/readings as Lesson 5. Slides/quiz questions get folded in with correct answers and a note on where each is covered, the same way COMP 210 and COMP 211 were built." }
   ],
   resources: [
     { title: "Checkland, P. & Poulter, J. — Learning for Action (2006), Preface & Preamble", url: "", note: "A ten-minute account of SSM" },
-    { title: "Checkland, P. & Poulter, J. — Learning for Action (2006), Ch. 1: A Skeleton Account of SSM", url: "", note: "Lesson 1 reading" }
+    { title: "Checkland, P. & Poulter, J. — Learning for Action (2006), Ch. 1: A Skeleton Account of SSM", url: "", note: "Lesson 1 reading" },
+    { title: "Checkland, P. & Poulter, J. — Learning for Action (2006), Ch. 4: SSM in Action in the Field of Information Systems", url: "", note: "Lesson 2 reading (pp.111–145)" },
+    { title: "Slides L13 (Oct 5), L14 (Oct 7), L15 (Oct 12)", url: "", note: "Lessons 2–4 — Models to Argue With" }
   ]
 };

@@ -8,11 +8,16 @@ UNC SDIS, Fall 2026 · Ryan Shaw. Open **`index.html`** in any browser. No serve
 |---|---|
 | `index.html` | Shell — all CSS, the header, the lesson bar, the progress bar, and one empty `<div class="lesson" id="lN">` per meeting. Loads the modules, then the engine. |
 | `INLS382_Study_Guide_L1.js` | **Lesson 1** — "What a rich picture is and isn't": the Preamble + Ch.1 "A Skeleton Account of SSM" (problematical situations, worldview, the four core systems ideas, purposeful activity models, the learning cycle, LUMAS, hard vs. soft systems, and a rich-picture preview). |
-| `INLS382_Study_Guide.js` | Shared **engine**. Must load **last**. |
+| `INLS382_Study_Guide_L2.js` | **Lesson 2** (Oct 5) — Ch.4: information vs. activity, Case 1 hospital strategy, Cases 2–4, aspect vs. relevant system, PT vs. IB. |
+| `INLS382_Study_Guide_L3.js` | **Lesson 3** (Oct 7) — PQR, the nurse's system twice, the ✗ card, the PT/IB unit test. |
+| `INLS382_Study_Guide_L4.js` | **Lesson 4** (Oct 12) — T, CATWOE on the bus, writing the card, worldview declarations & the steelman, unit cheat-sheet. |
+| `../../../shared/guide-engine.js` | Shared **engine** (loaded last, after `window.GUIDE_COURSE = 'INLS382'`). |
 
 ## Lessons built
 
 - **Lesson 1 · Rich Pictures & the Basics of SSM** — problematical situations vs. "problems"; worldview (Weltanschauung) with an interactive **worldview lens** (same scenario, different worldview, different verdict — the reading's eco-warrior/capitalist, punishment/rehabilitation, and terrorism/freedom-fighting examples); the four requirements of an adaptive whole (communication, control, layered structure, emergent properties) as a clickable diagram; purposeful activity models worked through the fence-painting example (Fig. 1.2/1.3); the SSM learning cycle (Fig. 1.4–1.6) and why it's iterative, not linear; the LUMAS model; hard vs. soft systems thinking; and a preview of what a rich picture is (and isn't), sourced from the course's own framing, ahead of the full technique in Chapter 2 (not yet assigned). 16 graded items plus two matching tables.
+
+- **Lessons 2–4 · Models to Argue With** — built from the Oct 5/7/12 slides and Ch.4 (Ch.2 passages come from the slides' quotations). Items marked "not from the slides" are practice written for the guide.
 
 ## Grading behaviour
 
@@ -32,11 +37,11 @@ These controls are injected by the engine, so **lesson modules need no changes**
 - **True/False:** `<div class="q" data-tf="T">` + `<button class="opt" data-v="T">` + `<div class="fb">`
 - **Multiple choice:** `<div class="q" data-mc="2">` (index of the correct option) + `<button class="opt" data-i="0">` + `<div class="fb">`
 - **Multiple select:** `<div class="q" data-multi="2,3">` with `.ma-item` checkboxes carrying `data-i`, graded by `checkMulti(this)`
-- **Fill-in:** `<input class="fillblank" data-answer="a|b">` + `checkFill(this)` (one blank) or `checkFillGroup(this)` (all blanks in the enclosing `.q`/`.card`)
+- **Fill-in:** `<input class="fillblank" data-answer="a~~~b">` + `checkFill(this)` (one blank) or `checkFillGroup(this)` (all blanks in the enclosing `.q`/`.card`)
 - **Matching:** `<table class="match" id="X">` of `.match-term` + `<select class="match-def">`, then `checkMatch('X','fb-X',[...keys])`
 - **Reveal:** `<textarea>` + `<button onclick="toggleReveal(this)">Show solution</button>` + `<div class="reveal">`
 - Progress counts every `.q` and every `table.match`.
-- Modules that render widgets define `initL0()`, `initL1()`, … — the engine calls `initL0` through `initL8` automatically if they exist.
+- Modules that render widgets define `initL0()`, `initL1()`, … — the engine calls `initL0` through `initL10` automatically if they exist.
 
 ## Authoring rules (learned the hard way, on COMP 210/211)
 

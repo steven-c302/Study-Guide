@@ -27,7 +27,10 @@ courses/INLS382/
   guide/
     index.html                  ← shell: CSS, lesson bar, empty .lesson divs, script tags
     INLS382_Study_Guide_L1.js   ← Lesson 1: Preamble + Ch.1 "A Skeleton Account of SSM"
-    INLS382_Study_Guide.js      ← shared engine, MUST load last
+    INLS382_Study_Guide_L2.js   ← Lesson 2 (Oct 5): Ch.4
+    INLS382_Study_Guide_L3.js   ← Lesson 3 (Oct 7): PQR
+    INLS382_Study_Guide_L4.js   ← Lesson 4 (Oct 12): RDs & CATWOE, cheat-sheet
+    (engine: ../../shared/guide-engine.js, loaded after window.GUIDE_COURSE)
     README.md                   ← engine API + authoring rules — read this first
 ```
 
@@ -37,7 +40,10 @@ courses/INLS382/
 interactive worldview-lens widget), the four core systems ideas (interactive diagram), purposeful activity
 models worked through the fence-painting example, the SSM learning cycle and LUMAS, hard vs. soft systems
 thinking, and a preview of what a rich picture is/isn't (full technique arrives with Chapter 2, not yet
-assigned). 16 graded items plus two matching tables. Nothing past Lesson 1 exists yet.
+assigned). 16 graded items plus two matching tables. 
+
+**Lessons 2–4 (unit "Models to Argue With")** are built from slides L13/L14/L15 and Ch.4. Next: steelman material
+(Wed 10/14 onward). After adding lessons, rerun `node tools/build-rag-index.mjs INLS382` to refresh the Ask index.
 
 ## Adding a meeting
 
@@ -54,7 +60,7 @@ assigned). 16 graded items plus two matching tables. Nothing past Lesson 1 exist
 5. Write `guide/INLS382_Study_Guide_LN.js` following the existing pattern: a `<nav class="topics">`, several
    `<section class="topic">`, concept cards, active-recall questions (MC/TF/fill-in as fits), at least one
    **interactive widget or diagram**, and worked examples.
-6. If it renders widgets, define `initLN()` — the engine already calls `initL0`…`initL8`.
+6. If it renders widgets, define `initLN()` — the engine already calls `initL0`…`initL10`.
 7. `node --check` every JS file before shipping.
 8. Update `guide/README.md` and the status note in `config.js`.
 
