@@ -360,7 +360,26 @@ function restoreProgress() {
       const fb = el.querySelector('.fb');
       if (fb) fbOk(fb);
       qShowControls(el);
-      el.querySelectorAll('.opt').forEach(o => o.classList.add('disabled'));
+      /* show what was answered, not just the verdict: the right option, the typed answer, the ticked boxes */
+      const tf = el.dataset.tf, mc = el.dataset.mc, multi = el.dataset.multi;
+      el.querySelectorAll('.opt').forEach(o => {
+        o.classList.add('disabled');
+        const isRight = (tf !== undefined) ? o.dataset.v === tf : (mc !== undefined && parseInt(o.dataset.i) === parseInt(mc));
+        if (isRight) o.classList.add('correct');
+      });
+      if (multi !== undefined) {
+        const want = multi.split(',').map(x => x.trim());
+        el.querySelectorAll('.ma-item').forEach(i => {
+          const b = i.querySelector('input');
+          b.checked = want.indexOf(b.dataset.i) !== -1;
+          i.style.borderColor = b.checked ? 'var(--green)' : 'var(--line)';
+        });
+      }
+      el.querySelectorAll('.fillblank').forEach(i => {
+        if (i.dataset.answer === undefined) return;
+        i.value = i.dataset.answer.split('~~~')[0];
+        i.style.borderColor = 'var(--green)';
+      });
     }
   });
   document.querySelectorAll('table.match').forEach(t => {

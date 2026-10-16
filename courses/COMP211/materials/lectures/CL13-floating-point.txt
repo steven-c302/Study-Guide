@@ -1,0 +1,801 @@
+CL13 - Floating Point: fixed point, normalized form, implicit 1, microfloat V1-V4 (COMP 211, Connor McMahon) - text extracted from the slides for search
+
+[Slide 1]
+Floating Point
+COMP211 Connor McMahon
+[Slide 2]
+This Week
+• Information on next week's debugging checkoff can be found here.
+• Make sure to sign up for a slot by Friday!
+• Debugging Prep Sessions
+• Tomorrow (Thursday) 4-5pm
+• Tomorrow (Thursday) 5-6pm
+• Homework 4 (Debugging) is due Friday.
+• The TAs and I will be grading the quizzes tomorrow. We plan to get your
+grades back to you by the end of the week.
+2
+[Slide 3]
+3
+[Slide 4]
+Floating Point Representation
+• What is floating point representation?
+• A way to represent very large and very small numbers efficiently
+• A standard called IEEE-754 defines how modern systems handle these
+values.
+• We will start with simpler models (microfloat and minifloat) to build up to
+IEEE-754.
+4
+[Slide 5]
+Binary in Normalized Form
+5
+1.0101 x 26
+Significand
+Exponent
+Binary Point
+Base
+In normalized form, 1 <= |significand| < 2
+This means the value to the left of the binary point is always 1.
+We can increase the precision by not storing this 1!
+[Slide 6]
+Implicit 1
+• In normalized binary floating point, every (nonzero) number has a leading 1
+before the binary point.
+• Since that leading one is always there, we don’t need to store it
+• Hence the name “Implicit 1”
+• By not storing it, we free up one extra bit for the significand
+• This extra bit increase precision
+• The range is unaffected by this
+• (Since the range is determined by the exponent bits)
+6
+[Slide 7]
+Microfloat V1
+7
+[Slide 8]
+Floating Point
+• The full value is not stored directly
+• Instead, we store
+• Significand (without the leading one)
+• Exponent
+• This design allows for a much larger range of values
+• But it in turn trades off precision
+8
+[Slide 9]
+Microfloat
+• We’ll start by looking at a simple design called microfloat.
+• Let’s say we have 4 bits to represent our fractional value. Let’s use two bits
+for the exponent and two bits for the significand.
+9
+Exponent Bits Significand Bits
+[Slide 10]
+Microfloat V1: Encoding 3.5
+10
+Decimal
+Place-Value 3 5
+100 10-1
+[Slide 11]
+Microfloat V1: Encoding 3.5
+11
+Binary
+Place-Value
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+[Slide 12]
+Microfloat V1: Encoding 3.5
+12
+Binary
+Place-Value 1 1 1
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+[Slide 13]
+Microfloat V1: Encoding 3.5
+13
+1.11 x 21
+Binary
+Place-Value 1 1 1
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+Exponent
+Significand
+The leading 1 is not stored!
+[Slide 14]
+Microfloat V1: Encoding 3.5
+14
+Exponent Bits Significand Bits
+1.11 x 21
+Microfloat
+Binary
+Place-Value 1 1 1
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+Exponent
+Significand
+The leading 1 is not stored!
+[Slide 15]
+Microfloat V1: Encoding 3.5
+15
+0 1 1 1
+Exponent Bits Significand Bits
+1.11 x 21
+Microfloat
+Binary
+Place-Value 1 1 1
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+Exponent
+Significand
+The leading 1 is not stored!
+[Slide 16]
+Microfloat V1: Encoding 7
+16
+Decimal
+Place-Value 7
+100
+[Slide 17]
+Microfloat V1: Encoding 7
+17
+Binary
+Place-Value
+22 21 20
+Decimal
+Place-Value 7
+100
+[Slide 18]
+Microfloat V1: Encoding 7
+18
+1.11 x 22
+Binary
+Place-Value 1 1 1
+22 21 20
+Decimal
+Place-Value 7
+100
+Exponent
+Significand
+The leading 1 is not stored!
+[Slide 19]
+Microfloat V1: Encoding 7
+19
+Exponent Bits Significand Bits
+1.11 x 22
+Microfloat
+Binary
+Place-Value 1 1 1
+22 21 20
+Decimal
+Place-Value 7
+100
+Exponent
+Significand
+The leading 1 is not stored!
+[Slide 20]
+Microfloat V1: Encoding 7
+20
+1 0 1 1
+Exponent Bits Significand Bits
+1.11 x 22
+Microfloat
+Binary
+Place-Value 1 1 1
+22 21 20
+Decimal
+Place-Value 7
+100
+Exponent
+Significand
+The leading 1 is not stored!
+[Slide 21]
+Microfloat to Decimal
+21
+0 1 0 1
+Exponent Bits Significand Bits
+x 2?
+Microfloat
+Binary 1
+21 20 2-1
+Implicit 1!
+[Slide 22]
+Microfloat to Decimal
+22
+0 1 0 1
+Exponent Bits Significand Bits
+x 21
+Microfloat
+Binary
+Decimal
+Place-Value
+100 10-1
+1 0 1
+21 20 2-1
+[Slide 23]
+Microfloat to Decimal
+23
+0 1 0 1
+Exponent Bits Significand Bits
+x 21
+Microfloat
+Binary
+Decimal
+Place-Value 2 5
+100 10-1
+1 0 1
+21 20 2-1
+[Slide 24]
+Microfloat V1
+Exponent Significand Value Decimal
+002 002 1.002x20 1
+002 012 1.012x20 1.25
+002 102 1.102x20 1.5
+002 112 1.112x20 1.75
+012 002 1.002x21 2
+012 012 1.012x21 2.5
+012 102 1.102x21 3
+012 112 1.112x21 3.5
+102 002 1.002x22 4
+102 012 1.012x22 5
+102 102 1.102x22 6
+102 112 1.112x22 7
+112 002 1.002x23 8
+112 012 1.012x23 10
+112 102 1.102x23 12
+112 112 1.112x23 14 24
+0.25
+Distance between
+consecutive
+values
+0.5
+1
+2
+[Slide 25]
+Microfloat V2
+25
+[Slide 26]
+Microfloat V2
+• Let’s see what happens to the range and precision when we adjust the
+number of bits for the exponent and significand!
+26
+Exponent Bits Significand Bits
+[Slide 27]
+Microfloat V2: Encoding 1.125
+27
+Decimal
+Place-Value 1 1
+100 10-1
+2
+10-2
+5
+10-3
+[Slide 28]
+Microfloat V2: Encoding 1.125
+28
+Binary
+Place-Value
+20 2-1 2-2
+Decimal
+Place-Value 1 1
+100 10-1
+2
+10-2
+5
+10-3
+2-3
+[Slide 29]
+Microfloat V2: Encoding 1.125
+29
+1.001 x 20
+Binary
+Place-Value 1 0 0
+20 2-1 2-2
+Decimal
+Place-Value 1 1
+100 10-1
+Significand
+The leading 1 is not stored!
+2
+10-2
+5
+10-3
+1
+2-3
+[Slide 30]
+Microfloat V2: Encoding 1.125
+30
+Exponent Bits Significand Bits
+1.001 x 20
+Microfloat
+Binary
+Place-Value 1 0 0
+20 2-1 2-2
+Decimal
+Place-Value 1 1
+100 10-1
+Significand
+The leading 1 is not stored!
+2
+10-2
+5
+10-3
+1
+2-3
+[Slide 31]
+Microfloat V2: Encoding 1.125
+31
+0 0 0 1
+Exponent Bits Significand Bits
+1.001 x 20
+Microfloat
+Binary
+Place-Value 1 0 0
+20 2-1 2-2
+Decimal
+Place-Value 1 1
+100 10-1
+Significand
+The leading 1 is not stored!
+2
+10-2
+5
+10-3
+1
+2-3
+[Slide 32]
+Microfloat V2: Encoding 3.5
+32
+Binary
+Place-Value
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+[Slide 33]
+Microfloat V2: Encoding 3.5
+33
+Exponent Bits Significand Bits
+1.11 x 21
+Microfloat
+Binary
+Place-Value 1 1 1
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+Significand
+The leading 1 is not stored!
+[Slide 34]
+Microfloat V2: Encoding 3.5
+34
+1 1 1 0
+Exponent Bits Significand Bits
+1.11 x 21
+Microfloat
+Binary
+Place-Value 1 1 1
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+Significand
+The leading 1 is not stored!
+[Slide 35]
+Microfloat V2
+Exponent Significand Value Decimal
+02 0002 1.0002x20 1
+02 0012 1.0012x20 1.125
+02 0102 1.0102x20 1.25
+02 0112 1.0112x20 1.375
+02 1002 1.1002x20 1.5
+02 1012 1.1012x20 1.625
+02 1102 1.1102x20 1.75
+02 1112 1.1112x20 1.875
+12 0002 1.0002x21 2
+12 0012 1.0012x21 2.25
+12 0102 1.0102x21 2.5
+12 0112 1.0112x21 2.75
+12 1002 1.1002x21 3.5
+12 1012 1.1012x21 3.25
+12 1102 1.1102x21 3.5
+12 1112 1.1112x21 3.75 35
+0.125
+Distance between
+consecutive
+values
+0.25
+[Slide 36]
+Microfloat V3
+36
+[Slide 37]
+Microfloat V3
+• Let’s see what happens to the range and precision when we adjust the
+number of bits for the exponent and significand!
+37
+Exponent Bits Significand Bits
+[Slide 38]
+• For each value below, determine if it
+can be represented.
+• If it can be represented, write out its
+Microfloat V3 encoding.
+• If not, explain why: not enough precision
+or not enough range.
+• A) 1.75 1.112 x 20
+=> not enough precision
+• B) 3
+• C) 192
+• D) 20
+• E) 256
+Microfloat V3
+38
+A
+B
+C
+D
+E
+[Slide 39]
+Microfloat V3
+• For each value below, determine if it can be
+represented.
+• If it can be represented, write out its Microfloat
+V3 encoding.
+• If not, explain why: not enough precision or not
+enough range.
+• A) 1.75 = 1.112 x 20
+=> not enough precision
+• B) 3 = 1.12 x 21 => 00112
+• C) 192 = 1.12x27 => 11112
+• D) 20 = 1.012 x 24 => not enough precision
+• E) 256 = 12 x 28 => not enough range
+39
+A
+B
+C
+D
+E
+0 0 0 1
+0 0 1 1
+1 1 1 1
+1 0 0 0
+0 0 0 0
+1
+1
+1
+[Slide 40]
+Microfloat V3
+Exponent Significand Value Decimal
+0002 02 1.02x20 1
+0002 12 1.12x20 1.5
+0012 02 1.02x21 2
+0012 12 1.12x21 3
+0102 02 1.02x22 4
+0102 12 1.12x22 6
+0112 02 1.02x23 8
+0112 12 1.12x23 12
+1002 02 1.02x24 16
+1002 12 1.12x24 24
+1012 02 1.02x25 32
+1012 12 1.12x25 48
+1102 02 1.02x26 64
+1102 12 1.12x26 96
+1112 02 1.02x27 128
+1112 12 1.12x27 192 40
+0.5
+Distance between
+consecutive values
+1
+2
+4
+8
+16
+32
+64
+[Slide 41]
+Design Tradeoffs
+• There’s a tradeoff between how large or small a number you can represent
+(range) and how accurately you can represent numbers (precision), both of
+which are constrained by the total number of available bits.
+• Precision vs Range
+• More exponent bits increase the range of representable numbers but reduces the
+number of bits available for the significand, decreasing precision.
+• More significand bits increase the precision of the representation, allowing for more
+precision, but reduce the number of bits available for the exponent, decreasing the
+range.
+41
+[Slide 42]
+Microfloat Comparison
+Exponen
+t
+Significa
+nd
+Value Decimal
+002 002 1.002x20 1
+002 012 1.012x20 1.25
+002 102 1.102x20 1.5
+002 112 1.112x20 1.75
+012 002 1.002x21 2
+012 012 1.012x21 2.5
+012 102 1.102x21 3
+012 112 1.112x21 3.5
+102 002 1.002x22 4
+102 012 1.012x22 5
+102 102 1.102x22 6
+102 112 1.112x22 7
+112 002 1.002x23 8
+112 012 1.012x23 10
+112 102 1.102x23 12
+112 112 1.112x23 14
+0.25
+0.5
+1
+2
+Exponent Significan
+d
+Value Decimal
+02 0002 1.0002x20 1
+02 0012 1.0012x20 1.125
+02 0102 1.0102x20 1.25
+02 0112 1.0112x20 1.375
+02 1002 1.1002x20 1.5
+02 1012 1.1012x20 1.625
+02 1102 1.1102x20 1.75
+02 1112 1.1112x20 1.875
+12 0002 1.0002x21 2
+12 0012 1.0012x21 2.25
+12 0102 1.0102x21 2.5
+12 0112 1.0112x21 2.75
+12 1002 1.1002x21 3.5
+12 1012 1.1012x21 3.25
+12 1102 1.1102x21 3.5
+12 1112 1.1112x21 3.75
+0.125
+0.25
+Expone
+nt
+Significa
+nd
+Value Decimal
+0002 02 1.02x20 1
+0002 12 1.12x20 1.5
+0012 02 1.02x21 2
+0012 12 1.12x21 3
+0102 02 1.02x22 4
+0102 12 1.12x22 6
+0112 02 1.02x23 8
+0112 12 1.12x23 12
+1002 02 1.02x24 16
+1002 12 1.12x24 24
+1012 02 1.02x25 32
+1012 12 1.12x25 48
+1102 02 1.02x26 64
+1102 12 1.12x26 96
+1112 02 1.02x27 128
+1112 12 1.12x27 192
+0.5
+1
+2
+4
+8
+16
+32
+64
+V1 V2 V3
+[Slide 43]
+Microfloat V4
+43
+[Slide 44]
+Representing Small Values
+• Problem: Notice in the previous slide that we cannot represent values
+between 0 and 1
+• This is because the exponent must be positive
+• Solution: Subtract a fixed bias from the exponent
+44
+[Slide 45]
+Microfloat V4: Representing Small Values
+• Let’s return back to having two exponent bits and two significand bits.
+• Let’s set the bias to 2. This makes the range of exponents [-2, 1]
+45
+Exponent Bits Significand Bits
+[Slide 46]
+Microfloat V4: Encoding 0.75
+46
+Decimal
+Place-Value 0 7
+100 10-1
+5
+10-2
+[Slide 47]
+Microfloat V4: Encoding 0.75
+47
+Binary
+Place-Value
+20 2-1 2-2
+Decimal
+Place-Value 0 7
+100 10-1
+5
+10-2
+[Slide 48]
+Microfloat V4: Encoding 0.75
+48
+Exponent Bits Significand Bits
+1.1 x 2-1
+Microfloat
+Binary
+Place-Value 0 1 1
+20 2-1 2-2
+Decimal
+Place-Value 0 7
+100 10-1
+Significand
+The leading 1 is not stored!
+5
+10-2
+Exponent bits = -1 + bias = -1 + 2 = 1
+[Slide 49]
+Microfloat V4: Encoding 0.75
+49
+0 1 1 0
+Exponent Bits Significand Bits
+1.1 x 2-1
+Microfloat
+Binary
+Place-Value 0 1 1
+20 2-1 2-2
+Decimal
+Place-Value 0 7
+100 10-1
+Significand
+The leading 1 is not stored!
+5
+10-2
+Exponent bits = -1 + bias = -1 + 2 = 1
+[Slide 50]
+Microfloat V4: Encoding 2.5
+50
+Decimal
+Place-Value 2 5
+100 10-1
+[Slide 51]
+Microfloat V4: Encoding 2.5
+51
+Binary
+Place-Value
+21 20 2-1
+Decimal
+Place-Value 2 5
+100 10-1
+[Slide 52]
+Microfloat V4: Encoding 2.5
+52
+Exponent Bits Significand Bits
+1.01 x 21
+Microfloat
+Binary
+Place-Value 1 0 1
+21 20 2-1
+Decimal
+Place-Value 2 5
+100 10-1
+Significand
+The leading 1 is not stored!
+Exponent bits = 1 + bias = 1 + 2 = 3
+[Slide 53]
+Microfloat V4: Encoding 2.5
+53
+1 1 0 1
+Exponent Bits Significand Bits
+1.01 x 21
+Microfloat
+Binary
+Place-Value 1 0 1
+21 20 2-1
+Decimal
+Place-Value 2 5
+100 10-1
+Significand
+The leading 1 is not stored!
+Exponent bits = 1 + bias = 1 + 2 = 3
+[Slide 54]
+Example: Microfloat V4 to Decimal
+54
+0 1 1 1
+Exponent Bits Significand Bits
+[Slide 55]
+Example: Microfloat V4 to Decimal
+55
+0 1 1 1
+Exponent Bits Significand Bits
+1.<significand bits> x 2<exponent bits>-bias
+1.11x 21-2
+0.111
+0.875
+[Slide 56]
+Example: Microfloat V4 to Decimal
+56
+1 1 1 0
+Exponent Bits Significand Bits
+[Slide 57]
+Example: Microfloat V4 to Decimal
+57
+1 1 1 0
+Exponent Bits Significand Bits
+1.<significand bits> x 2<exponent bits>-bias
+1.10x 23-2
+11
+3
+[Slide 58]
+Microfloat V4
+• For each value below, determine if it
+can be represented.
+• If it can be represented, write out its
+Microfloat V4 encoding.
+• If not, explain why: not enough precision
+or not enough range.
+• A) 0.5
+• B) 1.75
+• C) 3.5
+• D) 4
+• E) 0.125
+58
+[Slide 59]
+Microfloat V4
+• For each value below, determine if it can
+be represented.
+• If it can be represented, write out its
+Microfloat V4 encoding.
+• If not, explain why: not enough precision or
+not enough range.
+• A) 0.5 = 12 x 2-1 = 01002
+• B) 1.75 = 1.112 x 20 = 10112
+• C) 3.5 = 1.11 x 21 = 11112
+• D) 4 = 12 x 22 => not enough range
+• E) 0.125 = 12 x 2-3
+=> not enough range
+59
+A
+B
+C
+D
+E
+0 1 0 0
+1 0 1 1
+1 1 1 1
+0 0 0 0
+0 0
+Exponent is
+-3 + 2 = -1.
+Exponent must
+be positive
+1
+[Slide 60]
+Microfloat V4
+Exponent Significand Value Decimal
+002 002 1.002x20-2 0.25
+002 012 1.012x20-2 0.3125
+002 102 1.102x20-2 0.375
+002 112 1.112x20-2 0.4375
+012 002 1.002x21-2 0.5
+012 012 1.012x21-2 0.625
+012 102 1.102x21-2 0.75
+012 112 1.112x21-2 0.875
+102 002 1.002x22-2 1
+102 012 1.012x22-2 1.25
+102 102 1.102x22-2 1.5
+102 112 1.112x22-2 1.75
+112 002 1.002x23-2 2
+112 012 1.012x23-2 2.5
+112 102 1.102x23-2 3
+112 112 1.112x23-2 3.5 60
+0.0625
+Distance between
+consecutive
+values
+0.125
+0.25
+0.5

@@ -10,7 +10,7 @@
   Mastery.unit({
     id: 'u17', order: 9, title: 'CL10 · Debugging with the VS Code debugger', short: 'CL10 Debugging',
     blurb: 'Breakpoints, stepping, watch expressions, why output and input are buffered, how launch.json and tasks.json start the debugger (including input redirection), and the predict-then-compare habit that finds bugs.',
-    lessons: [{ id: 'l15', label: 'CL10 · Debugging (RD09)' }, { id: 'l19', label: 'Checkoff 2 Prep · Debugging' }],
+    lessons: [{ id: 'l15', label: 'CL10 · Debugging (RD09)' }, { id: 'l22', label: 'HW04 · Debugging' }, { id: 'l19', label: 'Checkoff 2 Prep · Debugging' }],
     learn: {
       big: [
         '<b>A debugger runs your program under control.</b> A <b>breakpoint</b> (click the gutter left of a line number; a red dot appears) pauses execution <i>before</i> that line runs. Then you <b>step</b> and watch the state change. Compile with <code>-g</code> so the debugger can map machine code back to source lines.',

@@ -1,0 +1,78 @@
+RD12 reading slides - Minifloat (sign, 3 exponent bits with bias 3, 4 significand bits) - text extracted from the slides for search
+
+[Slide 1]
+Minifloat
+COMP211 Connor McMahon
+[Slide 2]
+Minifloat
+2
+Exponent Bits Significand Bits
+Sign Bit
+Sign Bit (1 bit):
+• 0: Positive number
+• 1: Negative number
+Exponent (3 bits):
+• Represents the exponent using a fixed bias of 3
+Significand (4 bits):
+• Represents the fractional part
+• Assumes an implicit leading 1 for normalized numbers
+[Slide 3]
+Bias
+• Why do we use a bias instead of 2’s complement?
+• Simplifies Comparison Operations
+• With a biased exponent, larger numbers have higher bit values, and smaller numbers
+have lower bit values, making it easy to compare them as unsigned integers.
+• If two’s complement were used, negative exponents (which have leading 1s) would be
+greater in unsigned comparison, breaking the ordering.
+3
+Bias = 2n-1-1
+[Slide 4]
+Minifloat
+4
+0 1 0 1 1 0 1 1
+Exponent Bits Significand Bits
+Sign Bit
+(-1)S x 1.<significand bits> x 2<exponent bits> – <bias>
+Bias = 3
+[Slide 5]
+Minifloat
+5
+0 1 0 1 1 0 1 1
+Exponent Bits Significand Bits
+Sign Bit
+(-1)S x 1.<significand bits> x 2<exponent bits> – <bias>
+(-1)0 x 1.1011 x 25 – 3
+Bias = 3
+110.11 = 6.75
+[Slide 6]
+Minifloat
+6
+1 0 0 1 1 0 0 0
+Exponent Bits Significand Bits
+Sign Bit
+(-1)S x 1.<significand bits> x 2<exponent bits> – <bias>
+Bias = 3
+[Slide 7]
+Minifloat
+7
+1 0 0 1 1 0 0 0
+Exponent Bits Significand Bits
+Sign Bit
+(-1)S x 1.<significand bits> x 2<exponent bits> – <bias>
+(-1)1 x 1.1000 x 21 – 3
+Bias = 3
+-0.011000 = -0.375
+[Slide 8]
+Minifloat
+• For each value below,
+determine if it can be
+represented.
+• If it can be represented, write out
+its Minifloat encoding.
+• If not, explain why: not enough
+precision or not enough range.
+• A) 15
+• B) -4.25
+• C) -32
+• D) 12.25
+8

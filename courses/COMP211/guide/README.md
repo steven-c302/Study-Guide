@@ -22,6 +22,10 @@ Fall 2026 · Connor McMahon. Open **`index.html`** in any browser. No server, no
 | `COMP211_Study_Guide_L16.js` | **Quiz 1 Study Guide** — hub/coverage checklist for the 9/18 quiz: logistics, review/tutoring sessions, per-lecture and per-reading coverage tables with jump-links, and a gap tracker. Not a lecture. |
 | `COMP211_Study_Guide_L17.js` | **CL11 · Unix Basics: Shell Config & Env Vars** (shell prompt config, environment variables, `$PATH`, `.bashrc`/aliases) + **RD10**. |
 | `COMP211_Study_Guide_L18.js` | **CL12 · Quiz 1 Applied Review** — character arrays (`sizeof` vs `strlen`), bitwise image filters, stack diagram trace, glob practice. |
+| `COMP211_Study_Guide_L20.js` | **CL13 · Floating Point I** + **RD11** — binary fractions and fixed point, scientific/normalized form, the implicit 1, microfloat V1–V4 (range vs precision, bias). Includes the shared bit explorer (`shared/fp-explorer.js`). |
+| `COMP211_Study_Guide_L21.js` | **CL14 · Floating Point II** + **RD12** — bias formula, the 8-bit minifloat (decode/encode), zero/infinity/NaN, round-to-nearest ties-to-even, overflow/underflow, denormalized numbers. |
+| `COMP211_Study_Guide_L22.js` | **HW04 · Debugging** (homework review) — the six problems with fresh example programs: breakpoints and Debug Console, conditional breakpoints, step into/over/out, call stack, launch.json redirection, debugger detective. Lesson bar places it after CL10. |
+| `COMP211_Study_Guide_L23.js` | **HW05 · Floating Point Representation** (homework review) — fractional binary numbers, the 8-bit minifloat, and the 7-bit (2 exponent bits, bias 1) design with normalized/denormalized/precision/range classification. |
 | `COMP211_Study_Guide.js` | Shared **engine**. Must load **last**. |
 
 **Reading &rarr; lecture pairing:** RD00&rarr;CL01, RD01&rarr;CL02, RD02&rarr;CL03, RD03&rarr;CL04, RD05/RD06&rarr;CL06/CL07,

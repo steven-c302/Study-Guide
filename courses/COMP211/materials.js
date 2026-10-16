@@ -104,6 +104,26 @@ window.MATERIALS = {
       "title": "RD10 reading notes \u00b7 dot files and .bashrc (DiS 17.14)",
       "file": "materials/readings/RD10-DiS-17.14-dotfiles-bashrc-notes.txt",
       "date": "study notes"
+    },
+    {
+      "title": "CL13 \u00b7 Floating Point: fixed point, implicit 1, microfloat (slides)",
+      "file": "materials/lectures/CL13-floating-point.pdf",
+      "date": "Week 6 \u00b7 fractions in binary, normalized form, microfloat V1\u2013V4"
+    },
+    {
+      "title": "CL14 \u00b7 Floating Point: minifloat, special values, rounding, denormals (slides)",
+      "file": "materials/lectures/CL14-floating-point-minifloat.pdf",
+      "date": "Week 6 \u00b7 bias, minifloat, zero/inf/NaN, ties-to-even, denormalized"
+    },
+    {
+      "title": "RD11 reading slides \u00b7 floating point and microfloat V1",
+      "file": "materials/readings/RD11-floating-point-microfloat-slides.pdf",
+      "date": "Week 6 reading"
+    },
+    {
+      "title": "RD12 reading slides \u00b7 minifloat",
+      "file": "materials/readings/RD12-floating-point-minifloat-slides.pdf",
+      "date": "Week 6 reading"
     }
   ],
   "exams": []

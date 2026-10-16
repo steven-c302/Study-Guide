@@ -1,0 +1,358 @@
+RD11 reading slides - Floating Point (fixed point, normalized form, microfloat V1) - text extracted from the slides for search
+
+[Slide 1]
+Floating Point
+COMP211 Connor McMahon
+[Slide 2]
+Floating Point Representation
+• What is floating point representation?
+• A way to represent very large and very small numbers efficiently
+• A standard called IEEE-754 defines how modern systems handle these
+values.
+• We will start with simpler models (microfloat and minifloat) to build up to
+IEEE-754.
+2
+[Slide 3]
+Motivation
+• Learning floating point isn’t just about learning how numbers are stored
+• It teaches you how computers approximate reality,
+• Why rounding errors occur,
+• And why certain calculations don’t behave as expected.
+• Floating point teaches you how to think like a computer scientist
+• You learn about design tradeoffs
+• And how to balance precision, range, performance, and practicality.
+3
+[Slide 4]
+Fixed-Point Representation
+4
+[Slide 5]
+Place Values in Base-10
+5
+103 102 101 100 10-1 10-2 10-3 10-4
+1000 100 10 1
+1
+10
+1
+100
+1
+1000
+1
+10000
+Example: 234.56
+[Slide 6]
+Place Values in Base-10
+6
+2 3 4 5 6
+103 102 101 100 10-1 10-2 10-3 10-4
+1000 100 10 1
+1
+10
+1
+100
+1
+1000
+1
+10000
+Example: 234.56
+(2x100) + (3x10) + (4x1) + (5x0.5) + (6x0.01)
+[Slide 7]
+Fixed Point Representation (Unsigned)
+7
+23 22 21 20 2-1 2-2 2-3 2-4
+8 4 2 1
+1
+2
+1
+4
+1
+8
+1
+16
+Example: 101.101
+[Slide 8]
+Fixed Point Representation (Unsigned)
+8
+1 0 1 1 0 1
+23 22 21 20 2-1 2-2 2-3 2-4
+8 4 2 1
+1
+2
+1
+4
+1
+8
+1
+16
+Example: 101.101
+(1x4) + (0x2) + (1x1) + (1x0.5) + (0x0.25) + (1x0.125)
+5.625
+[Slide 9]
+Conversions
+• What is 01110.10112 in decimal?
+• What is 12.75 in unsigned fixed-point binary representation?
+9
+[Slide 10]
+Conversions
+• What is 01110.10112 in decimal?
+• 14 + 0.5 + 0.125 + 0.0625 = 14.6875
+• What is 12.75 in unsigned fixed-point binary representation?
+• 12 = 0b01100
+• 0.75 = 0.5 + 0.25
+• 12.75 = 0b1100.11
+10
+[Slide 11]
+Scientific Notation
+• Scientific notation is used to represent large or small numbers more
+compactly by reducing the number of digits displayed.
+11
+3.0 x 108 m/s
+6.022 x 1023 mol-1
+[Slide 12]
+Scientific Notation Terms
+12
+9.2318 x 105
+[Slide 13]
+Scientific Notation Terms
+13
+9.2318 x 105
+Significand
+Exponent
+Decimal Point
+Base
+Normalized Form: 1 <= |significand| < 10
+[Slide 14]
+Binary in Normalized Form
+14
+1.0101 x 26
+[Slide 15]
+Binary in Normalized Form
+15
+1.0101 x 26
+Significand
+Exponent
+Binary Point
+Base
+Normalized Form: 1 <= |significand| < 2
+[Slide 16]
+Conversions
+• What is 1.01012 x 26 in decimal?
+• What is 10.5 in normalized binary form?
+16
+[Slide 17]
+Conversions
+• What is 1.01012 x 26 in decimal?
+• 1.01012 x 26 = 1010100 = 84
+• What is 10.5 in normalized binary form?
+• 1.01012 x 23
+17
+[Slide 18]
+Microfloat
+18
+[Slide 19]
+Floating Point
+• The full value is not stored directly
+• (Unlike the fixed-point notation we saw earlier)
+• Instead, we store
+• Significand (without the leading one)
+• Exponent
+• This design allows for a much larger range of values
+• But it in turn trades off precision
+19
+[Slide 20]
+Microfloat
+• We’ll start by looking at a simple design called microfloat.
+• Let’s say we have 4 bits to represent our fractional value. Let’s use two bits
+for the exponent and two bits for the significand.
+20
+Exponent Bits Significand Bits
+[Slide 21]
+Encoding Fractional Values
+21
+Decimal
+Place-Value 3 5
+100 10-1
+[Slide 22]
+Encoding Fractional Values
+22
+Binary
+Place-Value
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+[Slide 23]
+Encoding Fractional Values
+23
+Binary
+Place-Value 1 1 1
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+[Slide 24]
+Encoding Fractional Values
+24
+1.11 x 21
+Binary
+Place-Value 1 1 1
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+Exponent
+Significand
+The leading 1 is not stored!
+[Slide 25]
+Encoding Fractional Values
+25
+Exponent Bits Significand Bits
+1.11 x 21
+Microfloat
+Binary
+Place-Value 1 1 1
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+Exponent
+Significand
+The leading 1 is not stored!
+[Slide 26]
+Encoding Fractional Values
+26
+0 1 1 1
+Exponent Bits Significand Bits
+1.11 x 21
+Microfloat
+Binary
+Place-Value 1 1 1
+21 20 2-1
+Decimal
+Place-Value 3 5
+100 10-1
+Exponent
+Significand
+The leading 1 is not stored!
+[Slide 27]
+Binary in Normalized Form
+27
+1.0101 x 26
+Significand
+Exponent
+Binary Point
+Base
+In normalized form, 1 <= |significand| < 2
+This means the value to the left of the binary point is always 1.
+We can increase the precision by not storing this 1!
+[Slide 28]
+Implicit 1
+• In normalized binary floating point, every (nonzero) number has a leading 1
+before the binary point.
+• Since that leading one is always there, we don’t need to store it
+• Hence the name “Implicit 1”
+• By not storing it, we free up one extra bit for the significand
+• This extra bit increase precision
+• The range is unaffected by this
+• (Since the range is determined by the exponent bits)
+28
+[Slide 29]
+Example: Decimal to Microfloat V1
+29
+Exponent Bits Significand Bits
+7
+[Slide 30]
+Example: Decimal to Microfloat V1
+30
+1 0 1 1
+Exponent Bits Significand Bits
+1.112 x 22
+1.<significand bits> x 2<exponent bits>
+7
+0b111
+[Slide 31]
+Example: Decimal to Microfloat V1
+31
+Exponent Bits Significand Bits
+1.25
+[Slide 32]
+Example: Decimal to Microfloat V1
+32
+0 0 0 1
+Exponent Bits Significand Bits
+1.012 x 22
+1.<significand bits> x 2<exponent bits>
+1.25
+0b1.01
+[Slide 33]
+Example: Microfloat V1 to Decimal
+33
+0 1 0 1
+Exponent Bits Significand Bits
+[Slide 34]
+Example: Microfloat V1 to Decimal
+34
+0 1 0 1
+Exponent Bits Significand Bits
+1.01 x 21
+1.<significand bits> x 2<exponent bits>
+2.5
+[Slide 35]
+Example: Microfloat V1 to Decimal
+35
+1 1 0 1
+Exponent Bits Significand Bits
+[Slide 36]
+Example: Microfloat V1 to Decimal
+36
+1 1 0 1
+Exponent Bits Significand Bits
+1.01 x 23
+1.<significand bits> x 2<exponent bits>
+10
+[Slide 37]
+Microfloat V1
+• For each value below, determine if it
+can be represented.
+• If it can be represented, write out its
+Microfloat V1 encoding.
+• If not, explain why: not enough precision
+or not enough range.
+• A) 1.75
+• B) 2.75
+• C) 5
+• D) 12
+• E) 16
+37
+A
+B
+C
+D
+E
+[Slide 38]
+Microfloat V1
+• For each value below, determine if
+it can be represented.
+• If it can be represented, write out its
+Microfloat V1 encoding.
+• If not, explain why: not enough
+precision or not enough range.
+• A) 1.75 = 1.112 x 20 => 00112
+• B) 2.75 = 1.0112 x 21
+=> not enough precision
+• C) 5 = 1.012 x 22 => 10012
+• D) 12 = 1.1002 x 23 => 11102
+• E) 16 = 12 x 24
+=> not enough range
+38
+A
+B
+C
+D
+E
+0 0 1 1
+0 1 0 1
+1 0 0 1
+1 1 1 0
+0 0 0 0
+1
+1

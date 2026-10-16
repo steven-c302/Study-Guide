@@ -1,0 +1,656 @@
+CL14 - Floating Point: bias, minifloat, special values, rounding, denormalized numbers (COMP 211, Connor McMahon) - text extracted from the slides for search
+
+[Slide 1]
+Floating Point
+COMP211 Connor McMahon
+[Slide 2]
+Microfloat
+• Microfloat is a simplified, made-up floating-point representation that uses
+only four bits.
+• The small number of bits allows us to easily explore design tradeoffs.
+3
+[Slide 3]
+Key Idea: Design Tradeoffs
+• There’s a tradeoff between
+• The range: how large or small a number you can represent and
+• The precision: how accurately you can represent numbers
+• Both of which are constrained by the total number of available bits.
+4
+[Slide 4]
+Key Idea: Design Tradeoffs
+• More exponent bits
+• increases the range of representable numbers
+• but reduces the number of bits available for the significand, decreasing
+precision.
+• More significand bits
+• increases the precision,
+• but reduce the number of bits available for the exponent, decreasing the
+range.
+5
+[Slide 5]
+Microfloat Comparison
+Exponen
+t
+Significa
+nd
+Value Decimal
+002 002 1.002x20 1
+002 012 1.012x20 1.25
+002 102 1.102x20 1.5
+002 112 1.112x20 1.75
+012 002 1.002x21 2
+012 012 1.012x21 2.5
+012 102 1.102x21 3
+012 112 1.112x21 3.5
+102 002 1.002x22 4
+102 012 1.012x22 5
+102 102 1.102x22 6
+102 112 1.112x22 7
+112 002 1.002x23 8
+112 012 1.012x23 10
+112 102 1.102x23 12
+112 112 1.112x23 14
+0.25
+0.5
+1
+2
+Exponent Significan
+d
+Value Decimal
+02 0002 1.0002x20 1
+02 0012 1.0012x20 1.125
+02 0102 1.0102x20 1.25
+02 0112 1.0112x20 1.375
+02 1002 1.1002x20 1.5
+02 1012 1.1012x20 1.625
+02 1102 1.1102x20 1.75
+02 1112 1.1112x20 1.875
+12 0002 1.0002x21 2
+12 0012 1.0012x21 2.25
+12 0102 1.0102x21 2.5
+12 0112 1.0112x21 2.75
+12 1002 1.1002x21 3.5
+12 1012 1.1012x21 3.25
+12 1102 1.1102x21 3.5
+12 1112 1.1112x21 3.75
+0.125
+0.25
+Expone
+nt
+Significa
+nd
+Value Decimal
+0002 02 1.02x20 1
+0002 12 1.12x20 1.5
+0012 02 1.02x21 2
+0012 12 1.12x21 3
+0102 02 1.02x22 4
+0102 12 1.12x22 6
+0112 02 1.02x23 8
+0112 12 1.12x23 12
+1002 02 1.02x24 16
+1002 12 1.12x24 24
+1012 02 1.02x25 32
+1012 12 1.12x25 48
+1102 02 1.02x26 64
+1102 12 1.12x26 96
+1112 02 1.02x27 128
+1112 12 1.12x27 192
+0.5
+1
+2
+4
+8
+16
+32
+64
+V1: 2 exp, 2 sig V2: 1 exp, 3 sig V3: 3 exp, 1 sig
+[Slide 6]
+Bias
+• With microfloat V1, V2, and V3
+• We cannot represent values between 0 and 1
+• This is because the exponent must be positive
+• Solution: Subtract a fixed bias from the exponent
+• Negative exponents allow us to represent values between 0 and 1
+• For microfloat, the bias is 2
+• This allows for a range of [-2, 1]
+7
+[Slide 7]
+Microfloat V4: Encoding 0.75
+8
+0 1 1 0
+Exponent Bits Significand Bits
+1.1 x 2-1
+Microfloat
+Binary
+Place-Value 0 1 1
+20 2-1 2-2
+Decimal
+Place-Value 0 7
+100 10-1
+5
+10-2
+Exponent bits
+-1 + bias = -1 + 2 = 1
+Normalized
+Form
+[Slide 8]
+Microfloat V4
+Exponent Significand Value Decimal
+002 002 1.002x20-2 0.25
+002 012 1.012x20-2 0.3125
+002 102 1.102x20-2 0.375
+002 112 1.112x20-2 0.4375
+012 002 1.002x21-2 0.5
+012 012 1.012x21-2 0.625
+012 102 1.102x21-2 0.75
+012 112 1.112x21-2 0.875
+102 002 1.002x22-2 1
+102 012 1.012x22-2 1.25
+102 102 1.102x22-2 1.5
+102 112 1.112x22-2 1.75
+112 002 1.002x23-2 2
+112 012 1.012x23-2 2.5
+112 102 1.102x23-2 3
+112 112 1.112x23-2 3.5 9
+0.0625
+Distance between
+consecutive
+values
+0.125
+0.25
+0.5
+[Slide 9]
+Generalizing the Bias
+• n = number of bits in the exponent field
+• This allows for almost the same number of positive and negative exponents
+• There is one more negative exponent
+10
+Bias = 2n-1-1
+[Slide 10]
+Bias
+• Why do we use a bias instead of 2’s complement?
+• Simplifies Comparison Operations
+• With a biased exponent, larger numbers have higher bit values, and smaller numbers
+have lower bit values, making it easy to compare them as unsigned integers.
+• If two’s complement were used, negative exponents (which have leading 1s) would be
+greater in unsigned comparison, breaking the ordering.
+11
+Bias = 2n-1-1
+[Slide 11]
+Minifloat
+12
+[Slide 12]
+Minifloat
+13
+Exponent Bits Significand Bits
+Sign Bit
+Sign Bit (1 bit):
+• 0: Positive number
+• 1: Negative number
+Exponent (3 bits):
+• Represents the exponent using a fixed bias of 3
+Significand (4 bits):
+• Represents the fractional part
+• Assumes an implicit leading 1 for normalized numbers
+[Slide 13]
+Minifloat
+Binary
+Place-Value
+Decimal
+Place-Value
+Normalized
+Form
+Exponent Bits Significand Bits
+Sign Bit
+15
+[Slide 14]
+1.111 x 23
+Minifloat
+Binary
+Place-Value
+Decimal
+Place-Value
+Normalized
+Form
+0 1 1 0 1 1 1 0
+Exponent Bits Significand Bits
+Sign Bit
+15
+11112
+[Slide 15]
+Minifloat
+Binary
+Place-Value
+Decimal
+Place-Value
+Normalized
+Form
+Exponent Bits Significand Bits
+Sign Bit
+-4.25
+[Slide 16]
+-1.00012 x 22
+Minifloat
+Binary
+Place-Value
+Decimal
+Place-Value
+Normalized
+Form
+1 1 0 1 0 0 0 1
+Exponent Bits Significand Bits
+Sign Bit
+-4.25
+-100.012
+[Slide 17]
+Minifloat
+Binary
+Place-Value
+Decimal
+Place-Value
+Normalized
+Form
+Exponent Bits Significand Bits
+Sign Bit
+-32
+[Slide 18]
+-1 x 25
+Minifloat
+Binary
+Place-Value
+Decimal
+Place-Value
+Normalized
+Form
+1
+0 0 0 0
+Exponent Bits Significand Bits
+Sign Bit
+-32
+-1000002
+5 + 3 = 8 = 0b1000 -> too large for exponent field
+Not enough range!
+[Slide 19]
+Minifloat
+Binary
+Place-Value
+Decimal
+Place-Value
+Normalized
+Form
+Exponent Bits Significand Bits
+Sign Bit
+12.25
+[Slide 20]
+-1.10001 x 23
+Minifloat
+Binary
+Place-Value
+Decimal
+Place-Value
+Normalized
+Form
+1 1 1 0
+Exponent Bits Significand Bits
+Sign Bit
+12.25
+1100.012
+Need 5 bits for significand
+Not enough precision!
+[Slide 21]
+Special Cases
+22
+[Slide 22]
+Special Cases
+• We’ll reserve a few bit patterns for special cases
+23
+Value Exponent Bits Significand Bits
+Normalized # Nonzero Anything
+[Slide 23]
+Special Cases
+• We’ll reserve a few bit patterns for special cases
+24
+Value Exponent Bits Significand Bits
+Normalized # Nonzero Anything
+Zero All zeros All zeros
+Infinity All ones All zeros
+[Slide 24]
+Zero
+25
+0 0 0 0 0 0 0 0
+Exponent Bits Significand Bits
+Sign Bit
+[Slide 25]
+26
+0 1 1 1 0 0 0 0
+Exponent Bits Significand Bits
+Sign Bit
+Positive Infinity
+1 1 1 1 0 0 0 0
+Exponent Bits Significand Bits
+Sign Bit
+Negative Infinity
+[Slide 26]
+Special Cases
+• We’ve seen Zero and Infinity
+27
+Value Exponent Bits Significand Bits
+Normalized # Nonzero Anything
+Zero All zeros All zeros
+Infinity All ones All zeros
+NaN All ones Nonzero
+[Slide 27]
+NaN (Not a Number)
+• The result of undefined or unrepresentable operations
+• Example operations that would produce NaN result
+• 0/0
+• ∞/∞
+• −1
+• log(−5)
+• NaN propagates through calculations
+• Ex: if x = NaN, then x + 5 = NaN
+• Enables graceful handling of errors
+• Helpful for debugging
+28
+[Slide 28]
+NaN
+29
+0 1 1 1
+Exponent Bits Significand Bits
+Sign Bit
+Significand is any non-zero value
+[Slide 29]
+Why not just one NaN?
+• Different NaN encodings let programs distinguish between error sources.
+30
+[Slide 30]
+Convert Each Minifloat Value to Decimal, Bias = 3
+1. 0 101 0110
+2. 1 001 1000
+3. 1 111 0000
+4. 0 111 0101
+31
+[Slide 31]
+Floating Point Rounding
+33
+[Slide 32]
+What happens when a number cannot be represented?
+• If a floating-point number cannot be represented exactly, the computer
+generally stores the closest representable floating-point value instead.
+• If the number is within the representable range, but not exactly representable
+• It gets rounded to a nearby representable value.
+• The number is too large
+• If the magnitude exceeds what the floating-point format can represent, you get overflow.
+• The value is encoded as infinity or negative infinity.
+• The number is extremely close to zero
+• You can get underflow where the value rounds to zero.
+34
+[Slide 33]
+Floating Point Rounding
+• We cannot represent -32 in minifloat because it is outside of the range of
+representable values. In this case, the computer would encode negative
+infinity.
+• Minifloat value for -32: 0b1 111 0000 => negative infinity
+35
+[Slide 34]
+Floating Point Rounding: 12.25
+• Decimal: 12.25
+• Binary: 0b1100.01
+• Normalize: 1.100012×23
+• Minifloat: 0b1. 10001
+• But we only have 4 fraction bits. So 10001 does not fit exactly.
+36
+[Slide 35]
+Floating Point Rounding: 12.25
+• Decimal: 12.25
+• Binary: 0b1100.01
+• Normalize: 1.100012×23
+• Minifloat: 0b1. 10001
+• But we only have 4 fraction bits. So 10001 does not fit exactly.
+• The two closest representable values are:
+• 1.10002×23 = 12.0 and 1.10012×23 = 12.5
+• And 12.25 is exactly halfway between them.
+• Using round-to-nearest, ties-to-even, we choose 12.0.
+• So: 12.25→12.0
+37
+[Slide 36]
+Floating Point Rounding: 5.3125
+• Decimal: 5.3125
+• Binary: 0b101.0101
+• Normalize: 1.0101012×22
+• Minifloat: 0b1. 010101
+• But we only have 4 fraction bits. So 010101 does not fit exactly.
+38
+[Slide 37]
+Floating Point Rounding: 5.3125
+• Decimal: 5.3125
+• Binary: 0b101.0101
+• Normalize: 1.0101012×22
+• Minifloat: 0b1. 010101
+• But we only have 4 fraction bits. So 010101 does not fit exactly.
+• The two closest representable values are:
+• 1.01012×22 = 5.25 and 1.01102×22 = 5.5
+• And 5.3125 is closer to 5.25:
+• 5.3125 − 5.25 = 0.0625
+• 5.5 − 5.3125 = 0.1875
+• Using round-to-nearest, we choose 5.25.
+• So: 5.3125→5.25
+39
+[Slide 38]
+How does 5.125 get represented in minifloat?
+40
+[Slide 39]
+Denormalized Numbers
+42
+[Slide 40]
+What is the Smallest Positive Normalized Value?
+43
+Exponent Bits Significand Bits
+Sign Bit
+Bias = 3
+[Slide 41]
+What is the Smallest Positive Normalized Value?
+44
+0 0 0 1 0 0 0 0
+Exponent Bits Significand Bits
+Sign Bit
+Bias = 3
+(-1)S x 1.<significand bits> x 2<exponent bits> – <bias>
+[Slide 42]
+What is the Smallest Positive Normalized Value?
+45
+0 0 0 1 0 0 0 0
+Exponent Bits Significand Bits
+Sign Bit
+(-1)0 x 1.0000 x 21– 3
+.012 = 0.25
+(-1)S x 1.<significand bits> x 2<exponent bits> – <bias>
+Bias = 3
+[Slide 43]
+What is the Next Smallest Positive Normalized Value?
+46
+Exponent Bits Significand Bits
+Sign Bit
+Bias = 3
+[Slide 44]
+What is the Next Smallest Positive Normalized Value?
+47
+0 0 0 1 0 0 0 1
+Exponent Bits Significand Bits
+Sign Bit
+Bias = 3
+(-1)S x 1.<significand bits> x 2<exponent bits> – <bias>
+[Slide 45]
+What is the Next Smallest Positive Normalized Value?
+48
+0 0 0 1 0 0 0 1
+Exponent Bits Significand Bits
+Sign Bit
+(-1)S x 1.<significand bits> x 2<exponent bits> – <bias>
+(-1)0 x 1.0001 x 21– 3
+.0100012 = 2-2 + 2-6 = 0.265625
+Bias = 3
+[Slide 46]
+Number Line of Representable Values
+49
+0
+0.25
+0.265625
+…
+…
+0.28125
+0.296875
+-0.265625
+-0.28125
+-0.296875
+-0.25
+A: Smallest positive
+normalized
+B: Second smallest
+positive normalized
+[Slide 47]
+Number Line of Representable Values
+50
+0
+0.25
+0.265625
+…
+…
+0.28125
+0.296875
+-0.265625
+-0.28125
+-0.296875
+-0.25
+A: Smallest positive
+normalized
+B: Second smallest
+positive normalized
+Why is the distance between 0 and A so much
+larger than the distance between A and B?
+The implicit leading 1!
+[Slide 48]
+Implicit 1
+• Remember, implicit 1 means more precision
+• Not storing the leading one gives us room to store an extra bit in the significand
+• But this also leaves a large gap between 0 and the smallest non-zero value
+• Any result smaller than the smallest normalized number would underflow directly to zero
+• Design trade-off
+• Pro: Higher precision for the same number of bits
+• Con: A large gap around 0
+• Solution: Add Denormalized numbers
+• Drop the hidden 1 to add values around 0
+51
+[Slide 49]
+Denormalized Exponent
+• The denormalized exponent is always fixed
+• Minifloat denorm exponent
+• 1 - 2n-1-1
+• 1 - 22-1
+• -2
+52
+Bias = 2n-1-1
+Denorm Exponent = 1 - Bias, where n is the number of exponent bits
+[Slide 50]
+• To encode a denormalized number, all exponent bits are set to 0
+Denormalized Numbers
+53
+0 0 0
+Exponent Bits Significand Bits
+Sign Bit
+(-1)S x 0.<significand bits> x 2-2
+[Slide 51]
+Smallest Positive Denormalized Value
+54
+0 0 0 0 0 0 0 1
+Exponent Bits Significand Bits
+Sign Bit
+[Slide 52]
+Smallest Positive Denormalized Value
+55
+0 0 0 0 0 0 0 1
+Exponent Bits Significand Bits
+Sign Bit
+(-1)0 x 0.0001 x 2–2
+(-1)0 x 0.000001
+2-6 = 1/64
+(-1)S x 0.<significand bits> x 2-2
+[Slide 53]
+Example: Denormalized Numbers
+56
+0 0 0 0 1 1 1 1
+Exponent Bits Significand Bits
+Sign Bit
+(-1)S x 0.<significand bits> x 2-2
+[Slide 54]
+Example: Denormalized Numbers
+57
+0 0 0 0 1 1 1 1
+Exponent Bits Significand Bits
+Sign Bit
+(-1)0 x 0.1111 x 2-2
+(-1)0 x 0.001111
+(-1)S x 0.<significand bits> x 2-2
+15/64
+[Slide 55]
+Number Line of Representable Values
+58
+0
+0.25
+0.265625
+…
+…
+0.28125
+0.296875
+-0.265625
+-0.28125
+-0.296875
+-0.25
+0.015625
+0.234375
+-0.015625
+-0.234375
+= normalized numbers
+= denormalized numbers
+• Overflow: The result of a computation exceeds the largest
+representable floating-point number
+• Underflow: A number is too small to be represented and is
+rounded to zero.
+[Slide 56]
+Special Cases
+• We’ve seen denormalized values
+59
+Value Exponent Bits Significand Bits
+Normalized # Nonzero Anything
+Zero All zeros All zeros
+Infinity All ones All zeros
+NaN All ones Nonzero
+Denormalized # All zeros Nonzero
+[Slide 57]
+Minifloat
+• For each value below, indicate whether
+it will be represented as a normalized
+or denormalized value. Then write out
+its encoding. Hint: first try encoding as
+a normalized number. If the exponent +
+bias is <= 0, it is too small to be a
+normalized number, so try dernorm.
+• A) 1/32
+• B) -3/8
+• C) 9/64
+• D) -48/64
+60
+[Slide 58]
+Notation
+62
+Sign Exp Significand
+Minifloat
+0
+3
+4
+6
+7
+4 Bits
+3 Bits
+1 Bit
