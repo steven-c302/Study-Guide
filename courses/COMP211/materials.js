@@ -146,6 +146,16 @@ window.MATERIALS = {
       "date": "study notes"
     },
     {
+      "title": "Denorm Exponent Guide \u00b7 three designs for exponent field 000",
+      "file": "materials/readings/COMP211-FloatingPointDenormExponent.pdf",
+      "date": "Week 9 \u00b7 Quiz 2 material"
+    },
+    {
+      "title": "Denorm Exponent Guide \u00b7 study notes",
+      "file": "materials/readings/Denorm-Exponent-Guide-notes.txt",
+      "date": "study notes"
+    },
+    {
       "title": "RD14 reading notes \u00b7 program memory and pointers (DiS 2.1, 2.2)",
       "file": "materials/readings/RD14-DiS-2.1-2.2-memory-pointers-notes.txt",
       "date": "study notes"

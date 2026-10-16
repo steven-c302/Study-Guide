@@ -4488,7 +4488,7 @@
     "lesson": "L24",
     "type": "section",
     "title": "CL15 &middot; Denormalized Numbers: Exponent 1 &minus; bias, Implicit 0",
-    "text": "CL15 &middot; Denormalized Numbers: Exponent 1 &minus; bias, Implicit 0 Last lecture introduced denormals; this one explains why they line up . A normalized value is exponent = field &minus; bias with an implicit 1 . The smallest normalized field is 001 , so its exponent is 1 &minus; 3 = &minus;2 . When the field is 000 the exponent is defined as 1 &minus; bias (also &minus;2), but the leading bit becomes an implicit 0 . Exponent field Form Example Smallest normalized 001 1.xxxx &times; 2 &minus;2 0 001 0000 = 1.0 &times; 2 &minus;2 = 16/64 All subnormals 000 0.xxxx &times; 2 &minus;2 0 000 1111 = 0.1111 &times; 2 &minus;2 = 15/64 Both use 2 &minus;2 ; the only change is the implicit leading bit . That makes the hand-off smooth: the largest subnormal is 15/16 &times; 1/4 = 15/64 , the smallest normalized is 16/64 , exactly one 1/64 step apart. ... 13/64 14/64 15/64 (largest denormal) | 16/64 (smallest normalized) 17/64 18/64 ... Encode a small value: normalized or denormalized? Try normalized first. If exponent + bias &le; 0 the value is too small: divide by 2 &minus;2 and write the result as 0.ffff . 1/32 : 1.0 &times; 2 &minus;5 &rarr; field &minus;2 &le; 0 &rarr; denormalized ; (1/32)&times;4 = 0.125 = 0.0010 &rarr; 0 000 0010 &minus;3/8 : &minus;1.1 &times; 2 &minus;2 &rarr; field 1 &rarr; normalized &rarr; 1 001 1000 9/64 : 0.001001 &rarr; field &le; 0 &rarr; denormalized ; (9/64)&times;4 = 0.5625 = 0.1001 &rarr; 0 000 1001 &minus;3/4 : &minus;1.1 &times; 2 &minus;1 &rarr; field 2 &rarr; normalized &rarr; 1 010 1000 Check What exponent do minifloat denormals use? Check Fixed at 1 &minus; bias = 1 &minus; 3 = &minus;2. Check The largest denormal is 0 000 1111. Give its value as a fraction over 64 (like 5/64). Check 0.1111 &times; 2 &minus;2 = 15/16 &times; 1/4 = 15/64. Check Is 3/32 normalized or denormalized in the minifloat? (answer normalized or denormalized) Check 3/32 = 0.09375 = 1.5 &times; 2 &minus;4 , so the exponent field would be &minus;4 + 3 = &minus;1 &le; 0: it is denormalized (0.09375 &times; 4 = 0.375 = 0.0110). Check What differs between the smallest normalized number and the denormalized numbers? The exponent used The implicit leading bit (1 vs 0) The number of fraction bits The sign convention Both use 2 &minus;2 ; normalized has implicit 1, denormalized implicit 0. Check What is the gap between the largest denormal and the smallest normalized value? 1/64 1/16 0.25 There is a hole 15/64 to 16/64 — the same spacing as inside the denormal range."
+    "text": "CL15 &middot; Denormalized Numbers: Exponent 1 &minus; bias, Implicit 0 Last lecture introduced denormals; this one explains why they line up . A normalized value is exponent = field &minus; bias with an implicit 1 . The smallest normalized field is 001 , so its exponent is 1 &minus; 3 = &minus;2 . When the field is 000 the exponent is defined as 1 &minus; bias (also &minus;2), but the leading bit becomes an implicit 0 . Exponent field Form Example Smallest normalized 001 1.xxxx &times; 2 &minus;2 0 001 0000 = 1.0 &times; 2 &minus;2 = 16/64 All subnormals 000 0.xxxx &times; 2 &minus;2 0 000 1111 = 0.1111 &times; 2 &minus;2 = 15/64 Both use 2 &minus;2 ; the only change is the implicit leading bit . That makes the hand-off smooth: the largest subnormal is 15/16 &times; 1/4 = 15/64 , the smallest normalized is 16/64 , exactly one 1/64 step apart. ... 13/64 14/64 15/64 (largest denormal) | 16/64 (smallest normalized) 17/64 18/64 ... Encode a small value: normalized or denormalized? Try normalized first. If exponent + bias &le; 0 the value is too small: divide by 2 &minus;2 and write the result as 0.ffff . 1/32 : 1.0 &times; 2 &minus;5 &rarr; field &minus;2 &le; 0 &rarr; denormalized ; (1/32)&times;4 = 0.125 = 0.0010 &rarr; 0 000 0010 &minus;3/8 : &minus;1.1 &times; 2 &minus;2 &rarr; field 1 &rarr; normalized &rarr; 1 001 1000 9/64 : 0.001001 &rarr; field &le; 0 &rarr; denormalized ; (9/64)&times;4 = 0.5625 = 0.1001 &rarr; 0 000 1001 &minus;3/4 : &minus;1.1 &times; 2 &minus;1 &rarr; field 2 &rarr; normalized &rarr; 1 010 1000 Check What exponent do minifloat denormals use? Check Fixed at 1 &minus; bias = 1 &minus; 3 = &minus;2. Check The largest denormal is 0 000 1111. Give its value as a fraction over 64 (like 5/64). Check 0.1111 &times; 2 &minus;2 = 15/16 &times; 1/4 = 15/64. Check Is 3/32 normalized or denormalized in the minifloat? (answer normalized or denormalized) Check 3/32 = 0.09375 = 1.5 &times; 2 &minus;4 , so the exponent field would be &minus;4 + 3 = &minus;1 &le; 0: it is denormalized (0.09375 &times; 4 = 0.375 = 0.0110). Check What differs between the smallest normalized number and the denormalized numbers? The exponent used The implicit leading bit (1 vs 0) The number of fraction bits The sign convention Both use 2 &minus;2 ; normalized has implicit 1, denormalized implicit 0. Check What is the gap between the largest denormal and the smallest normalized value? 1/64 1/16 0.25 There is a hole 15/64 to 16/64 — the same spacing as inside the denormal range. Denorm Exponent Guide: three designs for exponent field 000 Minifloat with 3 exponent bits (bias 3) and 4 fraction bits. What should the all-zeros exponent field mean? Design Exponent field 000 means Smallest positive Result 1 &middot; no denormals normal, exponent &minus;3 1/8 big gap between 0 and 1/8 (abrupt underflow) 2 &middot; denormals, exponent &minus;3 (&minus;bias) 0.f &times; 2 &minus;3 1/128 reaches closest to 0, but a gap from 15/128 to 1/4 3 &middot; denormals, exponent &minus;2 (1 &minus; bias) 0.f &times; 2 &minus;2 1/64 no gap: 15/64 is directly followed by 16/64 Design 3 is the real rule. The trade-off: it cannot get as close to zero as Design 2, but the number line stays evenly spaced around the smallest normalized value. Check Which design has a gap between its largest denormal and its smallest normalized value? Design 1 only Design 2 (exponent &minus;bias) Design 3 (exponent 1 &minus; bias) All of them Design 2 jumps from 15/128 to 1/4. Design 3 is continuous; Design 1 has no denormals at all (its gap is between 0 and 1/8). Check A format has 4 exponent bits with bias 7. What exponent do denormalized numbers use? Check 1 &minus; bias = 1 &minus; 7 = &minus;6."
   },
   {
     "id": "l24-denorm-q0",
@@ -4534,6 +4534,24 @@
     "type": "qa",
     "title": "CL15 &middot; Denormalized Numbers: Exponent 1 &minus; bias, Implicit 0",
     "text": "Check What is the gap between the largest denormal and the smallest normalized value? — 15/64 to 16/64 — the same spacing as inside the denormal range."
+  },
+  {
+    "id": "l24-denorm-q5",
+    "section": "l24-denorm",
+    "course": "COMP211",
+    "lesson": "L24",
+    "type": "qa",
+    "title": "CL15 &middot; Denormalized Numbers: Exponent 1 &minus; bias, Implicit 0",
+    "text": "Check Which design has a gap between its largest denormal and its smallest normalized value? — Design 2 jumps from 15/128 to 1/4. Design 3 is continuous; Design 1 has no denormals at all (its gap is between 0 and 1/8)."
+  },
+  {
+    "id": "l24-denorm-q6",
+    "section": "l24-denorm",
+    "course": "COMP211",
+    "lesson": "L24",
+    "type": "qa",
+    "title": "CL15 &middot; Denormalized Numbers: Exponent 1 &minus; bias, Implicit 0",
+    "text": "Check A format has 4 exponent bits with bias 7. What exponent do denormalized numbers use? — 1 &minus; bias = 1 &minus; 7 = &minus;6."
   },
   {
     "id": "l24-ieee",
@@ -7909,6 +7927,114 @@
     "type": "qa",
     "title": "HW07 &middot; Q7: Misaligned Pointers (Same Bytes, Different Pointer Types)",
     "text": "Check Why does the pointer type change what you read from the same memory? — Interpretation, not data, changes."
+  },
+  {
+    "id": "l33-make",
+    "section": "l33-make",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "section",
+    "title": "Lab 1 &middot; make and Makefiles",
+    "text": "Lab 1 &middot; make and Makefiles A Makefile is a list of rules : target: dependencies followed by a tab-indented recipe . make with no argument builds the first target (the default). It builds the dependencies first, then runs a target's recipe only if the target is missing or older than a dependency. make clean is just another target whose recipe removes files. all: stats filter merge stats: stats.o util.o gcc -o stats stats.o util.o clean: rm -f stats filter merge *.o Running make builds all , which depends on three programs, each depending on its own object files. make stats builds only stats and what it needs. Check You type make with no target. Which target is built? The one named all , always The first target in the Makefile The last target in the Makefile Every target The default is the first target; it is conventionally named all . Check True or false: the recipe lines of a rule must begin with a tab character. True False Spaces cause a &ldquo;missing separator&rdquo; error."
+  },
+  {
+    "id": "l33-make-q0",
+    "section": "l33-make",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 &middot; make and Makefiles",
+    "text": "Check You type make with no target. Which target is built? — The default is the first target; it is conventionally named all ."
+  },
+  {
+    "id": "l33-make-q1",
+    "section": "l33-make",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 &middot; make and Makefiles",
+    "text": "Check True or false: the recipe lines of a rule must begin with a tab character. — Spaces cause a &ldquo;missing separator&rdquo; error."
+  },
+  {
+    "id": "l33-rebuild",
+    "section": "l33-rebuild",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "section",
+    "title": "Lab 1 &middot; What Gets Rebuilt?",
+    "text": "Lab 1 &middot; What Gets Rebuilt? Order of reasoning: (1) start at the requested target, (2) recursively handle each dependency, (3) rebuild a target if it does not exist or any dependency is newer. Editing one source file triggers the object that uses it, then everything above it in the chain — and nothing else. All up to date, nothing edited: make reports nothing to do. You edit util.c , used by stats.o only: util.o , then stats rebuild; filter and merge do not. After make clean then make : everything rebuilds. A listed dependency that does not exist and has no rule: make stops with No rule to make target . Check app: main.o lib.o . You edit only lib.c (lib.o is built from lib.c). Which steps run on the next make ? Only linking app Everything, including main.o Compile lib.o, then link app Nothing: make cannot see .c changes lib.o is out of date, so it rebuilds; app depends on lib.o, so it relinks. main.o is untouched. Check The error make prints when a dependency file is missing and no rule builds it begins with &ldquo;No rule to make ___&rdquo;. Fill in the next word. Check &ldquo;No rule to make target &lsquo;x&rsquo;, needed by &lsquo;y&rsquo;.&rdquo;"
+  },
+  {
+    "id": "l33-rebuild-q0",
+    "section": "l33-rebuild",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 &middot; What Gets Rebuilt?",
+    "text": "Check app: main.o lib.o . You edit only lib.c (lib.o is built from lib.c). Which steps run on the next make ? — lib.o is out of date, so it rebuilds; app depends on lib.o, so it relinks. main.o is untouched."
+  },
+  {
+    "id": "l33-rebuild-q1",
+    "section": "l33-rebuild",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 &middot; What Gets Rebuilt?",
+    "text": "Check The error make prints when a dependency file is missing and no rule builds it begins with &ldquo;No rule to make ___&rdquo;. Fill in the next word. — &ldquo;No rule to make target &lsquo;x&rsquo;, needed by &lsquo;y&rsquo;.&rdquo;"
+  },
+  {
+    "id": "l33-bash",
+    "section": "l33-bash",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "section",
+    "title": "Lab 1 &middot; Bash Scripts",
+    "text": "Lab 1 &middot; Bash Scripts A script is a text file starting with a shebang ( #!/bin/bash ), made runnable with chmod +x and run as ./script.sh . Arguments are $1 $2 &hellip; . Numeric comparisons use -eq -ne -lt -gt -le -ge inside [ ] ; string comparisons use = and != ; file tests include -e (exists) and -f (regular file). Arithmetic uses $(( )) . #!/bin/bash n=$1 if [ $((n % 2)) -eq 0 ]; then echo \"even\" else echo \"odd\" fi Check What command makes script.sh executable? Check Then run it with ./script.sh . Check Which test is true when $x is exactly 7? [ $x -eq 7 ] [ $x == 7 ] only works in C [ $x =< 7 ] if $x = 7 Use -eq for numbers inside [ ] , with spaces around the brackets."
+  },
+  {
+    "id": "l33-bash-q0",
+    "section": "l33-bash",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 &middot; Bash Scripts",
+    "text": "Check What command makes script.sh executable? — Then run it with ./script.sh ."
+  },
+  {
+    "id": "l33-bash-q1",
+    "section": "l33-bash",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 &middot; Bash Scripts",
+    "text": "Check Which test is true when $x is exactly 7? — Use -eq for numbers inside [ ] , with spaces around the brackets."
+  },
+  {
+    "id": "l33-glob",
+    "section": "l33-glob",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "section",
+    "title": "Lab 1 &middot; Globs and Loops",
+    "text": "Lab 1 &middot; Globs and Loops * matches any characters, ? exactly one, [0-9] one character from a set. The shell expands the glob before the command runs. for f in data*.txt; do &hellip; done loops over the matches; while [ $i -lt 5 ]; do &hellip; i=$((i+1)); done loops on a condition. Files: data1.txt data2.txt data10.txt notes.txt . data*.txt matches 3 files; data?.txt matches 2 ( data10 has two characters). Check With x=1 and the loop while [ $x -lt 20 ]; do x=$((x*2)); done , what is x afterward? Check 1, 2, 4, 8, 16 (still < 20) then 32 stops the loop. Check Which pattern matches img3.png but not imgA.png ? img?.png img[0-9].png img*.png *.png Only the bracket range limits the character to a digit. Practice with real output checks: Quiz 2 hub &rarr; Mastery unit &ldquo;Lab 1 &middot; make & Bash scripts&rdquo;."
+  },
+  {
+    "id": "l33-glob-q0",
+    "section": "l33-glob",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 &middot; Globs and Loops",
+    "text": "Check With x=1 and the loop while [ $x -lt 20 ]; do x=$((x*2)); done , what is x afterward? — 1, 2, 4, 8, 16 (still < 20) then 32 stops the loop."
+  },
+  {
+    "id": "l33-glob-q1",
+    "section": "l33-glob",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 &middot; Globs and Loops",
+    "text": "Check Which pattern matches img3.png but not imgA.png ? — Only the bracket range limits the character to a digit."
   },
   {
     "id": "l4-concept",
@@ -12238,6 +12364,24 @@
     "type": "material",
     "title": "CL21 - Garbage Collection (Java) and Quiz 2 Review (COMP 211, Connor McMahon) (part 10)",
     "text": "[Slide 29] 29 int main() { int64_t arr[] = {5, 10, 15, 20, 25}; int64_t* p = &arr[2]; *p = 50; p[-1] = 100; *(p + 2) = arr[0] + arr[1]; p = p - 2; arr[3] = *(p + 2) + p[1]; arr[0] = &arr[4] - p; } Address Contents (4 bytes) Variable 0xFFFFAAAA0044 0 RA (upper 4 bytes) 0xFFFFAAAA0040 0 RA (lower 4 bytes) 0xFFFFAAAA003C 0 arr[4] (upper 4 bytes) 0xFFFFAAAA0038 25 105 arr[4] (lower 4 bytes) 0xFFFFAAAA0034 0 arr[3] (upper 4 bytes) 0xFFFFAAAA0030 20 150 arr[3] (lower 4 bytes) 0xFFFFAAAA002C 0 arr[2] (upper 4 bytes) 0xFFFFAAAA0028 15 50 arr[2] (lower 4 bytes) 0xFFFFAAAA0024 0 arr[1] (upper 4 bytes) 0xFFFFAAAA0020 10 100 arr[1] (lower 4 bytes) 0xFFFFAAAA001C 0 arr[0] (upper 4 bytes) 0xFFFFAAAA0018 5 4 arr[0] (lower 4 bytes) 0xFFFFAAAA0014 0x0000FFFF p (upper 4 bytes) 0xFFFFAAAA0010 0xAAAA0028 0xAAAA0018 p (lower 4 bytes) 0xFFFFAAAA000C (unused) 0xFFFFAAAA0008 (unused) 0xFFFFAAAA0004 (unused) 0xFFFFAAAA0000 (unused)"
+  },
+  {
+    "id": "mat-COMP211-FloatingPointDenormExponent-0",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "=== PAGE 1 === (part 1)",
+    "text": "=== PAGE 1 === Why Is the Denormalized Exponent -2? Our minifloat representation has: ● 1 sign bit ● 3 exponent bits ● 4 significand (fraction) bits For normalized numbers, the significand has an implied leading 1: 1.xxxx With a bias of 3, the exponent is: E = exponent field - 3 Exponent Bits Exponent 000 Special case 001 1 - 3 = -2 010 2 - 3 = -1 011 3 - 1 = 2 100 4 - 3 = 1 101 5 - 3 = 2 110 6 - 3 = 3 111 Special case The smallest exponent available to a normalized number is therefore -2. The smallest positive normalized number is: 1.0000 × 2^-2 = 1/4 What should we do with exponent field 000? Let's consider three possible designs. === PAGE 2 === Design 1: No Denormalized Numbers One option would be to use 000 as another normalized exponent. Since we are using a bias of 3: 000 -> exponent -3 Numbers with exponent field 000 would therefore have the form: 1.xxxx × 2^-3 The smallest positive number would be: 1.0000 × 2^-3 = 1/8 The spacing between numbers with this exponent is: 0.0001 × 2^-3 = 1/128 So the first positive values are: 16/128, 17/128, 18/128, ... Evaluating the Tradeoffs: Advantage: ● We gain another exponent for normalized numbers. Disadvantage: ● There are NO representable nonzero values between 0 and 1/8. ● There is a large gap around zero. ● Very small values can suddenly become zero. This behavior is called \"abrupt underflow. \" === PAGE 3 === Design 2: Denormalized Exponent = -3 Instead, suppose we reserve exponent field 000 for denormalized numbers. A denormalized number does NOT have the implied leading 1. Instead of: 1.xxxx we use: 0.xxxx At first, it might seem like we should give these numbers an exponent of -3: 0.xxxx × 2^-3 After all, if 000 were interpreted normally with a bias of 3, it would mean -3. If we did this, the smallest positive denormal would be: 0.0001 × 2^-3 = 1/16 × 1/8 = 1/128 The largest denormal would be: 0.1111 × 2^-3 = 15/16 × 1/8 = 15/128 So the positive denormalized values would be: 1/128, 2/128, 3/128, ... , 15/128 But remember that the smallest normalized value is still: 1.0000 × 2^-2 = 1/4 That creates a large gap where are no representable values between: 15/128 and 32/128 === PAGE 4 === So although we gained very small numbers near zero, we created a large gap between the denormalized and normalized numbers. Evaluating the Tradeoffs: Advantage: ● We can represent very tiny values. ● The smallest positive value is 1/128. Disadvantage: ● There is a large gap between the denormalized and normalized ranges. ● The spacing suddenly changes when we move from denormalized to normalized numbers. === PAGE 5 === Design 3: Denormalized Exponent = -2 Now suppose we give denormalized numbers an exponent of -2. A denormalized number has the form: 0.xxxx × 2^-2 The smallest positive denormal is: 0.0001 × 2^-2 Since: 0.0001 = 1/16 we get: 1/16 × 1/4 = 1/64 The next denormal is: 0.0010 × 2^-2 = 2/64 Then: 0.0011 × 2^-2 = 3/64 And so on. The largest denormal is: 0.1111 × 2^-2 = 15/64 So the positive denormalized values are: 1/64, 2/64, 3/64, ... , 15/64 Now look at the smallest normalized value: 1.0000 × 2^-2 = 1/4 = 16/64 === PAGE 6 === Here values around the transition from denormalized to normalized values: 13/64 14/64 15/64 (largest denormal) 16/64 (smallest normalized) 17/64 18/64 ... There is NO GAP! The spacing stays exactly the same as we cross from denormalized numbers to normalized numbers: 14/64 -> 15/64 -> 16/64 -> 17/64 Evaluating the Tradeoffs: Advantage ● Smooth transition between denormalized and normalized values ● No abrupt underflow Disadvantage ● Cannot represent numbers as close to 0 compared with Design 2"
+  },
+  {
+    "id": "mat-Denorm-Exponent-Guide-notes-0",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "Denorm Exponent Guide: own notes (part 1)",
+    "text": "Denorm Exponent Guide: own notes Minifloat: 3 exponent bits, bias 3, 4 fraction bits. Question: what does exponent field 000 mean? Design 1: no denormals; field 000 is a normal exponent of -3. Smallest positive 1/8; large gap from 0 to 1/8. Design 2: denormals with exponent -bias = -3 (0.f x 2^-3). Smallest positive 1/128; gap between 15/128 and the smallest normalized 1/4. Design 3: denormals with exponent 1 - bias = -2 (0.f x 2^-2). Smallest positive 1/64; 15/64 is directly followed by 16/64: no gap. Design 3 is the standard rule. Trade-off: it does not reach as close to zero as Design 2."
   },
   {
     "id": "mat-RD00-DiS-17.1.2-unix-notes-0",
@@ -24865,6 +25009,951 @@
     "type": "qa",
     "title": "Mastery: CL21 GC & Quiz 2",
     "text": "Teach it. Explain reference counting and mark-and-sweep, and why Java uses a tracing collector. — Reference counting frees at zero references but fails on cycles. Mark-and-sweep marks what the roots can reach and frees the rest, so cycles are collected."
+  },
+  {
+    "id": "mastery-u31-learn",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "section",
+    "title": "Mastery: Lab 1 · make & Makefiles, Bash scripts",
+    "text": "Reading a Makefile (default target, which targets rebuild, clean, missing files) and reading, tracing and running Bash scripts (shebang, chmod, conditionals, loops, globs). These were Lab 1 skills and are on Quiz 2. A Makefile is a list of rules : target: dependencies followed by a tab-indented recipe (the commands). make builds a target only if it is missing or older than one of its dependencies (timestamps), so builds are incremental . Variables like CC = gcc and CFLAGS = -Wall -Wextra -g are expanded as $(CC) $(CFLAGS) . Default target: plain make builds the first target in the file, whatever it is called ( all , entry , start , mainline ). A target with only dependencies (like all: stats filter merge ) builds those dependencies in the order listed. Commands you can predict. make : default target. make filter : only filter (and what it depends on). make a b : builds a then b (in the order given). After a successful build, running make again does nothing (“Nothing to be done”). Editing one source file rebuilds only the targets that depend on it (plus any target that depends on those). make clean deletes the built files, so the next make rebuilds everything but make clean then make green builds only green . Errors. If a required dependency ( read.c ) does not exist and there is no rule to create it, make stops with an error ( No rule to make target ). If a file with the target's name already exists and is newer than its dependencies, make considers it up to date and does nothing (even for a target like entry that has no recipe). Shell scripts. A shell script is an executable text file of shell commands run in order; used to automate tasks and group commands, with conditionals and loops. The first line #!/bin/bash (the shebang ) names the interpreter that runs the file. To run ./script.sh it needs the executable permission: view with ls -l , add with chmod u+x script.sh . Conditionals and loops. if [ $x -gt 10 ]; then … else … fi . Integer tests: -eq equal, -gt greater, -lt less, -le / -ge ; string equality [ \"$w\" = \"cat\" ] ; file tests -e exists, -f regular file. Arithmetic: count=$((count + n)) , (( count++ )) . for n in 2 4 5 7; do … done runs once per item; for f in data*.txt runs once per glob match ( * any characters, ? exactly one, [0-9] one digit; hidden files starting with a dot are not matched). Common trap: Thinking the default target is the one named all (it is simply the first target). Common trap: Believing make always recompiles: it rebuilds only out-of-date targets. Common trap: Forgetting that make clean followed by make red green builds in the order listed on the command line . Common trap: Letting a glob like log?.txt match log10.txt (? is exactly one character). Common trap: Forgetting that img*.jpg style globs skip hidden files and that [0-9] is one digit. Common trap: Mixing up -gt / -lt or using = for integers (it is for strings). Common trap: Forgetting chmod u+x before running ./script.sh ."
+  },
+  {
+    "id": "mastery-u31-card0",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What is a Makefile rule? — target: dependencies followed by a tab-indented recipe (commands) that builds the target."
+  },
+  {
+    "id": "mastery-u31-card1",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What is the default target? — The first target in the Makefile, regardless of its name."
+  },
+  {
+    "id": "mastery-u31-card2",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "When does make rebuild a target? — When the target file is missing or older than any of its dependencies."
+  },
+  {
+    "id": "mastery-u31-card3",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What does make do twice in a row with no changes? — Nothing the second time: “Nothing to be done” (everything is up to date)."
+  },
+  {
+    "id": "mastery-u31-card4",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Edit one .c file; what rebuilds? — Only the target(s) that depend on that file (and targets depending on them)."
+  },
+  {
+    "id": "mastery-u31-card5",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What does make clean do? — Runs its recipe (typically rm -f of the executables); afterwards make rebuilds everything."
+  },
+  {
+    "id": "mastery-u31-card6",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "make clean then make green ? — Only green is built (just that target's recipe runs)."
+  },
+  {
+    "id": "mastery-u31-card7",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Order for make red green ? — red first, then green (the order given on the command line)."
+  },
+  {
+    "id": "mastery-u31-card8",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "A dependency file does not exist? — make reports an error (no rule to make target) and stops."
+  },
+  {
+    "id": "mastery-u31-card9",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "A file named like the target exists and is newer than all its dependencies? — The target is up to date: its recipe does not run."
+  },
+  {
+    "id": "mastery-u31-card10",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What command shows what make filter runs? — Its recipe, e.g. gcc -Wall -Wextra -std=c11 -g -o filter filter.c (variables expanded)."
+  },
+  {
+    "id": "mastery-u31-card11",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What is a shell script? — An executable text file of shell commands run in order; used to automate and group commands."
+  },
+  {
+    "id": "mastery-u31-card12",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What does #!/bin/bash do? — The shebang line names the interpreter that runs the script: /bin/bash."
+  },
+  {
+    "id": "mastery-u31-card13",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "How do you view and add execute permission? — ls -l file to view; chmod u+x file to add execute for the user."
+  },
+  {
+    "id": "mastery-u31-card14",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Integer comparison operators? — -eq equal, -gt greater than, -lt less than (also -le, -ge, -ne). Strings use = ."
+  },
+  {
+    "id": "mastery-u31-card15",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "File test operators? — -e exists (any type), -f exists and is a regular file."
+  },
+  {
+    "id": "mastery-u31-card16",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Arithmetic in Bash? — x=$((x + 1)) or (( x++ )) ; $((n % 2)) is modulo."
+  },
+  {
+    "id": "mastery-u31-card17",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "How many times does for f in data*.txt run? — Once per file the glob matches (the shell expands the glob first); hidden files are not matched."
+  },
+  {
+    "id": "mastery-u31-q0",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "A Makefile lists the targets entry , alpha , beta , gamma , wipe in that order. What does plain make build? — The first target is the default."
+  },
+  {
+    "id": "mastery-u31-q1",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Everything was built. Running make again without changing any file does what? — All targets are newer than their dependencies."
+  },
+  {
+    "id": "mastery-u31-q2",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Why are some targets not rebuilt after you edit a single source file? — Dependency timestamps decide."
+  },
+  {
+    "id": "mastery-u31-q3",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "You run make alpha but read.c (alpha's only dependency) does not exist and no rule creates it. What happens? — No rule to make target."
+  },
+  {
+    "id": "mastery-u31-q4",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What does the first line #!/bin/bash specify? — It names /bin/bash as the program to run the script."
+  },
+  {
+    "id": "mastery-u31-q5",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Which command adds execute permission for the owner of run.sh ? — u+x adds execute for the user."
+  },
+  {
+    "id": "mastery-u31-q6",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What is a shell script? — It automates and groups commands."
+  },
+  {
+    "id": "mastery-u31-q7",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Which operator tests that integer $x is less than 3? — -lt is less than."
+  },
+  {
+    "id": "mastery-u31-q8",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What is the difference between -e and -f ? — A directory passes -e but not -f."
+  },
+  {
+    "id": "mastery-u31-q9",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "For this Makefile name the default target and the exact command run by make filter . CC = gcc CFLAGS = -Wall -Wextra -std=c11 -g all: stats filter merge stats: stats.c $(CC) $(CFLAGS) -o stats stats.c filter: filter.c $(CC) $(CFLAGS) -o filter filter.c merge: merge.c $(CC) $(CFLAGS) -o merge merge.c clean: rm -f stats filter merge — The first target is the default; the recipe has $(CC) and $(CFLAGS) expanded."
+  },
+  {
+    "id": "mastery-u31-q10",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Graph: all: stats filter merge , each depends on its own .c; everything is built. For each situation give the targets rebuilt by the next make (in order; none if nothing). — Targets whose source is newer are rebuilt, in the order of the dependency list."
+  },
+  {
+    "id": "mastery-u31-q11",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Same graph, all built. Give what is built after each sequence (targets in order). — make clean removes everything; a named target builds only that target, and several targets build in the order given."
+  },
+  {
+    "id": "mastery-u31-q12",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Graph: mainline: blue green ; red , blue , green each depend on their own .c; mainline is the first target. Everything built except red (red was never built). Give the result of each: make , then after editing only blue.c another make , then make red green from a clean directory (targets built, in order). — mainline needs blue and green, not red. blue.c is edited, so only blue rebuilds. make red green builds in the order given."
+  },
+  {
+    "id": "mastery-u31-q13",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Graph: entry: alpha beta gamma , each depends on its own .c. read.c (for alpha) is missing; the others exist. Give the exit status category of make alpha ( error or ok ) and of make beta . — alpha needs read.c which does not exist. beta's source exists, so beta builds."
+  },
+  {
+    "id": "mastery-u31-q14",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What does this script print? #!/bin/bash count=0 for n in 2 4 5 7; do if [ $((n % 2)) -eq 0 ]; then count=$((count + n)) else count=$((count + 1)) fi done echo \"$count\" — Even numbers add themselves (2 + 4), odd numbers add 1 (+1 +1): 8."
+  },
+  {
+    "id": "mastery-u31-q15",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "A directory holds data1.txt data2.txt notes.txt image.png data3.txt . What does this script print, and which files does the glob match? #!/bin/bash count=0 for file in data*.txt; do if [ -f \"$file\" ]; then count=$((count + 1)) fi done echo $count — data*.txt matches names starting with data and ending .txt. Each is a regular file, so count is 3."
+  },
+  {
+    "id": "mastery-u31-q16",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "A directory holds log1.txt log2.txt logA.txt log10.txt report.txt . Give the files matched by log?.txt and the output. #!/bin/bash sum=0 for f in log?.txt; do if [ -e \"$f\" ]; then sum=$((sum + 2)) else sum=$((sum + 1)) fi done echo $sum — ? is exactly one character, so log10.txt is excluded. Three matches that all exist: 2 + 2 + 2."
+  },
+  {
+    "id": "mastery-u31-q17",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Files: img1.png img2.png img10.png imgA.png img1.jpg img2.jpg readme.md .secret.png . Give the matches for img[0-9].png , for img*.jpg , and the printed value. #!/bin/bash count=0 for f in img[0-9].png; do if [[ -e \"$f\" ]]; then (( count += 2 )); fi done for f in img*.jpg; do (( count++ )) done echo \"$count\" — One digit only (so not img10 or imgA, and hidden .secret.png is never matched). Two matches add 2 each (4), then two jpgs add 1 each: 6."
+  },
+  {
+    "id": "mastery-u31-q18",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What does each script print? #!/bin/bash #!/bin/bash total=0 limit=3; result=0 for w in cat dog cat bird; do for i in 1 2 3 4; do if [ \"$w\" = \"cat\" ]; then if [ $i -le $limit ]; then total=$((total + 3)) result=$((result + i)) else total=$((total + 1)); fi else result=$((result - 1)); fi done; echo $total done; echo $result — Left: cat adds 3, others add 1: 3+1+3+1 = 8. Right: 1+2+3 = 6, then i = 4 subtracts 1: 5."
+  },
+  {
+    "id": "mastery-u31-q19",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What does this script print? #!/bin/bash x=1 for i in 3 1 4; do if [ $i -gt 2 ]; then x=$((x * 2)) else x=$((x + i)) fi done echo $x — x: 1 → 2 (3 > 2) → 3 (1 is not > 2, add 1) → 6 (4 > 2)."
+  },
+  {
+    "id": "mastery-u31-q20",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "A script contains exactly the three lines pwd , whoami , date after the shebang. How many commands run, and in what order? — Commands run in the order they appear."
+  },
+  {
+    "id": "mastery-u31-q21",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Running ./hello.sh prints “Permission denied”. Which step is missing? — Add execute permission, then run it."
+  },
+  {
+    "id": "mastery-u31-q22",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "The script should print \"big\" when $x exceeds 10 but misbehaves for numbers like 100. Find the bug. — Use the integer operator."
+  },
+  {
+    "id": "mastery-u31-q23",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "The script is supposed to count only log1.txt log2.txt logA.txt but also counts log10.txt . Which line is the problem? — Use ? for exactly one character."
+  },
+  {
+    "id": "mastery-u31-q24",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Typing make builds clean first and deletes the executables. Which line is the cause? — Order of targets matters."
+  },
+  {
+    "id": "mastery-u31-q25",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Arrange a minimal script that counts the .txt files in the current directory. One line does not belong. — Shebang, initialise, loop over the glob, increment, print."
+  },
+  {
+    "id": "mastery-u31-q26",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "You edited only merge.c and want to rebuild just what is out of date. Which command is enough? — make rebuilds only merge."
+  },
+  {
+    "id": "mastery-u31-q27",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "A script loops over *.c in a directory with a.c b.c c.c and compiles each with gcc -c ; make would rebuild only what changed. After editing only b.c how many object files would make rebuild, and how many would the script rebuild? — make uses timestamps to rebuild only b.o; the loop recompiles every file each time."
+  },
+  {
+    "id": "mastery-u31-q28",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "A Makefile has the default target all: app tests where app depends on app.c and tests on tests.c , and a clean target. You build everything, edit only tests.c and run make . Explain what is rebuilt and why. Then say what make clean followed by make app does. — make builds the default target all (the first target). It checks app and tests: app is still newer than app.c so it is skipped, but tests.c is now newer than tests so only tests is rebuilt. make clean deletes the built files; make app then builds only app (the named target), not tests."
+  },
+  {
+    "id": "mastery-u31-q29",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Describe what this script does when run and give its output: #!/bin/bash , t=0 , for n in 1 2 3 4 5 6; do , if [ $((n % 3)) -eq 0 ]; then t=$((t + n)); fi , done , echo $t . Also explain the first line and how you would make the script runnable. — It loops n over 1..6 and adds n to t only when n is divisible by 3 (3 and 6), so it prints 9. The first line is the shebang naming /bin/bash as the interpreter. To run it as ./script.sh it needs execute permission: chmod u+x script.sh."
+  },
+  {
+    "id": "mastery-u32-learn",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "section",
+    "title": "Mastery: Quiz 2 · Practice set (mixed)",
+    "text": "A mixed practice set in the style of the Quiz 2 practice problems: custom floating-point formats, program memory, byte addresses, low-level memory diagrams, pointer arithmetic, lifetime and memory bugs, code analysis and 2D arrays. (make and Bash practice is in the Lab 1 unit.) What Quiz 2 tests (10/14, covering everything through 10/12: CL13–CL21, RD11–RD19, HW5–HW7, Lab 1, and the Denorm Exponent Guide). Paper, 50 minutes, no calculators, no cheat sheet. The practice problems cover: make and Makefiles, Bash programming, floating point, program memory, byte addresses, low-level memory diagrams, pointer arithmetic, lifetime, and 2D arrays. Floating-point formats are built from the minifloat rules with different widths : normalized (−1) s × 1.f × 2 E − bias ; denormalized (E all zeros, f ≠ 0) (−1) s × 0.f × 2 1 − bias ; E all ones is ∞/NaN. Smallest positive normalized has field 0…01 and fraction 0; largest has field 1…10 and fraction all ones; smallest denormal has fraction 0…01; largest denormal fraction 1…1. Bias = 2 n−1 − 1. Byte addresses : element address = base + size × index; a word at an aligned address reads directly; a byte inside a word uses little endian (lowest address = least significant byte). Low-level memory diagrams : frame starts with the return address; locals are allocated downward in declaration order; each int64 slot is 8 bytes; a pointer stores an address; &arr[j] - &arr[i] is an element count; heap blocks are contiguous from the address malloc returns. Memory bugs and lifetime : automatic (locals), static (globals/statics), dynamic (malloc); leak, double free, dangling pointer, use after free. Pointer arithmetic : p + n moves n elements; p[i] is *(p + i) . Common trap: Using −bias instead of 1 − bias for the denormalized exponent. Common trap: Mixing up the smallest normalized and smallest denormalized values. Common trap: Reading bytes in big-endian order. Common trap: Forgetting that &arr[4] - &arr[0] is 4 (elements), not 32 (bytes). Common trap: Confusing the two stack-error and heap-error lists."
+  },
+  {
+    "id": "mastery-u32-card0",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "How do you build a custom floating-point format's rules? — Normalized: 1.f × 2 E−bias . Denormalized (E all 0, f ≠ 0): 0.f × 2 1−bias . E all ones: ∞ (f = 0) or NaN. Bias = 2 n−1 − 1."
+  },
+  {
+    "id": "mastery-u32-card1",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Smallest positive normalized value? — Exponent field 0…01, fraction 0: 2 1 − bias ."
+  },
+  {
+    "id": "mastery-u32-card2",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Largest normalized value? — Exponent field 1…10, fraction all ones: (2 − 2 −m ) × 2 (2 n −2) − bias ."
+  },
+  {
+    "id": "mastery-u32-card3",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Smallest and largest denormal? — Fraction 0…01: 2 −m × 2 1−bias . Fraction 1…1: (1 − 2 −m ) × 2 1−bias ."
+  },
+  {
+    "id": "mastery-u32-card4",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Why is the denormal exponent 1 − bias? — It makes the largest denormal one step below the smallest normalized value (no gap)."
+  },
+  {
+    "id": "mastery-u32-card5",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Which regions of program memory exist and what do they hold? — Text: instructions. Data: read-only data, globals, statics. Heap: malloc memory (grows up). Stack: frames (grows down)."
+  },
+  {
+    "id": "mastery-u32-card6",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Element address / bytes? — base + size × index; an element occupies size consecutive byte addresses."
+  },
+  {
+    "id": "mastery-u32-card7",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Byte inside a word (little endian)? — Lowest address = least significant byte."
+  },
+  {
+    "id": "mastery-u32-card8",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Stack frame layout in diagrams? — RA first, then locals in declaration order downward; 8-byte slots for int64 and pointers."
+  },
+  {
+    "id": "mastery-u32-card9",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Pointer difference? — &a[4] − &a[0] = 4 elements."
+  },
+  {
+    "id": "mastery-u32-card10",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Lifetime types? — Automatic (locals), static (globals/static), dynamic (malloc until free)."
+  },
+  {
+    "id": "mastery-u32-card11",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Four memory bugs? — Leak (lost, never freed), double free, dangling pointer (target's lifetime ended), use after free."
+  },
+  {
+    "id": "mastery-u32-card12",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "2D array formulas? — Linear index i × C + j; address base + size × (i × C + j)."
+  },
+  {
+    "id": "mastery-u32-card13",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Two ways to allocate a 2D array dynamically? — One contiguous block (index by hand), or an array of row pointers (rows separate)."
+  },
+  {
+    "id": "mastery-u32-q0",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Why is the exponent used for denormalized numbers 1 − bias and not −bias ? (Denorm Exponent Guide) — With −bias there is a gap between 15/128 and 32/128 in the minifloat; with 1 − bias the line is continuous (15/64 then 16/64)."
+  },
+  {
+    "id": "mastery-u32-q1",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Which statement about overflow and underflow is correct? — Range limits at both ends."
+  },
+  {
+    "id": "mastery-u32-q2",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Which is a common stack error? — Both are stack problems: a dangling pointer to a dead frame, and too many frames."
+  },
+  {
+    "id": "mastery-u32-q3",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "What is the difference between scope and lifetime ? — Names have scope; objects have lifetime."
+  },
+  {
+    "id": "mastery-u32-q4",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Which is a valid reason to use int *arr = malloc(n * sizeof(int)); instead of int arr[n]; ? — Control over lifetime."
+  },
+  {
+    "id": "mastery-u32-q5",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "void doubleValue(int *p) { p = p * 2; } called as doubleValue(&x) . What happens when you compile it? — Dereference to change the value."
+  },
+  {
+    "id": "mastery-u32-q6",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Name the two ways to dynamically allocate a 2D array and what makes them different. — Method 1 (single block) vs Method 2 (pointer to pointers)."
+  },
+  {
+    "id": "mastery-u32-q7",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "What does this print for float x = 1.0f; ? (1 = the addition had no effect) float x = 1.0f; float delta = 1e-8f; printf(\"%d\", x + delta == x); — A float has only 23 fraction bits, so a tiny delta is absorbed: both numbers are representable but their sum rounds back to 1.0."
+  },
+  {
+    "id": "mastery-u32-q8",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "What does this print? double a = 0.1, b = 0.2; printf(\"%d\", a + b == 0.3); — Rounding errors: 0.1 + 0.2 is not the same double as 0.3. Compare with an epsilon instead."
+  },
+  {
+    "id": "mastery-u32-q9",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "What does this print? int x = 4; int *p = &x; int **q = &p; *p = *p + **q + 2; printf(\"%d\", x); — *p and **q both read x (4): 4 + 4 + 2 = 10 is written back to x."
+  },
+  {
+    "id": "mastery-u32-q10",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "What does this print? int x = 5, y = 10; int *p = &x; int *q = &y; p = q; *p = 20; printf(\"x=%d y=%d\", x, y); — After p = q both point at y, so *p = 20 changes y."
+  },
+  {
+    "id": "mastery-u32-q11",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "The matrix program fills matrix[i][j] = i * j for 2 rows and 3 columns, prints each row, then frees the rows and the array. What are the two printed rows (digits separated by spaces, rows separated by a slash)? for (int i = 0; i < rows; i++) { for (int j = 0; j < cols; j++) printf(\"%d \", matrix[i][j]); printf(\"/\"); } — Row 0: 0×j = 0 0 0; row 1: 1×j = 0 1 2."
+  },
+  {
+    "id": "mastery-u32-q12",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Format A is 9 bits: 1 sign, 3 exponent (bias 3), 5 significand . Special values follow the usual table (exponent all ones: infinity/NaN; exponent all zeros: zero/denormalized). Convert 0b0101001000 … (9 bits) 0b010101000 to decimal (fractions allowed). — Exponent 101 = 5 (normalized): 1.01000 × 2 5−3 = 1.25 × 4 = 5."
+  },
+  {
+    "id": "mastery-u32-q13",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Format A (1-3-5, bias 3). Convert 0b000000110 to decimal as a fraction. (Exponent all zeros: denormalized, exponent 1 − bias = −2.) — 0.00110 × 2 −2 = 6/32 × 1/4 = 3/64."
+  },
+  {
+    "id": "mastery-u32-q14",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Format A. Encode each value as a 9-bit pattern. — 3.5 = 1.11 × 2 1 (field 4); 1/32 = 0.00001 is below 1/4, so denormalized: 0.00100 × 2 −2 ; −6.75 = −1.1011 × 2 2 (field 5)."
+  },
+  {
+    "id": "mastery-u32-q15",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Format A. Give the smallest positive normalized , the largest normalized, the smallest positive denormalized and the largest denormalized values (fractions or decimals). — Smallest normalized: field 001 → 1.0 × 2 −2 = 1/4. Largest: field 110, all fraction ones: 1.11111 × 2 3 = 15.75. Denormals use 0.fff × 2 −2 : 1/128 up to 31/128."
+  },
+  {
+    "id": "mastery-u32-q16",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Format B is 11 bits: 1 sign, 4 exponent (bias 7), 6 significand . Give the denormalized exponent, the bias check (2 n−1 − 1 for n = 4), and the smallest positive normalized value (fraction). — Denormals use 1 − 7 = −6. The smallest normalized field is 0001: 1.000000 × 2 1−7 = 2 −6 = 1/64."
+  },
+  {
+    "id": "mastery-u32-q17",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Format B (1-4-6, bias 7). Convert 0b11010111000 and 0b00000001010 to decimal (fractions allowed). — First: sign 1, exponent 1010 = 10 → 2 3 , 1.111000 × 8 = 15 → −15 (check: 1.875 × 8). Second: exponent all zeros, fraction .001010 × 2 −6 = 10/64 × 1/64."
+  },
+  {
+    "id": "mastery-u32-q18",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Format B. Encode 5.25 and 5/1024 (11-bit patterns). — 5.25 = 1.0101 × 2 2 → exponent field 9. 5/1024 is below the smallest normalized value 1/64, so it is denormalized: 0.101000 × 2 −6 ."
+  },
+  {
+    "id": "mastery-u32-q19",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Minifloat design comparison (3 exponent bits, bias 3, 4 fraction bits). For each design give the smallest positive value: Design 1 (no denormals; exponent 000 is normal with exponent −3), Design 2 (denormals with exponent −3), Design 3 (denormals with exponent −2, the real minifloat). — Design 1: 1.0000 × 2 −3 = 1/8. Design 2: 0.0001 × 2 −3 = 1/128. Design 3: 0.0001 × 2 −2 = 1/64."
+  },
+  {
+    "id": "mastery-u32-q20",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "For each item answer text , data , heap or stack (where it is stored). — Text: instructions. Data: read-only data, globals and statics. Heap: dynamic memory. Stack: function frames (locals, parameters, return addresses)."
+  },
+  {
+    "id": "mastery-u32-q21",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Which direction does each region grow? Answer higher or lower (addresses). — The stack grows toward lower addresses as frames are pushed; the heap grows upward as more is allocated."
+  },
+  {
+    "id": "mastery-u32-q22",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "A 30-element int array has base address 0xAAAA0000200C (sizeof(int) = 4). Give the address of element 1, 10 and 25 (hex). — base + 4 × index: +4, +40 (0x28), +100 (0x64)."
+  },
+  {
+    "id": "mastery-u32-q23",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Same array. List the four byte addresses element 6 occupies (hex, comma separated, lowest first). — Element 6 starts at base + 24 and spans four bytes."
+  },
+  {
+    "id": "mastery-u32-q24",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Little-endian memory (32-bit words): 0x4000: 0xE842613D , 0x4004: 0xFDA55F61 , 0x4008: 0x5A408FD2 , 0x400C: 0xB08F560E . Give the word at 0x4004 and the byte at each address. Address Data 0x4000 0xE842613D 0x4004 0xFDA55F61 0x4008 0x5A408FD2 0x400C 0xB08F560E — Within a word the lowest address holds the least significant byte: 0x5A408FD2 is D2 8F 40 5A at 0x4008..0x400B; the top byte of the word at 0x400C is at 0x400F."
+  },
+  {
+    "id": "mastery-u32-q25",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "The int array {50831, 242803, 384574} sits at base 0xABCD00004000 (4 bytes each, little endian). 50831 = 0x0000C68F , 242803 = 0x0003B473 , 384574 = 0x00055E3E . Give the byte (2 hex digits) at base+0, base+1, base+4, base+5, base+8. — Each int is stored least significant byte first: 8F C6 00 00 | 73 B4 03 00 | 3E 5E 05 00."
+  },
+  {
+    "id": "mastery-u32-q26",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Memory diagram. main 's frame starts at 0xFFFFAAAA0040 ; slots are 8 bytes, locals are allocated in declaration order downward after the return address (RA at 0x...0040). Final values after the program: give arr[0] to arr[4] and p as the address (hex). int64_t arr[] = {10, 20, 30, 40, 50}; int64_t *p = arr; p[0] = 100; arr[1] = 200; *(p + 2) = 300; arr[3] = (int64_t)p; // an address! arr[4] = &arr[1] - &arr[0]; — The frame: RA 0x40, arr[4] 0x38, arr[3] 0x30, arr[2] 0x28, arr[1] 0x20, arr[0] 0x18, p 0x10. arr[3] receives the pointer p = &arr[0] = 0xFFFFAAAA0018. &arr[1] − &arr[0] is 1 element."
+  },
+  {
+    "id": "mastery-u32-q27",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Heap diagram. main 's frame starts at 0xFFFFAAAA0040 ; malloc returns 0x555555556000 ; the heap array holds int64_t values. Just before main returns, give the heap contents. int64_t *arr = malloc(5 * sizeof(int64_t)); // 0x555555556000 int64_t *p = arr; arr[0] = 100; p[1] = 200; *(arr + 2) = (int64_t)(arr + 1); arr[3] = (int64_t)(p + 2); arr[4] = &arr[2] - &arr[0]; — arr[2] holds the address of arr[1] (0x...6008); arr[3] holds the address of arr[2] (0x...6010) since p + 2 is element 2; arr[4] is the element difference 2."
+  },
+  {
+    "id": "mastery-u32-q28",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "For the stack frame rule used above (RA at the frame start 0xFFFFAAAA0040, then locals downward), where do int64_t arr[3] and int64_t *p (declared in that order) live? Give the address of arr[0] , arr[2] and p (hex). int64_t arr[3] = {1, 2, 3}; int64_t *p = arr; — RA 0x40; the 24-byte array occupies 0x38 (arr[2]), 0x30 (arr[1]), 0x28 (arr[0]); p is the next slot, 0x20."
+  },
+  {
+    "id": "mastery-u32-q29",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Give the value of each expression. int32_t arr[5] = {10, 20, 30, 40, 50}; int32_t *p = arr; — Each is the element at the given offset; ++p moves to arr[1] first."
+  },
+  {
+    "id": "mastery-u32-q30",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Give the value of each expression. int16_t nums[4] = {1, 2, 3, 4}; int16_t *ptr = &nums[1]; — ptr points at nums[1] = 2; negative offsets go backward."
+  },
+  {
+    "id": "mastery-u32-q31",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "double values[3] = {2.0, 4.0, 6.0}; double *dp = values; and dp holds 0x1000 . Give each address (hex). — A double is 8 bytes: 0x1000 + 8 and + 16."
+  },
+  {
+    "id": "mastery-u32-q32",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "char text[] = \"COMP211\"; char *cp = text; . Give *(cp + 2) , the byte difference &text[4] - &text[0] (as the pointer difference in elements), and cp[cp[0] - 'A'] . — text = C O M P 2 1 1. cp[0] is 'C'; 'C' − 'A' = 2, so cp[2] = 'M'."
+  },
+  {
+    "id": "mastery-u32-q33",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Same idea: char code[] = \"ABCD\"; char *cp = code; . Give *(cp + 2) , the number of bytes between cp + 3 and cp + 1 , and cp[cp[1] - 'A'] . — chars are 1 byte; cp[1] is 'B', 'B' − 'A' = 1, so cp[1] = 'B'."
+  },
+  {
+    "id": "mastery-u32-q34",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Fill in the lifetime table. For each lifetime type give what it applies to using one word: locals , malloc or globals . — Automatic: locals and parameters (block entered → left). Dynamic: malloc memory (allocated → freed). Static: globals and static variables (program start → end)."
+  },
+  {
+    "id": "mastery-u32-q35",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Name the bug in each fragment: leak , double free , dangling or use after free . — The first lost the first block; the second returns the address of a dead local; the third reads freed memory; the fourth frees twice."
+  },
+  {
+    "id": "mastery-u32-q36",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Code analysis. In one phrase each: why does this not work as intended, and what is the one-line fix? void update(int *p) { *p = 50; } int main(void) { int x = 10; update(x); printf(\"%d\", x); } — update expects an address but receives the value of x (10). Pass &x ."
+  },
+  {
+    "id": "mastery-u32-q37",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "A 20 × 30 array is stored in row-major order. Give the linear index of [15][7] . A 12 × 5 int32_t array starts at 0xFFFF00000000 : give the address of [10][2] (hex). — 15 × 30 + 7 = 457. (10 × 5 + 2) × 4 = 208 = 0xD0."
+  },
+  {
+    "id": "mastery-u32-q38",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "In the pointer-to-pointer version int **ptr , give two ways to write the element at row 1, column 5. — ptr[1] is *(ptr + 1) (the row pointer); adding 5 and dereferencing gives the element."
+  },
+  {
+    "id": "mastery-u32-q39",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "A 10-bit format has 1 sign bit, 4 exponent bits (bias 7) and 5 fraction bits with the usual special-value rules. Explain how you would find (a) its smallest positive normalized value, (b) its smallest positive denormalized value, and give both values. — (a) Smallest normalized: exponent field 0001, fraction 00000: 1.0 × 2^(1−7) = 2^-6 = 1/64. (b) Denormalized numbers use the exponent 1 − bias = −6 with an implicit leading 0, so the smallest has fraction 00001: 0.00001 × 2^-6 = 2^-5 × 2^-6 = 2^-11 = 1/2048."
+  },
+  {
+    "id": "mastery-u32-q40",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 2 practice",
+    "text": "Teach it. Explain how to fill in a low-level memory diagram for a function with an array and a pointer, including where each local goes, what a pointer stores, and what &arr[j] - &arr[i] evaluates to. — Draw the RA, then each local in declaration order growing to lower addresses. Arrays have increasing addresses from arr[0]. Pointers hold addresses; subtracting pointers gives elements."
   },
   {
     "id": "mastery-u01-learn",

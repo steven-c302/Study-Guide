@@ -80,6 +80,32 @@ document.getElementById('l24').innerHTML = `
       <div class="fb">15/64 to 16/64 &mdash; the same spacing as inside the denormal range.</div>
     </div>
   </div>
+
+  <div class="card">
+    <h3>Denorm Exponent Guide: three designs for exponent field 000</h3>
+    <p>Minifloat with 3 exponent bits (bias 3) and 4 fraction bits. What should the all-zeros exponent field mean?</p>
+    <table class="cmp">
+      <tr><th>Design</th><th>Exponent field 000 means</th><th>Smallest positive</th><th>Result</th></tr>
+      <tr><td>1 &middot; no denormals</td><td>normal, exponent &minus;3</td><td>1/8</td><td>big gap between 0 and 1/8 (abrupt underflow)</td></tr>
+      <tr><td>2 &middot; denormals, exponent &minus;3 (&minus;bias)</td><td>0.f &times; 2<sup>&minus;3</sup></td><td>1/128</td><td>reaches closest to 0, but a gap from 15/128 to 1/4</td></tr>
+      <tr><td>3 &middot; denormals, exponent &minus;2 (1 &minus; bias)</td><td>0.f &times; 2<sup>&minus;2</sup></td><td>1/64</td><td>no gap: 15/64 is directly followed by 16/64</td></tr>
+    </table>
+    <p>Design 3 is the real rule. The trade-off: it cannot get as close to zero as Design 2, but the number line stays evenly spaced around the smallest normalized value.</p>
+    <div class="q" data-mc="1">
+      <div class="prompt"><span class="tag">Check</span>Which design has a gap between its largest denormal and its smallest normalized value?</div>
+      <button class="opt" data-i="0">Design 1 only</button>
+      <button class="opt" data-i="1">Design 2 (exponent &minus;bias)</button>
+      <button class="opt" data-i="2">Design 3 (exponent 1 &minus; bias)</button>
+      <button class="opt" data-i="3">All of them</button>
+      <div class="fb">Design 2 jumps from 15/128 to 1/4. Design 3 is continuous; Design 1 has no denormals at all (its gap is between 0 and 1/8).</div>
+    </div>
+    <div class="q" data-fill="1">
+      <div class="prompt"><span class="tag">Check</span>A format has 4 exponent bits with bias 7. What exponent do denormalized numbers use?</div>
+      <input class="fillblank sm" data-answer="-6~~~2^-6">
+      <button class="btn small" onclick="checkFill(this)">Check</button>
+      <div class="fb">1 &minus; bias = 1 &minus; 7 = &minus;6.</div>
+    </div>
+  </div>
 </section>
 
 <section class="topic" id="l24-ieee">

@@ -35,6 +35,8 @@ Fall 2026 · Connor McMahon. Open **`index.html`** in any browser. No server, no
 | `COMP211_Study_Guide_L30.js` | **CL20 · Arrays of Strings & the Heap Manager** — free list, first fit, coalescing, realloc cases, `char **`, `fgets`, a growing array of words. |
 | `COMP211_Study_Guide_L31.js` | **CL21 · Garbage Collection & Quiz 2 Review** — JVM and toolchains, C vs Java memory management, reference counting, mark-and-sweep, Quiz 2 checklist and class problem. |
 | `COMP211_Study_Guide_L32.js` | **HW07 · Pointer Arithmetic & Dynamic Memory** (homework review) — the seven HW7 question groups with fresh examples. |
+| `COMP211_Study_Guide_L33.js` | **Lab 1 · make & Bash Scripting** — Makefile rules and rebuild logic, shell scripts, globs and loops. |
+| `COMP211_Study_Guide_L34.js` | **★ Quiz 2 Study Guide** (hub) — logistics, coverage map with jump links, suggested order, gaps. |
 | `COMP211_Study_Guide.js` | Shared **engine**. Must load **last**. |
 
 **Reading &rarr; lecture pairing:** RD00&rarr;CL01, RD01&rarr;CL02, RD02&rarr;CL03, RD03&rarr;CL04, RD05/RD06&rarr;CL06/CL07,

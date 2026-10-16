@@ -1,0 +1,6 @@
+Denorm Exponent Guide: own notes
+Minifloat: 3 exponent bits, bias 3, 4 fraction bits. Question: what does exponent field 000 mean?
+Design 1: no denormals; field 000 is a normal exponent of -3. Smallest positive 1/8; large gap from 0 to 1/8.
+Design 2: denormals with exponent -bias = -3 (0.f x 2^-3). Smallest positive 1/128; gap between 15/128 and the smallest normalized 1/4.
+Design 3: denormals with exponent 1 - bias = -2 (0.f x 2^-2). Smallest positive 1/64; 15/64 is directly followed by 16/64: no gap.
+Design 3 is the standard rule. Trade-off: it does not reach as close to zero as Design 2.
