@@ -10,7 +10,7 @@ document.getElementById('l34').innerHTML = `
 <div class="card">
   <h3>Logistics</h3>
   <ul>
-    <li><b>Date:</b> Wednesday 10/14. Covers material through 10/12.</li>
+    <li><b>Date:</b> Monday 10/19 at 11:00 am (makeup session; the original date was 10/14). Covers material through 10/12.</li>
     <li>Paper quiz, 50 minutes. <b>No cheat sheets, no calculators.</b></li>
     <li>A seating chart is sent right before; no leaving and re-entering once it starts.</li>
     <li><b>Review session:</b> Monday 10/12, 5:00&ndash;6:30 pm, FB141. <b>Tutoring (CSXL):</b> Oct 5, 8, 13, 5&ndash;6 pm.</li>

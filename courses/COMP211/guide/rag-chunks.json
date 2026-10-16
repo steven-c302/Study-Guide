@@ -25458,7 +25458,7 @@
     "lesson": "MASTERY",
     "type": "section",
     "title": "Mastery: Quiz 2 · Practice set (mixed)",
-    "text": "A mixed practice set in the style of the Quiz 2 practice problems: custom floating-point formats, program memory, byte addresses, low-level memory diagrams, pointer arithmetic, lifetime and memory bugs, code analysis and 2D arrays. (make and Bash practice is in the Lab 1 unit.) What Quiz 2 tests (10/14, covering everything through 10/12: CL13–CL21, RD11–RD19, HW5–HW7, Lab 1, and the Denorm Exponent Guide). Paper, 50 minutes, no calculators, no cheat sheet. The practice problems cover: make and Makefiles, Bash programming, floating point, program memory, byte addresses, low-level memory diagrams, pointer arithmetic, lifetime, and 2D arrays. Floating-point formats are built from the minifloat rules with different widths : normalized (−1) s × 1.f × 2 E − bias ; denormalized (E all zeros, f ≠ 0) (−1) s × 0.f × 2 1 − bias ; E all ones is ∞/NaN. Smallest positive normalized has field 0…01 and fraction 0; largest has field 1…10 and fraction all ones; smallest denormal has fraction 0…01; largest denormal fraction 1…1. Bias = 2 n−1 − 1. Byte addresses : element address = base + size × index; a word at an aligned address reads directly; a byte inside a word uses little endian (lowest address = least significant byte). Low-level memory diagrams : frame starts with the return address; locals are allocated downward in declaration order; each int64 slot is 8 bytes; a pointer stores an address; &arr[j] - &arr[i] is an element count; heap blocks are contiguous from the address malloc returns. Memory bugs and lifetime : automatic (locals), static (globals/statics), dynamic (malloc); leak, double free, dangling pointer, use after free. Pointer arithmetic : p + n moves n elements; p[i] is *(p + i) . Common trap: Using −bias instead of 1 − bias for the denormalized exponent. Common trap: Mixing up the smallest normalized and smallest denormalized values. Common trap: Reading bytes in big-endian order. Common trap: Forgetting that &arr[4] - &arr[0] is 4 (elements), not 32 (bytes). Common trap: Confusing the two stack-error and heap-error lists."
+    "text": "A mixed practice set in the style of the Quiz 2 practice problems: custom floating-point formats, program memory, byte addresses, low-level memory diagrams, pointer arithmetic, lifetime and memory bugs, code analysis and 2D arrays. (make and Bash practice is in the Lab 1 unit.) What Quiz 2 tests (10/19 at 11 am, covering everything through 10/12: CL13–CL21, RD11–RD19, HW5–HW7, Lab 1, and the Denorm Exponent Guide). Paper, 50 minutes, no calculators, no cheat sheet. The practice problems cover: make and Makefiles, Bash programming, floating point, program memory, byte addresses, low-level memory diagrams, pointer arithmetic, lifetime, and 2D arrays. Floating-point formats are built from the minifloat rules with different widths : normalized (−1) s × 1.f × 2 E − bias ; denormalized (E all zeros, f ≠ 0) (−1) s × 0.f × 2 1 − bias ; E all ones is ∞/NaN. Smallest positive normalized has field 0…01 and fraction 0; largest has field 1…10 and fraction all ones; smallest denormal has fraction 0…01; largest denormal fraction 1…1. Bias = 2 n−1 − 1. Byte addresses : element address = base + size × index; a word at an aligned address reads directly; a byte inside a word uses little endian (lowest address = least significant byte). Low-level memory diagrams : frame starts with the return address; locals are allocated downward in declaration order; each int64 slot is 8 bytes; a pointer stores an address; &arr[j] - &arr[i] is an element count; heap blocks are contiguous from the address malloc returns. Memory bugs and lifetime : automatic (locals), static (globals/statics), dynamic (malloc); leak, double free, dangling pointer, use after free. Pointer arithmetic : p + n moves n elements; p[i] is *(p + i) . Common trap: Using −bias instead of 1 − bias for the denormalized exponent. Common trap: Mixing up the smallest normalized and smallest denormalized values. Common trap: Reading bytes in big-endian order. Common trap: Forgetting that &arr[4] - &arr[0] is 4 (elements), not 32 (bytes). Common trap: Confusing the two stack-error and heap-error lists."
   },
   {
     "id": "mastery-u32-card0",
@@ -25954,6 +25954,303 @@
     "type": "qa",
     "title": "Mastery: Quiz 2 practice",
     "text": "Teach it. Explain how to fill in a low-level memory diagram for a function with an array and a pointer, including where each local goes, what a pointer stores, and what &arr[j] - &arr[i] evaluates to. — Draw the RA, then each local in declaration order growing to lower addresses. Arrays have increasing addresses from arr[0]. Pointers hold addresses; subtracting pointers gives elements."
+  },
+  {
+    "id": "mastery-u33-learn",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "section",
+    "title": "Mastery: Quiz 1 repair · Mistakes that matter for Quiz 2",
+    "text": "A short repair set built from the Quiz 1 mistakes that Quiz 2 builds on: bit and byte vocabulary, answering in the form asked, two's complement in hex, signed overflow, pointer sizes, PATH commands and glob expansion. Know the sizes cold: byte = 8 bits; nibble = 4 bits; one hex digit (hexit) = 4 bits; a byte is 2 hex digits. n bits give 2 n values. Answer in the form asked. \"Interpret 0xE4\" asks for decimal values (228 unsigned, −28 signed), not binary. \"In hex\" means hex digits. Two's complement: negative n in w bits = 2 w − n; or invert all bits then add 1. −4 in 16 bits = 0xFFFC. Sign-extend by copying the top bit. Signed overflow: n-bit signed range is −2 n−1 to 2 n−1 −1. Two positives that give a negative (or two negatives that give a positive) overflowed. Pointers are 8 bytes on a 64-bit machine: an array parameter in a frame is an 8-byte pointer slot with an arrow, not the array size. PATH: export PATH=\"dir:$PATH\" puts dir first and keeps the rest; which cmd shows what will run. Globs expand in the shell before the command runs and match whole names. Common trap: Answering in binary when decimal was asked. Common trap: Writing −4 as 0x8004 (that is sign-magnitude). Common trap: Using : instead of = in a PATH assignment, or leaving out $PATH. Common trap: Drawing a 7-byte slot for an array parameter. Common trap: Forgetting that my_data1.csv does not match data*.csv."
+  },
+  {
+    "id": "mastery-u33-card0",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "How many bits are in a byte, a nibble and a hexit? — 8, 4 and 4. A byte is two hex digits."
+  },
+  {
+    "id": "mastery-u33-card1",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "How many values do n bits represent? — 2 n : 6 bits → 64, 8 bits → 256."
+  },
+  {
+    "id": "mastery-u33-card2",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Range of n-bit two's complement? — −2 n−1 to 2 n−1 − 1: 7 bits → [−64, 63]."
+  },
+  {
+    "id": "mastery-u33-card3",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "How do you interpret a hex byte as signed? — Compute the unsigned value; if it is 128 or more, subtract 256."
+  },
+  {
+    "id": "mastery-u33-card4",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "How do you write a negative number in hex? — 2 width − n, or invert all bits and add 1. −4 in 16 bits is 0xFFFC."
+  },
+  {
+    "id": "mastery-u33-card5",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "How do you detect signed overflow in addition? — Positive + positive gives negative, or negative + negative gives positive."
+  },
+  {
+    "id": "mastery-u33-card6",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "How big is a pointer, and an array parameter in a frame? — 8 bytes on a 64-bit machine, for both."
+  },
+  {
+    "id": "mastery-u33-card7",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "How do you prepend a directory to PATH? — export PATH=\"dir:$PATH\""
+  },
+  {
+    "id": "mastery-u33-card8",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Why is . at the front of PATH risky? — A program in the current directory named like a system command runs instead of the real one."
+  },
+  {
+    "id": "mastery-u33-card9",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "What does the shell do with a glob? — It expands the glob into matching names before running the command; it matches the whole name."
+  },
+  {
+    "id": "mastery-u33-q0",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "In your own words, what is overflow in fixed-width arithmetic? Pick the best definition. — For signed addition: two positives giving a negative or two negatives giving a positive."
+  },
+  {
+    "id": "mastery-u33-q1",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "A function void modify(char arr[], char ch) is called with a 7-element char array and a char. In the memory diagram, how big is the slot for arr in modify's frame? — Passing an array passes its address, so arr is an 8-byte pointer slot with an arrow to the caller's array."
+  },
+  {
+    "id": "mastery-u33-q2",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "A student runs export PATH=\"/home/student/bin\" . Afterwards ls and cat stop working. Why? — Append or prepend with $PATH to keep the existing directories."
+  },
+  {
+    "id": "mastery-u33-q3",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Why is putting . at the front of PATH a security risk? — PATH is searched left to right; a downloaded file called ls in your current directory would run first."
+  },
+  {
+    "id": "mastery-u33-q4",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "In a directory containing exam1.pdf exam2.pdf exam3.pdf exam4.pdf exam-review.pdf , how many files does exam[1-3].pdf match? (a number) ls exam[1-3].pdf — Only exam1, exam2 and exam3: one digit in the range, then .pdf. exam-review.pdf has no digit."
+  },
+  {
+    "id": "mastery-u33-q5",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Fill in the sizes. Write a number. — A byte is 8 bits. A nibble and one hex digit are both 4 bits, so a byte is two hex digits."
+  },
+  {
+    "id": "mastery-u33-q6",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "How many distinct values can each width represent? Give plain numbers, not powers of 2. — n bits give 2 n patterns."
+  },
+  {
+    "id": "mastery-u33-q7",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Range of values (write [low, high] ) for: 7-bit two's complement, 8-bit two's complement, 6-bit unsigned. — Two's complement n bits: −2 n−1 to 2 n−1 −1. Unsigned: 0 to 2 n −1."
+  },
+  {
+    "id": "mastery-u33-q8",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Interpret 0xE4 as an 8-bit number. Answer in decimal. (E4 = 1110 0100.) — Unsigned: 128+64+32+4 = 228. Signed: the top bit is 1, so subtract 256: 228 − 256 = −28. (Or invert and add 1: 0001 1011 + 1 = 0001 1100 = 28, so −28.)"
+  },
+  {
+    "id": "mastery-u33-q9",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Interpret each hex byte as unsigned and as 8-bit two's complement , in decimal. — A leading hex digit of 8 or more means the top bit is set, so the signed value is the unsigned value minus 256."
+  },
+  {
+    "id": "mastery-u33-q10",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Interpret 0xFA (8 bits) in decimal: unsigned and two's complement. — 250 − 256 = −6."
+  },
+  {
+    "id": "mastery-u33-q11",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Write −4 as a 16-bit two's complement value in hex . Steps: 4 = 0x0004; invert every bit; add 1. — Inverting 0x0004 gives 0xFFFB; adding 1 gives 0xFFFC. Setting only the top bit (0x8004) is sign-magnitude, not two's complement."
+  },
+  {
+    "id": "mastery-u33-q12",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Write each negative number in the given width, in hex. — A negative n is 2 width − n. -1 is always all ones."
+  },
+  {
+    "id": "mastery-u33-q13",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Sign-extend each value to 16 bits (hex). — Copy the top bit into the new high bits: 1 → fill with F, 0 → fill with 0."
+  },
+  {
+    "id": "mastery-u33-q14",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Add the 6-bit numbers 0b010100 (20) and 0b001100 (12). The 6-bit sum is 0b100000 . Give the decimal result and whether overflow occurs for each interpretation. — Unsigned 6 bits reach 63, so 32 fits. Signed 6 bits reach only 31, and 100000 reads as −32: two positives gave a negative, so overflow."
+  },
+  {
+    "id": "mastery-u33-q15",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Add the 8-bit numbers 0x64 (100) and 0x3C (60). Give the 8-bit sum as a decimal for each interpretation and whether overflow occurs. — 160 fits in unsigned 8 bits (max 255). As signed it is 160 − 256 = −96: two positives made a negative, so overflow."
+  },
+  {
+    "id": "mastery-u33-q16",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "sizeof checks. Give each answer as a number of bytes. Assume a 64-bit machine. — Every pointer is 8 bytes on a 64-bit machine, regardless of what it points at."
+  },
+  {
+    "id": "mastery-u33-q17",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "In a diagram, modify(char arr[], char ch) 's frame holds: the return address (8 bytes), arr , and ch . Give the size of each slot and the total frame size. — 8 + 8 + 1 = 17 (padding is ignored in these diagrams)."
+  },
+  {
+    "id": "mastery-u33-q18",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "PATH commands. Write each command. — The pattern is PATH=\"new:$PATH\" : assign with =, keep the old value with $PATH after a colon. which shows the first match in PATH order."
+  },
+  {
+    "id": "mastery-u33-q19",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Files in the directory: my_data1.csv data1.csv dataT.csv data33.csv data_info.csv notes.txt (and a directory backup ). Write the command after the shell expands cp data*.csv backup/ (list files in the order the shell sorts them). my_data1.csv data1.csv dataT.csv data33.csv data_info.csv notes.txt backup/ — The glob needs a name that starts with data and ends in .csv , so my_data1.csv is out. The shell sorts the matches by name (digits before upper case before lower case in the C locale)."
+  },
+  {
+    "id": "mastery-u33-q20",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "Write the single command (use a glob, not file names) for each task. — A bracket range [1-3] matches one character. *~ matches any name ending in a tilde. Do not put the glob in quotes, or the shell will not expand it."
+  },
+  {
+    "id": "mastery-u33-q21",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Quiz 1 repair",
+    "text": "In your own words, define overflow in fixed-width arithmetic, and use 6-bit signed numbers to show an example with its result. — Overflow happens when the true result cannot be represented in the available number of bits, so the stored result is wrong. For example in 6-bit signed numbers (range −32 to 31), 20 + 12 = 32 does not fit, so the bits 100000 read as −32 and the answer is wrong."
   },
   {
     "id": "mastery-u01-learn",
