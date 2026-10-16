@@ -26,6 +26,15 @@ Fall 2026 · Connor McMahon. Open **`index.html`** in any browser. No server, no
 | `COMP211_Study_Guide_L21.js` | **CL14 · Floating Point II** + **RD12** — bias formula, the 8-bit minifloat (decode/encode), zero/infinity/NaN, round-to-nearest ties-to-even, overflow/underflow, denormalized numbers. |
 | `COMP211_Study_Guide_L22.js` | **HW04 · Debugging** (homework review) — the six problems with fresh example programs: breakpoints and Debug Console, conditional breakpoints, step into/over/out, call stack, launch.json redirection, debugger detective. Lesson bar places it after CL10. |
 | `COMP211_Study_Guide_L23.js` | **HW05 · Floating Point Representation** (homework review) — fractional binary numbers, the 8-bit minifloat, and the 7-bit (2 exponent bits, bias 1) design with normalized/denormalized/precision/range classification. |
+| `COMP211_Study_Guide_L24.js` | **CL15 · Floating Point III** + **RD13** — denormal exponent 1 − bias and implicit 0, IEEE-754 float/double, rounding errors and epsilon comparison, the absorption exercise, FP16/BF16 for LLMs. Uses the shared bit explorer. |
+| `COMP211_Study_Guide_L25.js` | **CL16 · Intro to Pointers** + **RD14** — parts of program memory, address size, pointers, `&`/`*`/NULL, aliasing, double pointers. |
+| `COMP211_Study_Guide_L26.js` | **CL17 · Pointers and Functions** + **RD15** — pass-by-pointer (correct, incorrect, segfault), addOne/swap, bytes and endianness, arrays in memory and address calculation, array decay, pointer arithmetic. |
+| `COMP211_Study_Guide_L27.js` | **HW06 · Pointers** (homework review) — the eight HW6 question groups with fresh examples. |
+| `COMP211_Study_Guide_L28.js` | **CL18 · Dynamic Memory Allocation** + **RD16** — compile vs run time, stack vs heap, lifetimes, dangling pointers, malloc/free, leaks, realloc. |
+| `COMP211_Study_Guide_L29.js` | **CL19 · 2D Arrays** + **RD17** — memory has no types, indexing as pointer arithmetic, row-major order, Method 1 and Method 2 dynamic grids, byte views through different pointer types. |
+| `COMP211_Study_Guide_L30.js` | **CL20 · Arrays of Strings & the Heap Manager** — free list, first fit, coalescing, realloc cases, `char **`, `fgets`, a growing array of words. |
+| `COMP211_Study_Guide_L31.js` | **CL21 · Garbage Collection & Quiz 2 Review** — JVM and toolchains, C vs Java memory management, reference counting, mark-and-sweep, Quiz 2 checklist and class problem. |
+| `COMP211_Study_Guide_L32.js` | **HW07 · Pointer Arithmetic & Dynamic Memory** (homework review) — the seven HW7 question groups with fresh examples. |
 | `COMP211_Study_Guide.js` | Shared **engine**. Must load **last**. |
 
 **Reading &rarr; lecture pairing:** RD00&rarr;CL01, RD01&rarr;CL02, RD02&rarr;CL03, RD03&rarr;CL04, RD05/RD06&rarr;CL06/CL07,

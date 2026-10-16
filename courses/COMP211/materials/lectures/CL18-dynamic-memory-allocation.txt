@@ -1,0 +1,2984 @@
+CL18 - Dynamic Memory Allocation: heap, malloc, free, lifetimes, realloc (COMP 211, Connor McMahon) - text extracted from the slides for search
+
+[Slide 1]
+Dynamic Memory Allocation
+COMP211 Connor McMahon
+[Slide 2]
+Announcements
+• Quiz 2 is next week!
+• You can find all information on Canvas
+• https://uncch.instructure.com/courses/120642/pages/quiz-2
+• Don’t forget to fill out the mid-semester feedback form!
+• https://uncch.instructure.com/courses/120642/discussion_topics/893118
+2
+[Slide 3]
+Parts of Program Memory
+3
+[Slide 4]
+Parts of Program Memory
+4
+Text
+Operating System
+Data
+Heap
+Stack
+Lowest Address: 0
+1
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+Highest Address
+Program instructions
+Global and static variables
+Dynamically Allocated Memory
+(grows as needed)
+Function Stack Frames
+(grows when functions are called,
+shrinks when functions return)
+[Slide 5]
+Compile Time vs. Run Time
+• Compile time
+• The period when your program’s source code is being translated into machine code by
+the compiler.
+• Happens before execution.
+• The compiler checks syntax, types, and generates the executable file.
+5
+[Slide 6]
+Compile Time vs. Run Time
+• Compile time
+• The period when your program’s source code is being translated into machine code by
+the compiler.
+• Happens before execution.
+• The compiler checks syntax, types, and generates the executable file.
+• Run Time
+• Run time is the period when your compiled program is executing.
+• Managed by the runtime environment and the operating system.
+• Errors like division by zero, invalid memory access, or file not found happen at run time.
+6
+[Slide 7]
+Dynamic Memory Allocation
+• Sometimes, the amount of memory needed for a program is not known in
+advance (at compile time)
+• Dynamic memory allocation lets programs request and release memory
+while it is running (at runtime)
+7
+[Slide 8]
+Heap
+8
+[Slide 9]
+Stack vs. Heap
+• Stack
+• Automatically managed
+• Stores function stack frames
+• Memory is freed when a function returns
+• Heap
+• Manually managed by the programmer
+• Used for dynamically allocated memory
+• Memory remains allocated until the programmer explicitly frees it
+9
+[Slide 10]
+Lifetime
+• A lifetime in C is the period between when memory is allocated and when it
+is deallocated.
+10
+Type How it works Duration
+Automatic Local variables inside a
+function.
+Created at the {, destroyed at
+the }.
+Static Variables declared with static or
+globals.
+They live for the entire run of
+the program.
+Dynamic Memory allocated via malloc()
+or calloc().
+It lives until you manually call
+free().
+The Three Types of Lifetimes in C
+[Slide 11]
+Scope vs. Lifetime
+• Scope
+• Scope is a compile-time concept.
+• The region of your code where a variable's name is valid
+• Defined by curly braces { }.
+• Lifetime
+• Lifetime is a run-time concept.
+• The actual span of time that the variable occupies a physical spot in your computer's
+memory.
+• Defined by where the variable is stored in memory.
+11
+[Slide 12]
+Problem: Dangling Pointers
+• Dangling Pointer: when the pointer lives longer than the data it points to.
+• Example: Returning a local variable
+• In the example below, x exists on the stack. Once get_number finishes, that part of the
+stack is reclaimed by the system. The pointer p is now pointing at "garbage" memory.
+12
+int32_t* get_number() {
+int32_t x = 42; // 'x' has Automatic Lifetime
+return &x; // ERROR: x dies when the function ends!
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p); // UNDEFINED BEHAVIOR:
+}
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+[Slide 13]
+Problem: Dangling Pointers
+13
+int32_t* get_number() {
+int32_t x = 42; // 'x' has Automatic Lifetime
+return &x; // ERROR: x dies when the function ends!
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p); // UNDEFINED BEHAVIOR:
+}
+Stack
+main
+RA(8): 0
+p(8): ?
+RV(8): ?
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+sp
+[Slide 14]
+Problem: Dangling Pointers
+14
+int32_t* get_number() {
+int32_t x = 42; // 'x' has Automatic Lifetime
+return &x; // ERROR: x dies when the function ends!
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p); // UNDEFINED BEHAVIOR:
+}
+Stack
+main
+RA(8): 0
+p(8): ?
+RV(8): ?
+get_number
+RA(8): 8
+x(4): 42
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+sp
+[Slide 15]
+Problem: Dangling Pointers
+15
+int32_t* get_number() {
+int32_t x = 42; // 'x' has Automatic Lifetime
+return &x; // ERROR: x dies when the function ends!
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p); // UNDEFINED BEHAVIOR:
+}
+Stack
+main
+RA(8): 0
+p(8): ?
+RV(8): pointer to x
+get_number
+RA(8): 8
+x(4): 42
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+Just before get_number
+returns, it places the
+return value in main’s
+frame
+sp
+[Slide 16]
+Problem: Dangling Pointers
+16
+int32_t* get_number() {
+int32_t x = 42; // 'x' has Automatic Lifetime
+return &x; // ERROR: x dies when the function ends!
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p); // UNDEFINED BEHAVIOR:
+}
+Stack
+main
+RA(8): 0
+p(8): pointer to x
+RV(8): pointer to x
+get_number
+RA(8): 8
+x(4): 42
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+Now, p is a dangling pointer. Once get_number finishes,
+that part of the stack is reclaimed by the system. The pointer p
+is now pointing at "garbage" memory.
+sp
+[Slide 17]
+Introducing: malloc
+• malloc is a function defined in the C standard library that allocates a block
+of memory in the heap at runtime.
+• void* malloc(size_t size);
+• It reserves a block of memory containing size bytes.
+• It returns a pointer to the beginning of that block.
+• If the system cannot provide the requested memory, it returns NULL.
+17
+[Slide 18]
+malloc
+• void *malloc(size_t size);
+• You must include:
+• #include <stdlib.h>
+• Return type: void *
+• A generic pointer to the allocated memory block
+• Parameter: size_t size
+• Number of bytes to allocate.
+• Return value:
+• Pointer to allocated memory on success.
+• NULL if the allocation fails.
+18
+[Slide 19]
+malloc
+• To fix the previous issue, you must allocate the data on the heap instead of
+the stack.
+19
+int* get_number() {
+int* x = malloc(sizeof(int)); // Request heap memory
+*x = 42;
+return x; // This is safe! The memory persists.
+}
+int main() {
+int* p = get_number();
+printf("%d", *p);
+free(p); // You MUST manually end the lifetime here.
+p = NULL;
+}
+[Slide 20]
+Malloc Example
+20
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): ?
+RV(8): ?
+Stack
+malloc will return an
+address. All addresses
+are 8 bytes (64 bits).
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+sp
+[Slide 21]
+Malloc Example
+21
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): ?
+RV(8): ?
+Stack
+get_number
+RA (8): 9
+x(8): ?
+RV(8):
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+Frame is created for
+get_number().
+sp
+[Slide 22]
+Malloc Example
+22
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): ?
+RV(8): ?
+Stack
+get_number
+RA (8): 9
+x(8): ?
+RV(8):
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+Frame is created for
+malloc().
+malloc
+sp
+[Slide 23]
+Malloc Example
+23
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): ?
+RV(8): ?
+Stack
+get_number
+RA (8): 9
+x(8): ?
+RV(8):
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+malloc
+arg0 (8): 4
+RA(8): 2
+Argument 0: This is the amount of
+space malloc will allocate (in bytes).
+sp
+[Slide 24]
+Malloc Example
+24
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): ?
+RV(8): ?
+Stack
+get_number
+RA (8): 9
+x(8): ?
+RV(8):
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+malloc
+arg0 (8): 4
+RA(8): 2
+…
+We cannot see inside this
+function, so we use the dots to
+represent the rest of the frame.
+sp
+[Slide 25]
+Malloc Example
+25
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): ?
+RV(8): ?
+Stack
+get_number
+RA (8): 9
+x(8): ?
+RV(8):
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+malloc
+arg0 (8): 4
+RA(8): 2
+…
+malloc will allocate 4
+bytes on the heap.
+malloc will give the
+starting address of this
+block to get_number().
+Heap
+?
+(4)
+sp
+[Slide 26]
+Malloc Example
+26
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): ?
+RV(8): ?
+Stack
+get_number
+RA (8): 9
+x(8): ?
+RV(8): pointer to heap
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+malloc
+arg0 (8): 4
+RA(8): 2
+…
+Heap
+?
+(4)
+malloc places the address in
+main’s frame before returning.
+The arrow is used to indicate where
+this variable is pointing to.
+sp
+[Slide 27]
+Malloc Example
+27
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): ?
+RV(8): ?
+Stack
+get_number
+RA (8): 9
+x(8): ?
+RV(8): pointer to heap
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+malloc
+arg0 (8): 4
+RA(8): 2
+…
+Heap
+?
+(4)
+When malloc returns,
+its frame is deallocated.
+sp
+[Slide 28]
+Malloc Example
+28
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): ?
+RV(8): ?
+Stack
+get_number
+RA (8): 9
+x(8): pointer to heap
+RV(8): pointer to heap
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+malloc
+arg0 (8): 4
+RA(8): 2
+…
+Heap
+?
+(4)
+sp
+[Slide 29]
+Malloc Example
+29
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): ?
+RV(8): ?
+Stack
+get_number
+RA (8): 9
+x(8): pointer to heap
+RV(8): pointer to heap
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+malloc
+arg0 (8): 4
+RA(8): 2
+…
+Heap
+42
+(4)
+sp
+[Slide 30]
+Malloc Example
+30
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): ?
+RV(8): pointer to heap
+Stack
+get_number
+RA (8): 9
+x(8): pointer to heap
+RV(8): pointer to heap
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+malloc
+arg0 (8): 4
+RA(8): 2
+…
+Heap
+42
+(4)
+get_number places the address in
+main’s frame before returning.
+The arrow is used to indicate where
+this variable is pointing to.
+sp
+[Slide 31]
+Malloc Example
+31
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): ?
+RV(8): pointer to heap
+Stack
+get_number
+RA (8): 9
+x(8): pointer to heap
+RV(8): pointer to heap
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+malloc
+arg0 (8): 4
+RA(8): 2
+…
+Heap
+42
+(4)
+When get_number returns, its
+frame is deallocated.
+sp
+[Slide 32]
+Malloc Example
+32
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): pointer to heap
+RV(8): pointer to heap
+Stack
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+Heap
+42
+(4)
+printf’s frame will begin at
+the same location where
+get_number’s frame began.
+printf
+sp
+[Slide 33]
+Malloc Example
+33
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): pointer to heap
+RV(8): pointer to heap
+Stack
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+Heap
+42
+(4)
+printf
+(we’ll discuss this another day)
+sp
+[Slide 34]
+Malloc Example
+34
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): pointer to heap
+RV(8): pointer to heap
+Stack
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+Heap
+42
+(4)
+printf
+(we’ll discuss this another day)
+When printf returns, its
+frame is deallocated.
+sp
+[Slide 35]
+Free
+• void free(void *ptr);
+• Releases memory previously allocated by malloc(), calloc(), or
+realloc().
+• Prevents memory leaks by returning the memory to the system.
+35
+[Slide 36]
+Memory Leak
+• A memory leak happens when a program allocates memory on the heap but
+never frees it with free() and then loses all references to that allocated
+memory.
+• Why memory leaks are bad
+• The leaked memory remains allocated until the program ends.
+• Repeated leaks cause heap growth -> program uses more and more memory.
+• Over time, this can lead to slowed performance or system crashes due to running out of
+memory.
+36
+[Slide 37]
+Malloc Example
+37
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): pointer to heap
+RV(8): pointer to heap
+Stack
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+Heap
+42
+(4)
+free
+free’s frame will begin at
+the same location where
+printf’s frame began.
+sp
+[Slide 38]
+Malloc Example
+38
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): pointer to heap
+RV(8): pointer to heap
+Stack
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+Heap
+42
+(4)
+free
+arg0(8): pointer to heap
+RA(8): 11
+…
+The free() function takes a pointer
+to the start of the memory block to
+be released. You don’t need to
+provide the size of the block
+because the system already knows
+this from metadata stored in the
+heap.
+sp
+[Slide 39]
+Malloc Example
+39
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): pointer to heap
+RV(8): pointer to heap
+Stack
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+Heap
+42
+(4)
+free
+arg0(8): pointer to heap
+RA(8): 11
+…
+When free executes,
+it deallocates the
+block in memory.
+sp
+[Slide 40]
+Malloc Example
+40
+int32_t* get_number() {
+int32_t* x = malloc(sizeof(int32_t));
+*x = 42;
+return x;
+}
+int main() {
+int32_t* p = get_number();
+printf("%d", *p);
+free(p);
+p = NULL;
+}
+main
+RA (8): 0
+p(8): pointer to heap
+RV(8): pointer to heap
+Stack
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+Heap
+42
+(4)
+free
+arg0(8): pointer to heap
+RA(8): 11
+…
+When free returns,
+its frame is
+deallocated.
+sp
+[Slide 41]
+Free: Important Notes
+• Only call free() once on each allocated block.
+• Never free memory that wasn’t allocated with malloc(), calloc(), or
+realloc().
+• After calling free(), the pointer becomes dangling.
+• Dangling pointer: a pointer that points to a memory location that is no longer valid
+• Freeing memory too early can cause use-after-free bugs.
+• Use-after-free bugs: occurs when a program continues to use a pointer after the
+memory it points to has already been freed.
+41
+[Slide 42]
+malloc and free reference
+• void* malloc(size_t size);
+• It reserves a block of memory containing size bytes.
+• It returns a pointer to the beginning of that block.
+• If the system cannot provide the requested memory, it returns NULL.
+• void free(void *ptr);
+• Releases memory previously allocated by malloc(), calloc(), or realloc().
+42
+[Slide 43]
+43
+int* create_even_numbers(int count) {
+// TODO: Allocate an array of 'count' integers on the heap
+int* arr = __________________________________________;
+// Safety check: Ensure malloc succeeded
+if (arr == NULL) return NULL;
+for (int i = 0; i < count; i++) {
+arr[i] = i * 2;
+}
+// TODO: Return the pointer to the heap memory
+return ________;
+}
+int main() {
+int n = 5;
+int* my_evens = create_even_numbers(n);
+if (my_evens != NULL) {
+printf("The third even number is: %d\n", my_evens[2]);
+// TODO: Deallocate the array to avoid a memory leak
+}
+return 0;
+}
+[Slide 44]
+44
+int* create_even_numbers(int count) {
+// Allocate an array of 'count' integers on the heap
+int* arr = malloc(count * sizeof(int));
+// Safety check: Ensure malloc succeeded
+if (arr == NULL) return NULL;
+for (int i = 0; i < count; i++) {
+arr[i] = i * 2;
+}
+// Return the pointer to the heap memory
+return arr;
+}
+int main() {
+int n = 5;
+int* my_evens = create_even_numbers(n);
+if (my_evens != NULL) {
+printf("The third even number is: %d\n", my_evens[2]);
+// Deallocate the array to avoid a memory leak
+free(my_evens);
+my_evens = NULL;
+}
+return 0;
+}
+[Slide 45]
+The Unknown Size Array
+• The most common use for dynamic memory is when you don't know how
+much data you'll have until the program is actually running
+• (e.g., asking a user how many items are in their shopping list).
+• If we used a normal array like int grades[10];, we’d be stuck with exactly 10.
+malloc lets the lifetime of the array's size be determined at runtime.
+• See example on next slide.
+45
+[Slide 46]
+46
+#include <stdio.h>
+#include <stdlib.h>
+int main() {
+int n;
+printf("How many grades do you want to enter? ");
+scanf("%d", &n);
+// 1. Allocate memory on the HEAP
+// We request space for 'n' integers
+int* grades = malloc(n * sizeof(int));
+// ALWAYS check if malloc failed (if the computer is out of memory)
+if (grades == NULL) return 1;
+for (int i = 0; i < n; i++) {
+grades[i] = i * 10; // Assigning some values
+printf("Grade %d: %d\n", i, grades[i]);
+}
+// 2. Deallocate the array manually!
+free(grades);
+grades = NULL;
+return 0;
+}
+[Slide 47]
+Resizing Memory
+• Sometimes you start with a small array and later need to resize the array to fit
+more data.
+• This is how ArrayList in Java or list in Python works under the hood!
+47
+[Slide 48]
+realloc
+• realloc() resizes previously allocated memory.
+• ptr = realloc(ptr, new_size);
+• Preserves existing data up to the smaller of the old and new sizes.
+• May move memory to a new location if the current block cannot be extended.
+• Returns NULL if reallocation fails (the original pointer is still valid).
+• Commonly used for dynamic arrays that grow or shrink at runtime.
+• Declared in <stdlib.h>
+48
+[Slide 49]
+49
+#include <stdio.h>
+#include <stdlib.h>
+int main() {
+// Start with space for 2 integers
+int* list = malloc(2 * sizeof(int));
+list[0] = 100;
+list[1] = 200;
+// Oh no, we need room for a 3rd!
+// realloc moves the data to a bigger spot if needed
+int* temp = realloc(list, 3 * sizeof(int));
+if (temp != NULL) {
+list = temp;
+list[2] = 300;
+}
+for (int i = 0; i < 3; i++) printf("%d ", list[i]);
+printf("\n");
+free(list); // Clean up the final version
+list = NULL;
+return 0;
+}
+[Slide 50]
+50
+#include <stdio.h>
+#include <stdlib.h>
+int main() {
+// We start with space for 2 items
+int* list = malloc(2 * sizeof(int));
+list[0] = 10;
+list[1] = 20;
+printf("Original list: %d, %d\n", list[0], list[1]);
+// TODO: Use realloc to grow the 'list' to hold 4 integers
+int* temp = __________________________________________;
+if (temp != NULL) {
+list = temp;
+list[2] = 30;
+list[3] = 40;
+printf("New items: %d, %d\n", list[2], list[3]);
+}
+// TODO: Clean up the memory
+return 0;
+}
+[Slide 51]
+51
+#include <stdio.h>
+#include <stdlib.h>
+int main() {
+// We start with space for 2 items
+int* list = malloc(2 * sizeof(int));
+list[0] = 10;
+list[1] = 20;
+printf("Original list: %d, %d\n", list[0], list[1]);
+// Use realloc to grow the 'list' to hold 4 integers
+int* temp = realloc(list, 4 * sizeof(int));
+if (temp != NULL) {
+list = temp;
+list[2] = 30;
+list[3] = 40;
+printf("New items: %d, %d\n", list[2], list[3]);
+}
+// Clean up the memory
+free(list);
+list = NULL;
+return 0;
+}
+[Slide 52]
+High-Level Memory Diagram
+52
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+Step 1: Allocate space
+for everything that will be
+stored in main’s frame.
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 53]
+High-Level Memory Diagram
+53
+main
+RA (8): 0
+stack_arr[0] (2): ?
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+Stack
+The size of each element
+is 2 bytes or 16 bits.
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+Step 1: Allocate space
+for everything that will be
+stored in main’s frame.
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 54]
+High-Level Memory Diagram
+54
+main
+RA (8): 0
+stack_arr[0] (2): ?
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ?
+i (4): ?
+RV (malloc) (8): ?
+Stack
+malloc will return an
+address. All addresses
+are 8 bytes (64 bits).
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+Step 1: Allocate space
+for everything that will be
+stored in main’s frame.
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 55]
+High-Level Memory Diagram
+55
+main
+RA (8): 0
+stack_arr[0] (2): ?
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ?
+i (4): ?
+RV (malloc) (8): ?
+Stack
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+Step 2: Walk through
+program line-by-line.
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 56]
+High-Level Memory Diagram
+56
+main
+RA (8): 0
+stack_arr[0] (2): ?
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ?
+i (4): ?
+RV (malloc) (8): ?
+Stack
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+Nothing changes here.
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 57]
+High-Level Memory Diagram
+57
+main
+RA (8): 0
+stack_arr[0] (2): ?
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ?
+i (4): ?
+RV (malloc) (8): ?
+Stack
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+return 0;
+}
+Next, we will call
+malloc. We need to
+make a frame for it.
+malloc
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 58]
+High-Level Memory Diagram
+58
+main
+RA (8): 0
+stack_arr[0] (2): ?
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ?
+i (4): ?
+RV (malloc) (8): ?
+Stack
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+Argument 0: This is the amount
+of space malloc will allocate (in
+bytes).
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 59]
+High-Level Memory Diagram
+59
+main
+RA (8): 0
+stack_arr[0] (2): ?
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ?
+i (4): ?
+RV (malloc) (8): ?
+Stack
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+We cannot see inside this
+function, so we use the dots to
+represent the rest of the frame.
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 60]
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+High-Level Memory Diagram
+60
+main
+RA (8): 0
+stack_arr[0] (2): ?
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ?
+i (4): ?
+RV (malloc) (8): ?
+malloc will allocate
+6 bytes on the heap.
+malloc will give the
+starting address of
+this block to main.
+Stack
+Heap
+?
+?
+?
+(6)
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 61]
+High-Level Memory Diagram
+61
+main
+RA (8): 0
+stack_arr[0] (2): ?
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ?
+i (4): ?
+RV (malloc) (8): ptr to heap
+Stack
+Heap
+?
+?
+?
+(6)
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+return 0;
+}
+malloc places the address in
+main’s frame before returning.
+The arrow is used to indicate where
+this variable is pointing to.
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 62]
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+High-Level Memory Diagram
+62
+main
+RA (8): 0
+stack_arr[0] (2): ?
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ?
+i (4): ?
+RV (malloc) (8): ptr to heap
+Stack
+Heap
+?
+?
+?
+(6)
+When malloc returns,
+its frame is deallocated.
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 63]
+High-Level Memory Diagram
+63
+main
+RA (8): 0
+stack_arr[0] (2): ?
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ptr to heap
+i (4): ?
+RV (malloc) (8): ptr to heap
+Stack
+Heap
+?
+?
+?
+(6)
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 64]
+High-Level Memory Diagram
+64
+main
+RA (8): 0
+stack_arr[0] (2): ?
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ptr to heap
+i (4): ?
+RV (malloc) (8): ptr to heap
+Stack
+Heap
+?
+?
+?
+(6)
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+malloc isn’t guaranteed to succeed. If the system can’t allocate
+the requested memory (for example, because the system is out
+of memory or the request is too large) malloc will return NULL.
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 65]
+High-Level Memory Diagram
+65
+main
+RA (8): 0
+stack_arr[0] (2): ? 0
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ptr to heap
+i (4): ? 0
+RV (malloc) (8): ptr to heap
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+Stack
+Heap
+?
+?
+?
+(6)
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 66]
+High-Level Memory Diagram
+66
+main
+RA (8): 0
+stack_arr[0] (2): ? 0
+stack_arr[1] (2): ?
+stack_arr[2] (2): ?
+heap_arr (8): ptr to heap
+i (4): ? 0
+RV (malloc) (8): ptr to heap
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+Stack
+Heap
+? 0
+?
+?
+(6)
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 67]
+High-Level Memory Diagram
+67
+main
+RA (8): 0
+stack_arr[0] (2): ? 0
+stack_arr[1] (2): ? 1
+stack_arr[2] (2): ?
+heap_arr (8): ptr to heap
+i (4): ? 0 1
+RV (malloc) (8): ptr to heap
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+Stack
+Heap
+? 0
+?
+?
+(6)
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 68]
+High-Level Memory Diagram
+68
+main
+RA (8): 0
+stack_arr[0] (2): ? 0
+stack_arr[1] (2): ? 1
+stack_arr[2] (2): ?
+heap_arr (8): ptr to heap
+i (4): ? 0 1
+RV (malloc) (8): ptr to heap
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+Stack
+Heap
+? 0
+? 2
+?
+(6)
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 69]
+High-Level Memory Diagram
+69
+main
+RA (8): 0
+stack_arr[0] (2): ? 0
+stack_arr[1] (2): ? 1
+stack_arr[2] (2): ? 2
+heap_arr (8): ptr to heap
+i (4): ? 0 1 2
+RV (malloc) (8): ptr to heap
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+Stack
+Heap
+? 0
+? 2
+?
+(6)
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 70]
+High-Level Memory Diagram
+70
+main
+RA (8): 0
+stack_arr[0] (2): ? 0
+stack_arr[1] (2): ? 1
+stack_arr[2] (2): ? 2
+heap_arr (8): ptr to heap
+i (4): ? 0 1 2
+RV (malloc) (8): ptr to heap
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+Stack
+Heap
+? 0
+? 2
+? 4
+(6)
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 71]
+High-Level Memory Diagram
+71
+main
+RA (8): 0
+stack_arr[0] (2): ? 0
+stack_arr[1] (2): ? 1
+stack_arr[2] (2): ? 2
+heap_arr (8): ptr to heap
+i (4): ? 0 1 2
+RV (malloc) (8): ptr to heap
+malloc
+arg0 (8): 3 * 2 = 6
+RA (8): 8
+…
+Stack
+Heap
+? 0
+? 2
+? 4
+(6)
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 72]
+High-Level Memory Diagram
+72
+main
+RA (8): 0
+stack_arr[0] (2): ? 0
+stack_arr[1] (2): ? 1
+stack_arr[2] (2): ? 2
+heap_arr (8): ptr to heap
+i (4): ? 0 1 2
+RV (malloc) (8): ptr to heap
+malloc
+arg0 (8): 6
+RA (8): 8
+…
+Stack
+Heap
+? 0
+? 2
+? 4
+(6)
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+free’s frame will begin at
+the same location where
+malloc’s frame began.
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 73]
+High-Level Memory Diagram
+73
+main
+RA (8): 0
+stack_arr[0] (2): ? 0
+stack_arr[1] (2): ? 1
+stack_arr[2] (2): ? 2
+heap_arr (8): ptr to heap
+i (4): ? 0 1 2
+RV (malloc) (8): ptr to heap
+malloc
+arg0 (8): 6
+RA (8): 8
+…
+Stack
+Heap
+? 0
+? 2
+? 4
+(6)
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+free
+arg0 (8): ptr to heap
+RA (8): 21
+…
+The free() function
+takes a pointer to the
+start of the memory
+block to be released.
+You don’t need to
+provide the size of the
+block because the
+system already knows
+this from metadata
+stored in the heap.
+sp
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+[Slide 74]
+High-Level Memory Diagram
+74
+main
+RA (8): 0
+stack_arr[0] (2): ? 0
+stack_arr[1] (2): ? 1
+stack_arr[2] (2): ? 2
+heap_arr (8): ptr to heap NULL
+i (4): ? 0 1 2
+RV (malloc) (8): ptr to heap
+malloc
+arg0 (8): 6
+RA (8): 8
+…
+Stack
+Heap
+? 0
+? 2
+? 4
+(6)
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+free
+arg0 (8): ptr to heap
+RA (8): 21
+…
+When free executes,
+it deallocates the
+block in memory.
+sp
+[Slide 75]
+High-Level Memory Diagram
+75
+main
+RA (8): 0
+stack_arr[0] (2): ? 0
+stack_arr[1] (2): ? 1
+stack_arr[2] (2): ? 2
+heap_arr (8): ptr to heap
+i (4): ? 0 1 2
+RV (malloc) (8): ptr to heap
+malloc
+arg0 (8): 6
+RA (8): 8
+…
+Stack
+Heap
+? 0
+? 2
+? 4
+(6)
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+free
+arg0 (8): ptr to heap
+RA (8): 21
+…
+Set heap_arr to
+NULL to avoid a
+dangling pointer.
+sp
+[Slide 76]
+High-Level Memory Diagram
+76
+main
+RA (8): 0
+stack_arr[0] (2): ? 0
+stack_arr[1] (2): ? 1
+stack_arr[2] (2): ? 2
+heap_arr (8): ptr to heap NULL
+i (4): ? 0 1 2
+RV (malloc) (8): ptr to heap
+malloc
+arg0 (8): 6
+RA (8): 8
+…
+Stack
+Heap
+? 0
+? 2
+? 4
+(6)
+#include <ctype.h>
+#include <stdlib.h>
+#define ARRAY_SIZE 3
+int main() {
+int16_t stack_arr[ARRAY_SIZE];
+int16_t* heap_arr =
+(int16_t*)malloc(ARRAY_SIZE * sizeof(int16_t));
+if (heap_arr == NULL) {
+printf("Memory allocation failed!\n");
+return 1;
+}
+for (int32_t i = 0; i < ARRAY_SIZE; i++) {
+stack_arr[i] = i;
+heap_arr[i] = i * 2;
+}
+free(heap_arr);
+heap_arr = NULL;
+return 0;
+}
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+free
+arg0 (8): ptr to heap
+RA (8): 21
+…
+When free returns,
+its frame is
+deallocated.
+sp
+heap_arr = NULL;
+[Slide 77]
+Pointer Arithmetic
+• For both stack-allocated and heap-allocated arrays, the compiler determines
+the address of element i using the same basic calculation:
+• Stack-allocated array: stack_arr[i]
+• The address of element i is:
+• base address of stack_arr + (i × sizeof(int16_t))
+• Heap-allocated array: heap_arr[i]
+• The address of element i is:
+• base address of heap_arr + (i × sizeof(int16_t))
+77

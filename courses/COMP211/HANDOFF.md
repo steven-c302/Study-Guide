@@ -97,3 +97,15 @@ The site auto-deploys via GitHub Pages at `https://steven-c302.github.io/Study-G
 - **Graded work / anything with your name or grades** goes in `materials/private/` (git-ignored, never indexed or deployed). The honor code
   forbids posting assignments publicly and this repo is public. Turn it into original practice questions in `mastery/` instead.
 - PDF tip: `pdftotext` (poppler) works if installed; on macOS without it, a ~10-line Swift script using PDFKit extracts the text with no installs.
+
+## Quality checks
+
+- **`node tools/audit-guide.mjs COMP211`** (or `npm run audit-guide`) loads the guide in jsdom and checks that every lesson has a tab and
+  content, topic tabs and lesson links resolve, every question is well formed, every question accepts its intended answer (and every
+  listed alternative) and rejects a wrong one, saved progress restores with the answer visible, Mastery renders, and the materials
+  manifest points at real files. `--quick` skips the answer-every-question simulation (about 30 s instead of about 50 s). It exits
+  non-zero on errors. Run `npm install` once first (it needs the `jsdom` dev dependency).
+- **`node tools/validate-mastery.mjs`** checks Mastery schemas and machine-verifies computed answers (the audit runs it too).
+- **QA subagent** (`.claude/agents/comp211-guide-qa.md`): a read-only reviewer that runs both scripts and then reads the lessons for
+  wrong answers, contradictions, timeline and naming mistakes, coverage gaps and privacy problems. It is meant to be run on request
+  (for example before an exam), not automatically. It reports findings and never edits files.

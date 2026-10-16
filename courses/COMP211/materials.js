@@ -124,6 +124,66 @@ window.MATERIALS = {
       "title": "RD12 reading slides \u00b7 minifloat",
       "file": "materials/readings/RD12-floating-point-minifloat-slides.pdf",
       "date": "Week 6 reading"
+    },
+    {
+      "title": "CL15 \u00b7 Floating Point III: IEEE-754, rounding, FP16/BF16 (slides)",
+      "file": "materials/lectures/CL15-floating-point-ieee754.pdf",
+      "date": "Week 7 \u00b7 denormal exponent, IEEE-754, epsilon, absorption, LLM data types"
+    },
+    {
+      "title": "CL16 \u00b7 Intro to Pointers (slides)",
+      "file": "materials/lectures/CL16-intro-to-pointers.pdf",
+      "date": "Week 7 \u00b7 program memory, addresses, pointers, aliasing, double pointers"
+    },
+    {
+      "title": "CL17 \u00b7 Pointers and Functions (slides)",
+      "file": "materials/lectures/CL17-pointers-and-functions.pdf",
+      "date": "Week 7 \u00b7 pass-by-pointer, endianness, arrays, pointer arithmetic"
+    },
+    {
+      "title": "RD13 reading notes \u00b7 minifloat normalized vs denormalized",
+      "file": "materials/readings/RD13-floating-point-minifloat-notes.txt",
+      "date": "study notes"
+    },
+    {
+      "title": "RD14 reading notes \u00b7 program memory and pointers (DiS 2.1, 2.2)",
+      "file": "materials/readings/RD14-DiS-2.1-2.2-memory-pointers-notes.txt",
+      "date": "study notes"
+    },
+    {
+      "title": "RD15 reading notes \u00b7 pointers and functions (DiS 2.3)",
+      "file": "materials/readings/RD15-DiS-2.3-pointers-functions-notes.txt",
+      "date": "study notes"
+    },
+    {
+      "title": "CL18 \u00b7 Dynamic Memory Allocation (slides)",
+      "file": "materials/lectures/CL18-dynamic-memory-allocation.pdf",
+      "date": "Week 8 \u00b7 heap, malloc/free, lifetimes, dangling pointers, realloc"
+    },
+    {
+      "title": "CL19 \u00b7 2D Arrays (slides)",
+      "file": "materials/lectures/CL19-2d-arrays.pdf",
+      "date": "Week 8 \u00b7 row-major order, dynamic 2D arrays Method 1 and 2"
+    },
+    {
+      "title": "CL20 \u00b7 Arrays of Strings & the Heap Manager (slides)",
+      "file": "materials/lectures/CL20-arrays-of-strings-heap-manager.pdf",
+      "date": "Week 8 \u00b7 free list, first fit, realloc, char **, fgets"
+    },
+    {
+      "title": "CL21 \u00b7 Garbage Collection & Quiz 2 Review (slides)",
+      "file": "materials/lectures/CL21-garbage-collection-quiz2-review.pdf",
+      "date": "Week 9 \u00b7 JVM, reference counting, mark-and-sweep, Quiz 2 review"
+    },
+    {
+      "title": "RD16 reading notes \u00b7 dynamic memory allocation (DiS 2.4)",
+      "file": "materials/readings/RD16-DiS-2.4-dynamic-memory-notes.txt",
+      "date": "study notes"
+    },
+    {
+      "title": "RD17 reading notes \u00b7 arrays in C (DiS 2.5)",
+      "file": "materials/readings/RD17-DiS-2.5-arrays-in-c-notes.txt",
+      "date": "study notes"
     }
   ],
   "exams": []

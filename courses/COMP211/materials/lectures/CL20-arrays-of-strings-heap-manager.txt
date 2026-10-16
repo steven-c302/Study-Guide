@@ -1,0 +1,935 @@
+CL20 - Arrays of Strings: heap manager free list, realloc, char **, fgets (COMP 211, Connor McMahon) - text extracted from the slides for search
+
+[Slide 1]
+Heap
+COMP211 Connor McMahon
+[Slide 2]
+2D Arrays
+2
+[Slide 3]
+Dynamically Allocated 2D Array (Method 2)
+3
+Heap
+1 2 3
+4 5 6
+7 8 9
+10 11 12
+Col 0 Col 1 Col 2
+Row 0
+Row 1
+Row 2
+Row 3
+(32)
+(12)
+(12)
+(12)
+(12)
+sizeof(int) = 4 bytes
+[Slide 4]
+Dynamically Allocated 2D Array (Method 2)
+4
+Heap
+[1, 2, 3]
+1 2 3
+4 5 6
+7 8 9
+10 11 12
+Col 0 Col 1 Col 2
+Row 0
+Row 1
+Row 2
+[4, 5, 6]
+[7, 8, 9]
+Row 3
+[10, 11, 12]
+[Address of row 0
+Address of row 1,
+Address of row2,
+Address of row3]
+(32)
+(12)
+(12)
+(12)
+(12)
+[Slide 5]
+Dynamically Allocated 2D Array (Method 2)
+5
+#define NUM_ROWS 4
+#define NUM_COLS 3
+int main() {
+int32_t** two_d_array;
+int32_t i;
+two_d_array = malloc(sizeof(int32_t*) * NUM_ROWS);
+for (i = 0; i < NUM_ROWS; i++) {
+two_d_array[i] = malloc(sizeof(int32_t) * NUM_COLS);
+}
+main
+RA(8): 0
+two_d_array(8): ?
+i (4): ?
+RV(8)(malloc): …
+…
+(leaving out malloc frames for simplicity)
+Stack
+Heap
+[Slide 6]
+Dynamically Allocated 2D Array (Method 2)
+6
+#define NUM_ROWS 4
+#define NUM_COLS 3
+int main() {
+int32_t** two_d_array;
+int32_t i;
+two_d_array = malloc(sizeof(int32_t*) * NUM_ROWS);
+for (i = 0; i < NUM_ROWS; i++) {
+two_d_array[i] = malloc(sizeof(int32_t) * NUM_COLS);
+}
+main
+RA(8): 0
+two_d_array(8): ptr to heap
+i (4): ?
+RV(8)(malloc): …
+…
+(leaving out malloc frames for simplicity)
+Stack
+Heap
+(32)
+[Slide 7]
+Dynamically Allocated 2D Array (Method 2)
+7
+#define NUM_ROWS 4
+#define NUM_COLS 3
+int main() {
+int32_t** two_d_array;
+int32_t i;
+two_d_array = malloc(sizeof(int32_t*) * NUM_ROWS);
+for (i = 0; i < NUM_ROWS; i++) {
+two_d_array[i] = malloc(sizeof(int32_t) * NUM_COLS);
+}
+main
+RA(8): 0
+two_d_array(8): ptr to heap
+i (4): 0
+RV(8)(malloc): …
+…
+(leaving out malloc frames for simplicity)
+Stack
+Heap
+[Address of row 0
+?
+?
+?]
+(32)
+(12)
+[Slide 8]
+Dynamically Allocated 2D Array (Method 2)
+8
+#define NUM_ROWS 4
+#define NUM_COLS 3
+int main() {
+int32_t** two_d_array;
+int32_t i;
+two_d_array = malloc(sizeof(int32_t*) * NUM_ROWS);
+for (i = 0; i < NUM_ROWS; i++) {
+two_d_array[i] = malloc(sizeof(int32_t) * NUM_COLS);
+}
+main
+RA(8): 0
+two_d_array(8): ptr to heap
+i (4): 0 1
+RV(8)(malloc): …
+…
+(leaving out malloc frames for simplicity)
+Stack
+Heap
+[Address of row 0
+Address of row 1,
+?
+?]
+(32)
+(12)
+(12)
+[Slide 9]
+Dynamically Allocated 2D Array (Method 2)
+9
+#define NUM_ROWS 4
+#define NUM_COLS 3
+int main() {
+int32_t** two_d_array;
+int32_t i;
+two_d_array = malloc(sizeof(int32_t*) * NUM_ROWS);
+for (i = 0; i < NUM_ROWS; i++) {
+two_d_array[i] = malloc(sizeof(int32_t) * NUM_COLS);
+}
+main
+RA(8): 0
+two_d_array(8): ptr to heap
+i (4): 0 1 2
+RV(8)(malloc): …
+…
+(leaving out malloc frames for simplicity)
+Stack
+Heap
+[Address of row 0
+Address of row 1,
+Address of row2,
+?]
+(32)
+(12)
+(12)
+(12)
+[Slide 10]
+Dynamically Allocated 2D Array (Method 2)
+10
+#define NUM_ROWS 4
+#define NUM_COLS 3
+int main() {
+int32_t** two_d_array;
+int32_t i;
+two_d_array = malloc(sizeof(int32_t*) * NUM_ROWS);
+for (i = 0; i < NUM_ROWS; i++) {
+two_d_array[i] = malloc(sizeof(int32_t) * NUM_COLS);
+}
+main
+RA(8): 0
+two_d_array(8): ptr to heap
+i (4): 0 1 2 3
+RV(8)(malloc): …
+…
+(leaving out malloc frames for simplicity)
+Stack
+Heap
+[Address of row 0
+Address of row 1,
+Address of row2,
+Address of row3]
+(32)
+(12)
+(12)
+(12)
+(12)
+[Slide 11]
+cd lecture
+git pull
+OR
+git clone https://github.com/COMP211-
+FA26/lecture.git
+11
+[Slide 12]
+method2.c
+•Implement free2d.
+•Implement swap_rows.
+12
+Before swap_rows(a, 5, 1, 4):
+0 1 2 3 4 5
+10 11 12 13 14 15
+20 21 22 23 24 25
+30 31 32 33 34 35
+40 41 42 43 44 45
+After swap:
+0 1 2 3 4 5
+40 41 42 43 44 45
+20 21 22 23 24 25
+30 31 32 33 34 35
+10 11 12 13 14 15
+Swap example
+[Slide 13]
+13
+static void free2d(int** a, int rows) {
+if (a == NULL) {
+return;
+}
+/* Free each separately allocated row */
+for (int i = 0; i < rows; i++) {
+free(a[i]);
+}
+/* Free the array of row pointers */
+free(a);
+}
+[Slide 14]
+14
+void swap_rows(int** a, int rows, int r1, int r2) {
+if (a == NULL) {
+fprintf(stderr, "ERROR: array is NULL\n");
+exit(1);
+}
+if (r1 < 0 || r1 >= rows) {
+error_bad_row(r1, rows);
+}
+if (r2 < 0 || r2 >= rows) {
+error_bad_row(r2, rows);
+}
+int* temp = a[r1];
+a[r1] = a[r2];
+a[r2] = temp;
+}
+[Slide 15]
+Heap Memory Management
+15
+[Slide 16]
+Heap Memory Management
+•The heap memory manager maintains a free list which contains the start
+address and size of contiguous unallocated blocks of memory in the heap.
+•Initially, the heap consists of a single large free block, so the free list contains
+one entry representing the entire available heap.
+•After performing a series of malloc and free operations, the heap can become
+fragmented (free spaces end up scattered among allocated blocks).
+16
+[Slide 17]
+Heap Memory Management Example
+•Initial State
+•Heap size: 1000 bytes (this is an oversimplification)
+•Free List: One block covering the entire heap
+17
+[Slide 18]
+Initial State
+18
+Bytes 0 - 999
+Heap
+0
+999
+Free list
+[Slide 19]
+Operation 1: ptr1 = malloc(200)
+19
+Bytes 0 - 999
+Heap
+0
+999
+Free list
+[Slide 20]
+Operation 1: ptr1 = malloc(200)
+20
+Heap
+0
+999
+Free list
+Bytes 200 - 999
+199
+ptr1
+[Slide 21]
+Operation 2: ptr2 = malloc(300)
+21
+Heap
+0
+999
+Free list
+Bytes 200 - 999
+199
+ptr1
+[Slide 22]
+Operation 2: ptr2 = malloc(300)
+22
+Heap
+0
+999
+Free list
+Bytes 500 - 999
+199
+499
+ptr1
+ptr2
+200
+[Slide 23]
+Operation 3: free(ptr1)
+23
+Heap
+0
+999
+Free list
+Bytes 500 - 999
+199
+499
+ptr1
+ptr2
+200
+[Slide 24]
+Operation 3: free(ptr1)
+24
+Heap
+0
+999
+Free list
+Bytes 500 - 999
+199
+499
+ptr2
+Bytes 0 - 199
+200
+[Slide 25]
+Operation 4: ptr3 = malloc(100)
+25
+Heap
+0
+999
+Free list
+Bytes 500 - 999
+199
+499
+ptr2
+Bytes 0 - 199
+200
+[Slide 26]
+Operation 4: ptr3 = malloc(100)
+26
+Heap
+0
+999
+Free list
+Bytes 500 - 999
+99
+499
+ptr2
+Bytes 100 - 199
+ptr3
+200
+[Slide 27]
+Operation 5: ptr4 = malloc(200)
+27
+Heap
+0
+999
+Free list
+Bytes 500 - 999
+99
+499
+ptr2
+Bytes 100 - 199
+ptr3
+200
+[Slide 28]
+Operation 5: ptr4 = malloc(200)
+28
+Heap
+0
+999
+Free list
+Bytes 700 - 999
+99
+499
+ptr2
+Bytes 100 - 199
+ptr3
+ptr4
+500
+699
+200
+[Slide 29]
+Operation 6: free(ptr2)
+29
+Heap
+0
+999
+Free list
+Bytes 700 - 999
+99
+499
+ptr2
+Bytes 100 - 199
+ptr3
+ptr4
+500
+699
+200
+[Slide 30]
+Operation 6: free(ptr2)
+30
+Heap
+0
+999
+Free list
+Bytes 700 - 999
+99 Bytes 100 - 499
+ptr3
+ptr4
+500
+699
+Coalescing Free Blocks
+Two adjacent blocks are now free
+(100 –199 and 200 –499), so they
+can be merged into one block.
+[Slide 31]
+First Fit Allocation Strategy
+•This example used the first fit allocation strategy, in which the allocator
+•Starts at the beginning of the free list and checks each free block one by
+one.
+•Selects the first block that is large enough to accommodate the request.
+•If the chosen free block is larger than needed, it may be split into two
+parts:
+•one part is allocated
+•and the remaining part is left in the free list as a smaller free block.
+31
+[Slide 32]
+Initial State
+32
+Bytes 0 - 999
+Heap
+0
+999
+Free list
+Draw the state of the heap and the free list
+after the following operations are executed.
+ptr1 = malloc(100);
+free(ptr1);
+ptr2 = malloc(200);
+ptr3 = malloc(400);
+free(ptr2);
+ptr4 = malloc(300);
+ptr5 = malloc(50);
+[Slide 33]
+Operation 1: ptr1 = malloc(100);
+33
+Bytes 100 - 999
+Heap
+0
+999
+Free list
+Draw the state of the heap and the free list
+after the following operations are executed.
+ptr1 = malloc(100);
+free(ptr1);
+ptr2 = malloc(200);
+ptr3 = malloc(400);
+free(ptr2);
+ptr4 = malloc(300);
+ptr5 = malloc(50);
+ptr1
+99
+[Slide 34]
+Operation 2: free(ptr1);
+34
+Bytes 0 - 999
+Heap
+0
+999
+Free list
+Draw the state of the heap and the free list
+after the following operations are executed.
+ptr1 = malloc(100);
+free(ptr1);
+ptr2 = malloc(200);
+ptr3 = malloc(400);
+free(ptr2);
+ptr4 = malloc(300);
+ptr5 = malloc(50);
+[Slide 35]
+Operation 3: ptr2 = malloc(200);
+35
+Bytes 200 - 999
+Heap
+0
+999
+Free list
+Draw the state of the heap and the free list
+after the following operations are executed.
+ptr1 = malloc(100);
+free(ptr1);
+ptr2 = malloc(200);
+ptr3 = malloc(400);
+free(ptr2);
+ptr4 = malloc(300);
+ptr5 = malloc(50);
+ptr2
+199
+[Slide 36]
+Operation 4: ptr3 = malloc(400);
+36
+Bytes 600 - 999
+Heap
+0
+999
+Free list
+Draw the state of the heap and the free list
+after the following operations are executed.
+ptr1 = malloc(100);
+free(ptr1);
+ptr2 = malloc(200);
+ptr3 = malloc(400);
+free(ptr2);
+ptr4 = malloc(300);
+ptr5 = malloc(50);
+ptr2
+199
+ptr3
+200
+599
+[Slide 37]
+Operation 5: free(ptr2);
+37
+Bytes 600 - 999
+Heap
+0
+999
+Free list
+Draw the state of the heap and the free list
+after the following operations are executed.
+ptr1 = malloc(100);
+free(ptr1);
+ptr2 = malloc(200);
+ptr3 = malloc(400);
+free(ptr2);
+ptr4 = malloc(300);
+ptr5 = malloc(50);
+199
+ptr3
+200
+599
+Bytes 0 - 199
+[Slide 38]
+Operation 6: ptr4 = malloc(300);
+38
+Bytes 900 - 999
+Heap
+0
+999
+Free list
+Draw the state of the heap and the free list
+after the following operations are executed.
+ptr1 = malloc(100);
+free(ptr1);
+ptr2 = malloc(200);
+ptr3 = malloc(400);
+free(ptr2);
+ptr4 = malloc(300);
+ptr5 = malloc(50);
+199
+ptr3
+200
+599
+Bytes 0 - 199
+ptr4
+899
+[Slide 39]
+Operation 7: ptr5 = malloc(50);
+39
+Bytes 900 - 999
+Heap
+0
+999
+Free list
+Draw the state of the heap and the free list
+after the following operations are executed.
+ptr1 = malloc(100);
+free(ptr1);
+ptr2 = malloc(200);
+ptr3 = malloc(400);
+free(ptr2);
+ptr4 = malloc(300);
+ptr5 = malloc(50);
+199
+ptr3
+200
+599
+Bytes 50 - 199
+ptr4
+ptr5
+49
+899
+[Slide 40]
+Resizing Arrays
+•Arrays are stored contiguously, meaning each element sits directly next to
+the one before it in memory.
+•When an array is stored on the stack, its size is fixed and cannot be
+changed. This is because there may already be other data occupying the
+memory immediately after the array, leaving no room to expand it in place.
+40
+[Slide 41]
+Resizing Arrays
+•Arrays are stored contiguously, meaning each element sits directly next to the one before it
+in memory.
+•When an array is stored on the stack, its size is fixed and cannot be changed. This is
+because there may already be other data occupying the memory immediately after the array,
+leaving no room to expand it in place.
+41
+We cannot grow this
+array because there is
+already data above.
+0x0000_0000
+0x0000_0000
+1 10
+2 15
+3 20
+?
+0x0000_ffff
+0xdddd_0014
+0
+9
+Stack
+main: RA
+main: arr[2]
+main: arr[1]
+main: arr[0]
+modify: p
+modify: RA
+main: i
+0xffffdddd0024
+0xffffdddd0020
+0xffffdddd001C
+0xffffdddd0018
+0xffffdddd0014
+0xffffdddd0010
+0xffffdddd000C
+0xffffdddd0008
+0xffffdddd0004
+0xffffdddd0000
+[Slide 42]
+Realloc
+•Stack arrays cannot be resized, but heap arrays can be resized with realloc
+•realloc stands for reallocate. It's a function that changes the size of a block of
+memory previously allocated on the heap.
+•Under the hood, realloc can do one of two things (covered on the next slides)
+42
+void *realloc(void *ptr, size_t new_size);
+A pointer to the
+block that needs
+to be resized.
+The new size of
+the block.
+A pointer to the
+start of the new
+block of memory.
+[Slide 43]
+Case 1: Room to Grow in Place
+•If there's space directly after the current memory block, realloc just expands
+the block in place.
+43
+[Slide 44]
+Case 2: No room - must move
+•If there’s not enough room after the current block (maybe something else is in
+the way), realloc will:
+1. Allocate a new block of the requested size.
+2. Copy the contents from the old block to the new one.
+3. Free the old block (if successful).
+4. Return a pointer to the new block.
+44
+[Slide 45]
+Arrays of Strings
+45
+[Slide 46]
+Arrays of Strings
+46
+“Eliza” “Aileen” “Akshan” “Avi”
+Each string itself is an array of char
+[Slide 47]
+char** in Heap
+47
+Heap
+[Address to heap,
+Address to heap,
+Address to heap,
+Address to heap]
+(32) The char** array
+occupies 32 bytes because
+it contains four pointers,
+and each pointer is 8 bytes
+(8 ×4 = 32).
+[Slide 48]
+char** in Heap
+48
+Heap
+“Eliza”
+[Address to heap,
+Address to heap,
+Address to heap,
+Address to heap]
+(32)
+(6)
+Allocating space for the
+string "Eliza" requires
+6 bytes: five bytes for the
+characters and one
+additional byte for the
+terminating null character.”
+[Slide 49]
+char** in Heap
+49
+Heap
+“Eliza”
+[Address to heap,
+Address to heap,
+Address to heap,
+Address to heap]
+(32)
+(6)
+“Aileen”
+(7)
+Allocating space for the
+string "Aileen"
+requires 7 bytes: six
+bytes for the characters
+and one additional byte
+for the terminating null
+character.
+[Slide 50]
+char** in Heap
+50
+Heap
+“Eliza”
+[Address to heap,
+Address to heap,
+Address to heap,
+Address to heap]
+(32)
+(6)
+“Aileen”
+(7)
+“Akshan”
+(7)
+“Avi”
+(4)
+[Slide 51]
+Buffers
+•A buffer is just a chunk of memory used to store data —like an array.
+•When you write something into a buffer, you're filling up that space in
+memory.
+51
+char name[5];
+name is a buffer that can hold a string of up to 4
+characters plus the null terminator.
+[Slide 52]
+fgets
+•fgets reads a line of input from a given stream (stdinin this case) and
+stores it in the buffer you provide.
+•The second argument (sizeof(buffer)) tells fgets the maximum number
+of characters to read, including the null terminator (\0).
+•If the input fits in the buffer, it’s stored as a null-terminated string.
+•If the input is longer than the buffer, only part of it is read, and the rest
+remains in the input stream to be consumed later.
+•fgets returns the same pointer you passed in (buffer) on success, and
+NULL on failure (e.g., if end-of-file is reached or an error occurs).
+52
+[Slide 53]
+read_names
+•The function read_names dynamically allocates and fills a 2D array of
+characters (an array of strings) by reading a specified number of names from
+the user.
+•char** read_names(int num_names, int name_len);
+•Parameters
+•num_names: The number of names the function should read.
+•name_len: The maximum length allowed for each name (not including the null
+terminator).
+•Return Value
+•Returns a char** (a pointer to an array of char*).
+•Each char*in the array points to a dynamically allocated string containing one name.
+•The caller is responsible for freeing all allocated memory.
+53
+[Slide 54]
+54
+How much memory should we
+allocate for the outer array?
+How do we check if the
+allocation was successful?
+How much memory should we
+allocate for each inner array?
+How do we check if the
+allocation was successful?
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+char** read_names(int num_names, int name_len) {
+char** names = malloc( );
+if ( ) {
+fprintf(stderr, "Memory allocation failed!\n");
+exit(EXIT_FAILURE);
+}
+for (int i = 0; i < num_names; i++) {
+names[i] = malloc( );
+if ( ) {
+fprintf(stderr, "Memory allocation failed!\n");
+exit(EXIT_FAILURE);
+}
+printf("Enter name of student %d: ", i + 1);
+if (!fgets(names[i], name_len + 1, stdin)) {
+fprintf(stderr, "Error reading input!\n");
+exit(EXIT_FAILURE);
+}
+}
+return names;
+}
+[Slide 55]
+55
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+char** read_names(int num_names, int name_len) {
+char** names = malloc(num_names * sizeof(char*));
+if (!names) {
+fprintf(stderr, "Memory allocation failed!\n");
+exit(EXIT_FAILURE);
+}
+for (int i = 0; i < num_names; i++) {
+names[i] = malloc((name_len + 1) * sizeof(char));
+if (!names[i]) {
+fprintf(stderr, "Memory allocation failed!\n");
+exit(EXIT_FAILURE);
+}
+printf("Enter name of student %d: ", i + 1);
+if (!fgets(names[i], name_len + 1, stdin)) {
+fprintf(stderr, "Error reading input!\n");
+exit(EXIT_FAILURE);
+}
+}
+return names;
+}
+[Slide 56]
+array_of_strings.c
+•This program builds a dynamically growing array of strings.
+•It repeatedly asks the user to enter words.
+•Each word is stored on the heap.
+•The program keeps the words in a dynamically resized array of char * pointers.
+•If the array fills up, it doubles its capacity using realloc.
+•When the user types "quit", the program:
+•Prints all stored words.
+•Frees all allocated memory.
+56
+[Slide 57]
+57
+/* TODO: Allocate memory for an array of char*
+pointers with
+INITIAL_CAPACITY elements. Each element will
+eventually point to a
+dynamically allocated string. */
+words = malloc(capacity * sizeof(char*));
+if (!words) {
+fprintf(stderr, "malloc failed");
+return 1;
+}
+[Slide 58]
+58
+/* TODO: Use realloc to resize the existing array of
+char* pointers
+to hold the new (doubled) capacity. Do NOT lose the
+original
+pointer if realloc fails. */
+char** temp = realloc(words, capacity * sizeof(char*));
+if (!temp) {
+fprintf(stderr, "realloc failed");
+break;
+}
+words = temp;
+[Slide 59]
+59
+/* TODO: Allocate enough space on the heap to
+store the buffer string in
+the heap, including space for the null
+terminator ('\0'). */
+words[count] = malloc((strlen(buffer) + 1) *
+sizeof(char));
+if (!words[count]) {
+fprintf(stderr, "malloc failed");
+break;
+}
+[Slide 60]
+60
+printf("\nYou entered:\n");
+for (size_t i = 0; i < count; i++) {
+printf("%zu: %s\n", i, words[i]);
+/* TODO: Free the dynamically allocated
+string
+to prevent a memory leak. */
+free(words[i]);
+}
+/* TODO: After freeing each individual
+string, free the array
+that stores the char* pointers. */
+free(words);

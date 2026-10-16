@@ -1,0 +1,1755 @@
+CL17 - Pointers and Functions: pass-by-pointer, endianness, arrays, pointer arithmetic (COMP 211, Connor McMahon) - text extracted from the slides for search
+
+[Slide 1]
+Pointers and Functions
+COMP211 Connor McMahon
+[Slide 2]
+Diagram Convention
+• The caller places the parameters on the stack
+• Then the function call places the return address (RA) on the stack.
+• The called function then allocates space for its local variables.
+• Because the stack grows toward lower addresses, the resulting layout is:
+2
+Higher addresses
+┌──────────────────┐
+│ Parameters │
+├──────────────────┤
+│ Return Address │
+├──────────────────┤
+│ Local Variables │
+└──────────────────┘
+Lower addresses
+[Slide 3]
+Example 1 (Correct Pointer Usage)
+3
+[Slide 4]
+Memory Diagram just before fun is called
+4
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+*a = 10;
+*b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(&a, &b);
+printf("a: %d, b: %d\n", a, b);
+}
+Stack
+main
+RA(8): 0
+a(1): 5
+b(1): 6
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+sp
+[Slide 5]
+Memory Diagram before line 5 is executed
+5
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+*a = 10;
+*b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(&a, &b);
+printf("a: %d, b: %d\n", a, b);
+}
+Stack
+main
+RA(8): 0
+a(1): 5
+b(1): 6
+fun
+a(8): pointer to a in main
+b(8): pointer to b in main
+RA(8): 12
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+sp
+[Slide 6]
+Memory Diagram after line 6 is executed
+6
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+*a = 10;
+*b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(&a, &b);
+printf("a: %d, b: %d\n", a, b);
+}
+Stack
+main
+RA(8): 0
+a(1): 5 10
+b(1): 6 20
+fun
+a(8): pointer to a in main
+b(8): pointer to b in main
+RA(8): 12
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+sp
+[Slide 7]
+Memory Diagram after fun returns
+7
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+*a = 10;
+*b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(&a, &b);
+printf("a: %d, b: %d\n", a, b);
+}
+Stack
+main
+RA(8): 0
+a(1): 5 10
+b(1): 6 20
+fun
+a(8): pointer to a in main
+b(8): pointer to b in main
+RA(8): 12
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+sp
+[Slide 8]
+Memory Diagram When printf is called
+8
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+*a = 10;
+*b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(&a, &b);
+printf("a: %d, b: %d\n", a, b);
+} Program Output
+a: 10, b: 20
+Stack
+main
+RA(8): 0
+a(1): 5 10
+b(1): 6 20
+printf
+we’ll cover what
+goes in here in
+a future lecture
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+sp
+fun
+a(8): pointer to a in main
+b(8): pointer to b in main
+RA(8): 12
+[Slide 9]
+Example 2 (Incorrect Pointer Usage)
+9
+[Slide 10]
+Memory Diagram just before fun is called
+10
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+a = 10;
+b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(&a, &b);
+printf("a: %d, b: %d\n", a, b);
+}
+Stack
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+main
+RA(8): 0
+a(1): 5
+b(1): 6 sp
+[Slide 11]
+Memory Diagram before line 5 is executed
+11
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+a = 10;
+b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(&a, &b);
+printf("a: %d, b: %d\n", a, b);
+}
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+fun
+a(8): pointer to a in main
+b(8): pointer to b in main
+RA(8): 12
+main
+RA(8): 0
+a(1): 5
+b(1): 6
+Stack
+sp
+[Slide 12]
+Memory Diagram after line 6 is executed
+12
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+a = 10;
+b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(&a, &b);
+printf("a: %d, b: %d\n", a, b);
+}
+main
+RA(8): 0
+a(1): 5
+b(1): 6
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+fun
+a(8): pointer to a in main 10
+b(8): pointer to b in main 20
+RA(8): 12
+Stack
+sp
+[Slide 13]
+Memory Diagram after fun returns
+13
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+a = 10;
+b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(&a, &b);
+printf("a: %d, b: %d\n", a, b);
+}
+main
+RA(8): 0
+a(1): 5
+b(1): 6
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+fun
+a(8): pointer to a in main 10
+b(8): pointer to b in main 20
+RA(8): 12
+Stack
+sp
+[Slide 14]
+Memory Diagram when printf is called
+14
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+a = 10;
+b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(&a, &b);
+printf("a: %d, b: %d\n", a, b);
+} Program Output
+a: 5, b: 6
+main
+RA(8): 0
+a(1): 5
+b(1): 6
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+Stack
+printf
+we’ll cover what
+goes in here in a
+future lecture
+fun
+a(8): pointer to a in main 10
+b(8): pointer to b in main 20
+RA(8): 12
+sp
+[Slide 15]
+Example 3 (Incorrect Pointer Usage)
+15
+[Slide 16]
+Memory Diagram just before fun is called
+16
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+*a = 10;
+*b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(a, b);
+printf("a: %d, b: %d\n", a, b);
+}
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+Stack
+main
+RA(8): 0
+a(1): 5
+b(1): 6 sp
+[Slide 17]
+Memory Diagram before line 5 is executed
+17
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+*a = 10;
+*b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(a, b);
+printf("a: %d, b: %d\n", a, b);
+}
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+Stack
+main
+RA(8): 0
+a(1): 5
+b(1): 6
+fun
+a(8): 5
+b(8): 6
+RA(8): 12 sp
+[Slide 18]
+Line 5 Produces a Segmentation Fault
+18
+#include <stdint.h>
+#include <stdio.h>
+void fun(int8_t* a, int8_t* b) {
+*a = 10;
+*b = 20;
+}
+int main(void) {
+int8_t a = 5;
+int8_t b = 6;
+fun(a, b);
+printf("a: %d, b: %d\n", a, b);
+}
+learncli$ ./a.out
+Segmentation fault
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+Stack
+main
+RA(8): 0
+a(1): 5
+b(1): 6
+fun
+a(8): 5
+b(8): 6
+RA(8): 12 sp
+[Slide 19]
+Segmentation Fault
+• A segmentation fault (often called a segfault) happens when your program
+tries to access memory it’s not allowed to use.
+19
+[Slide 20]
+Short Code Writing Examples
+20
+[Slide 21]
+addOne
+21
+#include <stdio.h>
+void addOne(int* n) {
+}
+int main() {
+int x = 10;
+addOne(&x);
+printf("x = %d\n", x);
+return 0;
+}
+[Slide 22]
+addOne
+22
+#include <stdio.h>
+void addOne(int* n) {
+*n = *n + 1;
+}
+int main() {
+int x = 10;
+addOne(&x);
+printf("x = %d\n", x);
+return 0;
+}
+[Slide 23]
+Complete the implementation of swap
+23
+#include <stdint.h>
+#include <stdio.h>
+void swap(int16_t* a, int16_t* b) {
+}
+int main(void) {
+int16_t x = 10;
+int16_t y = 20;
+printf("x: %d, y: %d\n", x, y);
+swap( );
+printf("x: %d, y: %d\n", x, y);
+}
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[Slide 24]
+Complete the implementation of swap
+24
+#include <stdint.h>
+#include <stdio.h>
+void swap(int16_t* a, int16_t* b) {
+int16_t temp = *a;
+*a = *b;
+*b = temp;
+}
+int main(void) {
+int16_t x = 10;
+int16_t y = 20;
+printf("x: %d, y: %d\n", x, y);
+swap(&x, &y);
+printf("x: %d, y: %d\n", x, y);
+}
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+[Slide 25]
+Low-Level Memory Diagrams
+25
+[Slide 26]
+Low-Level Memory Diagram
+26
+Each of these rows can
+store one byte of data
+1 byte = 8 bits
+[Slide 27]
+Low-Level Memory Diagram
+27
+0b0000 0101
+0b0000 0100
+0b1111 1110
+Each of these rows can
+store one byte of data
+1 byte = 8 bits
+Let’s say we want to store the
+number 5 in the top row, 4 in the
+next row, and -2 in the next row.
+[Slide 28]
+Byte Addresses
+28
+0b0000 0101
+0b0000 0100
+0b1111 1110
+1 byte = 8 bits
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+Byte
+Address
+To reference each of these
+locations, we use something
+called a byte address.
+Note that these addresses are
+not stored anywhere!
+[Slide 29]
+Storing Larger Data
+• What if I want to store an int32_t?
+29
+Variables whose types are
+larger than one byte span
+multiple addresses in
+memory!
+[Slide 30]
+Storing Larger Data
+• Let’s say I want to store an int32_t whose value is 329,421
+30
+329,421 = 0b 0000 0000 0000 0101 0000 0110 1100 1101
+Data
+Byte
+Address
+0
+1
+2
+3
+What order
+should we
+store the
+bits?
+[Slide 31]
+Review: MSB and LSB
+31
+0b 0000 0000 0000 0101 0000 0110 1100 1101
+Most Significant Byte
+(MSB)
+Least Significant Byte
+(LSB)
+[Slide 32]
+Little Endian Ordering
+• The least significant byte of the integer goes in the lowest address
+32
+0b 0000 0000 0000 0101 0000 0110 1100 1101
+Most Significant Byte
+(MSB)
+Least Significant Byte
+(LSB)
+Data
+Byte
+Address
+0
+1
+2
+3
+[Slide 33]
+Little Endian Ordering
+• The least significant byte of the integer goes in the lowest address
+33
+0b 0000 0000 0000 0101 0000 0110 1100 1101
+Most Significant Byte
+(MSB)
+Least Significant Byte
+(LSB)
+1100 1101
+0000 0110
+0000 0101
+0000 0000
+Data
+Byte
+Address
+0
+1
+2
+3
+[Slide 34]
+Big Endian Ordering
+• The least significant byte of the integer goes in the largest address
+34
+0b 0000 0000 0000 0101 0000 0110 1100 1101
+Most Significant Byte
+(MSB)
+Least Significant Byte
+(LSB)
+Data
+Byte
+Address
+0
+1
+2
+3
+[Slide 35]
+Big Endian Ordering
+• The least significant byte of the integer goes in the largest address
+35
+0b 0000 0000 0000 0101 0000 0110 1100 1101
+Most Significant Byte
+(MSB)
+Least Significant Byte
+(LSB)
+0000 0000
+0000 0101
+0000 0110
+1100 1101
+Data
+Byte
+Address
+0
+1
+2
+3
+[Slide 36]
+Little Endian Ordering
+• The least significant byte of the integer goes in the lowest address
+36
+0b 0000 0000 0000 0101 0000 0110 1100 1101
+Most Significant Byte
+(MSB)
+Least Significant Byte
+(LSB)
+1100 1101
+0000 0110
+0000 0101
+0000 0000
+Data
+Byte
+Address
+0
+1
+2
+3
+Little Endian Ordering is dominant in
+processor architectures and is what we
+will be using in this class!
+[Slide 37]
+Arrays
+• Arrays are stored contiguously in
+memory
+• All the elements of an array are placed
+in consecutive memory locations.
+37
+0b 0000 0101
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 0101 1010
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 0110 0100
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 0010 1000
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 1111 1100
+0b 1111 1111
+0b 1111 1111
+0b 1111 1111
+Byte
+Address
+Data
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+5 90 100 40 -4
+0 1 2 3 4
+Example: Array of int32_t
+5
+90
+100
+40
+-4
+[Slide 38]
+38
+5 90 100 40 11
+0 1 2 3 4
+Index Value Address
+0 5
+1 90
+2 100
+3 40
+4 11
+The address of each element in the array
+corresponds to its starting byte in memory.
+int32_t Array0b 0000 0101
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 0101 1010
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 0110 0100
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 0010 1000
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 1111 1100
+0b 1111 1111
+0b 1111 1111
+0b 1111 1111
+Byte
+Address
+Data
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+5
+90
+100
+40
+-4
+[Slide 39]
+39
+5 90 100 40 11
+0 1 2 3 4
+Index Value Address
+0 5 0
+1 90 4
+2 100 8
+3 40 12
+4 11 16
+The address of each element in the array
+corresponds to its starting byte in memory.
+int32_t Array0b 0000 0101
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 0101 1010
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 0110 0100
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 0010 1000
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 1111 1100
+0b 1111 1111
+0b 1111 1111
+0b 1111 1111
+Byte
+Address
+Data
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+5
+90
+100
+40
+-4
+[Slide 40]
+Diagram Configurations
+• Sometimes memory diagrams will show 4 bytes per row instead of 1 byte per
+row
+• See side-by-side comparison on the next slide
+• This provides a more compact way to visualize the data
+• Much of the data that we are working with is 4 bytes, so this structure makes
+it easier to see what is stored in memory
+40
+[Slide 41]
+41
+0b 0000 0101
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 0101 1010
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 0110 0100
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 0010 1000
+0b 0000 0000
+0b 0000 0000
+0b 0000 0000
+0b 1111 1100
+0b 1111 1111
+0b 1111 1111
+0b 1111 1111
+Byte Address Data
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+5
+90
+100
+40
+-4
+0b 0000_0000_0000_0000_0000_0000_0000_0101
+0b 0000_0000_0000_0000_0000_0000_0101_1010
+0b 0000_0000_0000_0000_0000_0000_0110 0100
+0b 0000_0000_0000_0000_0000_0000_0010_1000
+0b 1111_1111_1111_1111_1111_1111_1111_1100
+One row = one byte
+Byte
+Address Data
+One row = four bytes
+0
+4
+8
+12
+16
+[Slide 42]
+Addresses in Hex
+• Addresses are normally written in hex, not decimal
+• In this class, we are working with 64-bit addresses
+• The rest of the memory diagrams you see in class will look the diagrams on
+the next slide
+• Notice that the compactness of the right diagram allows us to display more
+data at once than the left diagram
+42
+[Slide 43]
+43
+Byte Address Data
+0x000000000000
+0x000000000001
+0x000000000002
+0x000000000003
+0x000000000004
+0x000000000005
+0x000000000006
+0x000000000007
+0x000000000008
+0x000000000000
+0x000000000004
+Byte Address Data
+One row = one byte One row = four bytes
+[Slide 44]
+Address Calculation
+• Base address = address of the start of the array
+• Address of any element
+• (base address of array) + (size of each element)(index)
+44
+[Slide 45]
+Address Calculation
+• I have a 10-element array of int16_t with a base address of
+0x00000034002C. What is the byte address of element 9?
+45
+[Slide 46]
+Address Calculation
+• I have a 10-element array of int16_t with a base address of
+0x00000034002C. What is the byte address of element 9?
+• Address of element 9 = base address + sizeof(int16_t) * 9
+• 0x00000034002C + 2(9)
+• 0x00000034002C + 0x12
+• 0x00000034003E
+46
+[Slide 47]
+Arrays (High-level Diagram)
+47
+#include <stdint.h>
+#include <stdio.h>
+int main() {
+int32_t length = 5;
+int32_t nums[] = {2, 4, 6, 8, 10};
+int32_t i;
+for (i = 0; i < length; i++) {
+printf("nums[%d] = %d\n", i, nums[i]);
+}
+}
+main
+RA (8): 0
+length (4): 5
+nums (20): [2, 4, 6, 8, 10]
+i: ?
+Stack
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+When i is declared, it
+contains garbage data.
+State of the stack just before executing line 8.
+sp
+[Slide 48]
+Arrays (Low-level Diagram)
+48
+Stack 0
+0
+5
+10
+8
+6
+4
+2
+(uninit)
+Byte Address
+0xFFFFFFFFFF20
+0xFFFFFFFFFF1C
+0xFFFFFFFFFF18
+0xFFFFFFFFFF14
+0xFFFFFFFFFF10
+0xFFFFFFFFFF0C
+0xFFFFFFFFFF08
+0xFFFFFFFFFF04
+0xFFFFFFFFFF00
+main
+RA (8): 0
+length (4): 5
+nums (20): [2, 4, 6, 8, 10]
+i: (uninitialized)
+RA (bytes 5-7)
+RA (bytes 0-3)
+length
+nums[4]
+nums[3]
+nums[2]
+nums[1]
+nums[0]
+i
+Stack
+sp
+sp
+[Slide 49]
+49
+A copy of the variable is
+passed
+The function works with
+its own copy
+Changes do NOT affect
+the original variable
+A pointer (address) to the
+variable is passed
+The function accesses
+the original data
+Changes DO affect the
+original variable
+Pass-by-value Pass-by-pointer
+[Slide 50]
+50
+When you pass an array
+to a function in C, it
+“decays” to a pointer to
+its first element.
+[Slide 51]
+Pass by Value vs. Pass by Pointer
+• Pass by value
+• When length is passed to print_arr(), a copy of the value is sent
+• Modifying length inside print_arr() does not affect the original variable in main()
+• Pass by pointer
+• When nums is passed to print_arr(), instead of copying the entire array, the address
+of the array is sent
+• Modifying nums inside print_arr() does affect the original array in main()
+51
+[Slide 52]
+Pass by Value vs. Pass by Pointer
+52
+#include <stdint.h>
+#include <stdio.h>
+void modify_values(int8_t arr[], int8_t length) {
+length = 99; // This change DOES NOT affect length in main()
+arr[0] = 99; // This change DOES affect nums[0] in main()
+}
+int main() {
+int8_t nums[] = {2, 4, 6, 8, 10};
+int8_t length = 5;
+modify_values(nums, length);
+printf("length in main: %d\n", length); // Still 5
+printf("nums[0] in main: %d\n", nums[0]); // Now 99
+return 0;
+}
+length in main: 5
+nums[0] in main: 99
+Output:
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+[Slide 53]
+Pass by Value vs. Pass by Pointer
+Pass-by-Value Pass-by-Pointer
+Pros
+• Safety: The function cannot
+modify the original variable.
+• Simplicity: No risk of
+unintended side effects.
+• Efficient for large data types:
+No extra memory allocation for
+copies.
+• Allows modification: The
+function can directly modify the
+original data.
+Cons
+• Performance overhead:
+Copying large objects is
+expensive in terms of time and
+memory.
+• More memory usage: Each
+call creates a new copy of the
+variable.
+• Risk of unintended
+modification: The function
+can accidentally change the
+original variable.
+53
+[Slide 54]
+Arrays as Arguments (High-level Diagram)
+54
+#include <stdint.h>
+#include <stdio.h>
+void print_arr(int64_t arr[], int64_t length);
+int main() {
+int64_t length = 5;
+int64_t nums[] = {2, 4, 6, 8, 10};
+print_arr(nums, length);
+}
+void print_arr(int64_t arr[], int64_t length) {
+int64_t i;
+for (i = 0; i < length; i++) {
+printf("arr[%d] = %d\n", i, arr[i]);
+}
+}
+main
+RA (8): 0
+length (4): 5
+nums (20): [2, 4, 6, 8, 10]
+Stack
+print_arr
+arr (8): address of nums
+length (8): 5
+RA (8): 9
+i (8): (uninitialized)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17 State of stack before executing line 14
+sp
+[Slide 55]
+Arrays as Arguments (Low-level Diagram)
+55
+main
+RA: 0
+length: 5
+nums: [10, 4, 6, 8, 12]
+Stack RA
+length
+nums[4]
+nums[3]
+nums[2]
+nums[1]
+nums[0]
+arr
+length
+RA
+i
+0
+5
+12
+8
+6
+4
+10
+0xFFFFFFFFFF20
+5
+9
+(uninit)
+Byte
+Address
+print_arr
+arr: address of nums
+length: 5
+RA: 9
+i: ?
+0xFFFFFFFFFF50
+0xFFFFFFFFFF48
+0xFFFFFFFFFF40
+0xFFFFFFFFFF38
+0xFFFFFFFFFF30
+0xFFFFFFFFFF28
+0xFFFFFFFFFF20
+0xFFFFFFFFFF18
+0xFFFFFFFFFF10
+0xFFFFFFFFFF08
+0xFFFFFFFFFF00
+main’s frame
+print_arr’s
+frame
+[Slide 56]
+Recall: Little Endian Ordering
+• The least significant byte of the integer goes in the lowest address
+56
+0b 0000 0000 0000 0101 0000 0110 1100 1101
+Most Significant Byte
+(MSB)
+Least Significant Byte
+(LSB)
+1100 1101
+0000 0110
+0000 0101
+0000 0000
+Data
+Byte
+Address
+0
+1
+2
+3
+[Slide 57]
+57
+#include <stdint.h>
+#include <stdio.h>
+int main() {
+int32_t a = 5;
+int32_t b = 7;
+int32_t c = 11;
+int32_t d = 15;
+int32_t* a_ptr = &a;
+int32_t* b_ptr = &b;
+int32_t* c_ptr = &c;
+int32_t* d_ptr = &d;
+*a_ptr = 9;
+*b_ptr = 10;
+*c_ptr = *b_ptr;
+d_ptr = a_ptr;
+*d_ptr = 20;
+}
+Stack
+0
+0
+5
+7
+11
+15
+0x0000ffff
+0xe846ac54
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+0xffffe846ac5C
+0xffffe846ac58
+0xffffe846ac54
+0xffffe846ac50
+0xffffe846ac4c
+0xffffe846ac48
+0xffffe846ac44
+0xffffe846ac40
+0xffffe846ac3C
+0xffffe846ac38
+0xffffe846ac34
+0xffffe846ac30
+0xffffe846ac2c
+0xffffe846ac28
+RA (4-7)
+RA (0-3)
+a
+b
+c
+d
+a_ptr(4-7)
+a_ptr(0-3)
+[Slide 58]
+58
+#include <stdint.h>
+#include <stdio.h>
+int main() {
+int32_t a = 5;
+int32_t b = 7;
+int32_t c = 11;
+int32_t d = 15;
+int32_t* a_ptr = &a;
+int32_t* b_ptr = &b;
+int32_t* c_ptr = &c;
+int32_t* d_ptr = &d;
+*a_ptr = 9;
+*b_ptr = 10;
+*c_ptr = *b_ptr;
+d_ptr = a_ptr;
+*d_ptr = 20;
+}
+Stack
+0
+0
+5
+7
+11
+15
+0x0000ffff
+0xe846ac54
+0x0000ffff
+0xe846ac50
+0x0000ffff
+0xe846ac4c
+0x0000ffff
+0xe846ac48
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+State after line 12:
+0xffffe846ac5C
+0xffffe846ac58
+0xffffe846ac54
+0xffffe846ac50
+0xffffe846ac4c
+0xffffe846ac48
+0xffffe846ac44
+0xffffe846ac40
+0xffffe846ac3C
+0xffffe846ac38
+0xffffe846ac34
+0xffffe846ac30
+0xffffe846ac2c
+0xffffe846ac28
+RA (4-7)
+RA (0-3)
+a
+b
+c
+d
+a_ptr(4-7)
+a_ptr(0-3)
+b_ptr(4-7)
+b_ptr(0-3)
+c_ptr(4-7)
+c_ptr(0-3)
+d_ptr(4-7)
+d_ptr(0-3)
+[Slide 59]
+59
+#include <stdint.h>
+#include <stdio.h>
+int main() {
+int32_t a = 5;
+int32_t b = 7;
+int32_t c = 11;
+int32_t d = 15;
+int32_t* a_ptr = &a;
+int32_t* b_ptr = &b;
+int32_t* c_ptr = &c;
+int32_t* d_ptr = &d;
+*a_ptr = 9;
+*b_ptr = 10;
+*c_ptr = *b_ptr;
+d_ptr = a_ptr;
+*d_ptr = 20;
+}
+Stack
+0
+0
+5 9 20
+7 10
+11 10
+15
+0x0000ffff
+0xe846ac54
+0x0000ffff
+0xe846ac50
+0x0000ffff
+0xe846ac4c
+0x0000ffff
+0xe846ac48
+0xe846ac54
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+State after line 17:
+0xffffe846ac5C
+0xffffe846ac58
+0xffffe846ac54
+0xffffe846ac50
+0xffffe846ac4c
+0xffffe846ac48
+0xffffe846ac44
+0xffffe846ac40
+0xffffe846ac3C
+0xffffe846ac38
+0xffffe846ac34
+0xffffe846ac30
+0xffffe846ac2c
+0xffffe846ac28
+RA (4-7)
+RA (0-3)
+a
+b
+c
+d
+a_ptr(4-7)
+a_ptr(0-3)
+b_ptr(4-7)
+b_ptr(0-3)
+c_ptr(4-7)
+c_ptr(0-3)
+d_ptr(4-7)
+d_ptr(0-3)
+[Slide 60]
+Arrays
+• When you use an array name in an expression, it decays into:
+• a pointer to the first element
+• Pointer arithmetic moves by element size automatically.
+• arr[i] is the same as *(arr + i)
+60
+#include <stdio.h>
+int main() {
+int arr[3] = {10, 20, 30};
+int* p = arr; // same as &arr[0]
+printf("%d\n", *p); // 10
+printf("%d\n", *(p + 1)); // 20
+printf("%d\n", *(p + 2)); // 30
+return 0;
+}
+[Slide 61]
+Pointer Arithmetic
+• Pointer arithmetic allows you to move between memory locations that a
+pointer can access.
+• It’s based on the size of the data type the pointer refers to.
+61
+int arr[3] = {10, 20, 30};
+int *p = arr;
+Expression Meaning Result
+p address of arr[0] (points to 10)
+p + 1 address of arr[1] (points to 20)
+*(p + 2) value at arr[2] 30
+When used in an expression, the name of an
+array (like arr) automatically becomes a pointer
+element 0.
+[Slide 62]
+Pointer Arithmetic
+• Only valid within the same array (undefined outside).
+• Pointer increments depend on data type size
+• (p + 1 adds sizeof(*p) bytes).
+• Works with all pointer types (e.g., int*, double*, etc.).
+62
+Operation Description
+p + n Move forward n elements
+p - n Move backward n elements
+p1 - p2 Returns the number of elements
+between two pointers
+p++ / p-- Move to next / previous element
+[Slide 63]
+Draw the Low-Level Memory Diagram
+63
+#include <stdio.h>
+int main() {
+int16_t arr[] = {1, 2, 3, 4, 5};
+int16_t *ptr = arr;
+*(ptr + 1) = *ptr;
+*(ptr + 2) = *(ptr + 1);
+return 0;
+}
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+Stack
+0xffffdddd0018
+0xffffdddd0016
+0xffffdddd0014
+0xffffdddd0012
+0xffffdddd0010
+0xffffdddd000E
+0xffffdddd000C
+0xffffdddd000A
+0xffffdddd0008
+0xffffdddd0006
+0xffffdddd0004
+0xffffdddd0002
+0xffffdddd0000
+[Slide 64]
+Draw the Low-Level Memory Diagram
+64
+#include <stdio.h>
+int main() {
+int16_t arr[] = {1, 2, 3, 4, 5};
+int16_t *ptr = arr;
+*(ptr + 1) = *ptr;
+*(ptr + 2) = *(ptr + 1);
+return 0;
+}
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+0
+0
+0
+0
+5
+4
+3 1
+2 1
+1
+0x0000
+0xffff
+0xdddd
+0x0008
+Stack
+RA (bytes 6-7)
+RA (bytes 4-5)
+RA (bytes 2-3)
+RA (bytes 0-1)
+arr[4]
+arr[3]
+arr[2]
+arr[1]
+arr[0]
+ptr (bytes 6-7)
+ptr (bytes 4-5)
+ptr (bytes 2-3)
+ptr (bytes 0-1)
+0xffffdddd0018
+0xffffdddd0016
+0xffffdddd0014
+0xffffdddd0012
+0xffffdddd0010
+0xffffdddd000E
+0xffffdddd000C
+0xffffdddd000A
+0xffffdddd0008
+0xffffdddd0006
+0xffffdddd0004
+0xffffdddd0002
+0xffffdddd0000

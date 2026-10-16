@@ -5,3 +5,6 @@ deno.lock
 
 # graded work / personal files: keep local only (course honor code: no public posting of assignments)
 courses/*/materials/private/
+
+# personal Claude Code settings (permissions/paths): keep local
+.claude/settings.local.json
