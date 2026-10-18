@@ -397,12 +397,57 @@ checkMatch = function (tableId, fbId, key) { _checkMatch(tableId, fbId, key); sa
 const _matchRetry = matchRetry;
 matchRetry = function (tableId, fbId) { _matchRetry(tableId, fbId); saveProgress(); };
 
+/* ================= ANSWER ORDER =================
+   Lessons are written with the correct choice in a fixed slot, so mix every choice list up once at load.
+   The order is seeded from the question text, so it is the same on every visit (saved progress and
+   "reveal" keep working: grading follows each option's data-i / value, never its position). Questions
+   whose choices are lettered A, B, C or whose explanation cites a letter are left in order. */
+function seededRandom(text) {
+  let h = 1779033703 ^ text.length;
+  for (let i = 0; i < text.length; i++) { h = Math.imul(h ^ text.charCodeAt(i), 3432918353); h = (h << 13) | (h >>> 19); }
+  let a = h >>> 0;
+  return function () {
+    a = (a + 0x6D2B79F5) >>> 0;
+    let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function shuffleNodes(nodes, seed) {
+  if (nodes.length < 2) return;
+  const rnd = seededRandom(seed);
+  const marks = nodes.map(n => { const m = document.createComment(''); n.parentNode.insertBefore(m, n); return m; });
+  const order = nodes.slice();
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1)); const t = order[i]; order[i] = order[j]; order[j] = t;
+  }
+  nodes.forEach(n => n.parentNode.removeChild(n));
+  marks.forEach((m, i) => { m.parentNode.insertBefore(order[i], m); m.parentNode.removeChild(m); });
+}
+function shuffleAnswerOrder() {
+  document.querySelectorAll('.q[data-mc], .q[data-multi]').forEach(q => {
+    const prompt = (q.querySelector('.prompt') || q).textContent.replace(/\s+/g, ' ').trim();
+    const fb = q.querySelector('.fb');
+    const lettered = Array.from(q.querySelectorAll('.opt, .ma-item')).some(o => /^\s*\(?[A-Da-d][.):]\s/.test(o.textContent));
+    if (lettered || (fb && /\boption\s+[A-D]\b/i.test(fb.innerHTML))) return;
+    shuffleNodes(Array.from(q.querySelectorAll('.opt')), prompt);
+    shuffleNodes(Array.from(q.querySelectorAll('.ma-item')), prompt);
+  });
+  document.querySelectorAll('table.match').forEach(t => {
+    t.querySelectorAll('select.match-def').forEach((sel, k) => {
+      const opts = Array.from(sel.options).filter(o => o.value !== '');
+      shuffleNodes(opts, t.id + ':' + Array.from(t.querySelectorAll('.match-term')).map(x => x.textContent).join('|'));
+    });
+  });
+}
+
 /* ================= INIT ================= */
 ['initL0', 'initL1', 'initL2', 'initL3', 'initL4', 'initL5', 'initL6', 'initL7', 'initL8', 'initL9', 'initL10']
   .forEach(function (fn) { if (typeof window[fn] === 'function') window[fn](); });
 
 /* stash every explanation up front so nothing leaks before it is earned */
 document.querySelectorAll('.q .fb, .card > .fb').forEach(fbInit);
+
+shuffleAnswerOrder();
 
 restoreProgress();
 updateProgress();

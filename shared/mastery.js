@@ -289,8 +289,10 @@
     item.options.forEach(function (o, i) {
       var b = el('button', 'mq-opt', o.t); b.type = 'button';
       b.onclick = function () { if (done || b.disabled) return; btns.forEach(function (x) { x.classList.remove('sel'); }); b.classList.add('sel'); sel = i; };
-      btns.push(b); node.appendChild(b);
+      btns.push(b);
     });
+    /* show the choices in random order; btns stays indexed by original option number so grading is unchanged */
+    shuffle(btns).forEach(function (b) { node.appendChild(b); });
     return {
       node: node,
       grade: function () {
@@ -306,11 +308,12 @@
   }
 
   function multiBody(item) {
-    var node = el('div', 'mq-body'), boxes = [], done = false;
+    var node = el('div', 'mq-body'), boxes = [], labs = [], done = false;
     item.options.forEach(function (o, i) {
       var lab = el('label', 'mq-chk'), cb = document.createElement('input'); cb.type = 'checkbox';
-      lab.appendChild(cb); lab.appendChild(el('span', '', o.t)); boxes.push(cb); node.appendChild(lab);
+      lab.appendChild(cb); lab.appendChild(el('span', '', o.t)); boxes.push(cb); labs.push(lab);
     });
+    shuffle(labs).forEach(function (l) { node.appendChild(l); });
     return {
       node: node,
       grade: function () {
@@ -341,8 +344,9 @@
     item.reasons.forEach(function (r, i) {
       var b = el('button', 'mq-opt', r.t); b.type = 'button';
       b.onclick = function () { if (done || b.disabled) return; rs.forEach(function (x) { x.classList.remove('sel'); }); b.classList.add('sel'); reason = i; };
-      rs.push(b); node.appendChild(b);
+      rs.push(b);
     });
+    shuffle(rs).forEach(function (b) { node.appendChild(b); });
     return {
       node: node,
       grade: function () {
