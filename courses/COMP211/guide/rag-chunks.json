@@ -8037,6 +8037,96 @@
     "text": "Check Which pattern matches img3.png but not imgA.png ? — Only the bracket range limits the character to a digit."
   },
   {
+    "id": "l33-xeh",
+    "section": "l33-xeh",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "section",
+    "title": "Lab 1 Part 0 &middot; The xeh Decoder and Its Test Script",
+    "text": "Lab 1 Part 0 &middot; The xeh Decoder and Its Test Script Part 0 of Lab 1 (\"Mysterious Parody Bits\") asks you to write xeh.c : read hex text such as 48656C6C6F and print the decoded ASCII text Hello . It is built in small steps, then tested with diff and an automated Bash loop. Both halves are Quiz 2 material: the C part uses bitwise operators, the testing part is the Bash script reading (loops, chmod , redirection). Step What the code does Key idea 1 Read with getchar() until EOF , ignore '\\\\n' Each character is an ASCII code, not a number yet 2 c - '0' for digits, c - 'A' + 10 or c - 'a' + 10 for letters Digits and letters are consecutive ASCII codes; 'A' is 10 3 combined = (hi << 4) | low; The first digit is the high nibble (4 bits), the second is the low nibble 4 putchar(combined); The byte already is the ASCII code of the character A byte is 8 bits , a nibble is 4 bits , and one hex digit (a hexit) is 4 bits, so two hex digits make one byte. The lab forbids library converters ( strtol , sscanf ) and magic numbers. The test script #!/bin/bash input_dir=\"tests/xeh/input\" expected_dir=\"tests/xeh/expected\" actual_dir=\"tests/xeh/actual\" for input in \"$input_dir\"/*.hex; do base=$(basename \"$input\" .hex) expected=\"$expected_dir/$base.expected\" actual=\"$actual_dir/$base.actual\" ./xeh < \"$input\" > \"$actual\" diff \"$actual\" \"$expected\" \\\\ && echo \"$base: PASS\" \\\\ || echo \"$base: FAIL\" done for input in \"$input_dir\"/*.hex runs once per matching file (a glob, expanded in sorted order). basename \"$input\" .hex strips the directory and the .hex suffix, so tests/xeh/input/hello.hex becomes hello ; $(...) captures that output. ./xeh < \"$input\" > \"$actual\" : input redirection feeds the file to the program, output redirection saves what it prints. diff prints nothing and succeeds when the files match; A && B || C runs B on success and C on failure. The script itself needs chmod +x before ./xeh_tests.sh will run. Check hi = 6 and low = 12 . What does (hi << 4) | low equal, in hex? (two hex digits) Check 6 shifted left by 4 is 0x60; OR with 12 (0xC) gives 0x6C, the letter l . Check What number does 'B' - 'A' + 10 evaluate to? (decimal) Check 'B' is one after 'A', so 1 + 10 = 11, the value of the hex digit B. Check diff actual.txt expected.txt prints nothing. What does that mean? The command failed The two files are identical, so the test passed One of the files is empty The files differ only in whitespace diff only prints when there is a difference. Check tests/xeh/input holds 7 .hex files. How many times does the body of for input in tests/xeh/input/*.hex; do ... done run? (a number) Check A for loop over a glob runs once per matching file."
+  },
+  {
+    "id": "l33-xeh-q0",
+    "section": "l33-xeh",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 Part 0 &middot; The xeh Decoder and Its Test Script",
+    "text": "Check hi = 6 and low = 12 . What does (hi << 4) | low equal, in hex? (two hex digits) — 6 shifted left by 4 is 0x60; OR with 12 (0xC) gives 0x6C, the letter l ."
+  },
+  {
+    "id": "l33-xeh-q1",
+    "section": "l33-xeh",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 Part 0 &middot; The xeh Decoder and Its Test Script",
+    "text": "Check What number does 'B' - 'A' + 10 evaluate to? (decimal) — 'B' is one after 'A', so 1 + 10 = 11, the value of the hex digit B."
+  },
+  {
+    "id": "l33-xeh-q2",
+    "section": "l33-xeh",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 Part 0 &middot; The xeh Decoder and Its Test Script",
+    "text": "Check diff actual.txt expected.txt prints nothing. What does that mean? — diff only prints when there is a difference."
+  },
+  {
+    "id": "l33-xeh-q3",
+    "section": "l33-xeh",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 Part 0 &middot; The xeh Decoder and Its Test Script",
+    "text": "Check tests/xeh/input holds 7 .hex files. How many times does the body of for input in tests/xeh/input/*.hex; do ... done run? (a number) — A for loop over a glob runs once per matching file."
+  },
+  {
+    "id": "l33-hex",
+    "section": "l33-hex",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "section",
+    "title": "Lab 1 Part 1 &middot; The hex Encoder (xeh in Reverse)",
+    "text": "Lab 1 Part 1 &middot; The hex Encoder (xeh in Reverse) Part 1 asks for hex.c , the opposite of xeh.c : it reads plain ASCII text and prints each character as two hex digits, ending with a newline. Where xeh combined two nibbles into a byte, hex splits one byte into two nibbles . The testing reuses the Part 0 files in reverse. Piece Code idea High nibble hi = c >> 4; Low nibble low = c & 0x0F; (the mask keeps only the lowest 4 bits) Nibble to character 0–9: '0' + n 10–15: 'A' + (n - 10) Wrapping after every 80 hex digits (40 input characters) print '\\\\n' $ echo \"Hello\" | ./hex 48656C6C6F0A $ echo -n \"Hello\" | ./hex 48656C6C6F $ echo \"Hello\" | ./hex | ./xeh Hello echo adds a newline, which shows up as 0A in the hex. echo -n leaves it off. Piping hex into xeh round-trips back to the original text. Shell tricks in the Part 1 testing steps mkdir -p tests/hex/{input,expected,actual} : brace expansion turns it into three paths, one per item. -p makes missing parent directories. cp tests/xeh/expected/*.expected tests/hex/input/ : a glob copies every expected file; the Part 0 outputs become the Part 1 inputs, and the Part 0 hex inputs become the Part 1 expected outputs. for f in *.expected; do mv \"$f\" \"\\${f%.expected}.in\"; done : \\${f%.expected} strips the suffix, so digits.expected is renamed digits.in . The test script is the Part 0 script with the directories, the .in suffix ( basename \"$input\" .in ) and ./hex changed. Make it executable with chmod +x . Check For the byte 0x6C , what is 0x6C >> 4 ? (decimal) Check 0x6C = 0110 1100; shifting right by 4 leaves the high nibble 0110 = 6. Check For the byte 0x6C , what is 0x6C & 0x0F ? (decimal) Check The mask keeps only the low nibble 1100 = 12, which prints as the hex digit C. Check What does echo -n \"Hi\" | ./hex print? Check H is 0x48 and i is 0x69. Without -n the output would end in 0A. Check The encoder wraps after 80 hex digits. How many input characters is that? 80 160 40 20 Each character needs 2 hex digits, so 80 digits is 40 characters."
+  },
+  {
+    "id": "l33-hex-q0",
+    "section": "l33-hex",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 Part 1 &middot; The hex Encoder (xeh in Reverse)",
+    "text": "Check For the byte 0x6C , what is 0x6C >> 4 ? (decimal) — 0x6C = 0110 1100; shifting right by 4 leaves the high nibble 0110 = 6."
+  },
+  {
+    "id": "l33-hex-q1",
+    "section": "l33-hex",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 Part 1 &middot; The hex Encoder (xeh in Reverse)",
+    "text": "Check For the byte 0x6C , what is 0x6C & 0x0F ? (decimal) — The mask keeps only the low nibble 1100 = 12, which prints as the hex digit C."
+  },
+  {
+    "id": "l33-hex-q2",
+    "section": "l33-hex",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 Part 1 &middot; The hex Encoder (xeh in Reverse)",
+    "text": "Check What does echo -n \"Hi\" | ./hex print? — H is 0x48 and i is 0x69. Without -n the output would end in 0A."
+  },
+  {
+    "id": "l33-hex-q3",
+    "section": "l33-hex",
+    "course": "COMP211",
+    "lesson": "L33",
+    "type": "qa",
+    "title": "Lab 1 Part 1 &middot; The hex Encoder (xeh in Reverse)",
+    "text": "Check The encoder wraps after 80 hex digits. How many input characters is that? — Each character needs 2 hex digits, so 80 digits is 40 characters."
+  },
+  {
     "id": "l4-concept",
     "section": "l4-concept",
     "course": "COMP211",
@@ -12382,6 +12472,24 @@
     "type": "material",
     "title": "Denorm Exponent Guide: own notes (part 1)",
     "text": "Denorm Exponent Guide: own notes Minifloat: 3 exponent bits, bias 3, 4 fraction bits. Question: what does exponent field 000 mean? Design 1: no denormals; field 000 is a normal exponent of -3. Smallest positive 1/8; large gap from 0 to 1/8. Design 2: denormals with exponent -bias = -3 (0.f x 2^-3). Smallest positive 1/128; gap between 15/128 and the smallest normalized 1/4. Design 3: denormals with exponent 1 - bias = -2 (0.f x 2^-2). Smallest positive 1/64; 15/64 is directly followed by 16/64: no gap. Design 3 is the standard rule. Trade-off: it does not reach as close to zero as Design 2."
+  },
+  {
+    "id": "mat-Lab1-Part0-xeh-notes-0",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "Lab 1 Part 0 study notes (own summary; the handout itself is not republished) (part 1)",
+    "text": "Lab 1 Part 0 study notes (own summary; the handout itself is not republished) Task: write xeh.c, a C program that reads hex text such as 48656C6C6F from standard input and prints the decoded ASCII text Hello. Steps: (1) read with getchar() until EOF and skip newline characters; (2) convert each hex character to a number with c - '0' for digits and c - 'A' + 10 or c - 'a' + 10 for letters; (3) take two hex digits at a time, the first is the high nibble and the second the low nibble, and combine them with (hi << 4) | low; (4) print the byte with putchar. Vocabulary: a byte is 8 bits, a nibble is 4 bits, a hexit (one hex digit) is 4 bits, two hex digits make one byte. Rules: no library converters such as strtol or sscanf, no magic numbers, bitwise operators for the combination, only stdio.h and stdlib.h, no global variables. Testing: inputs in tests/xeh/input/*.hex, expected output in tests/xeh/expected/*.expected, actual output in tests/xeh/actual/*.actual. Run ./xeh < input > actual and compare with diff actual expected. diff prints nothing when the files are identical. Writing expected files: echo adds a newline; use single quotes around special characters such as !\"?. or escape each one; use printf for escape sequences such as \\n. Test script (Bash): a shebang line, then a for loop over \"$input_dir\"/*.hex, base=$(basename \"$input\" .hex), ./xeh < \"$input\" > \"$actual\", then diff \"$actual\" \"$expected\" && echo \"$base: PASS\" || echo \"$base: FAIL\". Make it executable once with chmod +x, run it as ./tests/xeh/xeh_tests.sh, and delete the temporary files with rm tests/xeh/actual/*.actual."
+  },
+  {
+    "id": "mat-Lab1-Part1-hex-notes-0",
+    "section": "",
+    "course": "COMP211",
+    "lesson": "MATERIALS",
+    "type": "material",
+    "title": "Lab 1 Part 1 study notes (own summary; the handout itself is not republished) (part 1)",
+    "text": "Lab 1 Part 1 study notes (own summary; the handout itself is not republished) Task: write hex.c, the opposite of xeh.c. It reads plain ASCII text until EOF and prints each character's two hex digits (0-9, A-F), then ends the output with a newline. Output of 80 or more hex digits wraps with a newline after every 80 digits. Example: echo \"Hello\" | ./hex prints 48656C6C6F0A (echo adds a newline, which is 0A). echo -n \"Hello\" | ./hex prints 48656C6C6F. Pipes should round trip: echo \"Hello\" | ./hex | ./xeh prints Hello. Splitting a byte into two nibbles uses bitwise operators: high nibble = byte >> 4, low nibble = byte & 0x0F. Turn a nibble 0 to 9 into '0' + nibble, and 10 to 15 into 'A' + (nibble - 10). Testing reuses the Part 0 files in reverse: mkdir -p tests/hex/{input,expected,actual} (brace expansion makes three directories), cp the old expected files to the new input directory and the old input files to the new expected directory, rename *.expected to *.in with for f in *.expected; do mv \"$f\" \"${f%.expected}.in\"; done (${f%.expected} removes the suffix), then a hex_tests.sh script like xeh_tests.sh with basename \"$input\" .in, ./hex < \"$input\" > \"$actual\", and diff \"$actual\" \"$expected\" && echo \"$base: PASS\" || echo \"$base: FAIL\". Make it executable with chmod +x and run it as ./tests/hex/hex_tests.sh."
   },
   {
     "id": "mat-RD00-DiS-17.1.2-unix-notes-0",
@@ -25350,7 +25458,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: Lab 1 make+Bash",
-    "text": "What does each script print? #!/bin/bash #!/bin/bash total=0 limit=3; result=0 for w in cat dog cat bird; do for i in 1 2 3 4; do if [ \"$w\" = \"cat\" ]; then if [ $i -le $limit ]; then total=$((total + 3)) result=$((result + i)) else total=$((total + 1)); fi else result=$((result - 1)); fi done; echo $total done; echo $result — Left: cat adds 3, others add 1: 3+1+3+1 = 8. Right: 1+2+3 = 6, then i = 4 subtracts 1: 5."
+    "text": "This is the shape of the Lab 1 test script. The directory tests/xeh/input holds hello.hex , digits.hex and upper.hex (nothing else). What does it print, one name per line, in the order the shell expands the glob? for input in tests/xeh/input/*.hex; do base=$(basename \"$input\" .hex) echo \"$base\" done — basename \"$input\" .hex strips the directory and the .hex suffix. The loop runs once per matching file, and the glob expands in sorted order. $(...) captures the command output into base ."
   },
   {
     "id": "mastery-u31-q19",
@@ -25359,7 +25467,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: Lab 1 make+Bash",
-    "text": "What does this script print? #!/bin/bash x=1 for i in 3 1 4; do if [ $i -gt 2 ]; then x=$((x * 2)) else x=$((x + i)) fi done echo $x — x: 1 → 2 (3 > 2) → 3 (1 is not > 2, add 1) → 6 (4 > 2)."
+    "text": "In the Lab 1 script each test ends with diff \"$actual\" \"$expected\" && echo \"$base: PASS\" || echo \"$base: FAIL\" . diff succeeds (exit status 0) when the files match. Here true stands for a diff that succeeds and false for one that fails. What does each line print? true && echo \"t1: PASS\" || echo \"t1: FAIL\" false && echo \"t2: PASS\" || echo \"t2: FAIL\" — A && B || C runs B only if A succeeded and C only if A (or B) failed. diff exits 0 for identical files, so PASS; any difference makes it exit non-zero, so FAIL."
   },
   {
     "id": "mastery-u31-q20",
@@ -25368,7 +25476,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: Lab 1 make+Bash",
-    "text": "A script contains exactly the three lines pwd , whoami , date after the shebang. How many commands run, and in what order? — Commands run in the order they appear."
+    "text": "The Lab 1 decoder combines two hex digits into one byte with combined = (hi << 4) | low; . Give the byte (hex) for each pair of nibble values. — Shifting the high nibble left by 4 moves it into the upper four bits, and OR places the low nibble in the lower four bits. 0x48 is the letter H, 0x6C is l, 0x6F is o."
   },
   {
     "id": "mastery-u31-q21",
@@ -25377,7 +25485,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: Lab 1 make+Bash",
-    "text": "Running ./hello.sh prints “Permission denied”. Which step is missing? — Add execute permission, then run it."
+    "text": "The decoder turns hex characters into numbers with c - '0' for digits and c - 'A' + 10 (or c - 'a' + 10 ) for letters. Give each result as a decimal number. — Characters are stored as ASCII codes, and the digits and letters are consecutive, so subtracting the code of the first one gives its position. A is 10 in hex, so add 10 for letters."
   },
   {
     "id": "mastery-u31-q22",
@@ -25386,7 +25494,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: Lab 1 make+Bash",
-    "text": "The script should print \"big\" when $x exceeds 10 but misbehaves for numbers like 100. Find the bug. — Use the integer operator."
+    "text": "You run diff tests/xeh/actual/hello.actual tests/xeh/expected/hello.expected and it prints nothing. What does that mean? — No output from diff means no differences. Any output shows where the files differ."
   },
   {
     "id": "mastery-u31-q23",
@@ -25395,7 +25503,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: Lab 1 make+Bash",
-    "text": "The script is supposed to count only log1.txt log2.txt logA.txt but also counts log10.txt . Which line is the problem? — Use ? for exactly one character."
+    "text": "In ./xeh < tests/xeh/input/hello.hex > tests/xeh/actual/hello.actual , what do the two redirections do? — Input redirection < replaces the keyboard; output redirection > replaces the terminal."
   },
   {
     "id": "mastery-u31-q24",
@@ -25404,7 +25512,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: Lab 1 make+Bash",
-    "text": "Typing make builds clean first and deletes the executables. Which line is the cause? — Order of targets matters."
+    "text": "Why does the lab write the expected file for the punctuation test with echo '!\"?.' > file using single quotes? — Characters such as ! , \" and ? mean something to the shell; quoting (or escaping each with a backslash) keeps them literal."
   },
   {
     "id": "mastery-u31-q25",
@@ -25413,7 +25521,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: Lab 1 make+Bash",
-    "text": "Arrange a minimal script that counts the .txt files in the current directory. One line does not belong. — Shebang, initialise, loop over the glob, increment, print."
+    "text": "After creating tests/xeh/xeh_tests.sh the lab runs chmod +x on it. Why? — ls -l shows the permission bits; chmod +x adds execute so the file can be run as a program."
   },
   {
     "id": "mastery-u31-q26",
@@ -25422,7 +25530,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: Lab 1 make+Bash",
-    "text": "You edited only merge.c and want to rebuild just what is out of date. Which command is enough? — make rebuilds only merge."
+    "text": "The Lab 1 encoder splits a byte into two hex digits with hi = byte >> 4; and low = byte & 0x0F; . Give hi and low as decimal numbers for each byte. — Shifting right by 4 drops the low nibble and leaves the high one. Masking with 0x0F keeps only the low nibble. 0x6C = 0110 1100, so hi = 0110 (6) and low = 1100 (12)."
   },
   {
     "id": "mastery-u31-q27",
@@ -25431,7 +25539,7 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: Lab 1 make+Bash",
-    "text": "A script loops over *.c in a directory with a.c b.c c.c and compiles each with gcc -c ; make would rebuild only what changed. After editing only b.c how many object files would make rebuild, and how many would the script rebuild? — make uses timestamps to rebuild only b.o; the loop recompiles every file each time."
+    "text": "To print a nibble the encoder uses '0' + n when n is 0 to 9 and 'A' + (n - 10) when n is 10 to 15. Give the printed character for each nibble. — Digits are consecutive after '0' and the letters are consecutive after 'A', so adding the position gives the character."
   },
   {
     "id": "mastery-u31-q28",
@@ -25440,10 +25548,154 @@
     "lesson": "MASTERY",
     "type": "qa",
     "title": "Mastery: Lab 1 make+Bash",
-    "text": "A Makefile has the default target all: app tests where app depends on app.c and tests on tests.c , and a clean target. You build everything, edit only tests.c and run make . Explain what is rebuilt and why. Then say what make clean followed by make app does. — make builds the default target all (the first target). It checks app and tests: app is still newer than app.c so it is skipped, but tests.c is now newer than tests so only tests is rebuilt. make clean deletes the built files; make app then builds only app (the named target), not tests."
+    "text": "What does the Lab 1 encoder print for each input? echo adds a newline (hex 0A) and echo -n does not. Use uppercase hex with no spaces. — Each character becomes its two-digit ASCII code: H = 48, i = 69, A = 41, 1 = 31, O = 4F, K = 4B, newline = 0A."
   },
   {
     "id": "mastery-u31-q29",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What does echo \"Hello\" | ./hex | ./xeh print? — hex turns the text into hex digits, the pipe feeds them to xeh, and xeh decodes them back to the original text including the newline."
+  },
+  {
+    "id": "mastery-u31-q30",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "In for f in *.expected; do mv \"$f\" \"${f%.expected}.in\"; done , give the new name for digits.expected , and the result of basename tests/hex/input/digits.in .in . — ${f%.expected} removes the shortest matching suffix from the value, and basename path .in strips the directory and the given suffix."
+  },
+  {
+    "id": "mastery-u31-q31",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What does echo tests/hex/{input,expected,actual} print? (The same expansion makes mkdir -p tests/hex/{input,expected,actual} create three directories.) — Brace expansion turns one word into several, one for each item in the braces, in the order written."
+  },
+  {
+    "id": "mastery-u31-q32",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "The encoder wraps its output with a newline after every 80 hex digits. How many input characters fit on one full line, and how many lines does a 100-character input produce (the last line may be shorter)? — Each character makes 2 hex digits, so 80 digits is 40 characters. 100 characters make 200 digits: two full lines of 80 and a last line of 40."
+  },
+  {
+    "id": "mastery-u31-q33",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "The test directory holds 7 .hex files. How many times does the body of this loop run? (a number) for input in tests/xeh/input/*.hex; do echo \"$input\" done — A for loop over a glob runs once for every file the glob matches."
+  },
+  {
+    "id": "mastery-u31-q34",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What does each script print? #!/bin/bash #!/bin/bash total=0 limit=3; result=0 for w in cat dog cat bird; do for i in 1 2 3 4; do if [ \"$w\" = \"cat\" ]; then if [ $i -le $limit ]; then total=$((total + 3)) result=$((result + i)) else total=$((total + 1)); fi else result=$((result - 1)); fi done; echo $total done; echo $result — Left: cat adds 3, others add 1: 3+1+3+1 = 8. Right: 1+2+3 = 6, then i = 4 subtracts 1: 5."
+  },
+  {
+    "id": "mastery-u31-q35",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "What does this script print? #!/bin/bash x=1 for i in 3 1 4; do if [ $i -gt 2 ]; then x=$((x * 2)) else x=$((x + i)) fi done echo $x — x: 1 → 2 (3 > 2) → 3 (1 is not > 2, add 1) → 6 (4 > 2)."
+  },
+  {
+    "id": "mastery-u31-q36",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "A script contains exactly the three lines pwd , whoami , date after the shebang. How many commands run, and in what order? — Commands run in the order they appear."
+  },
+  {
+    "id": "mastery-u31-q37",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Running ./hello.sh prints “Permission denied”. Which step is missing? — Add execute permission, then run it."
+  },
+  {
+    "id": "mastery-u31-q38",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "The script should print \"big\" when $x exceeds 10 but misbehaves for numbers like 100. Find the bug. — Use the integer operator."
+  },
+  {
+    "id": "mastery-u31-q39",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "The script is supposed to count only log1.txt log2.txt logA.txt but also counts log10.txt . Which line is the problem? — Use ? for exactly one character."
+  },
+  {
+    "id": "mastery-u31-q40",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Typing make builds clean first and deletes the executables. Which line is the cause? — Order of targets matters."
+  },
+  {
+    "id": "mastery-u31-q41",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "Arrange a minimal script that counts the .txt files in the current directory. One line does not belong. — Shebang, initialise, loop over the glob, increment, print."
+  },
+  {
+    "id": "mastery-u31-q42",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "You edited only merge.c and want to rebuild just what is out of date. Which command is enough? — make rebuilds only merge."
+  },
+  {
+    "id": "mastery-u31-q43",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "A script loops over *.c in a directory with a.c b.c c.c and compiles each with gcc -c ; make would rebuild only what changed. After editing only b.c how many object files would make rebuild, and how many would the script rebuild? — make uses timestamps to rebuild only b.o; the loop recompiles every file each time."
+  },
+  {
+    "id": "mastery-u31-q44",
+    "section": "lmastery",
+    "course": "COMP211",
+    "lesson": "MASTERY",
+    "type": "qa",
+    "title": "Mastery: Lab 1 make+Bash",
+    "text": "A Makefile has the default target all: app tests where app depends on app.c and tests on tests.c , and a clean target. You build everything, edit only tests.c and run make . Explain what is rebuilt and why. Then say what make clean followed by make app does. — make builds the default target all (the first target). It checks app and tests: app is still newer than app.c so it is skipped, but tests.c is now newer than tests so only tests is rebuilt. make clean deletes the built files; make app then builds only app (the named target), not tests."
+  },
+  {
+    "id": "mastery-u31-q45",
     "section": "lmastery",
     "course": "COMP211",
     "lesson": "MASTERY",

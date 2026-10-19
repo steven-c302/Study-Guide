@@ -55,7 +55,8 @@ document.getElementById('l34').innerHTML = `
 <div class="card danger">
   <h3>Gaps</h3>
   <ul>
-    <li><b>RD18, RD19 and the Lab 1 handout</b> have not been added. The Lab 1 tab and unit are built from the Quiz 2 practice problems.</li>
+    <li><b>RD18 and RD19</b> have not been added.</li>
+    <li><b>Lab 1:</b> Parts 0 and 1 (the <code>xeh</code> decoder, the <code>hex</code> encoder, <code>diff</code> testing and the Bash test scripts) are in the Lab 1 tab. Part 2 and Part 3 of the handout have not been added; the make and Bash practice is built from the Quiz 2 learning objectives and the released practice problems.</li>
     <li>The released Quiz 2 practice PDFs are kept privately; this guide uses original questions of the same types.</li>
   </ul>
 </div>

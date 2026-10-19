@@ -1,0 +1,8 @@
+Lab 1 Part 0 study notes (own summary; the handout itself is not republished)
+Task: write xeh.c, a C program that reads hex text such as 48656C6C6F from standard input and prints the decoded ASCII text Hello.
+Steps: (1) read with getchar() until EOF and skip newline characters; (2) convert each hex character to a number with c - '0' for digits and c - 'A' + 10 or c - 'a' + 10 for letters; (3) take two hex digits at a time, the first is the high nibble and the second the low nibble, and combine them with (hi << 4) | low; (4) print the byte with putchar.
+Vocabulary: a byte is 8 bits, a nibble is 4 bits, a hexit (one hex digit) is 4 bits, two hex digits make one byte.
+Rules: no library converters such as strtol or sscanf, no magic numbers, bitwise operators for the combination, only stdio.h and stdlib.h, no global variables.
+Testing: inputs in tests/xeh/input/*.hex, expected output in tests/xeh/expected/*.expected, actual output in tests/xeh/actual/*.actual. Run ./xeh < input > actual and compare with diff actual expected. diff prints nothing when the files are identical.
+Writing expected files: echo adds a newline; use single quotes around special characters such as !"?. or escape each one; use printf for escape sequences such as \n.
+Test script (Bash): a shebang line, then a for loop over "$input_dir"/*.hex, base=$(basename "$input" .hex), ./xeh < "$input" > "$actual", then diff "$actual" "$expected" && echo "$base: PASS" || echo "$base: FAIL". Make it executable once with chmod +x, run it as ./tests/xeh/xeh_tests.sh, and delete the temporary files with rm tests/xeh/actual/*.actual.

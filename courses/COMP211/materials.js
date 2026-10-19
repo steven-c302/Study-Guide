@@ -151,6 +151,16 @@ window.MATERIALS = {
       "date": "Week 9 \u00b7 Quiz 2 material"
     },
     {
+      "title": "Lab 1 Part 0 \u00b7 xeh hex decoder, diff testing and the Bash test script (study notes)",
+      "file": "materials/readings/Lab1-Part0-xeh-notes.txt",
+      "date": "study notes"
+    },
+    {
+      "title": "Lab 1 Part 1 \u00b7 hex encoder, round trip pipes and the hex test script (study notes)",
+      "file": "materials/readings/Lab1-Part1-hex-notes.txt",
+      "date": "study notes"
+    },
+    {
       "title": "Denorm Exponent Guide \u00b7 study notes",
       "file": "materials/readings/Denorm-Exponent-Guide-notes.txt",
       "date": "study notes"
